@@ -219,7 +219,7 @@ e2e/*.map
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-!.vscode/*.code-snippets
+
 
 # Local History for Visual Studio Code
 .history/

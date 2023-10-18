@@ -2,7 +2,6 @@ package com.longdrink.rest_api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;

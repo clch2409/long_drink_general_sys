@@ -1,12 +1,9 @@
 package com.longdrink.rest_api.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.ManyToAny;
 
 import java.io.Serializable;
 import java.util.List;
@@ -38,7 +35,7 @@ public class Curso implements Serializable {
 
     private String imagen;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "cod_profesor")
     private Profesor profesor;

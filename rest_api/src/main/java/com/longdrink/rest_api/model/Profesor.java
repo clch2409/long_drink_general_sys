@@ -1,11 +1,7 @@
 package com.longdrink.rest_api.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -45,11 +41,12 @@ public class Profesor implements Serializable {
 
     private boolean activo;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "cod_usuario")
     private Usuario usuario;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "profesor")
     private List<Curso> cursos;
 

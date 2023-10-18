@@ -1,8 +1,8 @@
 package com.longdrink.rest_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,6 +35,7 @@ public class Alumno implements Serializable {
 
     private boolean activo;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "cod_usuario")
     private Usuario usuario;

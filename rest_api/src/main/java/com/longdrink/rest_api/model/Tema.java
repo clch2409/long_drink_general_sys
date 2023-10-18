@@ -1,11 +1,9 @@
 package com.longdrink.rest_api.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 import java.io.Serializable;
 import java.util.List;

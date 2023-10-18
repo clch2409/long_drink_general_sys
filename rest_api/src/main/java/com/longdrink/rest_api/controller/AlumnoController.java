@@ -41,7 +41,7 @@ public class AlumnoController {
     @GetMapping("/{dni}")
     public ResponseEntity<?> getPorDNI(@PathVariable String dni){
         Alumno alumno = alumnoService.getPorDNI(dni);
-        if(alumno.getDni() == ""){
+        if(alumno == null){
             return new ResponseEntity<>(new Mensaje("Error! El alumno con dni: "+dni+" no fue encontrado.",404),
                     HttpStatus.NOT_FOUND);
         }

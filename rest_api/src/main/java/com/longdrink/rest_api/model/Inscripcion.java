@@ -3,12 +3,9 @@ package com.longdrink.rest_api.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity(name = "Inscripcion")
 @Table(name = "inscripcion")

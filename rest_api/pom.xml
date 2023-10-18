@@ -39,14 +39,6 @@
 			<scope>test</scope>
 		</dependency>
 		<!--Fin de dependencias base para el proyecto-->
-		<!--Inicio: Ahorro de código / Getter Setter toString-->
-		<dependency>
-    		<groupId>org.projectlombok</groupId>
-    		<artifactId>lombok</artifactId>
-    		<version>1.18.30</version>
-    		<scope>provided</scope>
-		</dependency>
-		<!--Fin: Ahorro de código / Getter Setter toString-->
 		<!--Inicio: Documentacion de la API-->
 		<dependency>
     		<groupId>org.springdoc</groupId>

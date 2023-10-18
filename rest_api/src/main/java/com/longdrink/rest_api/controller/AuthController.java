@@ -71,7 +71,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/iniciar_sesion")
+    @PostMapping("/iniciar_sesion")
     public ResponseEntity<?> iniciarSesion(@RequestBody Login l){
         Usuario u = usuarioService.getPorUsername(l.getNombreUsuario().trim().toUpperCase());
         if(u == null){
@@ -86,17 +86,17 @@ public class AuthController {
         if(u.getRol().getCodRol() == 3L){
             Alumno a = alumnoService.getPorCodUsuario(u.getCodUsuario());
             String nombreCompleto = a.getNombre()+" "+a.getApellidoPaterno()+" "+a.getApellidoMaterno();
-            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto);
+            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
             return new ResponseEntity<>(respuesta,HttpStatus.OK);
         }
         if(u.getRol().getCodRol() == 2L){
             Profesor p = profesorService.getPorCodUsuario(u.getCodUsuario());
             String nombreCompleto = p.getNombre() +" "+p.getApellidoPaterno()+" "+p.getApellidoMaterno();
-            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto);
+            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"DOCENTE");
             return new ResponseEntity<>(respuesta,HttpStatus.OK);
         }
         if(u.getRol().getCodRol() == 1L){
-            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),"Gerencia Long Drink");
+            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),"Gerencia Long Drink","ADMINISTRADOR");
             return new ResponseEntity<>(respuesta,HttpStatus.OK);
         }
         return new ResponseEntity<>(new Mensaje("Error! Credenciales de acceso incorrectas.",401),

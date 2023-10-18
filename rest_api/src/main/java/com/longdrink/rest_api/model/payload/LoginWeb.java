@@ -5,14 +5,16 @@ public class LoginWeb {
     private String contrasena;
     private String email;
     private String nombreCompleto;
+    private String rol;
 
     public LoginWeb(){}
 
-    public LoginWeb(String nombreUsuario, String contrasena, String email, String nombreCompleto) {
+    public LoginWeb(String nombreUsuario, String contrasena, String email, String nombreCompleto, String rol) {
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.email = email;
         this.nombreCompleto = nombreCompleto;
+        this.rol = rol;
     }
 
     public String getNombreUsuario() {
@@ -45,5 +47,13 @@ public class LoginWeb {
 
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

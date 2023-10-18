@@ -61,6 +61,13 @@
     		<version>1.7</version>
 		</dependency>
 		<!--Fin: Validaciones-->
+		<!--Inicio: BCrypt-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>6.1.5</version>
+		</dependency>
+		<!--Fin: BCrypt-->
 	</dependencies>
 
 	<build>

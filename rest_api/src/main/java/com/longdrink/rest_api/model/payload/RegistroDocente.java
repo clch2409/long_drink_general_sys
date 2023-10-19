@@ -1,8 +1,11 @@
 package com.longdrink.rest_api.model.payload;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class RegistroAlumno {
+import java.util.Date;
+
+public class RegistroDocente {
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -12,6 +15,22 @@ public class RegistroAlumno {
     private String nombreUsuario;
     private String email;
     private String contrasena;
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
+    private Date fechaContratacion;
+
+    public RegistroDocente(){}
+
+    public RegistroDocente(String nombre, String apellidoPaterno, String apellidoMaterno, String dni, String telefono, String nombreUsuario, String email, String contrasena, Date fechaContratacion) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.fechaContratacion = fechaContratacion;
+    }
 
     @JsonIgnore
     public String generarNombreUsuario(){
@@ -25,17 +44,15 @@ public class RegistroAlumno {
     }
 
     @JsonIgnore
-    public RegistroAlumno limpiarDatos(){
+    public RegistroDocente limpiarDatos(){
         try{
-            return new RegistroAlumno(
-                    this.nombre.trim().toUpperCase(),this.apellidoPaterno.trim().toUpperCase(),
+            return new RegistroDocente(this.nombre.trim().toUpperCase(),this.apellidoPaterno.trim().toUpperCase(),
                     this.apellidoMaterno.trim().toUpperCase(),this.dni.trim(),this.telefono.trim(),
-                    this.generarNombreUsuario(),this.email.trim().toUpperCase(),this.contrasena
-            );
+                    this.generarNombreUsuario(),this.email.trim().toUpperCase(),this.contrasena,
+                    this.fechaContratacion);
         }
         catch(Exception ex){ return null; }
     }
-
     @JsonIgnore
     public boolean validarDatos(){
         return this.nombre.length() >= 1 && this.nombre.length() <= 50 &&
@@ -44,19 +61,6 @@ public class RegistroAlumno {
                 this.dni.length() >= 8 && this.dni.length() <= 12 && this.telefono.length() >= 9 &&
                 this.telefono.length() <= 15 && this.nombreUsuario.length() <= 50 && this.email.length() <= 50 &&
                 this.contrasena.length() >= 5 && this.contrasena.length() <=30;
-    }
-
-    public RegistroAlumno(){}
-
-    public RegistroAlumno(String nombre, String apellidoPaterno, String apellidoMaterno, String dni, String telefono, String nombreUsuario, String email, String contrasena) {
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.dni = dni;
-        this.telefono = telefono;
-        this.nombreUsuario = nombreUsuario;
-        this.email = email;
-        this.contrasena = contrasena;
     }
 
     public String getNombre() {
@@ -121,5 +125,13 @@ public class RegistroAlumno {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public Date getFechaContratacion() {
+        return fechaContratacion;
+    }
+
+    public void setFechaContratacion(Date fechaContratacion) {
+        this.fechaContratacion = fechaContratacion;
     }
 }

@@ -65,6 +65,18 @@ public class Profesor implements Serializable {
         this.cursos = cursos;
     }
 
+    public Profesor(Long codProfesor, String nombre, String apellidoPaterno, String apellidoMaterno, String dni, String telefono, Date fechaContratacion, boolean activo, Usuario usuario) {
+        this.codProfesor = codProfesor;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.fechaContratacion = fechaContratacion;
+        this.activo = activo;
+        this.usuario = usuario;
+    }
+
     public Long getCodProfesor() {
         return codProfesor;
     }

@@ -4,10 +4,7 @@ import com.longdrink.rest_api.model.Alumno;
 import com.longdrink.rest_api.model.Profesor;
 import com.longdrink.rest_api.model.Rol;
 import com.longdrink.rest_api.model.Usuario;
-import com.longdrink.rest_api.model.payload.Login;
-import com.longdrink.rest_api.model.payload.LoginWeb;
-import com.longdrink.rest_api.model.payload.Mensaje;
-import com.longdrink.rest_api.model.payload.RegistroAlumno;
+import com.longdrink.rest_api.model.payload.*;
 import com.longdrink.rest_api.services.AlumnoService;
 import com.longdrink.rest_api.services.ProfesorService;
 import com.longdrink.rest_api.services.UsuarioService;
@@ -47,8 +44,8 @@ public class AuthController {
         }
         RegistroAlumno limpiarDatos = reg.limpiarDatos();
         limpiarDatos.setNombreUsuario(limpiarDatos.generarNombreUsuario());
-        limpiarDatos.setContrasena(bCryptPasswordEncoder.encode(limpiarDatos.getContrasena()));
         boolean datosValidos = limpiarDatos.validarDatos();
+        limpiarDatos.setContrasena(bCryptPasswordEncoder.encode(limpiarDatos.getContrasena()));
         boolean emailValido = em.isValid(limpiarDatos.getEmail());
         if(!datosValidos || !emailValido){
             return new ResponseEntity<>(new Mensaje("Error! Los datos ingresados no cuentan con el formato requerido.",400),
@@ -65,6 +62,77 @@ public class AuthController {
                     limpiarDatos.getTelefono(),true,usuarioGuardado);
             Alumno alumnoGuardado = alumnoService.guardar(alumno);
             return new ResponseEntity<>(new Mensaje("Exito! Alumno registrado correctamente.",201),HttpStatus.CREATED);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/registro_docente")
+    public ResponseEntity<?> registroDocente(@RequestBody RegistroDocente reg){
+        EmailValidator em = EmailValidator.getInstance();
+        Alumno a = alumnoService.getPorDNI(reg.getDni());
+        Profesor p = profesorService.getPorDNI(reg.getDni());
+        Usuario u = usuarioService.getPorEmail(reg.getEmail());
+        if(a != null || p != null){
+            return new ResponseEntity<>(new Mensaje("Error! El DNI ingresado ya pertenece a una cuenta registrada.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        if(u != null){
+            return new ResponseEntity<>(new Mensaje("Error! El E-Mail ingresado ya pertenece a una cuenta registrada.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        RegistroDocente limpiarDatos = reg.limpiarDatos();
+        limpiarDatos.setNombreUsuario(limpiarDatos.generarNombreUsuario());
+        boolean datosValidos = limpiarDatos.validarDatos();
+        limpiarDatos.setContrasena(bCryptPasswordEncoder.encode(limpiarDatos.getContrasena()));
+        boolean emailValido = em.isValid(limpiarDatos.getEmail());
+        if(!datosValidos || !emailValido){
+            return new ResponseEntity<>(new Mensaje("Error! Los datos ingresados no cuentan con el formato requerido.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        //Insert de datos.
+        try{
+            Rol r = new Rol(2L,"DOCENTE");
+            Usuario usuario = new Usuario(0L,limpiarDatos.getNombreUsuario(),
+                    limpiarDatos.getContrasena(),limpiarDatos.getEmail(),true,r);
+            Usuario usuarioGuardado = usuarioService.guardar(usuario);
+            Profesor profesor = new Profesor(0L,limpiarDatos.getNombre(),limpiarDatos.getApellidoPaterno(),
+                    limpiarDatos.getApellidoMaterno(),limpiarDatos.getDni(),limpiarDatos.getTelefono(),
+                    limpiarDatos.getFechaContratacion(),true,usuarioGuardado);
+            Profesor profesorGuardado = profesorService.guardar(profesor);
+            return new ResponseEntity<>(profesorGuardado,HttpStatus.CREATED);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/registro_usuario")
+    public ResponseEntity<?> registroUsuario(@RequestBody RegistroUsuario reg){
+        EmailValidator em = EmailValidator.getInstance();
+        Usuario u = usuarioService.getPorEmail(reg.getEmail());
+        if(u != null){
+            return new ResponseEntity<>(new Mensaje("Error! El E-Mail ingresado ya pertenece a una cuenta registrada.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        RegistroUsuario limpiarDatos = reg.limpiarDatos();
+        limpiarDatos.setNombreUsuario(limpiarDatos.generarNombreUsuario());
+        boolean datosValidos = limpiarDatos.validarDatos();
+        limpiarDatos.setContrasena(bCryptPasswordEncoder.encode(limpiarDatos.getContrasena()));
+        boolean emailValido = em.isValid(limpiarDatos.getEmail());
+        if(!datosValidos || !emailValido){
+            return new ResponseEntity<>(new Mensaje("Error! Los datos ingresados no cuentan con el formato requerido.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        //Insert de datos.
+        try{
+            Rol r = new Rol(1L,"ADMINISTRADOR");
+            Usuario usuario = new Usuario(0L,limpiarDatos.getNombreUsuario(),
+                    limpiarDatos.getContrasena(),limpiarDatos.getEmail(),true,r);
+            Usuario usuarioGuardado = usuarioService.guardar(usuario);
+            return new ResponseEntity<>(usuarioGuardado,HttpStatus.CREATED);
+
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);

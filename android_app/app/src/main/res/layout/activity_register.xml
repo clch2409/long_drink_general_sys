@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="25dp"
+        android:background="@drawable/fondo_register">
+
+        <ImageView
+            android:id="@+id/back_register"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/baseline_arrow_back_24"
+            android:layout_centerHorizontal="false"
+            android:backgroundTint="@color/light_red"/>
+
+        <ImageView
+            android:id="@+id/image_register"
+            android:layout_width="150dp"
+            android:layout_height="150sp"
+            android:background="@drawable/logo_blanco"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_title"
+            android:layout_below="@id/image_register"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:textSize="27sp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:id="@+id/txtNombres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/register"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="15sp"
+            android:background="@color/nomuch_white"
+            android:hint="@string/register_hint_names"
+            android:inputType="text"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/light_blue"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <EditText
+            android:id="@+id/txtApPaterno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtNombres"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="15sp"
+            android:background="@color/nomuch_white"
+            android:hint="@string/register_hint_father"
+            android:inputType="text"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/light_blue"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <EditText
+            android:id="@+id/txtApMaterno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtApPaterno"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="15sp"
+            android:background="@color/nomuch_white"
+            android:hint="@string/register_hint_mother"
+            android:inputType="text"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/light_blue"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <EditText
+            android:id="@+id/txtDni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtApMaterno"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="15sp"
+            android:background="@color/nomuch_white"
+            android:hint="@string/register_hint_dni"
+            android:inputType="number"
+            android:drawableLeft="@drawable/baseline_credit_card_24"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/light_blue"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <EditText
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDni"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="15sp"
+            android:background="@color/nomuch_white"
+            android:hint="@string/register_hint_email"
+            android:inputType="textEmailAddress"
+            android:drawableLeft="@drawable/baseline_alternate_email_24"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/light_blue"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <EditText
+            android:id="@+id/txtTelf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="15sp"
+            android:background="@color/nomuch_white"
+            android:hint="@string/register_hint_phone "
+            android:inputType="phone"
+            android:drawableLeft="@drawable/baseline_local_phone_24"
+            android:drawablePadding="15dp"
+            android:drawableTint="@color/light_blue"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <Button
+            android:id="@+id/button_continue_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTelf"
+            android:layout_centerHorizontal="true"
+            android:text="Continuar"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/dark_blue"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

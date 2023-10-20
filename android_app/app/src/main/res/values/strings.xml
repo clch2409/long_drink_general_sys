@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">android_app</string>
+    <!-- Pantalla de login -->
+    <string name="login_title">Iniciar Sesion</string>
+    <string name="login_hint_username">Usuario</string>
+    <string name="login_hint_password">Contraseña</string>
+    <string name="login_forget">¿Olvidó su contraseña?</string>
+    <string name="login_text_register">Registrarse</string>
+    <string name="login_button_text">Ingresar</string>
+    <!-- Pantalla de registro de datos personales -->
+    <string name="register_title">Ingrese sus datos Personales</string>
+    <string name="register_hint_names">Nombres</string>
+    <string name="register_hint_father">Apellido Paterno</string>
+    <string name="register_hint_mother">Apellido Materno</string>
+    <string name="register_hint_dni">DNI</string>
+    <string name="register_hint_email">Correo electrónico</string>
+    <string name="register_hint_phone">Teléfono</string>
+    <!-- Pantalla de registro (contraseñas) -->
+    <string name="register_pass_title">Ingrese su contraseña</string>
+    <string name="register_pass_repeat">Repita su contraseña</string>
+    <string name="register_button">Registrar</string>
+    <string name="register_back_login"></string>
 </resources>

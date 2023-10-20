@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dimensiones de RelativeLayout -->
+    <dimen name="login_padding_layout">30dp</dimen>
+    <!-- Dimensiones imagenes -->
+    <dimen name="login_image_width">350dp</dimen>
+    <dimen name="login_image_height">150dp</dimen>
+    <dimen name="login_image_margintop">40dp</dimen>
+    <!-- Dimensiones títtulo -->
+    <dimen name="login_title_marginvertical">20dp</dimen>
+    <dimen name="login_title_textsize">40dp</dimen>
+    <!-- Dimensiones de EditText -->
+    <dimen name="login_edittext_padding">20dp</dimen>
+    <dimen name="login_edittext_margintop">20dp</dimen>
+    <dimen name="login_edittext_drawable_padding">20dp</dimen>
+    <!-- Otros Textos -->
+    <dimen name="login_text_size">20sp</dimen>
+    <dimen name="login_text_margintop">20dp</dimen>
+    <!-- Botones -->
+    <dimen name="login_button_margintop">15dp</dimen>
+</resources>

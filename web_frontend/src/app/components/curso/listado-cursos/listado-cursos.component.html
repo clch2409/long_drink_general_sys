@@ -13,14 +13,15 @@
                     <th class="fw-bold align-middle">Profesor</th>
                     <th class="fw-bold align-middle">Turnos</th>
                     <th class="fw-bold align-middle">Temas</th>
-                    <th class="fw-bold align-middle">Cantidad de Alumnos</th>
+                    <th class="fw-bold align-middle">Capacidad de Alumnos</th>
+                    <th class="fw-bold align-middle">Herramientas</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let curso of cursos" class="text-center">
                     <td class="fw-medium align-middle">{{ curso.descripcion }}</td>
                     <td class="fw-medium align-middle">S/ {{ curso.mensualidad }}</td>
-                    <td class="fw-medium align-middle">{{ curso.duracion }} meses</td>
+                    <td class="fw-medium align-middle">{{ curso.duracion }} Semanas</td>
                     <td class="fw-medium align-middle">{{ curso.frecuencia }}</td>
                     <td class="fw-medium align-middle">
                         {{ curso.profesor?.nombre }} {{ curso.profesor?.apellidoPaterno }}
@@ -40,6 +41,7 @@
                         </ul>
                     </td>
                     <td class="fw-medium align-middle">{{ curso.cantidadAlumnos }}</td>
+                    <td class="fw-medium align-middle">// Dropdown \\</td>
                 </tr>
             </tbody>
         </table>

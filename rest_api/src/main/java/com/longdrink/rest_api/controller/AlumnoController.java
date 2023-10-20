@@ -48,6 +48,16 @@ public class AlumnoController {
         return new ResponseEntity<>(alumno,HttpStatus.OK);
     }
 
+    @GetMapping("/por_cod")
+    public ResponseEntity<?> getPorCod(@RequestParam Long codAlum){
+        Alumno alumno = alumnoService.getPorCod(codAlum);
+        if (alumno == null){
+            return new ResponseEntity<>(new Mensaje("Error! El alumno con código: "+codAlum+" no fue encontrado.",404),
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(alumno,HttpStatus.OK);
+    }
+
     //TODO : POST Y PUT.
     @DeleteMapping()
     public ResponseEntity<?> eliminar(@RequestParam Long codAlumno){

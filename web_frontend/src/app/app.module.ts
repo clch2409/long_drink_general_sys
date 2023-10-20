@@ -7,8 +7,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ListadoCursosComponent } from './components/cursos_listado/listado-cursos/listado-cursos.component';
+import { ListadoCursosComponent } from './components/curso/listado-cursos/listado-cursos.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ListadoInscripcionesComponent } from './components/inscripcion/listado-inscripciones/listado-inscripciones.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HeaderComponent } from './components/header/header.component';
     LoginComponent,
     DashboardComponent,
     ListadoCursosComponent,
-    HeaderComponent
+    HeaderComponent,
+    ListadoInscripcionesComponent
   ],
   imports: [
     BrowserModule,

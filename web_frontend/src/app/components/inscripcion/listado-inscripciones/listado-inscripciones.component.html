@@ -1,6 +1,41 @@
-<ul>
-<li *ngFor="let ins of inscripciones">Alumno: {{ins.inscripcionPk?.codAlumno}} -- Curso: {{ins.inscripcionPk?.codCurso}}</li>
-<h4>Formato: Nombre curso Solicitud / nombres - apellidos alumno / dni / fecha-solicitud ( de inscripcion ) // Dropdown - (Detalles y Aprobar)</h4>
-<h3>Filtro con dropdown: Para ver solicitudes pendientes, ya aceptadas. </h3>
-<h3>Buscador: Para buscar inscripciones por curso o alumno</h3>
-</ul>
+<div class="container d-flex flex-column align-items-center">
+    <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Inscripciones Por Aceptar</h1>
+    
+    <div class="search-bar mb-4">
+        <label for="buscar" class="me-2">BUSCAR:</label>
+        <select id="buscar" class="me-2">
+            <option value="porCurso">POR CURSO</option>
+            <option value="porNombre">POR NOMBRE</option>
+        </select>
+        <input type="text" class="me-2">
+        <button class="btn btn-primary me-2">BUSCAR</button>
+        <label for="ordenar" class="me-2">ORDENAR:</label>
+        <select id="ordenar">
+            <option value="fechaAscendente">FECHA SOLICITUD * ASCENDENTE</option>
+            <option value="fechaDescendente">FECHA SOLICITUD * DESCENDENTE</option>
+            <option value="nombres">NOMBRES</option>
+            <option value="apellidos">APELLIDOS</option>
+        </select>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr class="text-center">
+                    <th class="fw-bold align-middle">Curso</th>
+                    <th class="fw-bold align-middle">Alumno</th>
+                    <th class="fw-bold align-middle">DNI</th>
+                    <th class="fw-bold align-middle">Fecha de Solicitud</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let inscripcion of inscripciones" class="text-center">
+                    <td class="fw-medium align-middle">{{ inscripcion.curso?.descripcion}}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.nombre}} {{ inscripcion.alumno?.apellidoPaterno}} {{ inscripcion.alumno?.apellidoMaterno}}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.dni}}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.fechaInscripcion | date }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

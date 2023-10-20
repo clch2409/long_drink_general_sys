@@ -1,6 +1,7 @@
 package com.longdrink.rest_api.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
@@ -15,35 +16,37 @@ public class Inscripcion implements Serializable {
 
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaInicio")
     private Date fechaInicio;
 
     @Column(name = "fecha_final")
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaFinal")
     private Date fechaFinal;
 
     @Column(name = "fecha_inscripcion")
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaInscripcion")
     private Date fechaInscripcion;
 
     @Column(name = "fecha_terminado")
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaTerminado")
     private Date fechaTerminado;
 
     private boolean estado;
 
+    @JsonIgnore
     @MapsId("codAlumno")
     @ManyToOne
     @JoinColumn(name = "cod_alumno")
     private Alumno alumno;
 
+    @JsonIgnore
     @MapsId("codCurso")
     @ManyToOne
     @JoinColumn(name = "cod_curso")

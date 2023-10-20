@@ -23,6 +23,12 @@ public class InscripcionService {
         return inscripcionDAO.findAllByEstado();
     }
 
+    public List<Inscripcion> listarPendientes(){ return inscripcionDAO.findAllByPendiente(); }
+
+    public List<Inscripcion> listarInscripciones(){ return (List<Inscripcion>) inscripcionDAO.findAll(); }
+
+    public List<Inscripcion> listarPorEstado_Curso(boolean estado, Long codCurso){ return inscripcionDAO.findAllByEstadoAndInscripcionPkCodCurso(estado,codCurso); }
+
     public Inscripcion guardar(Inscripcion i){
         return inscripcionDAO.save(i);
     }

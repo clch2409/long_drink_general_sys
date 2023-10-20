@@ -7,7 +7,7 @@ import { ListadoCursosComponent } from './components/cursos_listado/listado-curs
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, children:[
-    { path: 'cursos', component: ListadoCursosComponent}
+  { path: 'cursos', component: ListadoCursosComponent}
   ]
   },
   

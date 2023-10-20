@@ -1,4 +1,47 @@
-<p>Listado de cursos!!</p>
-<ul>
-    <li *ngFor="let i of cursos">{{i.descripcion }} --- {{ i.frecuencia}} </li>
-</ul>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Cursos</h1>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr class="text-center">
+                    <th class="fw-bold align-middle">Descripción</th>
+                    <th class="fw-bold align-middle">Mensualidad</th>
+                    <th class="fw-bold align-middle">Duración</th>
+                    <th class="fw-bold align-middle">Frecuencia</th>
+                    <th class="fw-bold align-middle">Profesor</th>
+                    <th class="fw-bold align-middle">Turnos</th>
+                    <th class="fw-bold align-middle">Temas</th>
+                    <th class="fw-bold align-middle">Cantidad de Alumnos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let curso of cursos" class="text-center">
+                    <td class="fw-medium align-middle">{{ curso.descripcion }}</td>
+                    <td class="fw-medium align-middle">S/ {{ curso.mensualidad }}</td>
+                    <td class="fw-medium align-middle">{{ curso.duracion }} meses</td>
+                    <td class="fw-medium align-middle">{{ curso.frecuencia }}</td>
+                    <td class="fw-medium align-middle">
+                        {{ curso.profesor?.nombre }} {{ curso.profesor?.apellidoPaterno }}
+                    </td>
+                    <td class="fw-medium align-middle">
+                        <ul>
+                            <li *ngFor="let turno of curso.turnos">
+                                {{ turno.nombre }} ({{ turno.horaInicio }} - {{ turno.horaFin }})
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="fw-medium align-middle">
+                        <ul>
+                            <li *ngFor="let tema of curso.temas">
+                                {{ tema.nombre }} - {{ tema.ficha }}
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="fw-medium align-middle">{{ curso.cantidadAlumnos }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

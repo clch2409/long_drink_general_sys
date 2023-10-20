@@ -1,0 +1,8 @@
+.navbar-nav .nav-link:hover {
+    background-color: #004080; /* Gris oscuro que combina con el fondo oscuro */
+    border-radius: 5px; /* Borde redondeado en hover */
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}

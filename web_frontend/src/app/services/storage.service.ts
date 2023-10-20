@@ -9,28 +9,30 @@ export class StorageService {
 
   constructor() { }
 
-  limpiarCredenciales(): void{
+  limpiarCredenciales(): void {
     window.sessionStorage.clear();
   }
 
-  public guardarUsuario(loginWeb: any): void{
+  public guardarUsuario(loginWeb: any): void {
     window.sessionStorage.removeItem(USER_DATA);
-    window.sessionStorage.setItem(USER_DATA,JSON.stringify(loginWeb));
+    window.sessionStorage.setItem(USER_DATA, JSON.stringify(loginWeb));
   }
 
-  public obtenerUsuario(): any{
+  public obtenerUsuario(): any {
     const usuario = window.sessionStorage.getItem(USER_DATA);
-    if(usuario){
+    if (usuario) {
       return JSON.parse(usuario);
     }
     return null;
   }
 
-  public sesionIniciada(): boolean{
+  public sesionIniciada(): boolean {
     const usuario = window.sessionStorage.getItem(USER_DATA);
-    if(usuario){
-      return true;
-    }
-    return false;
+    return !!usuario;
+  }
+
+  public cerrarSesion(): void {
+    window.sessionStorage.removeItem(USER_DATA);
+    window.location.href = '/';
   }
 }

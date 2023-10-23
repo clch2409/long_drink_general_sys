@@ -6,6 +6,7 @@ import { Alumno } from 'src/app/models/alumno.model';
 import { AlumnoService } from 'src/app/services/alumno.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { CursoService } from 'src/app/services/curso.service';
 
 @Component({
   selector: 'app-listado-inscripciones',
@@ -18,29 +19,48 @@ export class ListadoInscripcionesComponent {
   inscripciones: Inscripcion[] = [];
   cursos: Curso[] = [];
   
-  constructor(private storageService: StorageService,private router: Router,private inscripcionService: InscripcionService, private alumnoService: AlumnoService) { }
+  constructor(private storageService: StorageService, private router: Router, private inscripcionService: InscripcionService, private cursoService: CursoService, private alumnoService: AlumnoService) { }
+
   ngOnInit(): void {
-      this.comprobarSesion();
-      this.getInscripcionesPendientes();
+    this.comprobarSesion();
+    this.getInscripcionesPendientes();
   }
 
-  getInscripcionesPendientes(): void{
+  getInscripcionesPendientes(): void {
     this.inscripcionService.getInscripcionesPendientes().subscribe({
       next: (data) => {
         this.inscripciones = data;
-        console.log(this.inscripciones);
+        this.enriquecerInscripciones();
       },
-      error: (err) =>{ console.log(err); }
+      error: (err) => { console.log(err); }
     });
   }
 
-  getInscripciones(): void{
+  enriquecerInscripciones(): void {
+    for (const inscripcion of this.inscripciones) {
+      if (inscripcion.inscripcionPk) {
+        this.getAlumnoCod(inscripcion.inscripcionPk.codAlumno).subscribe((alumno: Alumno) => {
+          inscripcion.alumno = alumno;
+        });
+        this.getCursoCod(inscripcion.inscripcionPk.codCurso).subscribe((curso: Curso) => {
+          inscripcion.curso = curso;
+        });
+      }
+    }
+  }
+
+  getCursoCod(codCurso: number): any {
+    return this.cursoService.getCurso(codCurso);
+  }
+  
+
+  getInscripciones(): void {
     this.inscripcionService.getInscripciones().subscribe({
       next: (data) => {
         this.inscripciones = data;
         console.log(this.inscripciones);
       },
-      error: (err) =>{ console.log(err); }
+      error: (err) => { console.log(err); }
     });
   }
 
@@ -50,46 +70,40 @@ export class ListadoInscripcionesComponent {
         this.inscripciones = data;
         console.log(this.inscripciones);
       },
-      error: (err) =>{ console.log(err); }
+      error: (err) => { console.log(err); }
     });
   }
 
-  getInscripcionesAlumno(codAlumno: number): void{
+  getInscripcionesAlumno(codAlumno: number): void {
     this.inscripcionService.getInscripcionesPorAlumno(codAlumno).subscribe({
       next: (data) => {
         this.inscripciones = data;
         console.log(this.inscripciones);
       },
-      error: (err) =>{ console.log(err); }
+      error: (err) => { console.log(err); }
     });
   }
 
-  getInscripcionesCurso(codCurso: number): void{
+  getInscripcionesCurso(codCurso: number): void {
     this.inscripcionService.getInscripcionesPorCurso(codCurso).subscribe({
       next: (data) => {
         this.inscripciones = data;
         console.log(this.inscripciones);
       },
-      error: (err) =>{ console.log(err); }
+      error: (err) => { console.log(err); }
     });
   }
 
-  getAlumnoCod(codAlum: number): any{
-    this.alumnoService.getAlumnoCod(codAlum).subscribe({
-      next: (data) =>{
-        return data;
-      },
-      error: (err) => { return null; }
-    })
+  getAlumnoCod(codAlum: number): any {
+    return this.alumnoService.getAlumnoCod(codAlum);
   }
 
-  comprobarSesion(): void{
-    if(this.storageService.sesionIniciada()){
+  comprobarSesion(): void {
+    if (this.storageService.sesionIniciada()) {
       this.sesionIniciada = true;
       this.rol = this.storageService.obtenerUsuario().rol;
+    } else {
+      this.router.navigate(['/']);
+    }
   }
-  else{
-    this.router.navigate(['/']);
-  };
-}
 }

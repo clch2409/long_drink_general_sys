@@ -2,17 +2,26 @@
 <resources>
     <!-- Dimensiones de RelativeLayout -->
     <dimen name="login_padding_layout">30dp</dimen>
+    <dimen name="register_padding_layout">18dp</dimen>
     <!-- Dimensiones imagenes -->
     <dimen name="login_image_width">350dp</dimen>
     <dimen name="login_image_height">150dp</dimen>
     <dimen name="login_image_margintop">40dp</dimen>
+    <dimen name="register_back_image_width_heigth">40dp</dimen>
+    <dimen name="register_logo_image_width_heigth">150dp</dimen>
     <!-- Dimensiones títtulo -->
     <dimen name="login_title_marginvertical">20dp</dimen>
-    <dimen name="login_title_textsize">40dp</dimen>
+    <dimen name="login_title_textsize">40sp</dimen>
+    <dimen name="register_title_margintop">15dp</dimen>
+    <dimen name="register_title_textsize">27sp</dimen>
+    <dimen name="register_title_pass_margintop">50dp</dimen>
     <!-- Dimensiones de EditText -->
     <dimen name="login_edittext_padding">20dp</dimen>
     <dimen name="login_edittext_margintop">20dp</dimen>
     <dimen name="login_edittext_drawable_padding">20dp</dimen>
+    <dimen name="register_edittext_margintop">15dp</dimen>
+    <dimen name="register_edittext_padding">15dp</dimen>
+    <dimen name="register_edittext_drawable_padding">15dp</dimen>
     <!-- Otros Textos -->
     <dimen name="login_text_size">20sp</dimen>
     <dimen name="login_text_margintop">20dp</dimen>

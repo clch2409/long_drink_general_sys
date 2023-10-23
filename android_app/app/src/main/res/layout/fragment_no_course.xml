@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.NoCourseFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/no_course_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:background=""
+
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/no_course_text"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/no_course_image"
+            android:text="Creo que no se ha inscrito a un curso. Inscríbase a uno para observar su información aquí"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:textAlignment="center"
+            android:textSize="24sp"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

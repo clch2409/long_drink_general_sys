@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.MyCourseFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/my_course_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/my_course_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Nombre del Curso"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/my_course_teacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_name"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="37dp"
+            android:text="Profesor:"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/my_course_teacher_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_name"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="37dp"
+            android:layout_toEndOf="@+id/my_course_teacher"
+            android:text="Nombre del profee"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/my_course_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_teacher"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="25dp"
+            android:text="Horario:"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/my_course_schedule_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_teacher_name"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@+id/my_course_teacher"
+            android:text="00:00 - 00:00"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/my_course_next_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_schedule"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="25dp"
+            android:text="Siguiente clase:"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/my_course_next_class_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_schedule_hours"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@+id/my_course_teacher"
+            android:text="xx/xx/xxxx"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/my_course_classes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_next_class"
+            android:layout_marginTop="@dimen/login_text_margintop"
+            android:layout_centerHorizontal="true"
+            android:text="Temario"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_blue"/>
+
+        <FrameLayout
+            android:id="@+id/my_course_framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_classes">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_course_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="5"
+                tools:listitem="@layout/list_item_my_course_classes"/>
+        </FrameLayout>
+
+
+
+    </RelativeLayout>
+
+</FrameLayout>

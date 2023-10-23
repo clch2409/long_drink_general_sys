@@ -12,6 +12,8 @@ public interface IInscripcionDAO extends CrudRepository<Inscripcion,InscripcionP
 
     List<Inscripcion> findAllByInscripcionPkCodCurso(Long codCurso);
 
+    List<Inscripcion> findAllByAlumnoDni(String dni);
+
     @Query("SELECT I FROM Inscripcion I WHERE I.estado = true")
     List<Inscripcion> findAllByEstado();
 

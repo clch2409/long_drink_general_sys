@@ -69,6 +69,17 @@ public class InscripcionController {
         return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
     }
 
+    @GetMapping("/por_dni")
+    public ResponseEntity<?> listarPorDNIAlumno(@RequestParam String dni){
+        List<Inscripcion> listaInscripciones = inscripcionService.listarPorDniAlumno(dni);
+        if (listaInscripciones.isEmpty()){
+            return new ResponseEntity<>(
+                    new Mensaje("Ups! El alumno ingresado no posee inscripciones en la institución.", 404),
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
+    }
+
     @GetMapping("/por_curso")
     public ResponseEntity<?> listarPorCurso(@RequestParam Long codCurso){
         List<Inscripcion> listaInscripciones = inscripcionService.listarPorCurso(codCurso);

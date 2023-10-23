@@ -29,6 +29,8 @@ public class InscripcionService {
 
     public List<Inscripcion> listarPorEstado_Curso(boolean estado, Long codCurso){ return inscripcionDAO.findAllByEstadoAndInscripcionPkCodCurso(estado,codCurso); }
 
+    public List<Inscripcion> listarPorDniAlumno(String dni){ return inscripcionDAO.findAllByAlumnoDni(dni); }
+
     public Inscripcion guardar(Inscripcion i){
         return inscripcionDAO.save(i);
     }

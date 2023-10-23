@@ -84,6 +84,16 @@ export class ListadoInscripcionesComponent {
     });
   }
 
+  getInscripcionesDniAlumno(dni: string): void{
+    this.inscripcionService.getInscripcionesDniAlumno(dni).subscribe({
+      next: (data) =>{
+        this.inscripciones = data;
+        console.log(this.inscripciones);
+      },
+      error: (err) => { console.log(err); }
+    })
+  }
+
   getInscripcionesCurso(codCurso: number): void {
     this.inscripcionService.getInscripcionesPorCurso(codCurso).subscribe({
       next: (data) => {

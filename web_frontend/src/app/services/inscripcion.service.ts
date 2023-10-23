@@ -28,8 +28,13 @@ export class InscripcionService {
     return this.http.get<Inscripcion[]>(API+`/inscripcion/por_alumno?codAlumno=${codAlumno}`);
   } 
 
+  getInscripcionesDniAlumno(dni: string): Observable<Inscripcion[]>{
+    return this.http.get<Inscripcion[]>(API+`/inscripcion/por_dni?dni=${dni}`);
+  }
+
   getInscripcionesPorCurso(codCurso: number): Observable<Inscripcion[]>{
     return this.http.get<Inscripcion[]>(API+`/inscripcion/por_curso?codCurso=${codCurso}`);
   } 
+
   
 }

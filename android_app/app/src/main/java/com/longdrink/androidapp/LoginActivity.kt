@@ -1,8 +1,12 @@
 package com.longdrink.androidapp
 
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.snackbar.Snackbar
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.ActivityLoginBinding
 import com.longdrink.androidapp.model.LoginSendData
@@ -26,30 +30,66 @@ class LoginActivity : AppCompatActivity() {
         retrofit = getRetrofit()
 
         binding.btnIniciar.setOnClickListener {
-            doLogin(getInfo())
+            val username = binding.txtUsuario.text.toString()
+            val password = binding.txtContrasena.text.toString()
+            if (checkingEmpty(username, password))
+            {
+                showSnackbar("Ingrese todos los datos solicitados, por favor")
+            }
+            else if (!checkUsernameFormat(username))
+            {
+                showSnackbar("Ingrese el formato correcto del usuario, por favor\"")
+            }
+            else
+            {
+                doLogin(LoginSendData(username, password))
+            }
         }
+
+        binding.register.setOnClickListener { goToRegister() }
+        binding.forgetPass.setOnClickListener { goToForgot() }
 
         setContentView(binding.root)
     }
 
-    private fun getInfo(): LoginSendData {
-        val usuario: String = binding.txtUsuario.text.toString()
-        val contrasena = binding.txtContrasena.text.toString()
-        return LoginSendData(usuario, contrasena)
-    }
-
     private fun doLogin(sendData : LoginSendData){
+
         CoroutineScope(Dispatchers.IO).launch{
             val response : Response<LoginWebResponse>  =
                 retrofit.create(ApiService::class.java).IniciarSesion(sendData)
 
             if (response.code() == 401){
-                Log.i("ERROR", "No hay inicio de sesión")
+                 showSnackbar("Sus datos no coinciden, intente de nuevo")
             }
-            else{
-                Log.i("SUCCESS", response.body().toString());
+            else {
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
             }
         }
+    }
+
+    private fun checkingEmpty(username: String, password: String) : Boolean{
+        if (username.isEmpty() || password.isEmpty()){
+            return true
+        }
+        return false
+    }
+
+    private fun checkUsernameFormat(username: String) : Boolean{
+        return username.matches("^[A-Z]{2}\\d{8}$".toRegex())
+    }
+
+    private fun showSnackbar(text : String){
+        this.runOnUiThread { Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show() }
+    }
+
+    private fun goToRegister(){
+        val intent = Intent(applicationContext, RegisterActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun goToForgot(){
+        showSnackbar("Estamos trabajando en ello \uD83D\uDEE0")
     }
 
     private fun getRetrofit() : Retrofit{

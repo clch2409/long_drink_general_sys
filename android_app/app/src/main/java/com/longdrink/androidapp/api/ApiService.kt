@@ -11,4 +11,7 @@ interface ApiService {
     @POST("auth/iniciar_sesion")
     suspend fun IniciarSesion(@Body login: LoginSendData) : Response<LoginWebResponse>
 
+
+    /*@POST("auth/registro")
+    suspend fun RegistroAlumno(@Body registro : RegisterSendData) : Response<RegisterResponse>*/
 }

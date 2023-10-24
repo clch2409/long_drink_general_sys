@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">android_app</string>
+    <string name="app_name">LONGDRINK</string>
     <!-- Pantalla de login -->
     <string name="login_title">Iniciar Sesion</string>
     <string name="login_hint_username">Usuario</string>

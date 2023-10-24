@@ -1,1 +1,6 @@
-<p>listado-profesores works!</p>
+<p>Formato tabla: CÓDIGO - AP. PA - APE. MA - NOMBRE - DNI - TELEFONO - FECHA_CONTRATO - ACTIVO</p>
+<p>Busqueda por DNI Profesor. -- Filtro: Listado general de profesores (todo) y listado de activos. ** La pagina abre en listado de activos...</p>
+<p>Botón de NUEVO que lleva a dashboard/nuevo-docente</p>
+<ul *ngFor="let profesor of profesores">
+    <li> -- {{profesor.nombre}}</li>
+</ul>

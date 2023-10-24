@@ -2,10 +2,12 @@ package com.longdrink.rest_api.services;
 
 import com.longdrink.rest_api.dao.IInscripcionDAO;
 import com.longdrink.rest_api.model.Inscripcion;
+import com.longdrink.rest_api.model.InscripcionPk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InscripcionService {
@@ -42,5 +44,9 @@ public class InscripcionService {
     public Inscripcion modificarEstado(Inscripcion i,boolean estado){
         i.setEstado(estado);
         return inscripcionDAO.save(i);
+    }
+
+    public Optional<Inscripcion> buscarPorPk(InscripcionPk inscripcionPk){
+        return inscripcionDAO.findByInscripcionPk(inscripcionPk);
     }
 }

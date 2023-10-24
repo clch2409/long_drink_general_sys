@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
 <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid d-flex justify-content-between">
         <div style="flex-basis: 0;" class="d-flex flex-grow-1">
@@ -24,8 +25,12 @@
                 </li>
             </ul>
         </div>
+
         <div style="flex-basis: 0;" class="d-flex flex-grow-1 justify-content-end">
+            <div class="btn-group">
+            <button class="btn btn-secondary fw-bold" (click)="miCuenta()">Mi Cuenta</button>
             <button class="btn btn-danger fw-bold" (click)="cerrarSesion()">Cerrar Sesión</button>
+        </div>
         </div>
     </div>
 </nav>

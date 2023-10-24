@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Inscripcion } from '../models/inscripcion.model';
 
 const API = 'http://localhost:8080/api/v1';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type' : 'application/json'})
+}; 
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +15,9 @@ const API = 'http://localhost:8080/api/v1';
 export class InscripcionService {
 
   constructor(private http: HttpClient) { }
+
+
+  
 
   getInscripciones(): Observable<Inscripcion[]>{
     return this.http.get<Inscripcion[]>(API+'/inscripcion');
@@ -36,5 +43,8 @@ export class InscripcionService {
     return this.http.get<Inscripcion[]>(API+`/inscripcion/por_curso?codCurso=${codCurso}`);
   } 
 
-  
+  confirmarInscripcion(codCurso?: number, codAlumno?: number): Observable<any>{
+    return this.http.post(API+`/inscripcion/confirmar_inscripcion?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
+  }
+
 }

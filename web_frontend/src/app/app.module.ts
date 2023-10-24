@@ -10,6 +10,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ListadoCursosComponent } from './components/curso/listado-cursos/listado-cursos.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ListadoInscripcionesComponent } from './components/inscripcion/listado-inscripciones/listado-inscripciones.component';
+import { NuevoCursoComponent } from './components/curso/nuevo-curso/nuevo-curso.component';
+import { ListadoAlumnosComponent } from './components/alumno/listado-alumnos/listado-alumnos.component';
+import { ListadoProfesoresComponent } from './components/profesor/listado-profesores/listado-profesores.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { ListadoInscripcionesComponent } from './components/inscripcion/listado-
     DashboardComponent,
     ListadoCursosComponent,
     HeaderComponent,
-    ListadoInscripcionesComponent
+    ListadoInscripcionesComponent,
+    NuevoCursoComponent,
+    ListadoAlumnosComponent,
+    ListadoProfesoresComponent
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/inscripcion")
@@ -116,6 +117,22 @@ public class InscripcionController {
             return new ResponseEntity<>(
                     new Mensaje("Error! Ha sucedido un error en el guardado de datos.", 500),
                     HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/confirmar_inscripcion")
+    public ResponseEntity<?> confirmarInscripcion(@RequestParam Long codAlumno, @RequestParam Long codCurso){
+        InscripcionPk pk = new InscripcionPk(codAlumno,codCurso);
+        try{
+            Inscripcion ins = inscripcionService.buscarPorPk(pk).get();
+            ins.setEstado(true);
+            inscripcionService.guardar(ins);
+            return new ResponseEntity<>(ins,HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(
+                    new Mensaje("Error! Datos de inscripción no encontrados.", 404),
+                    HttpStatus.NOT_FOUND);
         }
     }
 

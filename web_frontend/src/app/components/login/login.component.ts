@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
       if(this.storageService.sesionIniciada()){
           this.sesionIniciada = true;
           this.rol = this.storageService.obtenerUsuario().rol;
+          this.router.navigate(['/dashboard']); //Testear....!
       }
       if(this.sesionIniciada == true && this.rol === 'ADMINISTRADOR'){
         this.router.navigate(['/dashboard']);

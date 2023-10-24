@@ -194,9 +194,10 @@ export class ListadoInscripcionesComponent {
         next: (data) => {
           const inscripciones = data as Inscripcion[];
           this.enriquecerInscripciones(inscripciones);
+          this.valorInput = '';
         },
         error: (err) => {
-          console.log(err);
+          this.mostrarError('Imposible recuperar listado de inscripciones pendientes. Intente nuevamente.')
         }
       });
     } else if (this.filtroSeleccionado === 'aceptadas') {
@@ -204,9 +205,10 @@ export class ListadoInscripcionesComponent {
         next: (data) => {
           const inscripciones = data as Inscripcion[];
           this.enriquecerInscripciones(inscripciones);
+          this.valorInput = '';
         },
         error: (err) => {
-          console.log(err);
+          this.mostrarError('Imposible recuperar listado de inscripciones aceptadas. Intente nuevamente.')
         }
       });
     } else if (this.filtroSeleccionado === 'generales') {
@@ -214,11 +216,58 @@ export class ListadoInscripcionesComponent {
         next: (data) => {
           const inscripciones = data as Inscripcion[];
           this.enriquecerInscripciones(inscripciones);
+          this.valorInput = '';
         },
         error: (err) => {
-          console.log(err);
+          this.mostrarError('Imposible recuperar listado general de inscripciones. Intente nuevamente.')
         }
       });
     }
+  }
+
+  mostrarError(mensaje: string): void{
+    Swal.fire({
+      title:'Ups! Ha sucedido un error.',
+      text:mensaje,
+      icon:'error',
+      footer:'<a href="mailto:devtesting.idat@gmail.com">¿Desea comunicarse con el área de sistemas? Click aquí</a>',
+    });
+  }
+
+  aprobarSolicitud(codAlum?: number, codCurso?: number, curso?: string, nombreAlum?: string, apePa?: string, apeMa?: string, fecha?: string | Date): void{
+    var textoSolicitud = `Usted esta a punto de aceptar la siguiente solicitud:
+    ALUMNO: ${apePa}  ${apeMa} ${nombreAlum}
+    CURSO: ${curso}
+    FECHA SOLICITUD: 
+    `
+    Swal.fire({
+      title:'Confirmación de Solicitud.',
+      text:textoSolicitud,
+      icon:'question',
+      showCancelButton: true,
+      cancelButtonText: 'CANCELAR',
+      confirmButtonColor: '#129C1A',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'APROBAR',
+    }).then((result) => {
+      if(result.isConfirmed){
+        this.confirmarSolicitud(codAlum,codCurso);
+        console.log('Solicitud confirmada....');
+      }
+    })
+  }
+
+  confirmarSolicitud(codAlum?: number, codCurso?: number): void{
+    this.inscripcionService.confirmarInscripcion(codCurso,codAlum).subscribe({
+      next: (data) =>{
+        console.log(data);
+        this.recargarPagina();
+      },
+      error: (err) => console.log(err)
+    });
+  }
+
+  recargarPagina(): void{
+    window.location.reload();
   }
 }

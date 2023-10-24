@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IInscripcionDAO extends CrudRepository<Inscripcion,InscripcionPk> {
     List<Inscripcion> findAllByInscripcionPkCodAlumno(Long codAlumno);
@@ -21,5 +22,7 @@ public interface IInscripcionDAO extends CrudRepository<Inscripcion,InscripcionP
     List<Inscripcion> findAllByPendiente();
 
     List<Inscripcion> findAllByEstadoAndInscripcionPkCodCurso(boolean Estado, Long CodCurso);
+
+    Optional<Inscripcion> findByInscripcionPk(InscripcionPk inscripcionPk);
 
 }

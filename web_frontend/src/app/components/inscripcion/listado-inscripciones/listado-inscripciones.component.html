@@ -23,6 +23,7 @@
                     <th class="fw-bold align-middle">Alumno</th>
                     <th class="fw-bold align-middle">DNI</th>
                     <th class="fw-bold align-middle">Fecha de Solicitud</th>
+                    <th class="fw-bold align-middle">Estado</th>
                     <th class="fw-bold align-middle" colspan="2">Acciones</th>
                 </tr>
             </thead>
@@ -33,10 +34,20 @@
                         inscripcion.alumno?.apellidoPaterno }} {{ inscripcion.alumno?.apellidoMaterno }}</td>
                     <td class="fw-medium align-middle">{{ inscripcion.alumno?.dni }}</td>
                     <td class="fw-medium align-middle">{{ inscripcion.fechaInscripcion | date }}</td>
-                    <td class="d-flex justify-content-center align-items-center">
+                    <td class="fw-bold align-middle text-success" *ngIf="inscripcion.estado == true; else pendiente">APROBADO</td>
+                    <ng-template #pendiente><td class="fw-bold align-middle text-danger">PENDIENTE</td></ng-template>
+                    <td class="d-flex justify-content-center align-items-center" *ngIf="inscripcion.estado == false; else bloque_aprobado">
                         <a class="btn btn-success mx-2 my-1 fw-bold">Detalles</a>
-                        <a class="btn btn-warning mx-2 my-1 fw-bold">Aprobar</a>
+                        <a class="btn btn-warning mx-2 my-1 fw-bold" 
+                        (click)="aprobarSolicitud(inscripcion.inscripcionPk?.codAlumno,inscripcion.inscripcionPk?.codCurso, 
+                        inscripcion.curso?.descripcion,inscripcion.alumno?.nombre,
+                        inscripcion.alumno?.apellidoPaterno,inscripcion.alumno?.apellidoMaterno, inscripcion.fechaInscripcion)">Aprobar</a>
                     </td>
+                    <ng-template #bloque_aprobado>
+                        <td class="d-flex justify-content-center align-content-around"> <!---Ayudaaa....!!-->
+                            <a class="btn btn-success mx-2 my-1 fw-bold">Detalles</a>
+                        </td>
+                    </ng-template>
                 </tr>
             </tbody>
         </table>

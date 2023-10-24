@@ -1,9 +1,10 @@
 package com.longdrink.androidapp
 
+import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.longdrink.androidapp.databinding.ActivityRegisterBinding
 import com.longdrink.androidapp.model.RegisterSendData
@@ -11,9 +12,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RegisterActivity : AppCompatActivity() {
-    lateinit var binding : ActivityRegisterBinding
-    lateinit var retrofit: Retrofit
-    val BASE_URL : String = "http://10.0.2.2:8080/api/v1/"
+    private lateinit var binding : ActivityRegisterBinding
+    private lateinit var retrofit: Retrofit
+    private val BASE_URL : String = "http://10.0.2.2:8080/api/v1/"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +24,9 @@ class RegisterActivity : AppCompatActivity() {
         retrofit = getRetrofit()
 
         binding.buttonContinueRegister.setOnClickListener {
+            returnColors()
             if (checkEmpty()){
-                showSnackbar("Ingrese TODOS los datos solicitados para pode continuar")
-                changeColors()
+                showSnackbar("Ingrese TODOS los datos solicitados para poder continuar")
             }
             else if (!checkDniFormat()){
                 showSnackbar("Recuerde que el DNI deben ser 8 dígitos numéricos")
@@ -35,19 +36,19 @@ class RegisterActivity : AppCompatActivity() {
                 showSnackbar("Recuerde que el telefono debe tener nueve número y comenzar con el número 9")
                 changeTelfColors()
             }
-            else if (!checkNamesFormat()){
+            /*else if (!checkNamesFormat()){
                 showSnackbar("Ingrese los datos correctos en sus nombres y apellidos")
-            }
+            }*/
             else{
                 continueRegister(getData())
             }
         }
 
         binding.backRegister.setOnClickListener {
-            goToLogin()
+            showingMessageAndSending("Regresar a Login","¿Desea volver a la pantalla de Login? Perderá todo el progeso", 0)
         }
 
-        setContentView(R.layout.activity_register)
+        setContentView(binding.root)
     }
     /*-------Register Functions---------*/
     private fun getData() : RegisterSendData{
@@ -83,11 +84,11 @@ class RegisterActivity : AppCompatActivity() {
                 binding.txtEmail.text.isEmpty()
     }
 
-    private fun checkNamesFormat(): Boolean{
+    /*private fun checkNamesFormat(): Boolean{
         return binding.txtNombres.toString().matches("^[A-Za-záéíóú]+ *[A-Za-záéíóú]*$".toRegex())
-                || binding.txtApPaterno.toString().matches("^[A-Za-záéíóú]+ *[A-Za-záéíóú]*$".toRegex())
-                || binding.txtApMaterno.toString().matches("^[A-Za-záéíóú]+ *[A-Za-záéíóú]*$".toRegex())
-    }
+                && binding.txtApPaterno.toString().matches("^[A-Za-záéíóú]+ *[A-Za-záéíóú]*$".toRegex())
+                && binding.txtApMaterno.toString().matches("^[A-Za-záéíóú]+ *[A-Za-záéíóú]*$".toRegex())
+    }*/
 
     private fun checkDniFormat() : Boolean{
         return binding.txtDni.text.toString().length == 8 && binding.txtDni.text.toString().matches("^\\d{8}$".toRegex())
@@ -98,21 +99,28 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     /*-------Changing Colors Functions---------*/
-    private fun changeColors(){
-        binding.txtNombres.highlightColor = Color.parseColor("#EA5455")
+    //TODO Buscar manera de recorrer el RelativeLayout para resaltar aquellos que se encuentren coloreados
+    /*private fun changeColors(){
+        binding.txtNombres.setBackgroundResource(R.color.light_red_error)
         binding.txtApPaterno.highlightColor = Color.parseColor("#EA5455")
         binding.txtApMaterno.highlightColor = Color.parseColor("#EA5455")
         binding.txtDni.highlightColor = Color.parseColor("#EA5455")
         binding.txtEmail.highlightColor = Color.parseColor("#EA5455")
         binding.txtTelf.highlightColor = Color.parseColor("#EA5455")
+        binding.registerRelativeLayout.
+    }*/
+
+    private fun returnColors(){
+        binding.txtDni.setBackgroundResource(R.color.nomuch_white)
+        binding.txtTelf.setBackgroundResource(R.color.nomuch_white)
     }
 
     private fun changeDniColors(){
-        binding.txtDni.highlightColor = Color.parseColor("#EA5455")
+        binding.txtDni.setBackgroundResource(R.color.light_red_error)
     }
 
     private fun changeTelfColors(){
-        binding.txtTelf.highlightColor = Color.parseColor("#EA5455")
+        binding.txtTelf.setBackgroundResource(R.color.light_red_error)
     }
 
     /*-------Extra Functions---------*/
@@ -125,8 +133,29 @@ class RegisterActivity : AppCompatActivity() {
     private fun showSnackbar(text : String){
         this.runOnUiThread { Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show() }
     }
+
+    private fun showingMessageAndSending(titulo: String, mensaje : String, cualFuncion : Int){
+        val mensajeEmergente = AlertDialog.Builder(this)
+
+        mensajeEmergente.apply {
+            setTitle(titulo)
+            setMessage(mensaje)
+            setPositiveButton("SI") { _: DialogInterface?, _: Int ->
+                if (cualFuncion == 0){
+                    goToLogin()
+                }
+            }
+            setNegativeButton("NO"){ _: DialogInterface?, _: Int ->
+
+            }
+        }
+        mensajeEmergente.create()
+        mensajeEmergente.show()
+    }
+
     private fun getRetrofit() : Retrofit{
-        return Retrofit.Builder()
+        return Retrofit
+            .Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

@@ -12,6 +12,7 @@
     <color name="light_beige">#F9F5EB</color>
     <color name="light_blue">#00C4FF</color>
     <color name="light_red">#EA5455</color>
+    <color name="light_red_error">#5BEA5455</color>
     <color name="dark_beige">#E4DCCF</color>
     <color name="dark_blue">#002B5B</color>
     <color name="dark_red">#B31312</color>

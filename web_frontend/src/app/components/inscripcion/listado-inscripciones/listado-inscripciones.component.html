@@ -15,7 +15,7 @@
             <option value="generales">Solicitudes Generales</option>
         </select>
     </div>
-    <div class="table-container">
+    <div class="table-container" *ngIf="mostrarTabla">
         <table>
             <thead>
                 <tr class="text-center">
@@ -44,7 +44,7 @@
                         inscripcion.alumno?.apellidoPaterno,inscripcion.alumno?.apellidoMaterno, inscripcion.fechaInscripcion)">Aprobar</a>
                     </td>
                     <ng-template #bloque_aprobado>
-                        <td class="d-flex justify-content-center align-content-around"> <!---Ayudaaa....!!-->
+                        <td class="d-flex justify-content-center align-content-around">
                             <a class="btn btn-success mx-2 my-1 fw-bold">Detalles</a>
                         </td>
                     </ng-template>

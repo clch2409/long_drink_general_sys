@@ -22,6 +22,7 @@ export class ListadoInscripcionesComponent {
   comboBoxSeleccionado: string = 'porCurso';
   valorInput: any;
   filtroSeleccionado: string = 'pendientes';
+  mostrarTabla: boolean = false;
 
   constructor(private storageService: StorageService, private router: Router, private inscripcionService: InscripcionService, private cursoService: CursoService, private alumnoService: AlumnoService) { }
 
@@ -34,11 +35,37 @@ export class ListadoInscripcionesComponent {
     this.inscripcionService.getInscripcionesPendientes().subscribe({
       next: (data) => {
         const inscripciones = data as Inscripcion[];
-        this.enriquecerInscripciones(inscripciones);
+        if (inscripciones.length === 0) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Información',
+            text: 'Actualmente no hay inscripciones pendientes.',
+          });
+          this.mostrarTabla = false;
+        } else {
+          this.mostrarTabla = true;
+          this.enriquecerInscripciones(inscripciones);
+        }
       },
-      error: (err) => { console.log(err); }
+      error: (err) => {
+        if (err.status === 404) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Información',
+            text: 'Actualmente no hay inscripciones pendientes. Mostrando inscripciones generales..',
+          }).then(() => {
+            this.valorInput = '';
+            this.filtroSeleccionado = 'generales';
+            this.filtrarInscripciones();
+            this.mostrarTabla = true;
+          });
+        } else {
+          console.log(err);
+          this.mostrarTabla = false;
+        }
+      }
     });
-  }
+  }  
 
   enriquecerInscripciones(inscripciones: Inscripcion[]): void {
     for (const inscripcion of inscripciones) {
@@ -197,7 +224,7 @@ export class ListadoInscripcionesComponent {
           this.valorInput = '';
         },
         error: (err) => {
-          this.mostrarError('Imposible recuperar listado de inscripciones pendientes. Intente nuevamente.')
+          this.mostrarError('Imposible recuperar listado de inscripciones pendientes. Intente nuevamente.');
         }
       });
     } else if (this.filtroSeleccionado === 'aceptadas') {
@@ -208,7 +235,7 @@ export class ListadoInscripcionesComponent {
           this.valorInput = '';
         },
         error: (err) => {
-          this.mostrarError('Imposible recuperar listado de inscripciones aceptadas. Intente nuevamente.')
+          this.mostrarError('Imposible recuperar listado de inscripciones aceptadas. Intente nuevamente.');
         }
       });
     } else if (this.filtroSeleccionado === 'generales') {
@@ -219,11 +246,11 @@ export class ListadoInscripcionesComponent {
           this.valorInput = '';
         },
         error: (err) => {
-          this.mostrarError('Imposible recuperar listado general de inscripciones. Intente nuevamente.')
+          this.mostrarError('Imposible recuperar listado general de inscripciones. Intente nuevamente.');
         }
       });
     }
-  }
+  }  
 
   mostrarError(mensaje: string): void{
     Swal.fire({

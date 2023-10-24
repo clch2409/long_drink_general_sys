@@ -17,8 +17,7 @@ const routes: Routes = [
   { path: 'docentes', component: ListadoProfesoresComponent, title: 'Long Drink - Listado Profesores' },
   { path: 'nuevo-docente', component: NuevoProfesorComponent, title: 'Long Drink - Nuevo Profesor' }
   ]
-  },
-  
+  },  
 ];
 
 @NgModule({

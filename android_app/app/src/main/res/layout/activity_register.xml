@@ -7,6 +7,7 @@
     tools:context=".RegisterActivity">
 
     <RelativeLayout
+        android:id="@+id/register_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/register_padding_layout"

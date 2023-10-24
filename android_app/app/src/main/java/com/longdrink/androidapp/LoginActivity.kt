@@ -64,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
             else {
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         }
     }
@@ -76,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkUsernameFormat(username: String) : Boolean{
-        return username.matches("^[A-Z]{2}\\d{8}$".toRegex())
+        return username.matches("^[A-Z]{3}\\d{8}$".toRegex())
     }
 
     private fun showSnackbar(text : String){

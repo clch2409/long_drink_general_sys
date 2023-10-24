@@ -1,23 +1,20 @@
 <div class="container d-flex flex-column align-items-center">
-    <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Inscripciones Por Aceptar</h1>
-    
+    <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Inscripciones</h1>
     <div class="search-bar mb-4">
-        <label for="buscar" class="me-2">BUSCAR:</label>
-        <select id="buscar" class="me-2">
-            <option value="porCurso">POR CURSO</option>
-            <option value="porNombre">POR NOMBRE</option>
+        <label for="buscar" class="fw-bold me-2">Buscar</label>
+        <select id="buscar" class="fw-medium me-2" [(ngModel)]="comboBoxSeleccionado">
+            <option value="porCurso">Por Curso</option>
+            <option value="porDni">Por DNI</option>
         </select>
-        <input type="text" class="me-2">
-        <button class="btn btn-primary me-2">BUSCAR</button>
-        <label for="ordenar" class="me-2">ORDENAR:</label>
-        <select id="ordenar">
-            <option value="fechaAscendente">FECHA SOLICITUD * ASCENDENTE</option>
-            <option value="fechaDescendente">FECHA SOLICITUD * DESCENDENTE</option>
-            <option value="nombres">NOMBRES</option>
-            <option value="apellidos">APELLIDOS</option>
+        <input type="text" id="texto" autofocus class="fw-medium me-2" [(ngModel)]="valorInput">
+        <button class="fw-bold btn btn-primary me-2" (click)="buscarInscripciones()">Buscar</button>
+        <label for="ver" class="fw-bold me-2">Ver</label>
+        <select id="ver" class="fw-medium" [(ngModel)]="filtroSeleccionado" (change)="filtrarInscripciones()">
+            <option value="pendientes">Solicitudes Pendientes</option>
+            <option value="aceptadas">Solicitudes Aceptadas</option>
+            <option value="generales">Solicitudes Generales</option>
         </select>
     </div>
-
     <div class="table-container">
         <table>
             <thead>
@@ -26,14 +23,20 @@
                     <th class="fw-bold align-middle">Alumno</th>
                     <th class="fw-bold align-middle">DNI</th>
                     <th class="fw-bold align-middle">Fecha de Solicitud</th>
+                    <th class="fw-bold align-middle" colspan="2">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let inscripcion of inscripciones" class="text-center">
-                    <td class="fw-medium align-middle">{{ inscripcion.curso?.descripcion}}</td>
-                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.nombre}} {{ inscripcion.alumno?.apellidoPaterno}} {{ inscripcion.alumno?.apellidoMaterno}}</td>
-                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.dni}}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.curso?.descripcion }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.nombre }} {{
+                        inscripcion.alumno?.apellidoPaterno }} {{ inscripcion.alumno?.apellidoMaterno }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.dni }}</td>
                     <td class="fw-medium align-middle">{{ inscripcion.fechaInscripcion | date }}</td>
+                    <td class="d-flex justify-content-center align-items-center">
+                        <a class="btn btn-success mx-2 my-1 fw-bold">Detalles</a>
+                        <a class="btn btn-warning mx-2 my-1 fw-bold">Aprobar</a>
+                    </td>
                 </tr>
             </tbody>
         </table>

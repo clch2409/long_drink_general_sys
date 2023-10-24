@@ -2,18 +2,23 @@
     <div class="row justify-content-center">
         <div class="col-md-5 py-3 px-4 border border-primary shadow-lg border-3 rounded-4">
             <h2 class="text-center mb-4 fw-bold fs-2 fst-italic text-decoration-underline">Inicio de Sesión</h2>
+            <img src="assets/images/icon-login.png" alt="Imagen" class="mx-auto d-block mb-4"
+                style="max-width: 100px; height: 150px;">
             <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
                 <div class="mb-3">
                     <label for="nombreUsuario" class="fw-bold form-label">Usuario</label>
-                    <input type="text" class="text-uppercase fw-medium form-control" id="nombreUsuario" name="nombreUsuario" autofocus required [(ngModel)]="loginData.nombreUsuario">
+                    <input type="text" class="text-uppercase fw-medium form-control" id="nombreUsuario"
+                        name="nombreUsuario" autofocus required [(ngModel)]="loginData.nombreUsuario">
                 </div>
                 <div class="mb-3">
                     <label for="contrasena" class="fw-bold form-label">Contraseña</label>
-                    <input type="password" class="text-uppercase fw-medium form-control" id="contrasena" name="contrasena" required [(ngModel)]="loginData.contrasena">
-                </div>                
+                    <input type="password" class="text-uppercase fw-medium form-control" id="contrasena"
+                        name="contrasena" required [(ngModel)]="loginData.contrasena">
+                </div>
                 <div class="d-grid gap-2">
                     <button type="submit" class="fw-bold fs-6 btn btn-primary">Ingresar</button>
-                    <button type="button" class="fw-bold fs-6 btn btn-secondary" (click)="limpiarCampos()">Limpiar</button>
+                    <button type="button" class="fw-bold fs-6 btn btn-secondary"
+                        (click)="limpiarCampos()">Limpiar</button>
                 </div>
             </form>
         </div>

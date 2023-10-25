@@ -7,6 +7,7 @@ import { ListadoInscripcionesComponent } from './components/inscripcion/listado-
 import { ListadoAlumnosComponent } from './components/alumno/listado-alumnos/listado-alumnos.component';
 import { ListadoProfesoresComponent } from './components/profesor/listado-profesores/listado-profesores.component';
 import { NuevoProfesorComponent } from './components/profesor/nuevo-profesor/nuevo-profesor.component';
+import { DetalleInscripcionComponent } from './components/inscripcion/detalle-inscripcion/detalle-inscripcion.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, title: 'Long Drink - Inicio de Sesión' },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'inscripciones', component: ListadoInscripcionesComponent, title: 'Long Drink - Listado Inscripciones' },
   { path: 'alumnos', component: ListadoAlumnosComponent, title: 'Long Drink - Listado Alumnos' },
   { path: 'docentes', component: ListadoProfesoresComponent, title: 'Long Drink - Listado Profesores' },
-  { path: 'nuevo-docente', component: NuevoProfesorComponent, title: 'Long Drink - Nuevo Profesor' }
+  { path: 'nuevo-docente', component: NuevoProfesorComponent, title: 'Long Drink - Nuevo Profesor' },
+  { path: 'detalle-inscripcion/:codalum/:codcurso', component: DetalleInscripcionComponent, title: 'Long Drink - Detalle Inscripción' }
   ]
   },  
 ];

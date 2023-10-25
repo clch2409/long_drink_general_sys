@@ -23,7 +23,7 @@
                 <th class="fw-bold align-middle">DNI</th>
                 <th class="fw-bold align-middle">Teléfono</th>
                 <th class="fw-bold align-middle">Fecha de Contratación</th>
-                <th class="fw-bold align-middle">Activo</th>
+                <th class="fw-bold align-middle">Estado</th>
                 <th class="fw-bold align-middle" colspan="2">Acciones</th>
             </tr>
         </thead>
@@ -35,7 +35,8 @@
                 <td class="fw-medium align-middle">{{ profesor.dni }}</td>
                 <td class="fw-medium align-middle">{{ profesor.telefono }}</td>
                 <td class="fw-medium align-middle">{{ profesor.fechaContratacion | date }}</td>
-                <td class="fw-medium align-middle">{{ profesor.activo ? 'Sí' : 'No' }}</td>
+                <td class="fw-bold align-middle text-success" *ngIf="profesor.activo == true; else inactivo">ACTIVO</td>
+                <ng-template #inactivo><td class="fw-bold align-middle text-danger">INACTIVO</td></ng-template>
                 <td>
                     <a class="btn btn-success mx-2 my-1 fw-bold">Editar</a>
                     <a class="btn btn-danger mx-2 my-1 fw-bold">Eliminar</a>

@@ -14,6 +14,7 @@ import { NuevoCursoComponent } from './components/curso/nuevo-curso/nuevo-curso.
 import { ListadoAlumnosComponent } from './components/alumno/listado-alumnos/listado-alumnos.component';
 import { ListadoProfesoresComponent } from './components/profesor/listado-profesores/listado-profesores.component';
 import { NuevoProfesorComponent } from './components/profesor/nuevo-profesor/nuevo-profesor.component';
+import { DetalleInscripcionComponent } from './components/inscripcion/detalle-inscripcion/detalle-inscripcion.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NuevoProfesorComponent } from './components/profesor/nuevo-profesor/nue
     NuevoCursoComponent,
     ListadoAlumnosComponent,
     ListadoProfesoresComponent,
-    NuevoProfesorComponent
+    NuevoProfesorComponent,
+    DetalleInscripcionComponent
   ],
   imports: [
     BrowserModule,

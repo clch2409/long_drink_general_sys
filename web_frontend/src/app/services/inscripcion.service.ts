@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Inscripcion } from '../models/inscripcion.model';
+import { DetalleInscripcion } from '../models/detalle.inscripcion.model';
 
 const API = 'http://localhost:8080/api/v1';
 
@@ -45,6 +46,10 @@ export class InscripcionService {
 
   confirmarInscripcion(codCurso?: number, codAlumno?: number): Observable<any>{
     return this.http.post(API+`/inscripcion/confirmar_inscripcion?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
+  }
+
+  detalleInscripcion(codCurso?: number, codAlumno?: number): Observable<DetalleInscripcion>{
+    return this.http.get<DetalleInscripcion>(API+`/inscripcion/detalle?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
   }
 
 }

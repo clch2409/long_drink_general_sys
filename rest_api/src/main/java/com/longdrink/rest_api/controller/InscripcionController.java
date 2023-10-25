@@ -1,19 +1,23 @@
 package com.longdrink.rest_api.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.longdrink.rest_api.model.Alumno;
 import com.longdrink.rest_api.model.Curso;
 import com.longdrink.rest_api.model.Inscripcion;
 import com.longdrink.rest_api.model.InscripcionPk;
+import com.longdrink.rest_api.model.payload.DetalleInscripcion;
 import com.longdrink.rest_api.model.payload.InsertInscripcion;
 import com.longdrink.rest_api.model.payload.Mensaje;
 import com.longdrink.rest_api.services.AlumnoService;
 import com.longdrink.rest_api.services.CursoService;
 import com.longdrink.rest_api.services.InscripcionService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -128,6 +132,24 @@ public class InscripcionController {
             ins.setEstado(true);
             inscripcionService.guardar(ins);
             return new ResponseEntity<>(ins,HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(
+                    new Mensaje("Error! Datos de inscripción no encontrados.", 404),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/detalle")
+    public ResponseEntity<?> detalleInscripcion(@RequestParam Long codAlumno, @RequestParam Long codCurso){
+        InscripcionPk pk = new InscripcionPk(codAlumno,codCurso);
+        try{
+            Inscripcion ins = inscripcionService.buscarPorPk(pk).get();
+            DetalleInscripcion retorno = new DetalleInscripcion();
+            BeanUtils.copyProperties(retorno,ins.getAlumno());
+            BeanUtils.copyProperties(retorno,ins.getCurso());
+            BeanUtils.copyProperties(retorno,ins);
+            return new ResponseEntity<>(retorno,HttpStatus.OK);
         }
         catch(Exception ex){
             return new ResponseEntity<>(

@@ -6,19 +6,21 @@
         <table>
             <thead>
                 <tr class="text-center">
+                    <th class="fw-bold align-middle">Código</th>
                     <th class="fw-bold align-middle">Descripción</th>
                     <th class="fw-bold align-middle">Mensualidad</th>
                     <th class="fw-bold align-middle">Duración</th>
                     <th class="fw-bold align-middle">Frecuencia</th>
                     <th class="fw-bold align-middle">Profesor</th>
                     <th class="fw-bold align-middle">Turnos</th>
-                    <th class="fw-bold align-middle">Temas</th>
+                    <!---<th class="fw-bold align-middle">Temas</th>-->
                     <th class="fw-bold align-middle">Capacidad de Alumnos</th>
                     <th class="fw-bold align-middle">Herramientas</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let curso of cursos" class="text-center">
+                    <td class="fw-medium align-middle">{{ curso.codCurso }}</td>
                     <td class="fw-medium align-middle">{{ curso.descripcion }}</td>
                     <td class="fw-medium align-middle">S/ {{ curso.mensualidad }}</td>
                     <td class="fw-medium align-middle">{{ curso.duracion }} Semanas</td>
@@ -33,13 +35,13 @@
                             </li>
                         </ul>
                     </td>
-                    <td class="fw-medium align-middle">
+                    <!-----<td class="fw-medium align-middle">
                         <ul>
                             <li *ngFor="let tema of curso.temas">
                                 {{ tema.nombre }} - {{ tema.ficha }}
                             </li>
                         </ul>
-                    </td>
+                    </td>---->
                     <td class="fw-medium align-middle">{{ curso.cantidadAlumnos }}</td>
                     <td class="d-flex justify-content-center align-items-center">
                         <button type="button" class="btn btn-success mx-2 fw-bold">DETALLES</button>

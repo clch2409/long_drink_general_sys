@@ -35,17 +35,17 @@ data class RegisterResponse(
 /** --------------------- COURSES RELATED DATA CLASSES ----------------------------------*/
 
 data class CursoResponse(
-    @SerializedName("listaCursos") val listadoCursos : List<Curso>
+    val listadoCursos : List<Curso>
 )
 
 data class Curso(
-    @SerializedName("codCurso") val codCurso : Long,
-    @SerializedName("descripcion") val descripcion : String,
-    @SerializedName("mensualidad") val mensualidad : Double,
-    @SerializedName("duracion") val duracion : Byte,
-    @SerializedName("cantidadAlumnos") val cantidadAlumnos : Byte,
-    @SerializedName("visibilidad") val visibilidad : Boolean,
-    @SerializedName("frecuencia") val frecuencia : String,
-    @SerializedName("imagen") val imagen : String,
+    @SerializedName("codCurso") var codCurso : Long = 0L,
+    @SerializedName("descripcion") var descripcion : String = "",
+    @SerializedName("mensualidad") var mensualidad : Double = 0.0,
+    @SerializedName("duracion") var duracion : Byte = 0,
+    @SerializedName("cantidadAlumnos") var cantidadAlumnos : Byte = 0,
+    @SerializedName("visibilidad") var visibilidad : Boolean = false,
+    @SerializedName("frecuencia") var frecuencia : String = "",
+    @SerializedName("imagen") var imagen : String = "",
 
 )

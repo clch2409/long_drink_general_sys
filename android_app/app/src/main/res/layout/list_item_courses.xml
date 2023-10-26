@@ -11,35 +11,23 @@
     <ImageView
         android:id="@+id/course_image"
         android:layout_width="70sp"
-        android:layout_height="90sp"
+        android:layout_height="70sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
         android:id="@+id/course_name"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/course_image"
         android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="12sp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8sp"
-        android:layout_marginLeft="10sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
         android:text="Nombre del curso"/>
 
-    <TextView
-        android:id="@+id/course_description"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:layout_marginTop="10sp"
-        android:text="Se mostrará bebidas elaboradas por maceración en frío son el café Cold Brew o algunos licores como el Pacharán o las Hierbas Ibicencas."
-        android:textSize="12sp"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/course_image"
-        app:layout_constraintTop_toBottomOf="@+id/course_name"
-        app:layout_constraintEnd_toStartOf="@+id/course_button_details"/>
 
     <Button
         android:id="@+id/course_button_details"

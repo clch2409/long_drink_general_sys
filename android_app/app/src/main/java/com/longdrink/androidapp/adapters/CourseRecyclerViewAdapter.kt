@@ -7,12 +7,15 @@ import com.longdrink.androidapp.R
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.viewholders.CoursesViewHolder
 
-class CourseAdapter(
+class CourseRecyclerViewAdapter(
     var listadoCursos : List<Curso> = emptyList(),
-    private val onItemSelected : (String) -> Unit
 ) : RecyclerView.Adapter<CoursesViewHolder>()
 
 {
+    fun updateList(listadoCursos : List<Curso>){
+        this.listadoCursos = listadoCursos
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return CoursesViewHolder(layoutInflater.inflate(R.layout.list_item_courses, parent, false))

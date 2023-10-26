@@ -13,6 +13,7 @@
         <table>
             <thead>
                 <tr class="text-center">
+                    <th class="fw-bold align-middle">Código</th>
                     <th class="fw-bold align-middle">Ap. Paterno</th>
                     <th class="fw-bold align-middle">Ap. Materno</th>
                     <th class="fw-bold align-middle">Nombre</th>
@@ -24,6 +25,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let alumno of alumnos" class="text-center">
+                    <td class="fw-medium align-middle">{{ alumno.codAlumno }}</td>
                     <td class="fw-medium align-middle">{{ alumno.apellidoPaterno }}</td>
                     <td class="fw-medium align-middle">{{ alumno.apellidoMaterno }} </td>
                     <td class="fw-medium align-middle">{{ alumno.nombre}}</td>

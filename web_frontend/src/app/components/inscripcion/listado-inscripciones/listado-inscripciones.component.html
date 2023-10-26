@@ -1,0 +1,55 @@
+<div class="container d-flex flex-column align-items-center">
+    <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Inscripciones</h1>
+    <div class="search-bar mb-4">
+        <label for="buscar" class="fw-bold me-2">Buscar</label>
+        <select id="buscar" class="fw-medium me-2" [(ngModel)]="comboBoxSeleccionado">
+            <option value="porCurso">Por Curso</option>
+            <option value="porDni">Por DNI</option>
+        </select>
+        <input type="text" id="texto" autofocus class="fw-medium me-2" [(ngModel)]="valorInput">
+        <button class="fw-bold btn btn-primary me-2" (click)="buscarInscripciones()">Buscar</button>
+        <label for="ver" class="fw-bold me-2">Ver</label>
+        <select id="ver" class="fw-medium" [(ngModel)]="filtroSeleccionado" (change)="filtrarInscripciones()">
+            <option value="pendientes">Solicitudes Pendientes</option>
+            <option value="aceptadas">Solicitudes Aceptadas</option>
+            <option value="generales">Solicitudes Generales</option>
+        </select>
+    </div>
+    <div class="table-container" *ngIf="mostrarTabla">
+        <table>
+            <thead>
+                <tr class="text-center">
+                    <th class="fw-bold align-middle">Curso</th>
+                    <th class="fw-bold align-middle">Alumno</th>
+                    <th class="fw-bold align-middle">DNI</th>
+                    <th class="fw-bold align-middle">Fecha de Solicitud</th>
+                    <th class="fw-bold align-middle">Estado</th>
+                    <th class="fw-bold align-middle" colspan="2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let inscripcion of inscripciones" class="text-center">
+                    <td class="fw-medium align-middle">{{ inscripcion.curso?.descripcion }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.nombre }} {{
+                        inscripcion.alumno?.apellidoPaterno }} {{ inscripcion.alumno?.apellidoMaterno }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.dni }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.fechaInscripcion | date }}</td>
+                    <td class="fw-bold align-middle text-success" *ngIf="inscripcion.estado == true; else pendiente">APROBADO</td>
+                    <ng-template #pendiente><td class="fw-bold align-middle text-danger">PENDIENTE</td></ng-template>
+                    <td class="d-flex justify-content-center align-items-center btn-group-vertical" *ngIf="inscripcion.estado == false; else bloque_aprobado">
+                        <a class="btn btn-success  fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.inscripcionPk?.codAlumno,inscripcion.inscripcionPk?.codCurso]">Detalles</a>
+                        <a class="btn btn-warning  fw-bold" 
+                        (click)="aprobarSolicitud(inscripcion.inscripcionPk?.codAlumno,inscripcion.inscripcionPk?.codCurso, 
+                        inscripcion.curso?.descripcion,inscripcion.alumno?.nombre,
+                        inscripcion.alumno?.apellidoPaterno,inscripcion.alumno?.apellidoMaterno, inscripcion.fechaInscripcion)">Aprobar</a>
+                    </td>
+                    <ng-template #bloque_aprobado>
+                        <td class="d-flex justify-content-center align-content-around">
+                            <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.inscripcionPk?.codAlumno,inscripcion.inscripcionPk?.codCurso]">Detalles</a>
+                        </td>
+                    </ng-template>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

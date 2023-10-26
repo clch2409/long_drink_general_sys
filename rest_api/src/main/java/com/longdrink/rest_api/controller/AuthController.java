@@ -135,7 +135,7 @@ public class AuthController {
 
         }
         catch(Exception ex){
-            return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new Mensaje("Error! Ha sucedido un error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

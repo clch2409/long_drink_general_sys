@@ -7,12 +7,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ListadoCursosComponent } from './components/curso/listado-cursos/listado-cursos.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ListadoInscripcionesComponent } from './components/inscripcion/listado-inscripciones/listado-inscripciones.component';
+import { NuevoCursoComponent } from './components/curso/nuevo-curso/nuevo-curso.component';
+import { ListadoAlumnosComponent } from './components/alumno/listado-alumnos/listado-alumnos.component';
+import { ListadoProfesoresComponent } from './components/profesor/listado-profesores/listado-profesores.component';
+import { NuevoProfesorComponent } from './components/profesor/nuevo-profesor/nuevo-profesor.component';
+import { DetalleInscripcionComponent } from './components/inscripcion/detalle-inscripcion/detalle-inscripcion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    ListadoCursosComponent,
+    HeaderComponent,
+    ListadoInscripcionesComponent,
+    NuevoCursoComponent,
+    ListadoAlumnosComponent,
+    ListadoProfesoresComponent,
+    NuevoProfesorComponent,
+    DetalleInscripcionComponent
   ],
   imports: [
     BrowserModule,

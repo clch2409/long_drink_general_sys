@@ -48,6 +48,10 @@ export class InscripcionService {
     return this.http.post(API+`/inscripcion/confirmar_inscripcion?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
   }
 
+  rechazarInscripcion(codCurso?: number, codAlumno?: number): Observable<any>{
+    return this.http.post(API+`/inscripcion/rechazar_inscripcion?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
+  }
+
   detalleInscripcion(codCurso?: number, codAlumno?: number): Observable<DetalleInscripcion>{
     return this.http.get<DetalleInscripcion>(API+`/inscripcion/detalle?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
   }

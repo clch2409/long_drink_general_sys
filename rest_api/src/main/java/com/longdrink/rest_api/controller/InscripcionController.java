@@ -140,6 +140,23 @@ public class InscripcionController {
         }
     }
 
+    @PostMapping("/rechazar_inscripcion")
+    public ResponseEntity<?> rechazarInscripcion(@RequestParam Long codAlumno, @RequestParam Long codCurso){
+        InscripcionPk pk = new InscripcionPk(codAlumno,codCurso);
+        try{
+            Inscripcion ins = inscripcionService.buscarPorPk(pk).get();
+            ins.setEstado(false);
+            ins.setFechaTerminado(ins.getFechaInscripcion());
+            inscripcionService.guardar(ins);
+            return new ResponseEntity<>(ins,HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(
+                    new Mensaje("Error! Datos de inscripción no encontrados.", 404),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/detalle")
     public ResponseEntity<?> detalleInscripcion(@RequestParam Long codAlumno, @RequestParam Long codCurso){
         InscripcionPk pk = new InscripcionPk(codAlumno,codCurso);

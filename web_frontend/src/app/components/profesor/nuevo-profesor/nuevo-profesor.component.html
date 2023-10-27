@@ -38,12 +38,12 @@
                     <div class="mb-3">
                         <label for="contrasena" class="fw-bold form-label">Contraseña</label>
                         <input type="password" class="text-uppercase fw-medium form-control" id="contrasena"
-                            [(ngModel)]="profesor.contrasena" name="contrasena" required maxlength="25">
+                            [(ngModel)]="profesor.contrasena" name="contrasena" required minlength="5" maxlength="25">
                     </div>
                     <div class="mb-3">
                         <label for="fechaContratacion" class="fw-bold form-label">Fecha de Contratación</label>
                         <input type="date" class="text-uppercase fw-medium form-control" id="fechaContratacion"
-                            [(ngModel)]="fechaContratacionFormatted" name="fechaContratacion" readonly>
+                            [(ngModel)]="fechaContratacionFormatted" name="fechaContratacion">
                     </div>
                     <br>
                     <div class="d-grid gap-2">

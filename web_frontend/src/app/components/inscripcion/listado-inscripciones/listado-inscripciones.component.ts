@@ -138,7 +138,7 @@ export class ListadoInscripcionesComponent {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Ingrese los datos correctamente.',
+        text: 'Ingrese los datos con el formato correcto.',
       }).then(() => {
         this.valorInput = '';
       });
@@ -224,7 +224,7 @@ export class ListadoInscripcionesComponent {
           this.valorInput = '';
         },
         error: (err) => {
-          this.mostrarError('Imposible recuperar listado de inscripciones pendientes. Intente nuevamente.');
+          this.mostrarAlerta('Felicidades! No tiene solicitudes pendientes por aceptar.');
         }
       });
     } else if (this.filtroSeleccionado === 'aceptadas') {
@@ -261,11 +261,20 @@ export class ListadoInscripcionesComponent {
     });
   }
 
+  mostrarAlerta(mensaje: string): void{
+    Swal.fire({
+      title:'Información',
+      text:mensaje,
+      icon:'info',
+      footer:'<a href="mailto:devtesting.idat@gmail.com">¿Desea comunicarse con el área de sistemas? Click aquí</a>',
+    });
+  }
+
   aprobarSolicitud(codAlum?: number, codCurso?: number, curso?: string, nombreAlum?: string, apePa?: string, apeMa?: string, fecha?: string | Date): void{
     var textoSolicitud = `Usted esta a punto de aceptar la siguiente solicitud:
     ALUMNO: ${apePa}  ${apeMa} ${nombreAlum}
     CURSO: ${curso}
-    FECHA SOLICITUD: 
+    FECHA SOLICITUD: ${fecha}
     `
     Swal.fire({
       title:'Confirmación de Solicitud.',
@@ -287,10 +296,14 @@ export class ListadoInscripcionesComponent {
   confirmarSolicitud(codAlum?: number, codCurso?: number): void{
     this.inscripcionService.confirmarInscripcion(codCurso,codAlum).subscribe({
       next: (data) =>{
+        Swal.fire('Éxito', 'Solicitud de inscripción aceptada correctamente.', 'success');
         console.log(data);
-        this.recargarPagina();
+        //this.recargarPagina();
       },
-      error: (err) => console.log(err)
+      error: (err) => {
+        console.log(err);
+        Swal.fire('Error!', 'Ups! Imposible aceptar solicitud de inscripción. Comuniquese con el área IT.', 'error');
+      }
     });
   }
 

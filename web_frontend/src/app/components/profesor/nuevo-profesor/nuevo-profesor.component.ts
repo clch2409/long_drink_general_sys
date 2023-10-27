@@ -98,7 +98,7 @@ export class NuevoProfesorComponent {
         });
       },
       (error) => {
-        Swal.fire('Error', 'Las credenciales ingresadas ya existen. Por favor intente de nuevo', 'error').then(() => {
+        Swal.fire('Error','Ups! El DNI o E-Mail ingresado ya se encuentran registrados. Intente de nuevo.', 'error').then(() => {
           this.limpiarEmailYDni();
         });
       }

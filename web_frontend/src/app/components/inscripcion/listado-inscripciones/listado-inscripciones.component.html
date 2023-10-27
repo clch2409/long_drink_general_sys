@@ -43,7 +43,7 @@
                         inscripcion.curso?.descripcion,inscripcion.alumno?.nombre,
                         inscripcion.alumno?.apellidoPaterno,inscripcion.alumno?.apellidoMaterno, inscripcion.fechaInscripcion)">Aprobar</a>
                     </td>
-                    <ng-template #bloque_aprobado>
+                    <ng-template #bloque_aprobado> <!---Aprobado y rechazado (no permite aceptar)-->
                         <td class="d-flex justify-content-center align-content-around">
                             <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.inscripcionPk?.codAlumno,inscripcion.inscripcionPk?.codCurso]">Detalles</a>
                         </td>

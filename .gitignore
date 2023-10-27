@@ -226,3 +226,7 @@ e2e/*.map
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+#Images
+*.jpg
+*.png

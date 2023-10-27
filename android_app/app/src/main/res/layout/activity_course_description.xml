@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CourseDescriptionActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/course_description_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_blue"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:subtitleTextColor="@color/white"
+        app:titleTextColor="@color/white" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30sp"
+        android:outlineAmbientShadowColor="@color/dark_blue">
+
+        <ImageView
+            android:id="@+id/course_description_image"
+            android:layout_width="200sp"
+            android:layout_height="200sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:srcCompat="@tools:sample/avatars"
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <TextView
+            android:id="@+id/course_description_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            tools:text="Nombre del Curso"
+            app:layout_constraintTop_toBottomOf="@+id/course_description_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/course_description_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            tools:text="Precio del Curso"
+            app:layout_constraintTop_toBottomOf="@+id/course_description_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20sp"/>
+
+
+        <Button
+            android:id="@+id/course_description_inscription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/course_description_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="25sp"
+            app:layout_constraintHorizontal_bias="1"
+            android:text="Inscribirse"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/dark_blue"
+            android:textColor="@color/light_red"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -154,7 +154,8 @@ public class AuthController {
         if(u.getRol().getCodRol() == 3L){
             Alumno a = alumnoService.getPorCodUsuario(u.getCodUsuario());
             String nombreCompleto = a.getNombre()+" "+a.getApellidoPaterno()+" "+a.getApellidoMaterno();
-            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
+            LoginMovil respuesta = new LoginMovil(a.getCodAlumno(),u.getCodUsuario(),u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
+            //LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
             return new ResponseEntity<>(respuesta,HttpStatus.OK);
         }
         if(u.getRol().getCodRol() == 2L){

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Profesor } from '../models/profesor.model';
 
 const AUTH_API = 'http://localhost:8080/api/v1/auth/';
 
@@ -21,6 +22,14 @@ export class AuthService {
         nombreUsuario,
         contrasena,
       },
+      httpOptions
+    );
+  }
+
+  registroProfesor(profesor: Profesor): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'registro_docente',
+      profesor,
       httpOptions
     );
   }

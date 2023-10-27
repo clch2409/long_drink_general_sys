@@ -28,7 +28,7 @@
 
         <div style="flex-basis: 0;" class="d-flex flex-grow-1 justify-content-end">
             <div class="btn-group">
-            <button class="btn btn-secondary fw-bold" (click)="miCuenta()">Mi Cuenta</button>
+            <a class="btn btn-secondary fw-bold" [routerLink]="['/dashboard','mi-cuenta']" >Mi Cuenta</a>
             <button class="btn btn-danger fw-bold" (click)="cerrarSesion()">Cerrar Sesión</button>
         </div>
         </div>

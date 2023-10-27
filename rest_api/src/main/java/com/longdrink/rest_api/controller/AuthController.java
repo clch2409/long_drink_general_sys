@@ -154,7 +154,8 @@ public class AuthController {
         if(u.getRol().getCodRol() == 3L){
             Alumno a = alumnoService.getPorCodUsuario(u.getCodUsuario());
             String nombreCompleto = a.getNombre()+" "+a.getApellidoPaterno()+" "+a.getApellidoMaterno();
-            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
+            LoginMovil respuesta = new LoginMovil(a.getCodAlumno(),u.getCodUsuario(),u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
+            //LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
             return new ResponseEntity<>(respuesta,HttpStatus.OK);
         }
         if(u.getRol().getCodRol() == 2L){
@@ -169,5 +170,37 @@ public class AuthController {
         }
         return new ResponseEntity<>(new Mensaje("Error! Credenciales de acceso incorrectas.",401),
                 HttpStatus.UNAUTHORIZED);
+    }
+
+    @PostMapping("/cambiar_credenciales")
+    public ResponseEntity<?> cambiarCredenciales(@RequestBody CambiarCredenciales c){
+        Usuario u = usuarioService.getPorEmail(c.getEmailAntiguo());
+        EmailValidator em = EmailValidator.getInstance();
+        if(u == null){
+            return new ResponseEntity<>(new Mensaje("Error! El E-Mail ingresado no pertenece a una cuenta registrada.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        CambiarCredenciales carga = c.limpiarDatos();
+        boolean cargaValida = carga.validarDatos();
+        boolean validarEmail = em.isValid(carga.getEmailNuevo());
+        if(!cargaValida || !validarEmail){
+            return new ResponseEntity<>(new Mensaje("Error! Los datos ingresados no cumplen con el formato correcto.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        boolean contrasenaCorrecta = bCryptPasswordEncoder.matches(carga.getContrasenaAntigua(),u.getContrasena());
+        if(!contrasenaCorrecta){
+            return new ResponseEntity<>(new Mensaje("Error! La contraseña antigua ingresada no coincide en los registros.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        try{
+            u.setEmail(carga.getEmailNuevo());
+            u.setContrasena(bCryptPasswordEncoder.encode(carga.getNuevaContrasena()));
+            usuarioService.actualizar(u);
+            return new ResponseEntity<>(new Mensaje("Credenciales actualizadas con exito para el usuario de ID: "+u.getCodUsuario(),200),HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Error! Imposible actualizar datos de la cuenta.",500),
+                    HttpStatus.INTERNAL_SERVER_ERROR); //TE QUEDASTE ACA.....
+        }
     }
 }

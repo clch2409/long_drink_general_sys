@@ -111,7 +111,7 @@ class RegisterPasswordsActivity : AppCompatActivity() {
     private fun registerStudent(registerData : RegisterSendData) {
         CoroutineScope(Dispatchers.IO).launch {
             val response : Response<RegisterResponse> =
-                retrofit.create(ApiService::class.java).RegistroAlumno(registerData)
+                retrofit.create(ApiService::class.java).registroAlumno(registerData)
 
             if (response.body()?.estado?.toInt() == 400){
                 showSnackbar(response.body()?.mensaje.toString())

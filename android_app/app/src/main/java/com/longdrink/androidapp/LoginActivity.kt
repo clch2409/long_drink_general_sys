@@ -56,13 +56,14 @@ class LoginActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch{
             val response : Response<LoginWebResponse>  =
-                retrofit.create(ApiService::class.java).IniciarSesion(sendData)
+                retrofit.create(ApiService::class.java).iniciarSesion(sendData)
 
             if (response.code() == 401){
                  showSnackbar("Sus datos no coinciden, intente de nuevo")
             }
             else {
                 val intent = Intent(applicationContext, MainActivity::class.java)
+                intent.putExtra("codAlumno", response.body()?.email)
                 startActivity(intent)
                 finish()
             }

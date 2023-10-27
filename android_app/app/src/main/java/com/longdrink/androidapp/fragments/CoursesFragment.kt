@@ -13,7 +13,6 @@ import com.longdrink.androidapp.adapters.CourseRecyclerViewAdapter
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.FragmentCoursesBinding
 import com.longdrink.androidapp.model.Curso
-import com.longdrink.androidapp.model.CursoResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,7 +65,7 @@ class CoursesFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response : Response<List<Curso>> =
-                    retrofit.create(ApiService::class.java).ListarCursos()
+                    retrofit.create(ApiService::class.java).listarCursos()
                 if (response.isSuccessful){
                     val myResponse : List<Curso>? = response.body()
                     if (myResponse != null){

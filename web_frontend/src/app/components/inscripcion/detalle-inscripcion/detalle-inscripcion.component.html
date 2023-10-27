@@ -31,8 +31,10 @@
             <h6>FECHA SOLICITUD: {{detalle.fechaInscripcion | date}}</h6>
             <h6>FECHA INICIO: {{detalle.fechaInicio | date}}</h6>
             <h6>FECHA FINAL: {{detalle.fechaFinal | date}}</h6>
-            <h6>FECHA TERMINADO: {{detalle.fechaTerminado | date}}</h6>
-            <h6>ESTADO: SOLICITUD {{estado}}</h6>
+            <h6>FECHA TERMINADO: {{detalle.fechaTerminado == null? '---------': detalle.fechaTerminado | date}}</h6>
+            <h6 *ngIf="estado === 'PENDIENTE'" class="fw-bold text-primary">ESTADO: SOLICITUD {{estado}}</h6>
+            <h6 *ngIf="estado === 'ACEPTADA'" class="fw-bold text-success">ESTADO: SOLICITUD {{estado}}</h6>
+            <h6 *ngIf="estado === 'RECHAZADA'" class="fw-bold text-danger">ESTADO: SOLICITUD {{estado}}</h6>
             <hr>
             <div class="text-center" *ngIf="estado =='PENDIENTE'">
                 <div class="btn-group" role="group" >

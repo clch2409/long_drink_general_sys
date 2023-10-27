@@ -78,6 +78,7 @@ export class ListadoInscripcionesComponent {
         });
       }
     }
+    
     this.actualizarTabla(inscripciones);
   }
 
@@ -296,9 +297,9 @@ export class ListadoInscripcionesComponent {
   confirmarSolicitud(codAlum?: number, codCurso?: number): void{
     this.inscripcionService.confirmarInscripcion(codCurso,codAlum).subscribe({
       next: (data) =>{
-        Swal.fire('Éxito', 'Solicitud de inscripción aceptada correctamente.', 'success');
-        console.log(data);
-        //this.recargarPagina();
+        Swal.fire('Éxito', 'Solicitud de inscripción aceptada correctamente.', 'success').then(() =>{
+          window.location.reload();
+        });
       },
       error: (err) => {
         console.log(err);

@@ -62,8 +62,8 @@ export class MiCuentaComponent implements OnInit {
       (response) => {
         Swal.fire({
           icon: "success",
-          title: "Correcto",
-          text: "Credenciales actualizadas correctamente.",
+          title: "Cambios Guardados!",
+          text: "Credenciales actualizadas correctamente. A continuación, debe iniciar sesión con sus nuevas credenciales.",
           allowOutsideClick: false
         }).then((result) => {
           if (result.isConfirmed) {

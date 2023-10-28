@@ -33,4 +33,12 @@ export class AuthService {
       httpOptions
     );
   }
+
+  cambiarCredenciales(datosCambio: any): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'cambiar_credenciales',
+      datosCambio,
+      httpOptions
+    );
+  }
 }

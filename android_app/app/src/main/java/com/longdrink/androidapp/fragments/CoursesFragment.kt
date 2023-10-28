@@ -70,7 +70,6 @@ class CoursesFragment : Fragment() {
                     val myResponse : List<Curso>? = response.body()
                     if (myResponse != null){
                         initUI(myResponse)
-                        Log.i("LLEGÓ", myResponse.toString())
                     }
                 }
             }catch (ex : Exception){

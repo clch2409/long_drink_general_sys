@@ -62,8 +62,8 @@ class LoginActivity : AppCompatActivity() {
                  showSnackbar("Sus datos no coinciden, intente de nuevo")
             }
             else {
-                val intent = Intent(applicationContext, MainActivity::class.java)
-                intent.putExtra("codAlumno", response.body()?.email)
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                intent.putExtra("codAlumno", response.body()?.codAlumno)
                 startActivity(intent)
                 finish()
             }

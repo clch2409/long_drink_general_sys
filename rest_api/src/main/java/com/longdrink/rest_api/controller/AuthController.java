@@ -8,6 +8,7 @@ import com.longdrink.rest_api.model.payload.*;
 import com.longdrink.rest_api.services.AlumnoService;
 import com.longdrink.rest_api.services.ProfesorService;
 import com.longdrink.rest_api.services.UsuarioService;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,10 @@ public class AuthController {
                     limpiarDatos.getApellidoMaterno(),limpiarDatos.getDni(),
                     limpiarDatos.getTelefono(),true,usuarioGuardado);
             Alumno alumnoGuardado = alumnoService.guardar(alumno);
-            return new ResponseEntity<>(new Mensaje("Exito! Alumno registrado correctamente.",201),HttpStatus.CREATED);
+            RetornoAlumno retorno = new RetornoAlumno();
+            BeanUtils.copyProperties(retorno,alumnoGuardado);
+            BeanUtils.copyProperties(retorno,usuarioGuardado);
+            return new ResponseEntity<>(retorno,HttpStatus.CREATED);
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);

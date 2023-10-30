@@ -1,34 +1,54 @@
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-5 py-3 px-4 border border-danger shadow-lg border-3 rounded-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person-circle mx-auto d-block mb-4" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-              </svg>
-              <div class="mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor"
+                class="bi bi-person-circle mx-auto d-block mb-4" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
+            <div class="mb-3">
                 <label for="nombreUsuario" class="fw-bold form-label">Nombre Usuario</label>
-                <input type="text" class="text-uppercase fw-medium form-control" id="nombreUsuario"
-                    name="nombreUsuario" disabled>
+                <input type="text" class="text-uppercase fw-medium form-control" id="nombreUsuario" name="nombreUsuario"
+                    disabled>
             </div>
             <div class="mb-3">
                 <label for="nombre" class="fw-bold form-label">Nombre Completo</label>
-                <input type="text" class="text-uppercase fw-medium form-control" id="nombre"
-                    name="nombre" disabled>
+                <input type="text" class="text-uppercase fw-medium form-control" id="nombre" name="nombre" disabled>
             </div>
             <div class="mb-3">
                 <label for="email" class="fw-bold form-label">E-Mail</label>
-                <input type="text" class="text-uppercase fw-medium form-control" id="email"
-                    name="email" disabled>
+                <input #emailInput type="email" class="text-uppercase fw-medium form-control" id="email" name="email" disabled>
             </div>
             <div class="mb-3">
                 <label for="rol" class="fw-bold form-label">Rol</label>
-                <input type="text" class="text-uppercase fw-medium form-control" id="rol"
-                    name="rol" disabled>
+                <input type="text" class="text-uppercase fw-medium form-control" id="rol" name="rol" disabled>
             </div>
-            <h5 class="text-center fw-semibold">Cambio de Credenciales</h5>
-            <p class="text-center fw-light">A continuación deberá llenar los siguientes campos para actualizar la contraseña asociada a su cuenta. Una vez terminado el proceso de manera satisfactoria, será redirigido al inicio del sistema; donde deberá iniciar sesión nuevamente con sus nuevas credenciales.</p>
+            <h5 class="text-center fw-bold">Cambio de Credenciales</h5>
+            <p class="text-center fw-medium">A continuación deberá llenar los siguientes campos para actualizar la
+                contraseña asociada a su cuenta. Una vez terminado el proceso de manera satisfactoria, será redirigido
+                al inicio del sistema; donde deberá iniciar sesión nuevamente con sus nuevas credenciales.</p>
             <hr>
-            <h6>Formulario aqui, contraseña actual, repetir dos veces nueva contraseña y boton enviar / cancelar -> cancelar envia a dashboard.</h6>
+            <div class="mb-3">
+                <label for="contrasenaAntigua" class="fw-bold form-label">Contraseña Actual</label>
+                <input type="password" class="fw-medium form-control" id="contrasenaAntigua" name="contrasenaAntigua" minlength="5" maxlength="30">
+            </div>
+            <div class="mb-3">
+                <label for="nuevaContrasena" class="fw-bold form-label">Nueva Contraseña</label>
+                <input type="password" class="fw-medium form-control" id="nuevaContrasena" name="nuevaContrasena" minlength="5" maxlength="30">
+            </div>
+            <div class="mb-3">
+                <label for="nuevaContrasenaRepetir" class="fw-bold form-label">Repetir Nueva Contraseña</label>
+                <input type="password" class="fw-medium form-control" id="nuevaContrasenaRepetir" name="nuevaContrasenaRepetir" minlength="5" maxlength="30">
+            </div>
+            <div class="mb-3">
+                <label for="emailNuevo" class="fw-bold form-label">Nuevo E-Mail (Opcional)</label>
+                <input type="email" class="text-uppercase fw-medium form-control" id="emailNuevo" name="emailNuevo" maxlength="50">
+            </div>
+            <div class="d-grid gap-2">
+                <button class="fw-bold btn btn-primary" (click)="cambiarCredenciales()">Actualizar Credenciales</button>
+                <a class="fw-bold btn btn-secondary" [routerLink]="['/']">Cancelar</a>
+            </div>
         </div>
     </div>
 </div>

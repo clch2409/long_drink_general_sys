@@ -19,9 +19,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.properties.Delegates
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 class CoursesFragment : Fragment() {
@@ -30,6 +30,7 @@ class CoursesFragment : Fragment() {
     private lateinit var binding : FragmentCoursesBinding
     private lateinit var adapter : CourseRecyclerViewAdapter
     private lateinit var retrofit: Retrofit
+    private var codAlum by Delegates.notNull<Long>()
     private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +47,7 @@ class CoursesFragment : Fragment() {
     ): View? {
         binding = FragmentCoursesBinding.inflate(inflater)
         retrofit = getRetrofi()
+        codAlum = requireArguments().getLong("codAlum")
         getCursos()
         return binding.root
     }
@@ -53,7 +55,7 @@ class CoursesFragment : Fragment() {
     private fun initUI(listadoCursos : List<Curso>){
         /*TODO --> BUSCAR LA MANERA DE AGREGAR UN SEPARADOR PERSONALIZADO*/
 
-        adapter = CourseRecyclerViewAdapter(listadoCursos)
+        adapter = CourseRecyclerViewAdapter(listadoCursos, codAlum)
         binding.recyclerCourses.setHasFixedSize(true)
         binding.recyclerCourses.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerCourses.adapter = adapter
@@ -69,8 +71,9 @@ class CoursesFragment : Fragment() {
                 if (response.isSuccessful){
                     val myResponse : List<Curso>? = response.body()
                     if (myResponse != null){
-                        initUI(myResponse)
-                        Log.i("LLEGÓ", myResponse.toString())
+                        activity?.runOnUiThread{
+                            initUI(myResponse)
+                        }
                     }
                 }
             }catch (ex : Exception){

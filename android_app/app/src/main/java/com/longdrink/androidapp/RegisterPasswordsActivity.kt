@@ -26,7 +26,8 @@ class RegisterPasswordsActivity : AppCompatActivity() {
     private lateinit var recivedData : RegisterSendData
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        /** Decirle a Cristian que al momento del registro haga un envío del nombre de usuario del alumno*/
+        /** Para poder mostrarlo en ventana emergente*/
         recivedData = RegisterSendData(intent.getStringExtra("nombre").toString(),
             intent.getStringExtra("apa").toString(),
             intent.getStringExtra("ama").toString(),
@@ -63,6 +64,7 @@ class RegisterPasswordsActivity : AppCompatActivity() {
                         "\nDNI: " + recivedData.dni +
                         "\nTeléfono: " + recivedData.telefono +
                         "\nEmail: " + recivedData.email, 2)
+
             }
         }
 
@@ -84,6 +86,7 @@ class RegisterPasswordsActivity : AppCompatActivity() {
                 }
                 else if (cualFuncion == 2){
                     registerStudent(getData())
+
                 }
             }
             setNegativeButton("NO"){_: DialogInterface?, _: Int ->
@@ -113,14 +116,10 @@ class RegisterPasswordsActivity : AppCompatActivity() {
             val response : Response<RegisterResponse> =
                 retrofit.create(ApiService::class.java).registroAlumno(registerData)
 
-            if (response.body()?.estado?.toInt() == 400){
-                showSnackbar(response.body()?.mensaje.toString())
-            }
-            else if (response.body()?.estado?.toInt() == 500){
-                showSnackbar(response.body()?.mensaje.toString())
-            }
-            else{
-                goToLogin()
+            runOnUiThread{
+                showingMessageAndSending("Registro Exitoso", "Para poder ingresar al sistema, le hemos creado un nombre de usuario" +
+                        " el cual es el siguiente: ${response.body()?.nombreUsuario}. Tome nota, lo necesitará para " +
+                        "ingresar al sistema",0)
             }
         }
     }

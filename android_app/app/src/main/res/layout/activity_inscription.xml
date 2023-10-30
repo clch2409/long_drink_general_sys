@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InscriptionActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/inscription_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_blue"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/inscription_title"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:text="INSCRIPCION"
+        android:layout_marginTop="25sp"
+        app:layout_constraintTop_toBottomOf="@id/inscription_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!--**** Seleccionar el curso ****-->
+    <TextView
+        android:id="@+id/inscription_courses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="55sp"
+        android:labelFor="@+id/inscription_spinner_courses"
+        android:text="Seleccione el curso Deseado"
+        app:layout_constraintHorizontal_bias="0.2"/>
+
+    <!--**** Seleccionar el horario ****-->
+    <Spinner
+        android:id="@+id/inscription_spinner_courses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.245"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inscription_courses"
+        tools:listitem="" />
+
+    <TextView
+        android:id="@+id/inscription_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:labelFor="@+id/inscription_spinner_time"
+        android:text="Seleccione el horario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_spinner_courses" />
+
+    <Spinner
+        android:id="@+id/inscription_spinner_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/inscription_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        tools:listitem=""/>
+
+
+    <!--**** Seleccionar fecha de inicio del curso ****-->
+
+    <TextView
+        android:id="@+id/inscription_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:labelFor="@+id/inscription_spinner_time"
+        android:text="Seleccione la fecha de iniciodel curso:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_spinner_time" />
+
+    <Spinner
+        android:id="@+id/inscription_spinner_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/inscription_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        tools:listitem=""/>
+
+    <!--**** Seleccionar la frecuencia ****-->
+    <TextView
+        android:id="@+id/inscription_frecuency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_spinner_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="55sp"
+        android:text="Frecuencia del curso"
+        app:layout_constraintHorizontal_bias="0.2"/>
+
+
+    <!-- Botón de inscripción -->
+
+    <TextView
+        android:id="@+id/inscription_text_frecuency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Frecuencia del curso"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.179"
+        app:layout_constraintStart_toEndOf="@+id/inscription_frecuency"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.624"/>
+
+    <Button
+        android:id="@+id/inscription_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inscription_text_frecuency"
+        android:layout_marginTop="60sp"
+        android:text="Inscribirse"
+        android:backgroundTint="@color/dark_blue"
+        android:textColor="@color/light_red"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

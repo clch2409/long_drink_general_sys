@@ -5,6 +5,8 @@ import java.io.Serializable
 
 /** --------------------- LOGIN AND REGISTER RELATED DATA CLASSES ----------------------------------*/
 data class LoginWebResponse(
+    @SerializedName("codUsuario") val codUsuario : Long,
+    @SerializedName("codAlumno") val codAlumno : Long,
     @SerializedName("nombreUsuario") val nombreUsuario : String,
     @SerializedName("contrasena") val contrasena : String,
     @SerializedName("email") val email : String,
@@ -28,8 +30,14 @@ data class RegisterSendData(
 )
 
 data class RegisterResponse(
-    @SerializedName("mensaje") val mensaje : String,
-    @SerializedName("estado") val estado : Integer
+    @SerializedName("codAlumno") val codAlumno : Long,
+    @SerializedName("codUsuario") val codUsuario : Long,
+    @SerializedName("nombreUsuario") val nombreUsuario : String,
+    @SerializedName("email") val email : String,
+    @SerializedName("nombre") val nombre : String,
+    @SerializedName("apellidoPaterno") val apellidoPaterno : String,
+    @SerializedName("apellidoMaterno") val apellidoMaterno : String,
+    @SerializedName("dni") val dni : String,
 )
 
 /** --------------------- COURSES RELATED DATA CLASSES ----------------------------------*/
@@ -42,30 +50,30 @@ data class Curso(
     @SerializedName("visibilidad") var visibilidad : Boolean = false,
     @SerializedName("frecuencia") var frecuencia : String = "",
     @SerializedName("imagen") var imagen : String = "",
-    @SerializedName("profesor") var profesor : Profesor,
-    @SerializedName("turnos") var turnos : List<Turno>,
-    @SerializedName("temas") var temas : List<Tema>,
+    @SerializedName("profesor") var profesor : Profesor = Profesor(),
+    @SerializedName("turnos") var turnos : List<Turno> = emptyList(),
+    @SerializedName("temas") var temas : List<Tema> = emptyList(),
 )
 /** --------------------- TEACHER RELATED DATA CLASSES ----------------------------------*/
 
 data class Profesor(
     @SerializedName("codProfesor") var codProfesor : Long = 0L,
-    @SerializedName("nombre") var nombre : String,
-    @SerializedName("dni") var dni : String,
-    @SerializedName("telefono") var telefono : String,
-    @SerializedName("activo") var activo : Boolean,
-    @SerializedName("apellidoPaterno") var apellidoPaterno : String,
-    @SerializedName("apellidoMaterno") var apellidoMaterno : String,
-    @SerializedName("fechaContratacion") var fechaContratacion : String,
+    @SerializedName("nombre") var nombre : String = "",
+    @SerializedName("dni") var dni : String = "",
+    @SerializedName("telefono") var telefono : String = "",
+    @SerializedName("activo") var activo : Boolean = false,
+    @SerializedName("apellidoPaterno") var apellidoPaterno : String = "",
+    @SerializedName("apellidoMaterno") var apellidoMaterno : String = "",
+    @SerializedName("fechaContratacion") var fechaContratacion : String = "",
 )
 
 /** --------------------- TURN DATA CLASSES ----------------------------------*/
 
 data class Turno(
-    @SerializedName("codTurno") var codTurno : Long,
-    @SerializedName("nombre") var nombre : String,
-    @SerializedName("horaInicio") var horaInicio : String,
-    @SerializedName("horaFin") var horaFin : String
+    @SerializedName("codTurno") var codTurno : Long = 0,
+    @SerializedName("nombre") var nombre : String = "",
+    @SerializedName("horaInicio") var horaInicio : String = "",
+    @SerializedName("horaFin") var horaFin : String = ""
 )
 
 /** --------------------- CLASS DATA CLASSES ----------------------------------*/
@@ -79,15 +87,31 @@ data class Tema(
 /** --------------------- INSCRIPTION RELATED DATA CLASSES ----------------------------------*/
 
 data class Inscripcion(
-    @SerializedName("inscripcionPk") val inscripcionPK: InscripcionPK,
-    @SerializedName("estado") val estado: Boolean,
-    @SerializedName("fechaInicio") val fechaInicio: String,
-    @SerializedName("fechaFinal") val fechaFinal: String,
-    @SerializedName("fechaInscripcion") val fechaInscripcion: String,
-    @SerializedName("fechaTerminado") val fechaTerminado: String
+    @SerializedName("inscripcionPk") var inscripcionPK: InscripcionPK = InscripcionPK(),
+    @SerializedName("estado") var estado: Boolean = false,
+    @SerializedName("fechaInicio") var fechaInicio: String = "",
+    @SerializedName("fechaFinal") var fechaFinal: String = "",
+    @SerializedName("fechaInscripcion") var fechaInscripcion: String = "",
+    @SerializedName("fechaTerminado") var fechaTerminado: String = ""
 )
 
 data class InscripcionPK(
-    @SerializedName("codAlumno") val codAlumno : Long,
-    @SerializedName("codCurso") val codCurso : Long
+    @SerializedName("codAlumno") var codAlumno : Long = 0,
+    @SerializedName("codCurso") var codCurso : Long = 0
+)
+
+data class InscripcionDetallada(
+    @SerializedName("codAlumno") var codAlumno : Long = 0,
+    @SerializedName("codCurso") var codCurso : Long = 0,
+    @SerializedName("estado") var estado: Boolean = false,
+    @SerializedName("fechaInicio") var fechaInicio: String = "",
+    @SerializedName("fechaFinal") var fechaFinal: String = "",
+    @SerializedName("fechaInscripcion") var fechaInscripcion: String = "",
+    @SerializedName("fechaTerminado") var fechaTerminado: String = ""
+)
+
+data class InscripcionObjetos(
+    @SerializedName("inscripcion") var inscripcion: InscripcionDetallada = InscripcionDetallada(),
+    @SerializedName("curso") var curso: Curso = Curso(),
+    @SerializedName("profesor") var profesor : Profesor = Profesor(),
 )

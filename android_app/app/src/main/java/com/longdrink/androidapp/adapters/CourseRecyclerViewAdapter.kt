@@ -9,16 +9,14 @@ import com.longdrink.androidapp.viewholders.CoursesViewHolder
 
 class CourseRecyclerViewAdapter(
     var listadoCursos : List<Curso> = emptyList(),
+    private var codAlum : Long
 ) : RecyclerView.Adapter<CoursesViewHolder>()
 
 {
-    fun updateList(listadoCursos : List<Curso>){
-        this.listadoCursos = listadoCursos
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CoursesViewHolder(layoutInflater.inflate(R.layout.list_item_courses, parent, false))
+        return CoursesViewHolder(layoutInflater.inflate(R.layout.list_item_courses, parent, false), codAlum)
     }
 
     override fun onBindViewHolder (holder : CoursesViewHolder, position : Int){

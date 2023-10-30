@@ -10,6 +10,7 @@ import com.longdrink.androidapp.R
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.FragmentMyCourseBinding
 import com.longdrink.androidapp.model.Curso
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,8 +50,10 @@ class MyCourseFragment : Fragment() {
 
 
     private fun placeData(){
+        binding.myCourseName.text = curso.descripcion
         binding.myCourseTeacherName.text = "${curso.profesor.nombre} ${curso.profesor.apellidoPaterno} ${curso.profesor.apellidoMaterno}"
-        binding.myCourseScheduleHours.text = "${curso.turnos[0].horaInicio}"
+        binding.myCourseScheduleHours.text = "${curso.turnos[0].horaInicio} : ${curso.turnos[0].horaFin}"
+        Picasso.get().load(curso.imagen).into(binding.myCourseImage)
     }
 
     private fun getCourseInfo(){
@@ -61,8 +64,11 @@ class MyCourseFragment : Fragment() {
                         retrofit.create(ApiService :: class.java).findCursoById(codCurso)
 
                     if (response.body() != null){
-                        curso = response.body()!!
-                        placeData()
+                        activity?.runOnUiThread{
+                            curso = response.body()!!
+                            Log.e("CURSO", curso.toString())
+                            placeData()
+                        }
                     }
                 }
             }

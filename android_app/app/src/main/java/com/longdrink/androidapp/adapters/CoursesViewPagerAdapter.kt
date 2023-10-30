@@ -14,6 +14,7 @@ import com.longdrink.androidapp.fragments.CoursesFragment
 import com.longdrink.androidapp.fragments.MyAccountFragment
 import com.longdrink.androidapp.fragments.MyCourseFragment
 import com.longdrink.androidapp.fragments.NoCourseFragment
+import com.longdrink.androidapp.fragments.WaitingInscriptionFragment
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.Inscripcion
 import com.longdrink.androidapp.model.InscripcionPK
@@ -28,15 +29,10 @@ import kotlin.properties.Delegates
 class CoursesViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    private var studentId : Long,
     private var hasInscription : Boolean,
-    private var inscription : Inscripcion = Inscripcion()
+    private var inscription : Inscripcion = Inscripcion(),
+    private var codAlum : Long
 ) : FragmentStateAdapter(fragmentManager, lifecycle){
-
-    private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
-    private val retrofit = getRetrofit()
-
-
     override fun getItemCount(): Int {
         return 3
     }
@@ -44,13 +40,21 @@ class CoursesViewPagerAdapter(
     override fun createFragment(position: Int): Fragment {
 
         return if (position == 0) {
-            CoursesFragment()
+            var bundle = bundleOf(Pair("codAlum", codAlum))
+            var fragment = CoursesFragment()
+            fragment.arguments = bundle
+            fragment
         } else if (position == 1) {
             if (hasInscription) {
-                var bundle = bundleOf(Pair("codCurso" , inscription.inscripcionPK.codCurso))
-                var fragment = MyCourseFragment()
-                fragment.arguments = bundle
-                fragment
+                if(!inscription.estado){
+                    WaitingInscriptionFragment()
+                }
+                else{
+                    var bundle = bundleOf(Pair("codCurso" , inscription.inscripcionPK.codCurso))
+                    var fragment = MyCourseFragment()
+                    fragment.arguments = bundle
+                    fragment
+                }
             }
             else{
                 NoCourseFragment()
@@ -59,13 +63,5 @@ class CoursesViewPagerAdapter(
         } else{
             MyAccountFragment()
         }
-    }
-
-    private fun getRetrofit() : Retrofit{
-        return Retrofit
-            .Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
     }
 }

@@ -26,7 +26,8 @@ class RegisterPasswordsActivity : AppCompatActivity() {
     private lateinit var recivedData : RegisterSendData
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        /** Decirle a Cristian que al momento del registro haga un envío del nombre de usuario del alumno*/
+        /** Para poder mostrarlo en ventana emergente*/
         recivedData = RegisterSendData(intent.getStringExtra("nombre").toString(),
             intent.getStringExtra("apa").toString(),
             intent.getStringExtra("ama").toString(),
@@ -120,7 +121,9 @@ class RegisterPasswordsActivity : AppCompatActivity() {
                 showSnackbar(response.body()?.mensaje.toString())
             }
             else{
-                goToLogin()
+                showingMessageAndSending("Registro Exitoso", "Para poder ingresar al sistema, le hemos creado un nombre de usuario" +
+                        " el cual es el siguiente: ${response.body()}. Tome nota, lo necesitará para " +
+                        "ingresar al sistema",0)
             }
         }
     }

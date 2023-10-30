@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
             }
             else {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                intent.putExtra("codAlumno", response.body()?.codAlumno)
+                intent.putExtra("codAlum", response.body()?.codAlumno)
                 startActivity(intent)
                 finish()
             }

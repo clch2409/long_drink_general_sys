@@ -31,7 +31,7 @@ data class RegisterSendData(
 
 data class RegisterResponse(
     @SerializedName("mensaje") val mensaje : String,
-    @SerializedName("estado") val estado : Integer
+    @SerializedName("estado") val estado : Integer,
 )
 
 /** --------------------- COURSES RELATED DATA CLASSES ----------------------------------*/
@@ -95,7 +95,17 @@ data class InscripcionPK(
 )
 
 data class InscripcionDetallada(
-    @SerializedName("inscripcion") var inscripcion : Inscripcion = Inscripcion(),
-    @SerializedName("curso") var curso : Curso = Curso(),
-    @SerializedName("turno") var turno : Turno = Turno()
+    @SerializedName("codAlumno") var codAlumno : Long = 0,
+    @SerializedName("codCurso") var codCurso : Long = 0,
+    @SerializedName("estado") var estado: Boolean = false,
+    @SerializedName("fechaInicio") var fechaInicio: String = "",
+    @SerializedName("fechaFinal") var fechaFinal: String = "",
+    @SerializedName("fechaInscripcion") var fechaInscripcion: String = "",
+    @SerializedName("fechaTerminado") var fechaTerminado: String = ""
+)
+
+data class InscripcionObjetos(
+    @SerializedName("inscripcion") var inscripcion: Inscripcion = Inscripcion(),
+    @SerializedName("curso") var curso: Curso = Curso(),
+    @SerializedName("alumno") var profesor : Profesor = Profesor(),
 )

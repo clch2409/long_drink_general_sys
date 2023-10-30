@@ -1,10 +1,14 @@
 package com.longdrink.androidapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.longdrink.androidapp.adapters.CoursesViewPagerAdapter
 import com.longdrink.androidapp.api.ApiService
@@ -26,18 +30,34 @@ class MainActivity : AppCompatActivity() {
     private lateinit var retrofit : Retrofit
     private var inscripcion = Inscripcion()
     private var hasInscription = false
-    private var studentId by Delegates.notNull<Long>()
-    private lateinit var bundle : Bundle
+    private var codAlum by Delegates.notNull<Long>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        studentId = intent.getLongExtra("codAlumno", 0)
+        codAlum = intent.getLongExtra("codAlum", 0)
         binding = ActivityMainBinding.inflate(layoutInflater)
         retrofit = getRetrofit()
+        setSupportActionBar(binding.mainToolbar)
+        supportActionBar?.setLogo(R.mipmap.ic_logo_foreground)
         initUi()
 
         setContentView(binding.root)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_logout) {
+            finish()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        return true
     }
 
     private fun initUi(){
@@ -78,15 +98,17 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch{
             try{
                 val response : Response<List<Inscripcion>> =
-                    retrofit.create(ApiService::class.java).listarInscripcionesByAlumnoId(studentId)
+                    retrofit.create(ApiService::class.java).listarInscripcionesByAlumnoId(codAlum)
 
                 if (response.isSuccessful){
                     response.body()?.forEach{
                         if (it.estado) inscripcion = it
                     }
-                    hasInscription = true
-                    adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, studentId, hasInscription ,inscripcion)
-                    binding.mainViewpager.adapter = adapter
+                    runOnUiThread{
+                        hasInscription = true
+                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, hasInscription ,inscripcion, codAlum )
+                        binding.mainViewpager.adapter = adapter
+                    }
                 }
 
             }catch(ex : Exception){

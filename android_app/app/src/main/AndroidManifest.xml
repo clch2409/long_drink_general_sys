@@ -20,11 +20,7 @@
             android:name=".InscriptionActivity"
             android:exported="true"
             android:theme="@style/Theme.Android_app">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".CourseDescriptionActivity"
@@ -44,7 +40,11 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

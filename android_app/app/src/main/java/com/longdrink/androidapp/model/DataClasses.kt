@@ -30,8 +30,14 @@ data class RegisterSendData(
 )
 
 data class RegisterResponse(
-    @SerializedName("mensaje") val mensaje : String,
-    @SerializedName("estado") val estado : Integer,
+    @SerializedName("codAlumno") val codAlumno : Long,
+    @SerializedName("codUsuario") val codUsuario : Long,
+    @SerializedName("nombreUsuario") val nombreUsuario : String,
+    @SerializedName("email") val email : String,
+    @SerializedName("nombre") val nombre : String,
+    @SerializedName("apellidoPaterno") val apellidoPaterno : String,
+    @SerializedName("apellidoMaterno") val apellidoMaterno : String,
+    @SerializedName("dni") val dni : String,
 )
 
 /** --------------------- COURSES RELATED DATA CLASSES ----------------------------------*/

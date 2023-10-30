@@ -24,6 +24,7 @@ class RegisterPasswordsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterPasswordsBinding
     private lateinit var sendData : RegisterSendData
     private lateinit var recivedData : RegisterSendData
+    private lateinit var nombreUsuario : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         /** Decirle a Cristian que al momento del registro haga un envío del nombre de usuario del alumno*/
@@ -64,6 +65,7 @@ class RegisterPasswordsActivity : AppCompatActivity() {
                         "\nDNI: " + recivedData.dni +
                         "\nTeléfono: " + recivedData.telefono +
                         "\nEmail: " + recivedData.email, 2)
+
             }
         }
 
@@ -85,6 +87,7 @@ class RegisterPasswordsActivity : AppCompatActivity() {
                 }
                 else if (cualFuncion == 2){
                     registerStudent(getData())
+
                 }
             }
             setNegativeButton("NO"){_: DialogInterface?, _: Int ->
@@ -114,15 +117,9 @@ class RegisterPasswordsActivity : AppCompatActivity() {
             val response : Response<RegisterResponse> =
                 retrofit.create(ApiService::class.java).registroAlumno(registerData)
 
-            if (response.body()?.estado?.toInt() == 400){
-                showSnackbar(response.body()?.mensaje.toString())
-            }
-            else if (response.body()?.estado?.toInt() == 500){
-                showSnackbar(response.body()?.mensaje.toString())
-            }
-            else{
+            runOnUiThread{
                 showingMessageAndSending("Registro Exitoso", "Para poder ingresar al sistema, le hemos creado un nombre de usuario" +
-                        " el cual es el siguiente: ${response.body()}. Tome nota, lo necesitará para " +
+                        " el cual es el siguiente: ${response.body()?.nombreUsuario}. Tome nota, lo necesitará para " +
                         "ingresar al sistema",0)
             }
         }

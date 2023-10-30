@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.longdrink.androidapp.adapters.CoursesViewPagerAdapter
@@ -70,8 +68,6 @@ class MainActivity : AppCompatActivity() {
         binding.tablayout.addTab(binding.tablayout.newTab().setText("Cursos"))
         binding.tablayout.addTab(binding.tablayout.newTab().setText("Mi Curso"))
         /*binding.tablayout.addTab(binding.tablayout.newTab().setText("Mi Cuenta"))*/
-        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, hasInscription ,inscripcion, codAlum )
-        binding.mainViewpager.adapter = adapter
 
         addingListeners()
     }
@@ -107,11 +103,14 @@ class MainActivity : AppCompatActivity() {
                     retrofit.create(ApiService::class.java).listarInscripcionesByAlumnoId(codAlum)
 
                 if (response.isSuccessful){
+                    Log.i("INSCRIPCION", response.body().toString())
                     response.body()?.forEach{
-                        if (it.estado) inscripcion = it
+                        if (it.estado || (it.fechaInicio != "" && it.fechaTerminado == null)) inscripcion = it
                     }
                     runOnUiThread{
                         hasInscription = inscripcion.fechaInicio != ""
+                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, hasInscription ,inscripcion, codAlum )
+                        binding.mainViewpager.adapter = adapter
 
                     }
                 }

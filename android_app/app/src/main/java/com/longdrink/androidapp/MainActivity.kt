@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+    override fun onBackPressed() {
+
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -65,7 +69,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.tablayout.addTab(binding.tablayout.newTab().setText("Cursos"))
         binding.tablayout.addTab(binding.tablayout.newTab().setText("Mi Curso"))
-        binding.tablayout.addTab(binding.tablayout.newTab().setText("Mi Cuenta"))
+        /*binding.tablayout.addTab(binding.tablayout.newTab().setText("Mi Cuenta"))*/
+        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, hasInscription ,inscripcion, codAlum )
+        binding.mainViewpager.adapter = adapter
 
         addingListeners()
     }
@@ -105,9 +111,8 @@ class MainActivity : AppCompatActivity() {
                         if (it.estado) inscripcion = it
                     }
                     runOnUiThread{
-                        hasInscription = true
-                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, hasInscription ,inscripcion, codAlum )
-                        binding.mainViewpager.adapter = adapter
+                        hasInscription = inscripcion.fechaInicio != ""
+
                     }
                 }
 

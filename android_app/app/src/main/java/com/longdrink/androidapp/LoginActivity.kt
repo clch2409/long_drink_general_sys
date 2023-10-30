@@ -61,6 +61,9 @@ class LoginActivity : AppCompatActivity() {
             if (response.code() == 401){
                  showSnackbar("Sus datos no coinciden, intente de nuevo")
             }
+            else if (response.body()?.rol != "ALUMNO"){
+                showSnackbar("Usted no es un alumno, si es profesor o administrados, ingrese por el sistema web")
+            }
             else {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 intent.putExtra("codAlum", response.body()?.codAlumno)

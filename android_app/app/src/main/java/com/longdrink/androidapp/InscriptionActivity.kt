@@ -9,11 +9,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.snackbar.Snackbar
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.ActivityInscriptionBinding
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.Inscripcion
 import com.longdrink.androidapp.model.InscripcionDetallada
+import com.longdrink.androidapp.model.InscripcionObjetos
 import com.longdrink.androidapp.model.InscripcionPK
 import com.longdrink.androidapp.model.Turno
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +24,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -42,6 +45,8 @@ class InscriptionActivity : AppCompatActivity() {
 
     private var inscripcionesPorCurso = mutableListOf<Inscripcion>()
 
+    private val fechasDeInicio = listOf<String>("01-10-2023", "01-11-2023", "01-12-2023", "01-01-2024")
+
     private var codAlum by Delegates.notNull<Long>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +54,14 @@ class InscriptionActivity : AppCompatActivity() {
 
         binding = ActivityInscriptionBinding.inflate(layoutInflater)
         retrofit = getRetrofit()
-        codAlum = 7
+        codAlum = intent.getLongExtra("codAlum", 0)
         Log.i("LLEGO CODALUM", "CODALUM -> $codAlum")
         setSupportActionBar(binding.inscriptionToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24)
-
+        fillingDateSpinner(fechasDeInicio)
         getCursos()
 
         binding.inscriptionSpinnerCourses.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -72,16 +77,41 @@ class InscriptionActivity : AppCompatActivity() {
         }
 
         binding.inscriptionButton.setOnClickListener {
-            showingMessageAndSending("Inscripción", "Los datos de la inscripción son los siguientes: \n" +
-                    "\n" +
-                    "\t-Curso: ${binding.inscriptionSpinnerCourses.selectedItem}" +
-                    "\n" +
-                    "\t-Turno: ${binding.inscriptionSpinnerTime.selectedItem}"+
-                    "\n" +
-                    "¿Desea continuar?")
+            val cursoSeleccionado = cursos[binding.inscriptionSpinnerCourses.selectedItemPosition]
+            val datosInscripcion = getInscriptionData(cursoSeleccionado)
+            val courseFull = verifingIfCourseFull(cursoSeleccionado)
+            val checkDate = verifingDates(datosInscripcion)
+            if (courseFull){
+                showSnackbar("El curso cuenta con vacantes llenas.")
+            }
+            else if (checkDate){
+                showSnackbar("Esta fecha de inicio ya ha vencido, seleccione otra")
+            }
+            else{
+                runOnUiThread{
+                    showingMessageAndSending("Inscripción", "Los datos de la inscripción son los siguientes: \n" +
+                            "\n" +
+                            "\t-Curso: ${binding.inscriptionSpinnerCourses.selectedItem}" +
+                            "\n" +
+                            "\t-Turno: ${binding.inscriptionSpinnerTime.selectedItem}"+
+                            "\n" +
+                            "\t-Fecha de inicio:${binding.inscriptionSpinnerDate.selectedItem}"+
+                            "\n"+
+                            "¿Desea continuar?",
+                        datosInscripcion)
+                }
+            }
+
         }
 
         setContentView(binding.root)
+    }
+
+    private fun verifingDates(inscriptionData: InscripcionDetallada): Boolean {
+        val formatterFechaInscripcion = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val fechaInicio = LocalDate.parse(inscriptionData.fechaInicio, formatterFechaInscripcion)
+        val fechaInscripcion = LocalDate.parse(inscriptionData.fechaInscripcion, formatterFechaInscripcion)
+        return fechaInicio <= fechaInscripcion
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -167,7 +197,11 @@ class InscriptionActivity : AppCompatActivity() {
                         = retrofit.create(ApiService::class.java).listarInscripcionesByCursoId(codCurso)
 
                 if(response.isSuccessful){
-                    inscripcionesPorCurso = response.body() as MutableList<Inscripcion>
+                    response.body()?.forEach {
+                        if (it.estado){
+                            inscripcionesPorCurso.add(it)
+                        }
+                    }
                 }
                 else{
                     Log.e("INSCRIPTION_BY_COURSE", "NOOOOOOO")
@@ -179,30 +213,31 @@ class InscriptionActivity : AppCompatActivity() {
         }
     }
 
-    /*private fun verifingIfCourseFull(inscripcionObjetos: InscripcionObjetos){
-        val fechaHoy = Date()
-        val otraFechaHoy = Date()
-        Log.i("FECHA", "${fechaHoy > otraFechaHoy}")
-        if (inscripcionObjetos.curso.cantidadAlumnos <= inscripcionesPorCurso.size.toByte()){
 
+    private fun verifingIfCourseFull( cursoSeleccionado : Curso) : Boolean{
+        getInscriptionsByCourse(cursoSeleccionado.codCurso)
+        if (inscripcionesPorCurso.size >= cursoSeleccionado.cantidadAlumnos){
+            showSnackbar("El curso cuenta con las vacantes completas, por favor realice la inscripción en otro momento")
+            return true
         }
-    }*/
+        return false
+    }
 
-    private fun getInscriptionData(): InscripcionDetallada {
-        val cursoSeleccionado = cursos[binding.inscriptionSpinnerCourses.selectedItemPosition]
-        val formater = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    private fun getInscriptionData(cursoSeleccionado: Curso): InscripcionDetallada {
+        val formater = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val formatterInscripcion = SimpleDateFormat("yyyy-MM-dd")
         val codAlumno = codAlum
         val codCurso = cursoSeleccionado.codCurso
-        val fechaInicio = "2023-11-01"
-        val fechaInscripcion = LocalDate.parse("2023-10-29", formater)
+        val fechaInicio = LocalDate.parse(binding.inscriptionSpinnerDate.selectedItem.toString(), formater)
+        val fechaInscripcion = formatterInscripcion.format(Date())
         val fechaFinal =
-            LocalDate.parse(fechaInicio, formater).plusWeeks(cursoSeleccionado.duracion.toLong())
+            fechaInicio.plusWeeks(cursoSeleccionado.duracion.toLong())
 
         return InscripcionDetallada(
             codAlumno,
             codCurso,
             false,
-            fechaInicio,
+            fechaInicio.toString(),
             fechaFinal.toString(),
             fechaInscripcion.toString()
         )
@@ -219,18 +254,23 @@ class InscriptionActivity : AppCompatActivity() {
         binding.inscriptionSpinnerTime.adapter = adapterTurnos
     }
 
+    private fun fillingDateSpinner(fechasDeInicio : List<String>){
+        val adapterFechas = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fechasDeInicio)
+        binding.inscriptionSpinnerDate.adapter = adapterFechas
+    }
+
     private fun fillingFrecuencyCourse(curso : Curso){
         binding.inscriptionTextFrecuency.text = curso.frecuencia.toString()
     }
 
-    private fun showingMessageAndSending(titulo: String, mensaje : String){
+    private fun showingMessageAndSending(titulo: String, mensaje : String, datosInscripcion : InscripcionDetallada){
         val mensajeEmergente = AlertDialog.Builder(this)
 
         mensajeEmergente.apply {
             setTitle(titulo)
             setMessage(mensaje)
             setPositiveButton("SI") { _: DialogInterface?, _: Int ->
-                sendInscription(getInscriptionData())
+                sendInscription(datosInscripcion)
             }
             setNegativeButton("NO"){ _: DialogInterface?, _: Int ->
 
@@ -245,6 +285,10 @@ class InscriptionActivity : AppCompatActivity() {
         var intent = Intent(this@InscriptionActivity, MainActivity::class.java)
         intent.putExtra("codAlum", codAlum)
         startActivity(intent)
+    }
+
+    private fun showSnackbar(text : String){
+        this.runOnUiThread { Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show() }
     }
 
 

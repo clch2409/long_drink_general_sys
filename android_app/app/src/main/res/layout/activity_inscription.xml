@@ -79,16 +79,40 @@
         app:layout_constraintHorizontal_bias="0.25"
         tools:listitem=""/>
 
+
+    <!--**** Seleccionar fecha de inicio del curso ****-->
+
+    <TextView
+        android:id="@+id/inscription_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:labelFor="@+id/inscription_spinner_time"
+        android:text="Seleccione la fecha de iniciodel curso:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_spinner_time" />
+
+    <Spinner
+        android:id="@+id/inscription_spinner_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/inscription_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        tools:listitem=""/>
+
     <!--**** Seleccionar la frecuencia ****-->
     <TextView
         android:id="@+id/inscription_frecuency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/inscription_spinner_time"
+        app:layout_constraintTop_toBottomOf="@+id/inscription_spinner_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="55sp"
-        android:labelFor="@+id/inscription_spinner_courses"
         android:text="Frecuencia del curso"
         app:layout_constraintHorizontal_bias="0.2"/>
 
@@ -104,11 +128,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintHorizontal_bias="0.179"
         app:layout_constraintStart_toEndOf="@+id/inscription_frecuency"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.495"
-        tools:listitem="" />
+        app:layout_constraintVertical_bias="0.624"/>
 
     <Button
         android:id="@+id/inscription_button"

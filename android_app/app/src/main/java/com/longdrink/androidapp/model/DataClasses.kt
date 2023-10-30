@@ -111,7 +111,7 @@ data class InscripcionDetallada(
 )
 
 data class InscripcionObjetos(
-    @SerializedName("inscripcion") var inscripcion: Inscripcion = Inscripcion(),
+    @SerializedName("inscripcion") var inscripcion: InscripcionDetallada = InscripcionDetallada(),
     @SerializedName("curso") var curso: Curso = Curso(),
-    @SerializedName("alumno") var profesor : Profesor = Profesor(),
+    @SerializedName("profesor") var profesor : Profesor = Profesor(),
 )

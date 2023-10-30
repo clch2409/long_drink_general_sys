@@ -35,7 +35,7 @@ class NoCourseFragment : Fragment() {
 
         binding = FragmentNoCourseBinding.inflate(inflater)
 
-        Picasso.get().load("https://iconos8.es/icon/gCWKzO-Ww9oS/cara-pensante").into(binding.noCourseImage)
+        Picasso.get().load("https://images.pexels.com/photos/1806900/pexels-photo-1806900.jpeg?auto=compress&cs=tinysrgb&w=600").into(binding.noCourseImage)
         return binding.root
     }
 

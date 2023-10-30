@@ -29,6 +29,8 @@ class CoursesViewHolder(view: View, private var codAlum : Long) : RecyclerView.V
             putExtra("courseName", curso.descripcion)
             putExtra("price", curso.mensualidad)
             putExtra("image", curso.imagen)
+            putExtra("duration", curso.duracion)
+            putExtra("frecuency", curso.frecuencia)
             putExtra("codAlum", codAlum)
         }
         ContextCompat.startActivity(this.itemView.context, intent, null)

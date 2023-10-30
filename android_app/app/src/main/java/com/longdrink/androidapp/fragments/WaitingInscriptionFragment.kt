@@ -30,7 +30,7 @@ class WaitingInscriptionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentWaitingInscriptionBinding.inflate(inflater)
-        Picasso.get().load("https://iconos8.es/icon/15181/se%C3%B1al-de-stop").into(binding.waitingInscriptionImage)
+        Picasso.get().load("https://images.pexels.com/photos/7327772/pexels-photo-7327772.jpeg?auto=compress&cs=tinysrgb&w=600").into(binding.waitingInscriptionImage)
         return binding.root
     }
 

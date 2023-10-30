@@ -44,9 +44,13 @@ class CourseDescriptionActivity : AppCompatActivity() {
         courseData.descripcion = intent.getStringExtra("courseName").toString()
         courseData.mensualidad = intent.getDoubleExtra("price", 0.0)
         courseData.imagen = intent.getStringExtra("image").toString()
+        courseData.duracion = intent.getByteExtra("duration", 0)
+        courseData.frecuencia = intent.getStringExtra("frecuency").toString()
 
         binding.courseDescriptionName.text = courseData.descripcion
-        binding.courseDescriptionPrice.text = courseData.mensualidad.toString()
+        binding.courseDescriptionPrice.text = "Mensualidad: ${courseData.mensualidad.toString()}"
+        binding.courseDescriptionDuration.text = "Duración: ${courseData.duracion} semanas"
+        binding.courseDescriptionFrecuency.text = "Frecuencia: ${courseData.frecuencia}"
         Picasso.get().load(courseData.imagen).into(binding.courseDescriptionImage)
         binding.courseDescriptionInscription.setOnClickListener { sendToInscription() }
     }

@@ -24,7 +24,6 @@ class RegisterPasswordsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterPasswordsBinding
     private lateinit var sendData : RegisterSendData
     private lateinit var recivedData : RegisterSendData
-    private lateinit var nombreUsuario : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         /** Decirle a Cristian que al momento del registro haga un envío del nombre de usuario del alumno*/

@@ -34,7 +34,7 @@ class CoursesViewPagerAdapter(
     private var codAlum : Long
 ) : FragmentStateAdapter(fragmentManager, lifecycle){
     override fun getItemCount(): Int {
-        return 3
+        return 2
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -44,7 +44,7 @@ class CoursesViewPagerAdapter(
             var fragment = CoursesFragment()
             fragment.arguments = bundle
             fragment
-        } else if (position == 1) {
+        } else{
             if (hasInscription) {
                 if(!inscription.estado){
                     WaitingInscriptionFragment()
@@ -60,8 +60,8 @@ class CoursesViewPagerAdapter(
                 NoCourseFragment()
             }
 
-        } else{
+        } /*else{
             MyAccountFragment()
-        }
+        }*/
     }
 }

@@ -9,19 +9,12 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  sesionIniciada = false;
   rol = '';
   constructor(private storageService: StorageService,private router: Router) { }
   ngOnInit(): void {
-    this.comprobarSesion();
+    this.storageService.comprobarSesion();
+    this.rol = this.storageService.obtenerRol();
   }
-  comprobarSesion(): void{
-    if(this.storageService.sesionIniciada()){
-      this.sesionIniciada = true;
-      this.rol = this.storageService.obtenerUsuario().rol;
-  }
-  else{
-    this.router.navigate(['/']);
-  };
-  }
+
 }
+

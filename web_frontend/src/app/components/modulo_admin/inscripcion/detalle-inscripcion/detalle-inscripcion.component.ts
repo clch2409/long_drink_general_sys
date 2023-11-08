@@ -11,28 +11,18 @@ import Swal from 'sweetalert2';
   styleUrls: ['./detalle-inscripcion.component.css']
 })
 export class DetalleInscripcionComponent implements OnInit {
-  sesionIniciada = false;
-  rol = '';
   detalle: DetalleInscripcion = new DetalleInscripcion();
   codAlum?: number;
   codCurso?: number;
   estado = ''
   constructor(private storageService: StorageService, private router: Router, private inscripcionService: InscripcionService, private route: ActivatedRoute) { }
   ngOnInit(): void {
-    this.comprobarSesion();
+    this.storageService.comprobarSesion();
+    this.storageService.denegarAcceso('ALUMNOyDOCENTE');
     this.codAlum = this.route.snapshot.params['codalum']
     this.codCurso = this.route.snapshot.params['codcurso']
     this.obtenerDetalles();
     
-  }
-
-  comprobarSesion(): void {
-    if (this.storageService.sesionIniciada()) {
-      this.sesionIniciada = true;
-      this.rol = this.storageService.obtenerUsuario().rol;
-    } else {
-      this.router.navigate(['/']);
-    }
   }
 
   obtenerDetalles(): void{

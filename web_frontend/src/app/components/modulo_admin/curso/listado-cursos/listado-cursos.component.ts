@@ -10,12 +10,11 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./listado-cursos.component.css']
 })
 export class ListadoCursosComponent implements OnInit {
-  sesionIniciada = false;
-  rol = '';
   cursos: Curso[] = [];
   constructor(private storageService: StorageService,private router: Router,private cursoService: CursoService) { }
   ngOnInit(): void {
-      this.comprobarSesion();
+      this.storageService.comprobarSesion();
+      this.storageService.denegarAcceso('ALUMNOyDOCENTE');
       this.obtenerCursos();
   }
 
@@ -29,13 +28,4 @@ export class ListadoCursosComponent implements OnInit {
     });
   }
 
-  comprobarSesion(): void{
-    if(this.storageService.sesionIniciada()){
-      this.sesionIniciada = true;
-      this.rol = this.storageService.obtenerUsuario().rol;
-  }
-  else{
-    this.router.navigate(['/']);
-  };
-}
 }

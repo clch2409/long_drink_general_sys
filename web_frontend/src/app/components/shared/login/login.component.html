@@ -1,0 +1,40 @@
+<body class="vh-100 bg-light-subtle">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto">
+          <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+            <div class="card-img-left d-none d-md-flex" style="background: scroll center url({{enlaceImagen}}); background-size: cover; ">
+            </div>
+            <div class="card-body p-4 p-sm-5">
+              <h5 class="card-title text-center mb-5 fw-light fs-5">INICIO DE SESIÓN</h5>
+              <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+  
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" name="nombreUsuario"
+                  autofocus placeholder="Usuario" required [(ngModel)]="loginData.nombreUsuario">
+                  <label for="floatingInputUsername">Usuario</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" name="contrasena" placeholder="Contraseña" required
+                   [(ngModel)]="loginData.contrasena">
+                  <label for="floatingPassword">Contraseña</label>
+                </div>
+
+                <div class="d-grid mb-2">
+                  <button class="btn btn-lg btn-success btn-login fw-bold text-uppercase" type="submit">Ingresar</button>
+                </div>
+
+                <div class="d-grid mb-2">
+                    <button class="btn btn-lg btn-secondary btn-login fw-bold text-uppercase" type="button" (click)="limpiarCampos()">Limpiar</button>
+                </div>
+                <hr>
+                <a class="d-block text-center mt-2 small" (click)="enProgreso()">¿Problemas para iniciar sesión? Click aquí</a>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>

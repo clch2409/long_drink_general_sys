@@ -18,17 +18,9 @@ export class ListadoProfesoresComponent implements OnInit {
   filtroEstado = 'activos';
   constructor(private storageService: StorageService, private router: Router, private profesorService: ProfesorService) { }
   ngOnInit(): void {
-      this.comprobarSesion();
+      this.storageService.comprobarSesion();
+      this.storageService.denegarAcceso('ALUMNOyDOCENTE');
       this.getProfesoresActivos();
-  }
-
-  comprobarSesion(): void {
-    if (this.storageService.sesionIniciada()) {
-      this.sesionIniciada = true;
-      this.rol = this.storageService.obtenerUsuario().rol;
-    } else {
-      this.router.navigate(['/']);
-    }
   }
 
   getProfesoresActivos(): void{

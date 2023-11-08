@@ -32,16 +32,18 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/dashboard']);
       }
       if(this.sesionIniciada == true && this.rol === 'DOCENTE'){
-        this.intentoFallido = true;
-        this.mensajeError = 'Error! Su cuenta no tiene los permisos necesarios para iniciar sesión en esta área. Comuniquese con administración.'
-        this.mostrarMensaje(this.mensajeError);
-        this.storageService.limpiarCredenciales();
+        this.router.navigate(['/dashboard']);
+        //this.intentoFallido = true;
+        //this.mensajeError = 'Error! Su cuenta no tiene los permisos necesarios para iniciar sesión en esta área. Comuniquese con administración.'
+        //this.mostrarMensaje(this.mensajeError);
+        //this.storageService.limpiarCredenciales();
       }
       if(this.sesionIniciada == true && this.rol === 'ALUMNO'){
-        this.intentoFallido = true;
-        this.mensajeError = 'Error! Su cuenta no tiene los permisos necesarios para iniciar sesión en esta área. Usted debe iniciar sesión desde su App Movil "Long Drink".'
-        this.mostrarMensaje(this.mensajeError);
-        this.storageService.limpiarCredenciales();
+        this.router.navigate(['/dashboard']);
+        //this.intentoFallido = true;
+        //this.mensajeError = 'Error! Su cuenta no tiene los permisos necesarios para iniciar sesión en esta área. Usted debe iniciar sesión desde su App Movil "Long Drink".'
+        //this.mostrarMensaje(this.mensajeError);
+        //this.storageService.limpiarCredenciales();
       }
   }
 
@@ -84,4 +86,24 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
+  enProgreso(): void{
+    Swal.fire('Ups!',"Trabajo en progreso",'info');
+  }
+  
+  imagenesLogin = [
+    "https://i.imgur.com/EjSEAEc.jpg",
+    "https://i.imgur.com/AdyE4jy.jpg",
+    "https://i.imgur.com/PkOSD0J.jpg",
+    "https://i.imgur.com/ybFGJt8.jpg",
+    "https://i.imgur.com/6xFoaQJ.jpg",
+    "https://i.imgur.com/iHD2exV.jpg",
+    "https://i.imgur.com/APbzr19.jpg",
+    "https://i.imgur.com/NMsWNJy.jpg",
+    "https://i.imgur.com/3TSkszZ.jpg",
+    "https://i.imgur.com/E7p3wQB.jpg"
+  ]
+
+  enlaceImagen = this.imagenesLogin[Math.floor(Math.random() * this.imagenesLogin.length)];
+  
 }

@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Profesor } from 'src/app/models/profesor.model';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-nuevo-profesor',
   templateUrl: './nuevo-profesor.component.html',
   styleUrls: ['./nuevo-profesor.component.css']
 })
-export class NuevoProfesorComponent {
+export class NuevoProfesorComponent implements OnInit{
   profesor: Profesor;
   fechaContratacionFormatted: string;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private storageService: StorageService) {
     this.profesor = new Profesor();
     this.fechaContratacionFormatted = this.formatDate(new Date());
+  }
+
+  ngOnInit(): void {
+    this.storageService.comprobarSesion();
+    this.storageService.denegarAcceso('ALUMNOyDOCENTE');
   }
 
   formatDate(date: Date): string {

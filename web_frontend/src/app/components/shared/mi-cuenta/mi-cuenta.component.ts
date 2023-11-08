@@ -10,12 +10,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./mi-cuenta.component.css']
 })
 export class MiCuentaComponent implements OnInit {
-  sesionIniciada = false;
-  rol = '';
   
   constructor(private storageService: StorageService, private router: Router, private authService: AuthService) { }
   ngOnInit(): void {
-    this.comprobarSesion();
+    this.storageService.comprobarSesion();
     let username = document.getElementById("nombreUsuario") as HTMLInputElement;
     let nombre = document.getElementById("nombre") as HTMLInputElement;
     let email = document.getElementById("email") as HTMLInputElement;
@@ -97,13 +95,4 @@ export class MiCuentaComponent implements OnInit {
     emailNuevoInput.value = '';
   }  
 
-  comprobarSesion(): void {
-    if (this.storageService.sesionIniciada()) {
-      this.sesionIniciada = true;
-      this.rol = this.storageService.obtenerUsuario().rol;
-    }
-    else {
-      this.router.navigate(['/']);
-    };
-  }
 }

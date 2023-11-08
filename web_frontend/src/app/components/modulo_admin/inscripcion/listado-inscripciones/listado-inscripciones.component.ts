@@ -15,8 +15,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./listado-inscripciones.component.css']
 })
 export class ListadoInscripcionesComponent {
-  sesionIniciada = false;
-  rol = '';
   inscripciones: Inscripcion[] = [];
   cursos: Curso[] = [];
   comboBoxSeleccionado: string = 'porCurso';
@@ -27,7 +25,8 @@ export class ListadoInscripcionesComponent {
   constructor(private storageService: StorageService, private router: Router, private inscripcionService: InscripcionService, private cursoService: CursoService, private alumnoService: AlumnoService) { }
 
   ngOnInit(): void {
-    this.comprobarSesion();
+    this.storageService.comprobarSesion();
+    this.storageService.denegarAcceso('ALUMNOyDOCENTE');
     this.getInscripcionesPendientes();
   }
 
@@ -205,15 +204,6 @@ export class ListadoInscripcionesComponent {
 
   getAlumnoCod(codAlum: number): any {
     return this.alumnoService.getAlumnoCod(codAlum);
-  }
-
-  comprobarSesion(): void {
-    if (this.storageService.sesionIniciada()) {
-      this.sesionIniciada = true;
-      this.rol = this.storageService.obtenerUsuario().rol;
-    } else {
-      this.router.navigate(['/']);
-    }
   }
 
   filtrarInscripciones(): void {

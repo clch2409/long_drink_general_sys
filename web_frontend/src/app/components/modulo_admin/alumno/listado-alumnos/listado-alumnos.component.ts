@@ -10,14 +10,13 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./listado-alumnos.component.css']
 })
 export class ListadoAlumnosComponent implements OnInit {
-  sesionIniciada = false;
-  rol = '';
   alumnos: Alumno[] = [];
   criterioSeleccionado = '';
 
   constructor(private storageService: StorageService, private router: Router, private alumnoService: AlumnoService) { }
   ngOnInit(): void {
-    this.comprobarSesion();
+    this.storageService.comprobarSesion();
+    this.storageService.denegarAcceso('ALUMNOyDOCENTE');
     this.getAlumnosActivos();
 
   }
@@ -59,12 +58,4 @@ export class ListadoAlumnosComponent implements OnInit {
     });
   }
 
-  comprobarSesion(): void {
-    if (this.storageService.sesionIniciada()) {
-      this.sesionIniciada = true;
-      this.rol = this.storageService.obtenerUsuario().rol;
-    } else {
-      this.router.navigate(['/']);
-    }
-  }
 }

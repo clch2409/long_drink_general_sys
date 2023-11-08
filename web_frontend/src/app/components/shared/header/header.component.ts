@@ -8,14 +8,12 @@ import Swal from 'sweetalert2';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-
   constructor(private storageService: StorageService) { }
 
-  miCuenta(): void{
-    Swal.fire('Trabajo en Progreso...')
-  }
+  rol = this.storageService.obtenerRol();
 
   cerrarSesion(): void {
     this.storageService.cerrarSesion();
   }
+
 }

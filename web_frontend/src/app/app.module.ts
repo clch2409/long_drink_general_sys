@@ -16,6 +16,15 @@ import { ListadoProfesoresComponent } from './components/modulo_admin/profesor/l
 import { NuevoProfesorComponent } from './components/modulo_admin/profesor/nuevo-profesor/nuevo-profesor.component';
 import { DetalleInscripcionComponent } from './components/modulo_admin/inscripcion/detalle-inscripcion/detalle-inscripcion.component';
 import { MiCuentaComponent } from './components/shared/mi-cuenta/mi-cuenta.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenav, MatSidenavContainer, MatSidenavModule } from '@angular/material/sidenav';
+import { RouterModule } from '@angular/router';
+import { MatListItemIcon, MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon'
+import { MatCommonModule } from '@angular/material/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -30,13 +39,22 @@ import { MiCuentaComponent } from './components/shared/mi-cuenta/mi-cuenta.compo
     ListadoProfesoresComponent,
     NuevoProfesorComponent,
     DetalleInscripcionComponent,
-    MiCuentaComponent
+    MiCuentaComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    RouterModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatCommonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

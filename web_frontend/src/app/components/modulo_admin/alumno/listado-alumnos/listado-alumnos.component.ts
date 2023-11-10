@@ -13,12 +13,13 @@ export class ListadoAlumnosComponent implements OnInit {
   alumnos: Alumno[] = [];
   criterioSeleccionado = '';
 
+  columnas: string[] = ['codAlumno','apellidoPaterno','apellidoMaterno','nombre','dni','telefono','activo','acciones']
+
   constructor(private storageService: StorageService, private router: Router, private alumnoService: AlumnoService) { }
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     this.storageService.denegarAcceso('ALUMNOyDOCENTE');
     this.getAlumnosActivos();
-
   }
 
   onSelected(indice: string): void{

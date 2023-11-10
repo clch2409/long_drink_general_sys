@@ -16,6 +16,8 @@ export class ListadoProfesoresComponent implements OnInit {
   profesores: Profesor[] = [];
   filtroDni: string = '';
   filtroEstado = 'activos';
+  columnas: string[] = ['codProfesor','nombresApellidos','dni','telefono','fechaContrato','activo','acciones']
+
   constructor(private storageService: StorageService, private router: Router, private profesorService: ProfesorService) { }
   ngOnInit(): void {
       this.storageService.comprobarSesion();

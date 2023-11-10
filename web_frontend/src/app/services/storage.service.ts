@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 const USER_DATA = 'auth-user';
 
@@ -7,7 +8,7 @@ const USER_DATA = 'auth-user';
 })
 export class StorageService {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   limpiarCredenciales(): void {
     window.sessionStorage.clear();
@@ -49,18 +50,18 @@ export class StorageService {
   public denegarAcceso(criterio: string): void {
     //Caso: Denegar acceso a alumnos y docentes (Módulo administrativo)
     if(criterio === 'ALUMNOyDOCENTE'){
-      if(this.obtenerRol() === 'ALUMNO'){ window.location.href = '/'; } //Redirigir a módulo de alumno.
-      if(this.obtenerRol() === 'DOCENTE'){ window.location.href = '/'; } //Redirigir a módulo de docente.
+      if(this.obtenerRol() === 'ALUMNO'){ this.router.navigate(['/a']); } //Redirigir a módulo de alumno.
+      if(this.obtenerRol() === 'DOCENTE'){ this.router.navigate(['/p']); } //Redirigir a módulo de docente.
     }
     //Caso: Denegar acceso a administradores y docentes (Módulo alumno)
     if(criterio === 'ADMINISTRADORyDOCENTE'){
-      if(this.obtenerRol() === 'ADMINISTRADOR'){ window.location.href = '/'; }
-      if(this.obtenerRol() === 'DOCENTE'){ window.location.href = '/'; } 
+      if(this.obtenerRol() === 'ADMINISTRADOR'){ this.router.navigate(['/']); }
+      if(this.obtenerRol() === 'DOCENTE'){ this.router.navigate(['/p']); } 
     }
     //Caso: Denegar acceso a administradores y alumnos (Módulo docente)
     if(criterio === 'ADMINISTRADORyALUMNO'){
-      if(this.obtenerRol() === 'ADMINISTRADOR'){ window.location.href = '/'; }
-      if(this.obtenerRol() === 'ALUMNO'){ window.location.href = '/'; }
+      if(this.obtenerRol() === 'ADMINISTRADOR'){ this.router.navigate(['/']); }
+      if(this.obtenerRol() === 'ALUMNO'){ this.router.navigate(['/a']); }
     }
     }
   

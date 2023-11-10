@@ -1,4 +1,65 @@
-<div class="container">
+<div class="container d-flex align-items-center py-4">
+    <table mat-table [dataSource]="cursos" class="mat-elevation-z8">
+        <ng-container matColumnDef="codCurso">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Código</th>
+            <td mat-cell *matCellDef="let c"> {{c.codCurso}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Descripción</th>
+            <td mat-cell *matCellDef="let c"> {{c.descripcion}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="mensualidad">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Mensualidad</th>
+            <td mat-cell *matCellDef="let c"> {{c.mensualidad}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="duracion">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Duración</th>
+            <td mat-cell *matCellDef="let c"> {{c.duracion}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="profesor">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Profesor</th>
+            <td mat-cell *matCellDef="let c"> {{ c.profesor?.nombre }} {{ c.profesor?.apellidoPaterno }} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="turnos">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Turnos</th>
+            <td mat-cell *matCellDef="let c"> 
+                <span *ngFor="let turno of c.turnos">
+                    {{ turno.nombre }} ({{ turno.horaInicio }} - {{ turno.horaFin }})
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="capacidadAlumnos">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Capacidad Alumnos</th>
+            <td mat-cell *matCellDef="let c"> {{c.cantidadAlumnos}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Acciones</th>
+            <td mat-cell *matCellDef="let c"> 
+                <ng-container>
+                    <button mat-mini-fab class="me-2 bg-secondary">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-mini-fab class="bg-danger">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                </ng-container>
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    </table>
+</div>
+
+
+<!----<div class="container">
     <div class="d-flex justify-content-center">
         <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Cursos</h1>
     </div>
@@ -13,7 +74,6 @@
                     <th class="fw-bold align-middle">Frecuencia</th>
                     <th class="fw-bold align-middle">Profesor</th>
                     <th class="fw-bold align-middle">Turnos</th>
-                    <!---<th class="fw-bold align-middle">Temas</th>-->
                     <th class="fw-bold align-middle">Capacidad de Alumnos</th>
                     <th class="fw-bold align-middle">Herramientas</th>
                 </tr>
@@ -35,13 +95,6 @@
                             </li>
                         </ul>
                     </td>
-                    <!-----<td class="fw-medium align-middle">
-                        <ul>
-                            <li *ngFor="let tema of curso.temas">
-                                {{ tema.nombre }} - {{ tema.ficha }}
-                            </li>
-                        </ul>
-                    </td>---->
                     <td class="fw-medium align-middle">{{ curso.cantidadAlumnos }}</td>
                     <td class="d-flex justify-content-center align-items-center">
                         <button type="button" class="btn btn-success mx-2 fw-bold">DETALLES</button>
@@ -51,4 +104,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</div>---->

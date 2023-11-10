@@ -47,6 +47,10 @@
 				<mat-icon>description</mat-icon><span>Inscripciones</span>
 			</mat-list-item>
 
+			<mat-list-item>
+				<span>{{rol}}</span>
+			</mat-list-item>
+
 			<mat-list-item [routerLink]="['/dashboard','mi-cuenta']">
 				<mat-icon>description</mat-icon><span>Mi Cuenta</span>
 			</mat-list-item>
@@ -61,20 +65,16 @@
 		<!------------------------------INICIO DE BARRA LATERAL ALUMNO--------------------------------->
 		<mat-nav-list *ngIf="rol == 'ALUMNO';">
 
-			<mat-expansion-panel [class.mat-elevation-z0]="true">
-				<mat-expansion-panel-header>
-					<mat-icon>groups</mat-icon>
-					Desplegable
-				</mat-expansion-panel-header>
-				<mat-nav-list>
-					<a mat-list-item href="#">
-						<span>Listado</span>
-					</a>
-				</mat-nav-list>
-			</mat-expansion-panel>
+			<mat-list-item [routerLink]="['/a','mis-cursos']">
+				<mat-icon>book</mat-icon><span>Mis Cursos</span>
+			</mat-list-item>
 
 			<mat-list-item [routerLink]="['/dashboard','mi-cuenta']">
 				<mat-icon>description</mat-icon><span>Mi Cuenta</span>
+			</mat-list-item>
+
+			<mat-list-item>
+				<span>{{rol}}</span>
 			</mat-list-item>
 
 			<mat-list-item (click)="cerrarSesion()">
@@ -86,20 +86,16 @@
 		<!------------------------------INICIO DE BARRA LATERAL DOCENTE--------------------------------->
 		<mat-nav-list *ngIf="rol == 'DOCENTE';">
 
-			<mat-expansion-panel [class.mat-elevation-z0]="true">
-				<mat-expansion-panel-header>
-					<mat-icon>groups</mat-icon>
-					Alumnos
-				</mat-expansion-panel-header>
-				<mat-nav-list>
-					<a mat-list-item href="#">
-						<span>Listado</span>
-					</a>
-				</mat-nav-list>
-			</mat-expansion-panel>
+			<mat-list-item [routerLink]="['/p','mis-cursos']">
+				<mat-icon>book</mat-icon><span>Mis Cursos</span>
+			</mat-list-item>
 
 			<mat-list-item [routerLink]="['/dashboard','mi-cuenta']">
 				<mat-icon>description</mat-icon><span>Mi Cuenta</span>
+			</mat-list-item>
+
+			<mat-list-item>
+				<span>{{rol}}</span>
 			</mat-list-item>
 
 			<mat-list-item (click)="cerrarSesion()">

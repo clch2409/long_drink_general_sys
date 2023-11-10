@@ -9,6 +9,10 @@ import { ListadoProfesoresComponent } from './components/modulo_admin/profesor/l
 import { NuevoProfesorComponent } from './components/modulo_admin/profesor/nuevo-profesor/nuevo-profesor.component';
 import { DetalleInscripcionComponent } from './components/modulo_admin/inscripcion/detalle-inscripcion/detalle-inscripcion.component';
 import { MiCuentaComponent } from './components/shared/mi-cuenta/mi-cuenta.component';
+import { MisCursosComponent } from './components/modulo_alumnos/mis-cursos/mis-cursos.component';
+import { DetalleCursoAlumnoComponent } from './components/modulo_alumnos/detalle-curso-alumno/detalle-curso-alumno.component';
+import { MisCursosProfesorComponent } from './components/modulo_profesores/mis-cursos-profesor/mis-cursos-profesor.component';
+import { DetalleCursoProfesorComponent } from './components/modulo_profesores/detalle-curso-profesor/detalle-curso-profesor.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, title: 'Long Drink - Inicio de Sesión' },
@@ -22,6 +26,14 @@ const routes: Routes = [
   { path: 'mi-cuenta', component: MiCuentaComponent, title: 'Long Drink - Mi Cuenta' },
   ]
   },  
+  { path: 'a', component: DashboardComponent, title: 'Long Drink - Área Estudiantil', children: [
+    { path: 'mis-cursos', component: MisCursosComponent, title: 'Long Drink - Mis Cursos' },
+    { path: 'mi-curso', component: DetalleCursoAlumnoComponent, title: 'Long Drink - Curso: xxxx'},
+  ]},
+  { path: 'p', component: DashboardComponent, title: 'Long Drink - Área Docente', children: [
+    { path: 'mis-cursos', component: MisCursosProfesorComponent, title: 'Long Drink - Mis Cursos' },
+    { path: 'mi-curso', component: DetalleCursoProfesorComponent, title: 'Long Drink - Curso: xxxx'},
+  ]}
 ];
 
 @NgModule({

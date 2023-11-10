@@ -11,6 +11,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class ListadoCursosComponent implements OnInit {
   cursos: Curso[] = [];
+  columnas: string[] = ['codCurso','descripcion','mensualidad','duracion','profesor','turnos','capacidadAlumnos','acciones']
   constructor(private storageService: StorageService,private router: Router,private cursoService: CursoService) { }
   ngOnInit(): void {
       this.storageService.comprobarSesion();

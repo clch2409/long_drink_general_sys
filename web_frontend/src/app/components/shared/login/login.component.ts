@@ -32,14 +32,14 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/dashboard']);
       }
       if(this.sesionIniciada == true && this.rol === 'DOCENTE'){
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/p']);
         //this.intentoFallido = true;
         //this.mensajeError = 'Error! Su cuenta no tiene los permisos necesarios para iniciar sesión en esta área. Comuniquese con administración.'
         //this.mostrarMensaje(this.mensajeError);
         //this.storageService.limpiarCredenciales();
       }
       if(this.sesionIniciada == true && this.rol === 'ALUMNO'){
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/a']);
         //this.intentoFallido = true;
         //this.mensajeError = 'Error! Su cuenta no tiene los permisos necesarios para iniciar sesión en esta área. Usted debe iniciar sesión desde su App Movil "Long Drink".'
         //this.mostrarMensaje(this.mensajeError);

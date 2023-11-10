@@ -25,6 +25,12 @@ import { MatCommonModule } from '@angular/material/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { DetalleCursoAdminComponent } from './components/modulo_admin/curso/detalle-curso-admin/detalle-curso-admin.component';
+import { MisCursosComponent } from './components/modulo_alumnos/mis-cursos/mis-cursos.component';
+import { DetalleCursoAlumnoComponent } from './components/modulo_alumnos/detalle-curso-alumno/detalle-curso-alumno.component';
+import { MisCursosProfesorComponent } from './components/modulo_profesores/mis-cursos-profesor/mis-cursos-profesor.component';
+import { DetalleCursoProfesorComponent } from './components/modulo_profesores/detalle-curso-profesor/detalle-curso-profesor.component';
+import { MatTableModule } from '@angular/material/table' 
 
 @NgModule({
   declarations: [
@@ -40,6 +46,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
     NuevoProfesorComponent,
     DetalleInscripcionComponent,
     MiCuentaComponent,
+    DetalleCursoAdminComponent,
+    MisCursosComponent,
+    DetalleCursoAlumnoComponent,
+    MisCursosProfesorComponent,
+    DetalleCursoProfesorComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +65,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatCommonModule,
     MatToolbarModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,6 +2,7 @@ package com.longdrink.rest_api.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
@@ -37,14 +38,19 @@ public class Turno implements Serializable {
     @ManyToMany(mappedBy = "turnos")
     private List<Curso> cursos;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "turno")
+    private List<Inscripcion> inscripciones;
+
     public Turno(){}
 
-    public Turno(Long codTurno, String nombre, Date horaInicio, Date horaFin, List<Curso> cursos) {
+    public Turno(Long codTurno, String nombre, Date horaInicio, Date horaFin, List<Curso> cursos, List<Inscripcion> inscripciones) {
         this.codTurno = codTurno;
         this.nombre = nombre;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.cursos = cursos;
+        this.inscripciones = inscripciones;
     }
 
     public Long getCodTurno() {
@@ -85,5 +91,13 @@ public class Turno implements Serializable {
 
     public void setCursos(List<Curso> cursos) {
         this.cursos = cursos;
+    }
+
+    public List<Inscripcion> getInscripciones() {
+        return inscripciones;
+    }
+
+    public void setInscripciones(List<Inscripcion> inscripciones) {
+        this.inscripciones = inscripciones;
     }
 }

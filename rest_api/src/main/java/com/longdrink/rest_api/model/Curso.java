@@ -1,5 +1,6 @@
 package com.longdrink.rest_api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +17,8 @@ public class Curso implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("codCurso")
     private Long codCurso;
-
+    @Column(length = 100)
+    private String nombre;
     @Column(length = 150)
     private String descripcion;
 
@@ -54,14 +56,16 @@ public class Curso implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "cod_tema"))
     private List<Tema> temas;
 
+    @JsonBackReference
     @JsonIgnore
     @OneToMany(mappedBy = "curso")
     private List<Inscripcion> inscripciones;
 
     public Curso(){}
 
-    public Curso(Long codCurso, String descripcion, double mensualidad, byte duracion, byte cantidadAlumnos, boolean visibilidad, String frecuencia, String imagen, Profesor profesor, List<Turno> turnos, List<Tema> temas, List<Inscripcion> inscripciones) {
+    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, byte cantidadAlumnos, boolean visibilidad, String frecuencia, String imagen, Profesor profesor, List<Turno> turnos, List<Tema> temas, List<Inscripcion> inscripciones) {
         this.codCurso = codCurso;
+        this.nombre = nombre;
         this.descripcion = descripcion;
         this.mensualidad = mensualidad;
         this.duracion = duracion;
@@ -169,5 +173,13 @@ public class Curso implements Serializable {
 
     public void setInscripciones(List<Inscripcion> inscripciones) {
         this.inscripciones = inscripciones;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

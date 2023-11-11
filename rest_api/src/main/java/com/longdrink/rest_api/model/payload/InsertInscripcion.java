@@ -1,7 +1,6 @@
 package com.longdrink.rest_api.model.payload;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.longdrink.rest_api.model.InscripcionPk;
 
 import java.util.Date;
 

@@ -1,12 +1,7 @@
 package com.longdrink.rest_api.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.longdrink.rest_api.model.Alumno;
-import com.longdrink.rest_api.model.Curso;
 import com.longdrink.rest_api.model.Inscripcion;
-import com.longdrink.rest_api.model.InscripcionPk;
 import com.longdrink.rest_api.model.payload.DetalleInscripcion;
-import com.longdrink.rest_api.model.payload.InsertInscripcion;
 import com.longdrink.rest_api.model.payload.Mensaje;
 import com.longdrink.rest_api.services.AlumnoService;
 import com.longdrink.rest_api.services.CursoService;
@@ -17,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/inscripcion")
@@ -95,8 +88,8 @@ public class InscripcionController {
         }
         return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
     }
-
-    @PostMapping() //Diseñado para app Movil. --- TODO: A rediseñar segun fecha de finalizacion? - Se inserta sin fecha de terminado y con estado false para posterior confirmacion en Web.
+    /* TODO: Eliminar en próximos días.
+    @PostMapping() //Diseñado para app Movil.
     public ResponseEntity<?> agregarInscripcion(@RequestBody InsertInscripcion ins){
         Alumno alumno = alumnoService.getPorCod(ins.getCodAlumno());
         Curso curso = cursoService.getPorCod(ins.getCodCurso());
@@ -122,13 +115,13 @@ public class InscripcionController {
                     new Mensaje("Error! Ha sucedido un error en el guardado de datos.", 500),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    } */
 
+    /* TODO: Eliminar en próximos días.
     @PostMapping("/confirmar_inscripcion")
-    public ResponseEntity<?> confirmarInscripcion(@RequestParam Long codAlumno, @RequestParam Long codCurso){
-        InscripcionPk pk = new InscripcionPk(codAlumno,codCurso);
+    public ResponseEntity<?> confirmarInscripcion(@RequestParam Long codInscripcion){
         try{
-            Inscripcion ins = inscripcionService.buscarPorPk(pk).get();
+            Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion).get();
             ins.setEstado(true);
             inscripcionService.guardar(ins);
             return new ResponseEntity<>(ins,HttpStatus.OK);
@@ -138,13 +131,13 @@ public class InscripcionController {
                     new Mensaje("Error! Datos de inscripción no encontrados.", 404),
                     HttpStatus.NOT_FOUND);
         }
-    }
+    } */
 
+    /* TODO: Eliminar en próximos días.
     @PostMapping("/rechazar_inscripcion")
-    public ResponseEntity<?> rechazarInscripcion(@RequestParam Long codAlumno, @RequestParam Long codCurso){
-        InscripcionPk pk = new InscripcionPk(codAlumno,codCurso);
+    public ResponseEntity<?> rechazarInscripcion(@RequestParam Long codInscripcion){
         try{
-            Inscripcion ins = inscripcionService.buscarPorPk(pk).get();
+            Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion).get();
             ins.setEstado(false);
             ins.setFechaTerminado(ins.getFechaInscripcion());
             inscripcionService.guardar(ins);
@@ -155,13 +148,12 @@ public class InscripcionController {
                     new Mensaje("Error! Datos de inscripción no encontrados.", 404),
                     HttpStatus.NOT_FOUND);
         }
-    }
+    } */
 
     @GetMapping("/detalle")
-    public ResponseEntity<?> detalleInscripcion(@RequestParam Long codAlumno, @RequestParam Long codCurso){
-        InscripcionPk pk = new InscripcionPk(codAlumno,codCurso);
+    public ResponseEntity<?> detalleInscripcion(@RequestParam Long codInscripcion){
         try{
-            Inscripcion ins = inscripcionService.buscarPorPk(pk).get();
+            Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion).get();
             DetalleInscripcion retorno = new DetalleInscripcion();
             BeanUtils.copyProperties(retorno,ins.getAlumno());
             BeanUtils.copyProperties(retorno,ins.getCurso());
@@ -175,5 +167,4 @@ public class InscripcionController {
         }
     }
 
-    //TODO : Confirmar inscripcion desde web. ----->> "Eliminar" Inscripcion ( Desde web, marcar como false estado para cancelar inscripcion y permitir mas alumnos  ** Ergo, alumno tiro la toalla. )
 }

@@ -66,6 +66,13 @@
 			<version>6.1.5</version>
 		</dependency>
 		<!--Fin: BCrypt-->
+		<!--Inicio: E-Mail-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+		<!--Fin: E-Mail-->
 	</dependencies>
 
 	<build>

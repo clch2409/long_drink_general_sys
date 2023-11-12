@@ -230,3 +230,4 @@ e2e/*.map
 #Images
 *.jpg
 *.png
+rest_api/src/main/resources/application.properties

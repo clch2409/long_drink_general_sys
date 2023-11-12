@@ -231,3 +231,4 @@ e2e/*.map
 *.jpg
 *.png
 rest_api/src/main/resources/application.properties
+rest_api/src/main/resources/application.properties

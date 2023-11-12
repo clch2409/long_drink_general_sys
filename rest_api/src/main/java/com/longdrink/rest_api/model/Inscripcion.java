@@ -45,7 +45,7 @@ public class Inscripcion implements Serializable {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codAlumno")
     @JsonIdentityReference(alwaysAsId = true)
     //@JsonManagedReference
-    @MapsId("codAlumno")
+    //@MapsId("codAlumno") ->> TODO.
     @ManyToOne
     @JoinColumn(name = "cod_alumno")
     private Alumno alumno;
@@ -53,14 +53,14 @@ public class Inscripcion implements Serializable {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codCurso")
     @JsonIdentityReference(alwaysAsId = true)
     @JsonManagedReference
-    @MapsId("codCurso")
+    //@MapsId("codCurso") ->> TODO.
     @ManyToOne
     @JoinColumn(name = "cod_curso")
     private Curso curso;
 
 
     @JsonManagedReference
-    @MapsId("codTurno")
+    //@MapsId("codTurno") ->> TODO.
     @ManyToOne
     @JoinColumn(name = "cod_turno")
     private Turno turno;
@@ -91,6 +91,18 @@ public class Inscripcion implements Serializable {
         this.estado = estado;
         this.alumno = alumno;
         this.curso = curso;
+    }
+
+    public Inscripcion(Long codInscripcion, Date fechaInicio, Date fechaFinal, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Curso curso, Turno turno) {
+        this.codInscripcion = codInscripcion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+        this.fechaInscripcion = fechaInscripcion;
+        this.fechaTerminado = fechaTerminado;
+        this.estado = estado;
+        this.alumno = alumno;
+        this.curso = curso;
+        this.turno = turno;
     }
 
     public Long getCodInscripcion() {

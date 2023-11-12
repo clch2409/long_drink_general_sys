@@ -14,6 +14,8 @@ public class TurnoService {
 
     public List<Turno> listarTurnos(){ return (List<Turno>) turnoDAO.findAll(); }
 
+    public List<Turno> listarTurnoPorCurso(Long codCurso){ return turnoDAO.findAllByCursosCodCurso(codCurso); }
+
     public Turno guardar(Turno t){
         t.setCodTurno(0L);
         return turnoDAO.save(t);
@@ -22,4 +24,5 @@ public class TurnoService {
     public Turno actualizar(Turno t){
         return turnoDAO.save(t);
     }
+
 }

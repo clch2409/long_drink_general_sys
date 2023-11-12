@@ -4,6 +4,7 @@ import com.longdrink.rest_api.model.Inscripcion;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +21,10 @@ public interface IInscripcionDAO extends CrudRepository<Inscripcion,Long> {
     @Query("SELECT I FROM Inscripcion I WHERE I.estado = false AND I.fechaTerminado = null")
     List<Inscripcion> findAllByPendiente();
 
-    List<Inscripcion> findAllByEstadoAndCursoCodCurso(boolean Estado, Long CodCurso);
+    List<Inscripcion> findAllByEstadoAndCursoCodCurso(boolean estado, Long CodCurso);
 
     Optional<Inscripcion> findByCodInscripcion(Long codInscripcion);
+
+    List<Inscripcion> findAllByEstadoAndFechaTerminadoAndCursoCodCurso(boolean estado, Date fechaTerminado, Long codCurso);
 
 }

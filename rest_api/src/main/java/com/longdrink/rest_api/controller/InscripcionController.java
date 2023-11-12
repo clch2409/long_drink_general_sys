@@ -166,5 +166,6 @@ public class InscripcionController {
                     HttpStatus.NOT_FOUND);
         }
     }
+    //TODO: Matricular alumno ya registrado, el cual termino curso anterior.
 
 }

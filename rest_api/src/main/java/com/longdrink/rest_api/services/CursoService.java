@@ -1,7 +1,9 @@
 package com.longdrink.rest_api.services;
 
 import com.longdrink.rest_api.dao.ICursoDAO;
+import com.longdrink.rest_api.dao.IInscripcionDAO;
 import com.longdrink.rest_api.model.Curso;
+import com.longdrink.rest_api.model.Inscripcion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,9 @@ import java.util.List;
 public class CursoService {
     @Autowired
     private ICursoDAO cursoDAO;
+
+    @Autowired
+    private IInscripcionDAO inscripcionDAO;
 
     public List<Curso> listarCursos(){ return (List<Curso>) cursoDAO.findAll(); }
 
@@ -42,5 +47,27 @@ public class CursoService {
         }
         catch(Exception ex){ return false; }
         return false;
+    }
+
+    //Comprobar curso con vacantes libres.
+    public boolean cursoLleno(Long codCurso){
+        List<Inscripcion> listaInscripciones = inscripcionDAO.findAllByEstadoAndFechaTerminadoAndCursoCodCurso(true,null,codCurso);
+        if(listaInscripciones.isEmpty()){ //Lista vacia.
+            return false; //El curso no esta lleno.
+        }
+        else{
+            try{
+                int c = 0;
+                Curso curso = cursoDAO.findById(codCurso).get();
+                for(Inscripcion i : listaInscripciones){
+                    c++;
+                }
+                if(c < curso.getCantidadAlumnos()){
+                    return false;
+                }
+                else{ return true; }
+            }
+            catch(Exception ex){ return false; } //Curso con vacantes disponibles o no existente.
+        }
     }
 }

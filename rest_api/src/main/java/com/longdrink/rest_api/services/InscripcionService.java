@@ -5,6 +5,7 @@ import com.longdrink.rest_api.model.Inscripcion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,5 +48,9 @@ public class InscripcionService {
 
     public Optional<Inscripcion> buscarPorPk(Long codInscripcion){
         return inscripcionDAO.findByCodInscripcion(codInscripcion);
+    }
+
+    public List<Inscripcion> listarPorEstado_FechaTerminado_Curso(boolean estado, Date fechaTerminado, Long codCurso){
+        return inscripcionDAO.findAllByEstadoAndFechaTerminadoAndCursoCodCurso(estado,fechaTerminado,codCurso);
     }
 }

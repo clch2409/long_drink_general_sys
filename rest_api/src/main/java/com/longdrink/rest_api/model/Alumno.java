@@ -49,6 +49,10 @@ public class Alumno implements Serializable {
 
     public Alumno(){}
 
+    public Alumno(Long codAlumno){
+        this.codAlumno = codAlumno;
+    }
+
     public Alumno(Long codAlumno, String nombre, String apellidoPaterno, String apellidoMaterno, String dni, String telefono, boolean activo, Usuario usuario, List<Inscripcion> inscripciones, List<Pago> pagos) {
         this.codAlumno = codAlumno;
         this.nombre = nombre;

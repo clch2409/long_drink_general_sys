@@ -1,7 +1,6 @@
 package com.longdrink.rest_api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -40,12 +39,21 @@ public class Alumno implements Serializable {
     @JoinColumn(name = "cod_usuario")
     private Usuario usuario;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codInscripcion")
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(mappedBy = "alumno")
     private List<Inscripcion> inscripciones;
 
+    @OneToMany(mappedBy = "alumno")
+    private List<Pago> pagos;
+
     public Alumno(){}
 
-    public Alumno(Long codAlumno, String nombre, String apellidoPaterno, String apellidoMaterno, String dni, String telefono, boolean activo, Usuario usuario, List<Inscripcion> inscripciones) {
+    public Alumno(Long codAlumno){
+        this.codAlumno = codAlumno;
+    }
+
+    public Alumno(Long codAlumno, String nombre, String apellidoPaterno, String apellidoMaterno, String dni, String telefono, boolean activo, Usuario usuario, List<Inscripcion> inscripciones, List<Pago> pagos) {
         this.codAlumno = codAlumno;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -55,6 +63,7 @@ public class Alumno implements Serializable {
         this.activo = activo;
         this.usuario = usuario;
         this.inscripciones = inscripciones;
+        this.pagos = pagos;
     }
 
     public Alumno(Long codAlumno, String nombre, String apellidoPaterno, String apellidoMaterno, String dni, String telefono, boolean activo, Usuario usuario) {
@@ -138,5 +147,13 @@ public class Alumno implements Serializable {
 
     public void setInscripciones(List<Inscripcion> inscripciones) {
         this.inscripciones = inscripciones;
+    }
+
+    public List<Pago> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(List<Pago> pagos) {
+        this.pagos = pagos;
     }
 }

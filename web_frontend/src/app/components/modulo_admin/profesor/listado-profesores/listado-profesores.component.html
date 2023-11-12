@@ -1,0 +1,73 @@
+<div class="container py-4">
+    <div class="mb-1 d-flex justify-content-between">
+        <div>
+            <label for="dni" class="fw-bold me-2 form-label">Buscar Por DNI</label>
+            <input autofocus type="text" [(ngModel)]="filtroDni" class="fw-medium me-2">
+            <button class="fw-bold btn btn-warning me-5" (click)="buscarPorDNI()">Buscar</button>
+            <label for="filtro" class="form-label fw-bold me-2">Filtrar Por</label>
+            <select id="filtro" class="fw-medium me-2" [(ngModel)]="filtroEstado" (ngModelChange)="filtrarProfesores()">
+                <option value="activos">Lista Activos</option>
+                <option value="general">Lista General</option>
+            </select>
+        </div>
+        <a class="btn btn-primary mb-3 fw-bold" [routerLink]="['/dashboard/nuevo-docente']">Agregar Nuevo Profesor</a>
+    </div>
+
+    <div class="container d-flex align-items-center py-1 px-4">
+        <table mat-table [dataSource]="profesores" class="mat-elevation-z8">
+            <ng-container matColumnDef="codProfesor">
+                <th mat-header-cell *matHeaderCellDef class="text-dark">Código</th>
+                <td mat-cell *matCellDef="let p"> {{p.codProfesor}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="nombresApellidos">
+                <th mat-header-cell *matHeaderCellDef class="text-dark">Nombres y Apellidos</th>
+                <td mat-cell *matCellDef="let p"> {{p.nombre}} {{p.apellidoPaterno}} {{p.apellidoMaterno}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="dni">
+                <th mat-header-cell *matHeaderCellDef class="text-dark">DNI</th>
+                <td mat-cell *matCellDef="let p"> {{p.dni}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="telefono">
+                <th mat-header-cell *matHeaderCellDef class="text-dark">Teléfono</th>
+                <td mat-cell *matCellDef="let p"> {{p.telefono}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="fechaContrato">
+                <th mat-header-cell *matHeaderCellDef class="text-dark">Fecha Contratación</th>
+                <td mat-cell *matCellDef="let p"> {{p.fechaContratacion}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="activo">
+                <th mat-header-cell *matHeaderCellDef class="text-dark">Estado</th>
+                <td mat-cell *matCellDef="let p"> 
+                    <ng-container *ngIf="p.activo == true"; >
+                        <span class="text-success fw-bold">ACTIVO</span>
+                    </ng-container>
+                    <ng-container *ngIf="p.activo == false"; class="text-danger">
+                        <span class="text-danger fw-bold">INACTIVO</span>
+                    </ng-container>
+        
+                 </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef class="text-dark">Acciones</th>
+                <td mat-cell *matCellDef="let a"> 
+                    <ng-container>
+                        <button mat-mini-fab class="me-2 bg-secondary">
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                          <button mat-mini-fab class="bg-danger">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                    </ng-container>
+                </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+        </table>
+</div>

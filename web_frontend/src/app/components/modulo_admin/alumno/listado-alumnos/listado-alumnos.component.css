@@ -1,0 +1,25 @@
+table {
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #031a3a;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #b7c9e2;
+}

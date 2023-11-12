@@ -1,17 +1,17 @@
 package com.longdrink.rest_api.dao;
 
 import com.longdrink.rest_api.model.Inscripcion;
-import com.longdrink.rest_api.model.InscripcionPk;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public interface IInscripcionDAO extends CrudRepository<Inscripcion,InscripcionPk> {
-    List<Inscripcion> findAllByInscripcionPkCodAlumno(Long codAlumno);
+public interface IInscripcionDAO extends CrudRepository<Inscripcion,Long> {
+    List<Inscripcion> findAllByAlumnoCodAlumno(Long codAlumno);
 
-    List<Inscripcion> findAllByInscripcionPkCodCurso(Long codCurso);
+    List<Inscripcion> findAllByCursoCodCurso(Long codCurso);
 
     List<Inscripcion> findAllByAlumnoDni(String dni);
 
@@ -21,8 +21,10 @@ public interface IInscripcionDAO extends CrudRepository<Inscripcion,InscripcionP
     @Query("SELECT I FROM Inscripcion I WHERE I.estado = false AND I.fechaTerminado = null")
     List<Inscripcion> findAllByPendiente();
 
-    List<Inscripcion> findAllByEstadoAndInscripcionPkCodCurso(boolean Estado, Long CodCurso);
+    List<Inscripcion> findAllByEstadoAndCursoCodCurso(boolean estado, Long CodCurso);
 
-    Optional<Inscripcion> findByInscripcionPk(InscripcionPk inscripcionPk);
+    Optional<Inscripcion> findByCodInscripcion(Long codInscripcion);
+
+    List<Inscripcion> findAllByEstadoAndFechaTerminadoAndCursoCodCurso(boolean estado, Date fechaTerminado, Long codCurso);
 
 }

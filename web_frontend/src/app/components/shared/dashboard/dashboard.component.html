@@ -1,0 +1,113 @@
+<mat-toolbar color="primary" class="example-toolbar">
+	<button mat-icon-button color="secondary"><mat-icon>local_bar</mat-icon></button>
+	<h1 class="example-app-name">Long Drink</h1>
+</mat-toolbar>
+<mat-sidenav-container class="example-container" autosize>
+	<mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true">
+		<!------------------------------INICIO DE BARRA LATERAL ADMINISTRATIVA--------------------------------->
+		<mat-nav-list *ngIf="rol == 'ADMINISTRADOR';">
+			
+			<mat-expansion-panel [class.mat-elevation-z0]="true">
+				<mat-expansion-panel-header>
+					<mat-icon>groups</mat-icon>
+					Alumnos
+				</mat-expansion-panel-header>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'alumnos']">
+						<span>Listado</span>
+					</a>
+				</mat-nav-list>
+			</mat-expansion-panel>
+
+			<mat-expansion-panel [class.mat-elevation-z0]="true">
+				<mat-expansion-panel-header>
+					<mat-icon>book</mat-icon>
+					Cursos
+				</mat-expansion-panel-header>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'cursos']">
+						<span>Listado</span>
+					</a>
+				</mat-nav-list>
+			</mat-expansion-panel>
+
+			<mat-expansion-panel [class.mat-elevation-z0]="true">
+				<mat-expansion-panel-header>
+					<mat-icon>person</mat-icon>
+					Docentes
+				</mat-expansion-panel-header>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'docentes']">
+						<span>Listado</span>
+					</a>
+				</mat-nav-list>
+			</mat-expansion-panel>
+
+			<mat-list-item [routerLink]="['/dashboard', 'inscripciones']">
+				<mat-icon>description</mat-icon><span>Inscripciones</span>
+			</mat-list-item>
+
+			<mat-list-item>
+				<span>{{rol}}</span>
+			</mat-list-item>
+
+			<mat-list-item [routerLink]="['/dashboard','mi-cuenta']">
+				<mat-icon>description</mat-icon><span>Mi Cuenta</span>
+			</mat-list-item>
+
+			<mat-list-item (click)="cerrarSesion()">
+				<mat-icon>logout</mat-icon><span>Cerrar Sesión</span>
+			</mat-list-item>
+
+		</mat-nav-list>
+		<!------------------------------FIN DE BARRA LATERAL ADMINISTRATIVA--------------------------------->
+
+		<!------------------------------INICIO DE BARRA LATERAL ALUMNO--------------------------------->
+		<mat-nav-list *ngIf="rol == 'ALUMNO';">
+
+			<mat-list-item [routerLink]="['/a','mis-cursos']">
+				<mat-icon>book</mat-icon><span>Mis Cursos</span>
+			</mat-list-item>
+
+			<mat-list-item [routerLink]="['/dashboard','mi-cuenta']">
+				<mat-icon>description</mat-icon><span>Mi Cuenta</span>
+			</mat-list-item>
+
+			<mat-list-item>
+				<span>{{rol}}</span>
+			</mat-list-item>
+
+			<mat-list-item (click)="cerrarSesion()">
+				<mat-icon>logout</mat-icon><span>Cerrar Sesión</span>
+			</mat-list-item>
+
+		</mat-nav-list>
+		<!------------------------------FIN DE BARRA LATERAL ALUMNO--------------------------------->
+		<!------------------------------INICIO DE BARRA LATERAL DOCENTE--------------------------------->
+		<mat-nav-list *ngIf="rol == 'DOCENTE';">
+
+			<mat-list-item [routerLink]="['/p','mis-cursos']">
+				<mat-icon>book</mat-icon><span>Mis Cursos</span>
+			</mat-list-item>
+
+			<mat-list-item [routerLink]="['/dashboard','mi-cuenta']">
+				<mat-icon>description</mat-icon><span>Mi Cuenta</span>
+			</mat-list-item>
+
+			<mat-list-item>
+				<span>{{rol}}</span>
+			</mat-list-item>
+
+			<mat-list-item (click)="cerrarSesion()">
+				<mat-icon>logout</mat-icon><span>Cerrar Sesión</span>
+			</mat-list-item>
+
+		</mat-nav-list>
+		<!------------------------------FIN DE BARRA LATERAL DOCENTE--------------------------------->
+	</mat-sidenav>
+
+	<div class="example-sidenav-content">
+		<router-outlet></router-outlet> <!----Saludos de parte del router outlet.-->
+	</div>
+
+</mat-sidenav-container>

@@ -2,10 +2,10 @@ package com.longdrink.rest_api.services;
 
 import com.longdrink.rest_api.dao.IInscripcionDAO;
 import com.longdrink.rest_api.model.Inscripcion;
-import com.longdrink.rest_api.model.InscripcionPk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,11 +14,11 @@ public class InscripcionService {
     @Autowired
     private IInscripcionDAO inscripcionDAO;
     public List<Inscripcion> listarPorAlumno(Long codAlumno){
-        return inscripcionDAO.findAllByInscripcionPkCodAlumno(codAlumno);
+        return inscripcionDAO.findAllByAlumnoCodAlumno(codAlumno);
     }
 
     public List<Inscripcion> listarPorCurso(Long codCurso){
-        return inscripcionDAO.findAllByInscripcionPkCodCurso(codCurso);
+        return inscripcionDAO.findAllByCursoCodCurso(codCurso);
     }
 
     public List<Inscripcion> listarPorEstado(){
@@ -29,7 +29,7 @@ public class InscripcionService {
 
     public List<Inscripcion> listarInscripciones(){ return (List<Inscripcion>) inscripcionDAO.findAll(); }
 
-    public List<Inscripcion> listarPorEstado_Curso(boolean estado, Long codCurso){ return inscripcionDAO.findAllByEstadoAndInscripcionPkCodCurso(estado,codCurso); }
+    public List<Inscripcion> listarPorEstado_Curso(boolean estado, Long codCurso){ return inscripcionDAO.findAllByEstadoAndCursoCodCurso(estado,codCurso); }
 
     public List<Inscripcion> listarPorDniAlumno(String dni){ return inscripcionDAO.findAllByAlumnoDni(dni); }
 
@@ -46,7 +46,11 @@ public class InscripcionService {
         return inscripcionDAO.save(i);
     }
 
-    public Optional<Inscripcion> buscarPorPk(InscripcionPk inscripcionPk){
-        return inscripcionDAO.findByInscripcionPk(inscripcionPk);
+    public Optional<Inscripcion> buscarPorPk(Long codInscripcion){
+        return inscripcionDAO.findByCodInscripcion(codInscripcion);
+    }
+
+    public List<Inscripcion> listarPorEstado_FechaTerminado_Curso(boolean estado, Date fechaTerminado, Long codCurso){
+        return inscripcionDAO.findAllByEstadoAndFechaTerminadoAndCursoCodCurso(estado,fechaTerminado,codCurso);
     }
 }

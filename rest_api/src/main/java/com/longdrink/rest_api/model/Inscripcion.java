@@ -1,18 +1,20 @@
 package com.longdrink.rest_api.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "Inscripcion")
 @Table(name = "inscripcion")
 public class Inscripcion implements Serializable {
-    @EmbeddedId
-    private InscripcionPk inscripcionPk;
+    @Id
+    @Column(name = "cod_inscripcion")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("codInscripcion")
+    private Long codInscripcion;
 
     @Column(name = "fecha_inicio")
     @Temporal(TemporalType.DATE)
@@ -40,22 +42,36 @@ public class Inscripcion implements Serializable {
 
     private boolean estado;
 
-    @JsonIgnore
-    @MapsId("codAlumno")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codAlumno")
+    @JsonIdentityReference(alwaysAsId = true)
+    //@JsonManagedReference
+    //@MapsId("codAlumno") ->> TODO.
     @ManyToOne
     @JoinColumn(name = "cod_alumno")
     private Alumno alumno;
 
-    @JsonIgnore
-    @MapsId("codCurso")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codCurso")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonManagedReference
+    //@MapsId("codCurso") ->> TODO.
     @ManyToOne
     @JoinColumn(name = "cod_curso")
     private Curso curso;
 
+
+    @JsonManagedReference
+    //@MapsId("codTurno") ->> TODO.
+    @ManyToOne
+    @JoinColumn(name = "cod_turno")
+    private Turno turno;
+
+    @OneToMany(mappedBy = "inscripcion")
+    private List<Asistencia> asistencias;
+
     public Inscripcion(){}
 
-    public Inscripcion(InscripcionPk inscripcionPk, Date fechaInicio, Date fechaFinal, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Curso curso) {
-        this.inscripcionPk = inscripcionPk;
+    public Inscripcion(Long codInscripcion, Date fechaInicio, Date fechaFinal, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Curso curso, Turno turno, List<Asistencia> asistencias) {
+        this.codInscripcion = codInscripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.fechaInscripcion = fechaInscripcion;
@@ -63,6 +79,8 @@ public class Inscripcion implements Serializable {
         this.estado = estado;
         this.alumno = alumno;
         this.curso = curso;
+        this.turno = turno;
+        this.asistencias = asistencias;
     }
 
     public Inscripcion(Date fechaInicio, Date fechaFinal, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Curso curso) {
@@ -75,12 +93,24 @@ public class Inscripcion implements Serializable {
         this.curso = curso;
     }
 
-    public InscripcionPk getInscripcionPk() {
-        return inscripcionPk;
+    public Inscripcion(Long codInscripcion, Date fechaInicio, Date fechaFinal, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Curso curso, Turno turno) {
+        this.codInscripcion = codInscripcion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+        this.fechaInscripcion = fechaInscripcion;
+        this.fechaTerminado = fechaTerminado;
+        this.estado = estado;
+        this.alumno = alumno;
+        this.curso = curso;
+        this.turno = turno;
     }
 
-    public void setInscripcionPk(InscripcionPk inscripcionPk) {
-        this.inscripcionPk = inscripcionPk;
+    public Long getCodInscripcion() {
+        return codInscripcion;
+    }
+
+    public void setCodInscripcion(Long codInscripcion) {
+        this.codInscripcion = codInscripcion;
     }
 
     public Date getFechaInicio() {
@@ -137,5 +167,21 @@ public class Inscripcion implements Serializable {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public Turno getTurno() {
+        return turno;
+    }
+
+    public void setTurno(Turno turno) {
+        this.turno = turno;
+    }
+
+    public List<Asistencia> getAsistencias() {
+        return asistencias;
+    }
+
+    public void setAsistencias(List<Asistencia> asistencias) {
+        this.asistencias = asistencias;
     }
 }

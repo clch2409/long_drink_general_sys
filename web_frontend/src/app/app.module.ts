@@ -5,17 +5,32 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ListadoCursosComponent } from './components/curso/listado-cursos/listado-cursos.component';
-import { HeaderComponent } from './components/extras/header/header.component';
-import { ListadoInscripcionesComponent } from './components/inscripcion/listado-inscripciones/listado-inscripciones.component';
-import { NuevoCursoComponent } from './components/curso/nuevo-curso/nuevo-curso.component';
-import { ListadoAlumnosComponent } from './components/alumno/listado-alumnos/listado-alumnos.component';
-import { ListadoProfesoresComponent } from './components/profesor/listado-profesores/listado-profesores.component';
-import { NuevoProfesorComponent } from './components/profesor/nuevo-profesor/nuevo-profesor.component';
-import { DetalleInscripcionComponent } from './components/inscripcion/detalle-inscripcion/detalle-inscripcion.component';
-import { MiCuentaComponent } from './components/extras/mi-cuenta/mi-cuenta.component';
+import { LoginComponent } from './components/shared/login/login.component';
+import { DashboardComponent } from './components/shared/dashboard/dashboard.component';
+import { ListadoCursosComponent } from './components/modulo_admin/curso/listado-cursos/listado-cursos.component';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { ListadoInscripcionesComponent } from './components/modulo_admin/inscripcion/listado-inscripciones/listado-inscripciones.component';
+import { NuevoCursoComponent } from './components/modulo_admin/curso/nuevo-curso/nuevo-curso.component';
+import { ListadoAlumnosComponent } from './components/modulo_admin/alumno/listado-alumnos/listado-alumnos.component';
+import { ListadoProfesoresComponent } from './components/modulo_admin/profesor/listado-profesores/listado-profesores.component';
+import { NuevoProfesorComponent } from './components/modulo_admin/profesor/nuevo-profesor/nuevo-profesor.component';
+import { DetalleInscripcionComponent } from './components/modulo_admin/inscripcion/detalle-inscripcion/detalle-inscripcion.component';
+import { MiCuentaComponent } from './components/shared/mi-cuenta/mi-cuenta.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenav, MatSidenavContainer, MatSidenavModule } from '@angular/material/sidenav';
+import { RouterModule } from '@angular/router';
+import { MatListItemIcon, MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon'
+import { MatCommonModule } from '@angular/material/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { DetalleCursoAdminComponent } from './components/modulo_admin/curso/detalle-curso-admin/detalle-curso-admin.component';
+import { MisCursosComponent } from './components/modulo_alumnos/mis-cursos/mis-cursos.component';
+import { DetalleCursoAlumnoComponent } from './components/modulo_alumnos/detalle-curso-alumno/detalle-curso-alumno.component';
+import { MisCursosProfesorComponent } from './components/modulo_profesores/mis-cursos-profesor/mis-cursos-profesor.component';
+import { DetalleCursoProfesorComponent } from './components/modulo_profesores/detalle-curso-profesor/detalle-curso-profesor.component';
+import { MatTableModule } from '@angular/material/table' 
 
 @NgModule({
   declarations: [
@@ -30,13 +45,28 @@ import { MiCuentaComponent } from './components/extras/mi-cuenta/mi-cuenta.compo
     ListadoProfesoresComponent,
     NuevoProfesorComponent,
     DetalleInscripcionComponent,
-    MiCuentaComponent
+    MiCuentaComponent,
+    DetalleCursoAdminComponent,
+    MisCursosComponent,
+    DetalleCursoAlumnoComponent,
+    MisCursosProfesorComponent,
+    DetalleCursoProfesorComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    RouterModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatCommonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatExpansionModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

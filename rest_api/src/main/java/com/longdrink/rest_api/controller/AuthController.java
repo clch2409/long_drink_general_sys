@@ -1,20 +1,16 @@
 package com.longdrink.rest_api.controller;
 
-import com.longdrink.rest_api.model.Alumno;
-import com.longdrink.rest_api.model.Profesor;
-import com.longdrink.rest_api.model.Rol;
-import com.longdrink.rest_api.model.Usuario;
+import com.longdrink.rest_api.model.*;
 import com.longdrink.rest_api.model.payload.*;
-import com.longdrink.rest_api.services.AlumnoService;
-import com.longdrink.rest_api.services.ProfesorService;
-import com.longdrink.rest_api.services.UsuarioService;
-import org.apache.commons.beanutils.BeanUtils;
+import com.longdrink.rest_api.services.*;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,52 +21,16 @@ public class AuthController {
     private UsuarioService usuarioService;
     @Autowired
     private ProfesorService profesorService;
-
+    @Autowired
+    private CursoService cursoService;
+    @Autowired
+    private TurnoService turnoService;
+    @Autowired
+    private InscripcionService inscripcionService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @PostMapping("/registro")
-    public ResponseEntity<?> registroAlumno(@RequestBody RegistroAlumno reg){
-        EmailValidator em = EmailValidator.getInstance();
-        Alumno a = alumnoService.getPorDNI(reg.getDni());
-        Profesor p = profesorService.getPorDNI(reg.getDni());
-        Usuario u = usuarioService.getPorEmail(reg.getEmail());
-        if(a != null || p != null){
-            return new ResponseEntity<>(new Mensaje("Error! El DNI ingresado ya pertenece a una cuenta registrada.",400),
-                    HttpStatus.BAD_REQUEST);
-        }
-        if(u != null){
-            return new ResponseEntity<>(new Mensaje("Error! El E-Mail ingresado ya pertenece a una cuenta registrada.",400),
-                    HttpStatus.BAD_REQUEST);
-        }
-        RegistroAlumno limpiarDatos = reg.limpiarDatos();
-        limpiarDatos.setNombreUsuario(limpiarDatos.generarNombreUsuario());
-        boolean datosValidos = limpiarDatos.validarDatos();
-        limpiarDatos.setContrasena(bCryptPasswordEncoder.encode(limpiarDatos.getContrasena()));
-        boolean emailValido = em.isValid(limpiarDatos.getEmail());
-        if(!datosValidos || !emailValido){
-            return new ResponseEntity<>(new Mensaje("Error! Los datos ingresados no cuentan con el formato requerido.",400),
-                    HttpStatus.BAD_REQUEST);
-        }
-        //Insert de datos.
-        try{
-            Rol r = new Rol(3L,"ALUMNO");
-            Usuario usuario = new Usuario(0L,limpiarDatos.getNombreUsuario(),
-                    limpiarDatos.getContrasena(),limpiarDatos.getEmail(),true,r);
-            Usuario usuarioGuardado = usuarioService.guardar(usuario);
-            Alumno alumno = new Alumno(0L,limpiarDatos.getNombre(),limpiarDatos.getApellidoPaterno(),
-                    limpiarDatos.getApellidoMaterno(),limpiarDatos.getDni(),
-                    limpiarDatos.getTelefono(),true,usuarioGuardado);
-            Alumno alumnoGuardado = alumnoService.guardar(alumno);
-            RetornoAlumno retorno = new RetornoAlumno();
-            BeanUtils.copyProperties(retorno,alumnoGuardado);
-            BeanUtils.copyProperties(retorno,usuarioGuardado);
-            return new ResponseEntity<>(retorno,HttpStatus.CREATED);
-        }
-        catch(Exception ex){
-            return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    @Autowired(required = true)
+    private EmailService emailService;
 
     @PostMapping("/registro_docente")
     public ResponseEntity<?> registroDocente(@RequestBody RegistroDocente reg){
@@ -207,4 +167,70 @@ public class AuthController {
                     HttpStatus.INTERNAL_SERVER_ERROR); //TODO: Tal vez algo falle aqui!
         }
     }
+
+    //TODO: Testear.....
+    @PostMapping("/registro_alumno")
+    public ResponseEntity<?> registroAlumno(@RequestBody RegistroAlumno ra){
+        EmailValidator em = EmailValidator.getInstance();
+        Alumno a = alumnoService.getPorDNI(ra.getDni());
+        Profesor p = profesorService.getPorDNI(ra.getDni());
+        Usuario u = usuarioService.getPorEmail(ra.getEmail());
+        Curso c = cursoService.getPorCod(ra.getCodCurso());
+        List<Turno> listaTurnos = turnoService.listarTurnoPorCurso(c.getCodCurso());
+        boolean cursoLleno = cursoService.cursoLleno(c.getCodCurso()); //Chequear esto...!
+        if(a != null || p != null){
+            return new ResponseEntity<>(new Mensaje("Error! El DNI ingresado ya pertenece a una cuenta registrada.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        if(u != null){
+            return new ResponseEntity<>(new Mensaje("Error! El E-Mail ingresado ya pertenece a una cuenta registrada.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        if(c == null){
+            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no existe!",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        if(listaTurnos.isEmpty()){
+            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no tiene turno asignado!",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        RegistroAlumno limpiarDatos = ra.limpiarDatos();
+        limpiarDatos.setContrasena(limpiarDatos.getDni()+limpiarDatos.getApellidoPaterno().substring(0,1));
+        limpiarDatos.setNombreUsuario(limpiarDatos.generarNombreUsuario());
+        boolean datosValidos = limpiarDatos.validarDatos();
+        limpiarDatos.setContrasena(bCryptPasswordEncoder.encode(limpiarDatos.getDni()+limpiarDatos.getApellidoPaterno().substring(0,1)));
+        boolean emailValido = em.isValid(limpiarDatos.getEmail());
+        if(!datosValidos || !emailValido){
+            return new ResponseEntity<>(new Mensaje("Error! Los datos ingresados no cuentan con el formato requerido.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        if(cursoLleno){
+            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no cuenta con vacantes disponibles.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        //Insert de datos!!.
+        try{
+            //Usuario -> Alumno -> Inscripción
+            Rol r = new Rol(3L,"ALUMNO");
+            Usuario usuario = new Usuario(0L,limpiarDatos.getNombreUsuario(),limpiarDatos.getContrasena(),
+                    limpiarDatos.getEmail(),true,r);
+            Usuario usuarioGuardado = usuarioService.guardar(usuario);
+            Alumno alumno = new Alumno(0L,limpiarDatos.getNombre(),limpiarDatos.getApellidoPaterno(),
+                    limpiarDatos.getApellidoMaterno(),limpiarDatos.getDni(),
+                    limpiarDatos.getTelefono(),true,usuarioGuardado);
+            Alumno alumnoGuardado = alumnoService.guardar(alumno);
+            Inscripcion inscripcion = new Inscripcion(0L,ra.getFechaInicio(),
+                    ra.getFechaFinal(),ra.getFechaInscripcion(),
+                    null,true,new Alumno(alumnoGuardado.getCodAlumno()),
+                    c,listaTurnos.get(0));
+            Inscripcion inscripcionGuardada = inscripcionService.guardar(inscripcion);
+            emailService.enviarEmailInscripcion(limpiarDatos,c.getNombre(),c.getFrecuencia(),listaTurnos.get(0));
+            return new ResponseEntity<>(ra,HttpStatus.CREATED);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

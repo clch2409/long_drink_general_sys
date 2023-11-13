@@ -14,6 +14,8 @@ public class TemaService {
 
     public List<Tema> listarTemas(){ return (List<Tema>) temaDAO.findAll(); }
 
+    public List<Tema> listarTemasPorCurso(Long codCurso){ return temaDAO.findAllByCursosCodCurso(codCurso); }
+
     public Tema guardar(Tema t){
         t.setCodTema(0L);
         return temaDAO.save(t);

@@ -28,6 +28,16 @@ public class TemaController {
         return new ResponseEntity<>(listaTemas,HttpStatus.OK);
     }
 
+    @GetMapping("/por_curso")
+    public ResponseEntity<?> getPorCurso(@RequestParam Long codCurso){
+        List<Tema> listaTemas = temaService.listarTemasPorCurso(codCurso);
+        if(listaTemas.isEmpty()){
+            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no tiene temas asociados.",404),
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(listaTemas,HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> post(@RequestBody InsertTema t){
         if(!(t.getNombre().length() >= 1 && t.getNombre().length() <=30 && t.getFicha().length() >=1)) {

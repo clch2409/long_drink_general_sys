@@ -16,10 +16,11 @@ public class ProfesorService {
 
     public List<Profesor> listarActivos(){ return profesorDAO.findAllByActivo(); }
 
+    public List<Profesor> listarActivosNoAsignados(){ return profesorDAO.findActivosNoAsignados(); }
+
     public Profesor getPorCod(Long cod){
         try{
-            Profesor p = profesorDAO.findById(cod).get();
-            return p;
+            return profesorDAO.findById(cod).get();
         }
         catch(Exception ex){ return null; }
     }

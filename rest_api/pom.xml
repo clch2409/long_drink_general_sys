@@ -73,6 +73,13 @@
 			<version>3.1.2</version>
 		</dependency>
 		<!--Fin: E-Mail-->
+		<!--Inicio: Utilidades-->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+		</dependency>
+		<!--Fin: Utilidades-->
 	</dependencies>
 
 	<build>

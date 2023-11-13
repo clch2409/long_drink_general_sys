@@ -53,4 +53,8 @@ public class InscripcionService {
     public List<Inscripcion> listarPorEstado_FechaTerminado_Curso(boolean estado, Date fechaTerminado, Long codCurso){
         return inscripcionDAO.findAllByEstadoAndFechaTerminadoAndCursoCodCurso(estado,fechaTerminado,codCurso);
     }
+
+    public List<Inscripcion> listarPorEstado_FechaTerminado(boolean estado, Date fechaTerminado){
+        return inscripcionDAO.findAllByEstadoAndFechaTerminado(estado,fechaTerminado);
+    }
 }

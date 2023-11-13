@@ -45,4 +45,14 @@ public class ProfesorController {
         }
         return new ResponseEntity<>(profesor,HttpStatus.OK);
     }
+
+    @GetMapping("/disponibles")
+    public ResponseEntity<?> getActivosDisponibles(){
+        List<Profesor> listadoProfesores = profesorService.listarActivosNoAsignados();
+        if(listadoProfesores.isEmpty()){
+            return new ResponseEntity<>(new Mensaje("Error! No se encontraron profesores activos con cursos no asignados.",404),
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(listadoProfesores,HttpStatus.OK);
+    }
 }

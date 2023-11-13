@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TurnoService {
@@ -15,6 +16,13 @@ public class TurnoService {
     public List<Turno> listarTurnos(){ return (List<Turno>) turnoDAO.findAll(); }
 
     public List<Turno> listarTurnoPorCurso(Long codCurso){ return turnoDAO.findAllByCursosCodCurso(codCurso); }
+
+    public Turno getByCod(Long codTurno){
+        try{
+            return turnoDAO.findById(codTurno).get();
+        }
+        catch(Exception ex){ return null; }
+    }
 
     public Turno guardar(Turno t){
         t.setCodTurno(0L);

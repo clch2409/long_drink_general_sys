@@ -27,4 +27,5 @@ public interface IInscripcionDAO extends CrudRepository<Inscripcion,Long> {
 
     List<Inscripcion> findAllByEstadoAndFechaTerminadoAndCursoCodCurso(boolean estado, Date fechaTerminado, Long codCurso);
 
+    List<Inscripcion> findAllByEstadoAndFechaTerminado(boolean estado, Date fechaTerminado);
 }

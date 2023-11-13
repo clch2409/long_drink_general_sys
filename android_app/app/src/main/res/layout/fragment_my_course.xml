@@ -92,7 +92,17 @@
             android:id="@+id/my_course_framelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/my_course_classes"/>
+            android:layout_below="@id/my_course_classes">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_my_clasess"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/list_item_my_course_classes"/>
+
+        </FrameLayout>
 
 
 

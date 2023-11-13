@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.longdrink.androidapp.R
+import com.longdrink.androidapp.adapters.TemasRecyclerViewAdapter
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.FragmentMyCourseBinding
 import com.longdrink.androidapp.model.Curso
+import com.longdrink.androidapp.model.Tema
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +36,8 @@ class MyCourseFragment : Fragment() {
     private lateinit var retrofit : Retrofit
     private var codCurso : Long = 0
     private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
-    private lateinit var curso : Curso
+    private val listadoTemas : List<Tema> = emptyList()
+    private lateinit var recyclerViewAdapter : TemasRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,11 +53,17 @@ class MyCourseFragment : Fragment() {
 
 
 
-    private fun placeData(){
+    private fun placeData(curso : Curso){
         binding.myCourseName.text = curso.descripcion
         binding.myCourseTeacherName.text = "${curso.profesor.nombre} ${curso.profesor.apellidoPaterno} ${curso.profesor.apellidoMaterno}"
         binding.myCourseScheduleHours.text = "${curso.turnos[0].horaInicio} : ${curso.turnos[0].horaFin}"
         Picasso.get().load(curso.imagen).into(binding.myCourseImage)
+
+        recyclerViewAdapter = TemasRecyclerViewAdapter(curso.temas)
+        binding.recyclerMyClasess.setHasFixedSize(true)
+        binding.recyclerMyClasess.layoutManager = LinearLayoutManager(this.context)
+        binding.recyclerMyClasess.adapter = recyclerViewAdapter
+
     }
 
     private fun getCourseInfo(){
@@ -65,9 +75,8 @@ class MyCourseFragment : Fragment() {
 
                     if (response.body() != null){
                         activity?.runOnUiThread{
-                            curso = response.body()!!
-                            Log.e("CURSO", curso.toString())
-                            placeData()
+                            Log.e("CURSO", response.body()!!.toString())
+                            placeData(response.body()!!)
                         }
                     }
                 }

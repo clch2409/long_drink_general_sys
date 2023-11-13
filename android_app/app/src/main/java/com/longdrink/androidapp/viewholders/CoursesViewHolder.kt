@@ -10,37 +10,38 @@ import com.longdrink.androidapp.InscriptionActivity
 import com.longdrink.androidapp.databinding.FragmentCoursesBinding
 import com.longdrink.androidapp.databinding.ListItemCoursesBinding
 import com.longdrink.androidapp.model.Curso
+import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.squareup.picasso.Picasso
 
 class CoursesViewHolder(view: View, private var codAlum : Long) : RecyclerView.ViewHolder(view) {
 
     private val binding = ListItemCoursesBinding.bind(view)
 
-    fun bind(curso : Curso){
-        binding.courseName.text = curso.descripcion
-        Picasso.get().load(curso.imagen).into(binding.courseImage)
-        binding.courseButtonDetails.setOnClickListener { sendToCourseDetail(curso) }
-        binding.courseButtonInscription.setOnClickListener { sendToInscription(codAlum) }
+    fun bind(cursoTerminado : ListItemCursoTerminado){
+        binding.courseName.text = cursoTerminado.nombre
+        binding.courseFinishedDate.text = "Terminado el: ${cursoTerminado.fechaTerminadoInscripcion}"
+        Picasso.get().load(cursoTerminado.imagen).into(binding.courseImage)
+        binding.courseButtonDetails.setOnClickListener { sendToCourseDetail(cursoTerminado) }
     }
 
-    private fun sendToCourseDetail(curso : Curso){
+    private fun sendToCourseDetail(cursoTerminado : ListItemCursoTerminado){
         val intent = Intent(this.itemView.context, CourseDescriptionActivity::class.java)
         intent.apply {
-            putExtra("courseName", curso.descripcion)
-            putExtra("price", curso.mensualidad)
-            putExtra("image", curso.imagen)
-            putExtra("duration", curso.duracion)
-            putExtra("frecuency", curso.frecuencia)
+            putExtra("courseName", cursoTerminado.descripcion)
+            putExtra("price", cursoTerminado.mensualidad)
+            putExtra("image", cursoTerminado.imagen)
+            putExtra("duration", cursoTerminado.duracion)
+            putExtra("frecuency", cursoTerminado.frecuencia)
             putExtra("codAlum", codAlum)
         }
         ContextCompat.startActivity(this.itemView.context, intent, null)
     }
 
-    private fun sendToInscription(codAlum : Long){
+    /*private fun sendToInscription(codAlum : Long){
         val intent = Intent(this.itemView.context, InscriptionActivity::class.java)
         intent.apply {
             putExtra("codAlum", codAlum)
         }
         ContextCompat.startActivity(this.itemView.context, intent, null)
-    }
+    }*/
 }

@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.longdrink.androidapp.R
 import com.longdrink.androidapp.model.Curso
+import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.longdrink.androidapp.viewholders.CoursesViewHolder
 
 class CourseRecyclerViewAdapter(
-    var listadoCursos : List<Curso> = emptyList(),
-    private var codAlum : Long
+    var listadoCursosTerminados : List<ListItemCursoTerminado> = emptyList(),
+    private var codAlum : Long,
 ) : RecyclerView.Adapter<CoursesViewHolder>()
 
 {
@@ -20,10 +21,10 @@ class CourseRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder (holder : CoursesViewHolder, position : Int){
-        holder.bind(listadoCursos[position])
+        holder.bind(listadoCursosTerminados[position])
     }
 
-    override fun getItemCount() = listadoCursos.size
+    override fun getItemCount() = listadoCursosTerminados.size
 
 
 

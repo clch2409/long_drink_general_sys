@@ -13,6 +13,8 @@ import com.longdrink.androidapp.adapters.CourseRecyclerViewAdapter
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.FragmentCoursesBinding
 import com.longdrink.androidapp.model.Curso
+import com.longdrink.androidapp.model.Inscripcion
+import com.longdrink.androidapp.model.ListItemCursoTerminado
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,6 +34,7 @@ class CoursesFragment : Fragment() {
     private lateinit var retrofit: Retrofit
     private var codAlum by Delegates.notNull<Long>()
     private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
+    private val cursosTerminadosFiltrados = mutableListOf<ListItemCursoTerminado>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +55,10 @@ class CoursesFragment : Fragment() {
         return binding.root
     }
 
-    private fun initUI(listadoCursos : List<Curso>){
+    private fun initUI(cursosTerminadosFiltrados : List<ListItemCursoTerminado>){
         /*TODO --> BUSCAR LA MANERA DE AGREGAR UN SEPARADOR PERSONALIZADO*/
 
-        adapter = CourseRecyclerViewAdapter(listadoCursos, codAlum)
+        adapter = CourseRecyclerViewAdapter(cursosTerminadosFiltrados, codAlum)
         binding.recyclerCourses.setHasFixedSize(true)
         binding.recyclerCourses.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerCourses.adapter = adapter
@@ -66,13 +69,38 @@ class CoursesFragment : Fragment() {
     private fun getCursos(){
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val response : Response<List<Curso>> =
+                val response : Response<List<ListItemCursoTerminado>> =
                     retrofit.create(ApiService::class.java).listarCursos()
                 if (response.isSuccessful){
-                    val myResponse : List<Curso>? = response.body()
+                    val myResponse : List<ListItemCursoTerminado>? = response.body()
+                    if (myResponse != null){
+                        getInscripcion(myResponse)
+                    }
+                }
+            }catch (ex : Exception){
+                Log.i("ERROR", ex.toString())
+            }
+        }
+    }
+
+    private fun getInscripcion(cursos : List<ListItemCursoTerminado>){
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response : Response<List<Inscripcion>> =
+                    retrofit.create(ApiService::class.java).listarInscripcionesByAlumnoId(codAlum)
+                if (response.isSuccessful){
+                    val myResponse : List<Inscripcion>? = response.body()
                     if (myResponse != null){
                         activity?.runOnUiThread{
-                            initUI(myResponse)
+                            for (curso : ListItemCursoTerminado in cursos){
+                                for (inscripcion : Inscripcion in myResponse){
+                                    if (curso.codCurso == inscripcion.curso && !inscripcion.estado){
+                                        curso.fechaTerminadoInscripcion = inscripcion.fechaTerminado
+                                        cursosTerminadosFiltrados.add(curso)
+                                    }
+                                }
+                            }
+                            initUI(cursosTerminadosFiltrados)
                         }
                     }
                 }

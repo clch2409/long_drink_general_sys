@@ -46,7 +46,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        binding.register.setOnClickListener { goToRegister() }
         binding.forgetPass.setOnClickListener { goToForgot() }
 
         setContentView(binding.root)
@@ -88,10 +87,10 @@ class LoginActivity : AppCompatActivity() {
         this.runOnUiThread { Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show() }
     }
 
-    private fun goToRegister(){
+    /*private fun goToRegister(){
         val intent = Intent(applicationContext, RegisterActivity::class.java)
         startActivity(intent)
-    }
+    }*/
 
     private fun goToForgot(){
         showSnackbar("Estamos trabajando en ello \uD83D\uDEE0")

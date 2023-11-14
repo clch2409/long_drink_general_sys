@@ -4,6 +4,7 @@ import { Turno } from "./turno.model";
 
 export class Curso implements Deserializable {
     codCurso?: number;
+    nombre?: string;
     descripcion?: string;
     mensualidad?: number;
     duracion?: number;

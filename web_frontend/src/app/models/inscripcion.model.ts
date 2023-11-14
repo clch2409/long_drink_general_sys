@@ -1,8 +1,10 @@
 import { Alumno } from "./alumno.model";
 import { Curso } from "./curso.model";
 import { Deserializable } from "./deserializable.model";
+import { Turno } from "./turno.model";
 
 export class Inscripcion implements Deserializable {
+    codInscripcion?: number;
     inscripcionPk?: {
         codAlumno: number;
         codCurso: number;
@@ -14,6 +16,7 @@ export class Inscripcion implements Deserializable {
     fechaTerminado?: Date;
     alumno?: Alumno;
     curso?: Curso;
+    turno?: Turno;
 
     deserializable(input: any): this {
         Object.assign(this, input);

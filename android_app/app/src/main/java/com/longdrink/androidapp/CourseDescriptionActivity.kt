@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.longdrink.androidapp.databinding.ActivityCourseDescriptionBinding
 import com.longdrink.androidapp.model.Curso
 import com.squareup.picasso.Picasso
@@ -52,7 +53,7 @@ class CourseDescriptionActivity : AppCompatActivity() {
         binding.courseDescriptionDuration.text = "Duración: ${courseData.duracion} semanas"
         binding.courseDescriptionFrecuency.text = "Frecuencia: ${courseData.frecuencia}"
         Picasso.get().load(courseData.imagen).into(binding.courseDescriptionImage)
-        binding.courseDescriptionInscription.setOnClickListener { sendToInscription() }
+        binding.courseDescriptionInscription.setOnClickListener { showSnackbar("No Funcionando 🤡") }
     }
 
     /*override fun onBackPressed() {
@@ -70,5 +71,9 @@ class CourseDescriptionActivity : AppCompatActivity() {
         var intent = Intent(this@CourseDescriptionActivity, MainActivity::class.java)
         intent.putExtra("codAlum", codAlum)
         startActivity(intent)
+    }
+
+    private fun showSnackbar(text : String){
+        this.runOnUiThread { Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show() }
     }
 }

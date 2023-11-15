@@ -12,14 +12,22 @@ import com.longdrink.androidapp.databinding.ListItemCoursesBinding
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class CoursesViewHolder(view: View, private var codAlum : Long) : RecyclerView.ViewHolder(view) {
 
     private val binding = ListItemCoursesBinding.bind(view)
 
     fun bind(cursoTerminado : ListItemCursoTerminado){
+        val formato = SimpleDateFormat("yyyy-MM-dd")
+        val fechaFinal = formato.parse(cursoTerminado.fechaTerminadoInscripcion)
+        formato.applyPattern("dd-MM-yyyy")
+        val fechaFinalFormateada = formato.format(fechaFinal)
+
         binding.courseName.text = cursoTerminado.nombre
-        binding.courseFinishedDate.text = "Terminado el: ${cursoTerminado.fechaTerminadoInscripcion}"
+        binding.courseFinishedDate.text = "Terminado el: $fechaFinalFormateada"
         Picasso.get().load(cursoTerminado.imagen).into(binding.courseImage)
         binding.courseButtonDetails.setOnClickListener { sendToCourseDetail(cursoTerminado) }
     }

@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
     private lateinit var retrofit : Retrofit
-    private var inscripcion = Inscripcion()
+    private var inscripcionActiva = Inscripcion()
+    private var listadoInscripcionesTerminadas = mutableListOf<Inscripcion>()
     //private var hasInscription = false
     private var codAlum by Delegates.notNull<Long>()
 
@@ -106,11 +107,12 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful){
                     Log.i("INSCRIPCION", response.body().toString())
                     response.body()?.forEach{
-                        if (it.estado) inscripcion = it
+                        if (it.estado) inscripcionActiva = it
+                        else listadoInscripcionesTerminadas.add(it)
                     }
                     runOnUiThread{
                         //hasInscription = inscripcion.fechaInicio != ""
-                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcion, codAlum )
+                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcionActiva, codAlum, listadoInscripcionesTerminadas)
                         binding.mainViewpager.adapter = adapter
 
                     }

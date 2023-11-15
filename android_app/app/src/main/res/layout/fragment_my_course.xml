@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp">
+        android:layout_margin="10dp">
 
         <ImageView
             android:id="@+id/my_course_image"
@@ -77,10 +77,32 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/my_course_classes"
+            android:id="@+id/my_course_finished"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/my_course_schedule"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="25dp"
+            android:text="Termina el: "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/my_course_finished_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_schedule_hours"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@+id/my_course_teacher"
+            android:text="Fecha"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/my_course_classes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_course_finished"
             android:layout_marginTop="@dimen/login_text_margintop"
             android:layout_centerHorizontal="true"
             android:text="Temario"

@@ -20,6 +20,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +38,7 @@ class MyCourseFragment : Fragment() {
     private lateinit var binding : FragmentMyCourseBinding
     private lateinit var retrofit : Retrofit
     private var codCurso : Long = 0
+    private var fechaFinal : String = ""
     private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
     private val listadoTemas : List<Tema> = emptyList()
     private lateinit var recyclerViewAdapter : TemasRecyclerViewAdapter
@@ -47,6 +51,7 @@ class MyCourseFragment : Fragment() {
         binding = FragmentMyCourseBinding.inflate(inflater)
         retrofit = getRetrofit()
         codCurso = requireArguments().getLong("codCurso")
+        fechaFinal = requireArguments().getString("fechaFinal").toString()
         getCourseInfo()
         return binding.root
     }
@@ -54,9 +59,16 @@ class MyCourseFragment : Fragment() {
 
 
     private fun placeData(curso : Curso){
+        val formato = SimpleDateFormat("yyyy-MM-dd")
+        val fechaFinal = formato.parse(fechaFinal)
+        formato.applyPattern("dd-MM-yyyy")
+        val fechaFinalFormateada = formato.format(fechaFinal)
+
+
         binding.myCourseName.text = curso.descripcion
         binding.myCourseTeacherName.text = "${curso.profesor.nombre} ${curso.profesor.apellidoPaterno} ${curso.profesor.apellidoMaterno}"
-        binding.myCourseScheduleHours.text = "${curso.turnos[0].horaInicio} : ${curso.turnos[0].horaFin}"
+        binding.myCourseScheduleHours.text = "${curso.turnos[0].horaInicio} - ${curso.turnos[0].horaFin}"
+        binding.myCourseFinishedDate.text = fechaFinalFormateada
         Picasso.get().load(curso.imagen).into(binding.myCourseImage)
 
         recyclerViewAdapter = TemasRecyclerViewAdapter(curso.temas)

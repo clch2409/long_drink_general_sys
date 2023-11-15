@@ -36,10 +36,10 @@ class CoursesViewHolder(view: View, private var codAlum : Long) : RecyclerView.V
         val intent = Intent(this.itemView.context, CourseDescriptionActivity::class.java)
         intent.apply {
             putExtra("courseName", cursoTerminado.descripcion)
-            putExtra("price", cursoTerminado.mensualidad)
             putExtra("image", cursoTerminado.imagen)
-            putExtra("duration", cursoTerminado.duracion)
-            putExtra("frecuency", cursoTerminado.frecuencia)
+            putExtra("fechaInicio", cursoTerminado.fechaInicioInscripcion)
+            putExtra("estado", cursoTerminado.estadoInscripcion)
+            putExtra("fechaTerminado", cursoTerminado.fechaTerminadoInscripcion)
             putExtra("codAlum", codAlum)
         }
         ContextCompat.startActivity(this.itemView.context, intent, null)

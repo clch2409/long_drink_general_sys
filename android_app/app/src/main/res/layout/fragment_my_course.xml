@@ -30,7 +30,8 @@
             android:layout_marginTop="25dp"
             android:textStyle="bold"
             android:text="Nombre del Curso"
-            android:textSize="15sp" />
+            android:textSize="20sp"
+            android:textColor="@color/dark_blue"/>
 
         <TextView
             android:id="@+id/my_course_teacher"
@@ -41,18 +42,19 @@
             android:layout_marginStart="45dp"
             android:layout_marginTop="37dp"
             android:text="Profesor:"
-            android:textSize="20sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/my_course_teacher_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/my_course_name"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="55dp"
             android:layout_marginTop="37dp"
             android:layout_toEndOf="@+id/my_course_teacher"
             android:text="Nombre del profee"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/my_course_schedule"
@@ -63,7 +65,8 @@
             android:layout_marginStart="45dp"
             android:layout_marginTop="25dp"
             android:text="Horario:"
-            android:textSize="20sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/my_course_schedule_hours"
@@ -74,7 +77,7 @@
             android:layout_marginTop="25dp"
             android:layout_toEndOf="@+id/my_course_teacher"
             android:text="00:00 - 00:00"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/my_course_finished"
@@ -85,7 +88,8 @@
             android:layout_marginStart="45dp"
             android:layout_marginTop="25dp"
             android:text="Termina el: "
-            android:textSize="20sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/my_course_finished_date"
@@ -96,7 +100,7 @@
             android:layout_marginTop="25dp"
             android:layout_toEndOf="@+id/my_course_teacher"
             android:text="Fecha"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/my_course_classes"

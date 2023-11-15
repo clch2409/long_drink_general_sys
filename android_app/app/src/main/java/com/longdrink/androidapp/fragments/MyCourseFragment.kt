@@ -65,7 +65,7 @@ class MyCourseFragment : Fragment() {
         val fechaFinalFormateada = formato.format(fechaFinal)
 
 
-        binding.myCourseName.text = curso.descripcion
+        binding.myCourseName.text = curso.nombre
         binding.myCourseTeacherName.text = "${curso.profesor.nombre} ${curso.profesor.apellidoPaterno} ${curso.profesor.apellidoMaterno}"
         binding.myCourseScheduleHours.text = "${curso.turnos[0].horaInicio} - ${curso.turnos[0].horaFin}"
         binding.myCourseFinishedDate.text = fechaFinalFormateada

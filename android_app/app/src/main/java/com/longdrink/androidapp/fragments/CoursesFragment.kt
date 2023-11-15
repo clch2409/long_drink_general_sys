@@ -96,6 +96,10 @@ class CoursesFragment : Fragment() {
                                 for (inscripcion : Inscripcion in myResponse){
                                     if (curso.codCurso == inscripcion.curso && !inscripcion.estado){
                                         curso.fechaTerminadoInscripcion = inscripcion.fechaTerminado
+                                        curso.fechaInicioInscripcion = inscripcion.fechaInscripcion
+                                        curso.fechaFinalInscripcion = inscripcion.fechaFinal
+                                        curso.fechaInscripcion = inscripcion.fechaInscripcion
+                                        curso.estadoInscripcion = inscripcion.estado
                                         cursosTerminadosFiltrados.add(curso)
                                     }
                                 }

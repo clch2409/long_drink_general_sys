@@ -8,12 +8,13 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.longdrink.androidapp.databinding.ActivityCourseDescriptionBinding
 import com.longdrink.androidapp.model.Curso
+import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.squareup.picasso.Picasso
 import kotlin.properties.Delegates
 
 class CourseDescriptionActivity : AppCompatActivity() {
     private lateinit var binding : ActivityCourseDescriptionBinding
-    private lateinit var courseData : Curso
+    private lateinit var courseData : ListItemCursoTerminado
     private var codAlum by Delegates.notNull<Long>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,19 +42,16 @@ class CourseDescriptionActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        courseData = Curso()
-        courseData.descripcion = intent.getStringExtra("courseName").toString()
-        courseData.mensualidad = intent.getDoubleExtra("price", 0.0)
-        courseData.imagen = intent.getStringExtra("image").toString()
-        courseData.duracion = intent.getByteExtra("duration", 0)
-        courseData.frecuencia = intent.getStringExtra("frecuency").toString()
+        courseData.nombre = intent.getStringExtra("courseName").toString()
+        courseData.fechaInicioInscripcion = intent.getStringExtra("fechaInicio")
+        courseData.fechaTerminadoInscripcion = intent.getStringExtra("fechaTerminado").toString()
 
-        binding.courseDescriptionName.text = courseData.descripcion
+        binding.courseDescriptionName.text = courseData.nombre
         binding.courseDescriptionPrice.text = "Mensualidad: ${courseData.mensualidad.toString()}"
         binding.courseDescriptionDuration.text = "Duración: ${courseData.duracion} semanas"
         binding.courseDescriptionFrecuency.text = "Frecuencia: ${courseData.frecuencia}"
         Picasso.get().load(courseData.imagen).into(binding.courseDescriptionImage)
-        binding.courseDescriptionInscription.setOnClickListener { showSnackbar("No Funcionando 🤡") }
+        binding.courseDescriptionCertificate.setOnClickListener { showSnackbar("No Funcionando 🤡") }
     }
 
     /*override fun onBackPressed() {

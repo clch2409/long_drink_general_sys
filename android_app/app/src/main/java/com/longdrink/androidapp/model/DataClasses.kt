@@ -69,7 +69,11 @@ data class ListItemCursoTerminado(
     @SerializedName("profesor") var profesor : Profesor = Profesor(),
     @SerializedName("turnos") var turnos : List<Turno> = emptyList(),
     @SerializedName("temas") var temas : List<Tema> = emptyList(),
-    var fechaTerminadoInscripcion : String? = ""
+    var fechaInicioInscripcion : String?,
+    var fechaTerminadoInscripcion : String?,
+    var fechaFinalInscripcion : String?,
+    var fechaInscripcion : String?,
+    var estadoInscripcion : Boolean?
 )
 /** --------------------- TEACHER RELATED DATA CLASSES ----------------------------------*/
 

@@ -2,7 +2,7 @@ package com.longdrink.androidapp.api
 
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.Inscripcion
-import com.longdrink.androidapp.model.InscripcionDetallada
+import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.longdrink.androidapp.model.LoginSendData
 import com.longdrink.androidapp.model.LoginWebResponse
 import com.longdrink.androidapp.model.RegisterResponse
@@ -26,7 +26,7 @@ interface ApiService {
     /** ---------------------------- COURSES RELATED METHODS --------------------------*/
 
     @GET("curso")
-    suspend fun listarCursos() : Response<List<Curso>>
+    suspend fun listarCursos() : Response<List<ListItemCursoTerminado>>
 
     @GET("curso/{id}")
     suspend fun findCursoById(@Path("id") codCurso : Long) : Response<Curso>
@@ -38,6 +38,6 @@ interface ApiService {
     @GET("inscripcion/por_curso")
     suspend fun listarInscripcionesByCursoId(@Query("codCurso") codCurso : Long) : Response<List<Inscripcion>>
 
-    @POST("inscripcion")
-    suspend fun realizarInscripcion(@Body inscripcion : InscripcionDetallada) : Response<Inscripcion>
+    /*@POST("inscripcion")
+    suspend fun realizarInscripcion(@Body inscripcion : InscripcionDetallada) : Response<Inscripcion>*/
 }

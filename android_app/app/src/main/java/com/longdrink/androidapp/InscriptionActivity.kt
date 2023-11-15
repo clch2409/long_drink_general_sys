@@ -14,9 +14,6 @@ import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.ActivityInscriptionBinding
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.Inscripcion
-import com.longdrink.androidapp.model.InscripcionDetallada
-import com.longdrink.androidapp.model.InscripcionObjetos
-import com.longdrink.androidapp.model.InscripcionPK
 import com.longdrink.androidapp.model.Turno
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +46,7 @@ class InscriptionActivity : AppCompatActivity() {
 
     private var codAlum by Delegates.notNull<Long>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityInscriptionBinding.inflate(layoutInflater)
@@ -241,7 +238,7 @@ class InscriptionActivity : AppCompatActivity() {
             fechaFinal.toString(),
             fechaInscripcion.toString()
         )
-    }
+    }*/
 
     private fun fillingCoursesSpinner(nombresCursos : MutableList<String>){
         val adapterCursos = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nombresCursos)
@@ -263,7 +260,7 @@ class InscriptionActivity : AppCompatActivity() {
         binding.inscriptionTextFrecuency.text = curso.frecuencia.toString()
     }
 
-    private fun showingMessageAndSending(titulo: String, mensaje : String, datosInscripcion : InscripcionDetallada){
+    /*private fun showingMessageAndSending(titulo: String, mensaje : String, datosInscripcion : InscripcionDetallada){
         val mensajeEmergente = AlertDialog.Builder(this)
 
         mensajeEmergente.apply {
@@ -279,7 +276,7 @@ class InscriptionActivity : AppCompatActivity() {
 
         mensajeEmergente.create()
         mensajeEmergente.show()
-    }
+    }*/
 
     private fun goToMain(){
         var intent = Intent(this@InscriptionActivity, MainActivity::class.java)

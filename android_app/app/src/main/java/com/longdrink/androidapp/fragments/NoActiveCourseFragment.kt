@@ -5,17 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.longdrink.androidapp.R
-import com.longdrink.androidapp.databinding.FragmentWaitingInscriptionBinding
+import com.longdrink.androidapp.databinding.FragmentNoActiveCourseBinding
 import com.squareup.picasso.Picasso
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class WaitingInscriptionFragment : Fragment() {
+class NoActiveCourseFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding : FragmentWaitingInscriptionBinding
+    private lateinit var binding : FragmentNoActiveCourseBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +28,7 @@ class WaitingInscriptionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentWaitingInscriptionBinding.inflate(inflater)
+        binding = FragmentNoActiveCourseBinding.inflate(inflater)
         Picasso.get().load("https://images.pexels.com/photos/7327772/pexels-photo-7327772.jpeg?auto=compress&cs=tinysrgb&w=600").into(binding.waitingInscriptionImage)
         return binding.root
     }
@@ -37,7 +36,7 @@ class WaitingInscriptionFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            WaitingInscriptionFragment().apply {
+            NoActiveCourseFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

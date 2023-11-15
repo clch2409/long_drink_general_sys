@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.WaitingInscriptionFragment">
+    tools:context=".fragments.NoActiveCourseFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
@@ -23,7 +23,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/waiting_inscription_image"
-            android:text="Su inscripción no ha sido aceptada por el instituto. Cuando sea aceptada, podrá ver la información del mismo."
+            android:text="Usted no cuenta con un curso activo, diríjase a la institución para solicitar una inscripción al curso o llame al número: XXXXXXXXXX"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:textAlignment="center"

@@ -23,7 +23,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/no_course_image"
-            android:text="Creo que no se ha inscrito a un curso. Inscríbase a uno para observar su información aquí"
+            android:text="Usted no cuenta con cursos terminados aún"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:textAlignment="center"

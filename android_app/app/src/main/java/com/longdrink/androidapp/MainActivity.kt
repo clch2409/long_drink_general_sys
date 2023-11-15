@@ -26,8 +26,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
     private lateinit var retrofit : Retrofit
-    private var inscripcion = Inscripcion()
-    private var hasInscription = false
+    private var inscripcionActiva = Inscripcion()
+    private var listadoInscripcionesTerminadas = mutableListOf<Inscripcion>()
+    //private var hasInscription = false
     private var codAlum by Delegates.notNull<Long>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,9 +66,10 @@ class MainActivity : AppCompatActivity() {
     private fun initUi(){
         getInscription()
 
-        binding.tablayout.addTab(binding.tablayout.newTab().setText("Cursos"))
+        /*binding.tablayout.addTab(binding.tablayout.newTab().setText("Cursos"))*/
         binding.tablayout.addTab(binding.tablayout.newTab().setText("Mi Curso"))
-        /*binding.tablayout.addTab(binding.tablayout.newTab().setText("Mi Cuenta"))*/
+        binding.tablayout.addTab(binding.tablayout.newTab().setText("Cursos Terminados"))
+        binding.tablayout.addTab(binding.tablayout.newTab().setText("Mi Cuenta"))
 
         addingListeners()
     }
@@ -105,11 +107,12 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful){
                     Log.i("INSCRIPCION", response.body().toString())
                     response.body()?.forEach{
-                        if (it.estado || (it.fechaInicio != "" && it.fechaTerminado == null)) inscripcion = it
+                        if (it.estado) inscripcionActiva = it
+                        else listadoInscripcionesTerminadas.add(it)
                     }
                     runOnUiThread{
-                        hasInscription = inscripcion.fechaInicio != ""
-                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, hasInscription ,inscripcion, codAlum )
+                        //hasInscription = inscripcion.fechaInicio != ""
+                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcionActiva, codAlum, listadoInscripcionesTerminadas)
                         binding.mainViewpager.adapter = adapter
 
                     }

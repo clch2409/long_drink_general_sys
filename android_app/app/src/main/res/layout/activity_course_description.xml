@@ -44,43 +44,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20sp"
+            android:textColor="@color/dark_blue"
             android:textStyle="bold"/>
 
 
         <TextView
-            android:id="@+id/course_description_price"
+            android:id="@+id/course_description_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
-            android:layout_marginEnd="100dp"
+            app:layout_constraintHorizontal_bias="0.5"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/course_description_name"
-            tools:text="Precio del Curso" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Fecha Inicio" />
 
         <TextView
-            android:id="@+id/course_description_duration"
+            android:id="@+id/course_description_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:layout_marginEnd="92dp"
+            app:layout_constraintHorizontal_bias="0.5"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_description_price"
-            tools:text="Duracion del Curso" />
+            app:layout_constraintTop_toBottomOf="@+id/course_description_start"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Fecha Final" />
 
         <TextView
-            android:id="@+id/course_description_frecuency"
+            android:id="@+id/course_description_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
-            android:layout_marginEnd="88dp"
+            app:layout_constraintHorizontal_bias="0.5"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_description_duration"
-            tools:text="Frecuencia del Curso" />
+            app:layout_constraintTop_toBottomOf="@+id/course_description_end"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Estado Curso"
+            android:textAlignment="center"/>
 
-        <Button
+        <!--<Button
             android:id="@+id/course_description_inscription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,6 +97,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.429"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/course_description_duration" />
+            app:layout_constraintTop_toBottomOf="@+id/course_description_duration" />-->
+
+        <Button
+            android:id="@+id/course_description_certificate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:backgroundTint="@color/dark_blue"
+            android:text="Descargar Certificado"
+            android:textAllCaps="false"
+            android:textColor="@color/light_red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/course_description_state" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

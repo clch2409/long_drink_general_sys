@@ -88,6 +88,20 @@ public class InscripcionController {
         }
         return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
     }
+
+    @GetMapping("/por_cod")
+    public ResponseEntity<?> getPorCod(@RequestParam Long codInscripcion){
+        try{
+            Inscripcion retorno = inscripcionService.buscarPorPk(codInscripcion).get();
+            if(retorno.getCodInscripcion() != 0L){
+                return new ResponseEntity<>(retorno,HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new Mensaje("Ups! Datos de inscripción no encontrados.",404),HttpStatus.NOT_FOUND);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Ups! Datos de inscripción no encontrados.",404),HttpStatus.NOT_FOUND);
+        }
+    }
     /* TODO: Eliminar en próximos días.
     @PostMapping() //Diseñado para app Movil.
     public ResponseEntity<?> agregarInscripcion(@RequestBody InsertInscripcion ins){

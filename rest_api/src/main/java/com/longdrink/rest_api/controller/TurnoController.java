@@ -30,6 +30,16 @@ public class TurnoController {
         return new ResponseEntity<>(listaTurnos,HttpStatus.OK);
     }
 
+    @GetMapping("/por_curso")
+    public ResponseEntity<?> getPorCurso(@RequestParam Long codCurso){
+        List<Turno> listaTurnos = turnoService.listarTurnoPorCurso(codCurso);
+        if(listaTurnos.isEmpty()){
+            return new ResponseEntity<>(new Mensaje("Error! El curso ingresado no tiene turno asignado o no existe.",404),
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(listaTurnos,HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> post(@RequestBody InsertTurno t){
         t.setCodTurno(0L);

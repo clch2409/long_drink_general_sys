@@ -72,7 +72,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/registro_usuario")
+    @PostMapping("/registro_admin")
     public ResponseEntity<?> registroUsuario(@RequestBody RegistroUsuario reg){
         EmailValidator em = EmailValidator.getInstance();
         Usuario u = usuarioService.getPorEmail(reg.getEmail());
@@ -96,7 +96,6 @@ public class AuthController {
                     limpiarDatos.getContrasena(),limpiarDatos.getEmail(),true,r);
             Usuario usuarioGuardado = usuarioService.guardar(usuario);
             return new ResponseEntity<>(usuarioGuardado,HttpStatus.CREATED);
-
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Ha sucedido un error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);

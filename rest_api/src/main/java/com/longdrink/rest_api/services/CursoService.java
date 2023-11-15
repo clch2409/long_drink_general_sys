@@ -21,6 +21,8 @@ public class CursoService {
 
     public List<Curso> listarCursosVisibles(){ return cursoDAO.findAllByVisibilidad(); }
 
+    public List<Curso> listarCursosSinInscripciones(){ return cursoDAO.findSinInscripciones(); }
+
     public Curso getPorCod(Long cod){
         try{
             Curso c = cursoDAO.findById(cod).get();

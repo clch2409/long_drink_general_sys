@@ -14,4 +14,7 @@ public interface IProfesorDAO extends CrudRepository<Profesor,Long> {
     Optional<Profesor> findByDni(String dni);
 
     Optional<Profesor> findByUsuarioCodUsuario(Long cod);
+    //Excluye docentes que ya terminaron de dictar un curso.
+    @Query(value = "SELECT * FROM profesor WHERE NOT EXISTS(SELECT * FROM curso WHERE curso.cod_profesor = profesor.cod_profesor) AND profesor.activo = true",nativeQuery = true)
+    List<Profesor> findActivosNoAsignados();
 }

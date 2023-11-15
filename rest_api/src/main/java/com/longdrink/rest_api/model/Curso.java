@@ -79,6 +79,20 @@ public class Curso implements Serializable {
         this.inscripciones = inscripciones;
     }
 
+    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, byte cantidadAlumnos, boolean visibilidad, String frecuencia, String imagen, Profesor profesor, List<Turno> turnos) {
+        this.codCurso = codCurso;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.mensualidad = mensualidad;
+        this.duracion = duracion;
+        this.cantidadAlumnos = cantidadAlumnos;
+        this.visibilidad = visibilidad;
+        this.frecuencia = frecuencia;
+        this.imagen = imagen;
+        this.profesor = profesor;
+        this.turnos = turnos;
+    }
+
     public Long getCodCurso() {
         return codCurso;
     }

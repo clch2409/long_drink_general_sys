@@ -56,4 +56,8 @@ export class InscripcionService {
     return this.http.get<DetalleInscripcion>(API+`/inscripcion/detalle?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
   }
 
+  getInscripcionPorCod(codInscripcion?: number): Observable<Inscripcion>{
+    return this.http.get<Inscripcion>(API+`/inscripcion/por_cod?codInscripcion=${codInscripcion}`);
+  }
+
 }

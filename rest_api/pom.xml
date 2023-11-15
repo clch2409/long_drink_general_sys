@@ -80,6 +80,32 @@
 			<version>3.12.0</version>
 		</dependency>
 		<!--Fin: Utilidades-->
+		<!--Inicio: Exportación PDF-->
+		<dependency>
+			<groupId>com.github.librepdf</groupId>
+			<artifactId>openpdf</artifactId>
+			<version>1.3.32</version>
+		</dependency>
+		<!--Fin: Exportación PDF-->
+		<!--Inicio: Exportación Office-->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.3</version>
+		</dependency>
+		<!--Fin: Exportación Office-->
+		<!--Inicio: Exportación CSV-->
+		<dependency>
+			<groupId>net.sf.supercsv</groupId>
+			<artifactId>super-csv</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+		<!--Fin: Exportación CSV-->
 	</dependencies>
 
 	<build>

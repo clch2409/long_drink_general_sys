@@ -29,6 +29,11 @@
 						<span>Listado</span>
 					</a>
 				</mat-nav-list>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'cursos']">
+						<span>Guías de Estudio</span>
+					</a>
+				</mat-nav-list>
 			</mat-expansion-panel>
 
 			<mat-expansion-panel [class.mat-elevation-z0]="true">
@@ -39,6 +44,38 @@
 				<mat-nav-list>
 					<a mat-list-item [routerLink]="['/dashboard', 'docentes']">
 						<span>Listado</span>
+					</a>
+				</mat-nav-list>
+			</mat-expansion-panel>
+
+			<mat-expansion-panel [class.mat-elevation-z0]="true">
+				<mat-expansion-panel-header>
+					<mat-icon>leaderboard</mat-icon>
+					Reportes
+				</mat-expansion-panel-header>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'docentes']">
+						<span>Generales</span>
+					</a>
+				</mat-nav-list>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'exp','alumnos']">
+						<span>Alumnos</span>
+					</a>
+				</mat-nav-list>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'exp','profesores']">
+						<span>Docentes</span>
+					</a>
+				</mat-nav-list>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'exp','cursos']">
+						<span>Cursos</span>
+					</a>
+				</mat-nav-list>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'exp','inscripciones']">
+						<span>Inscripciones</span>
 					</a>
 				</mat-nav-list>
 			</mat-expansion-panel>

@@ -30,7 +30,11 @@ import { MisCursosComponent } from './components/modulo_alumnos/mis-cursos/mis-c
 import { DetalleCursoAlumnoComponent } from './components/modulo_alumnos/detalle-curso-alumno/detalle-curso-alumno.component';
 import { MisCursosProfesorComponent } from './components/modulo_profesores/mis-cursos-profesor/mis-cursos-profesor.component';
 import { DetalleCursoProfesorComponent } from './components/modulo_profesores/detalle-curso-profesor/detalle-curso-profesor.component';
-import { MatTableModule } from '@angular/material/table' 
+import { MatTableModule } from '@angular/material/table';
+import { ExportarAlumnosComponent } from './components/modulo_admin/exportaciones/exportar-alumnos/exportar-alumnos.component';
+import { ExportarDocentesComponent } from './components/modulo_admin/exportaciones/exportar-docentes/exportar-docentes.component';
+import { ExportarCursosComponent } from './components/modulo_admin/exportaciones/exportar-cursos/exportar-cursos.component';
+import { ExportarInscripcionesComponent } from './components/modulo_admin/exportaciones/exportar-inscripciones/exportar-inscripciones.component' 
 
 @NgModule({
   declarations: [
@@ -51,6 +55,10 @@ import { MatTableModule } from '@angular/material/table'
     DetalleCursoAlumnoComponent,
     MisCursosProfesorComponent,
     DetalleCursoProfesorComponent,
+    ExportarAlumnosComponent,
+    ExportarDocentesComponent,
+    ExportarCursosComponent,
+    ExportarInscripcionesComponent,
   ],
   imports: [
     BrowserModule,

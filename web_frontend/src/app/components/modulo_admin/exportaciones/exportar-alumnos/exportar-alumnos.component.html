@@ -1,0 +1,32 @@
+<div class="container container-fluid mt-5">
+<div class="card border-primary">
+    <div class="card-header text-center fw-bold bg-primary text-light">
+      <h5>Exportar Alumnos</h5>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text text-center fw-lighter">Por favor, seleccione las opciones a continuación para la generación de un reporte de estudiantes.</p>
+      <div class="row">
+        <div class="col-4">
+            <h6>Tipo de Reporte</h6>
+            <select class="form-select" id="tipo" #tipo (change)="setTipo(tipo.value)">
+                <option value="activos"selected>ALUMNOS ACTIVOS</option>
+                <option value="general">GENERAL</option>
+            </select>
+        </div>
+        <div class="col-4">
+            <h6>Formato de Archivo</h6>
+            <select class="form-select" id="formato" #formato (change)="setFormato(formato.value)">
+                <option value="excel"selected>EXCEL</option>
+                <option value="csv">CSV</option>
+                <option value="pdf">PDF</option>
+            </select>
+        </div>
+        <div class="col-4 mt-4">
+            <a class="btn-success btn" (click)="descargarArchivo()" >Descargar</a>
+        </div>
+
+    </div>
+    </div>
+</div>
+</div>

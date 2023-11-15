@@ -9,6 +9,8 @@ import com.longdrink.rest_api.services.CursoService;
 import com.longdrink.rest_api.services.InscripcionService;
 import com.longdrink.rest_api.services.ProfesorService;
 import com.longdrink.rest_api.utils.ExportarExcel;
+import com.longdrink.rest_api.utils.ExportarPdf;
+
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +36,8 @@ public class ReportesController {
     private AlumnoService alumnoService;
     @Autowired
     private InscripcionService inscripcionService;
+    @Autowired
+    private ExportarPdf pdfService;
 
     @GetMapping("/profesor/excel")
     public void exportarProfesorExcel(HttpServletResponse response, @RequestParam(required = false,name = "tipo") Integer tipo) throws IOException{
@@ -128,6 +132,68 @@ public class ReportesController {
             else{ exportarInscripcionesGeneral(response); }
         }
         else{ exportarInscripcionesGeneral(response); }
+    }
+
+    @GetMapping("/alumno/pdf")
+    public void ExportarAlumnosPDF(HttpServletResponse response, @RequestParam(name="activo", required = false) Integer activo) throws IOException{
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue;
+        if (activo == 1){
+            headerValue = "attachment; filename= AlumnosActivos-" + currentDateTime + ".pdf";
+        }
+        else{
+           headerValue = "attachment; filename= AlumnosGeneral-" + currentDateTime + ".pdf";
+        }
+        response.setHeader(headerKey, headerValue);
+        //activo == 1 -> Listar todos los alumnos activos
+        //activo == 0 -> Listado GENERAL de alumnos
+        this.pdfService.exportAlumnos(response, activo);
+    }
+
+    @GetMapping("/curso/pdf")
+    public void ExportarCursosPDF(HttpServletResponse response, @RequestParam(name="visible", required = false) Integer visible) throws IOException{
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue;
+        if (visible == 1){
+            headerValue = "attachment; filename= CursosActivos-" + currentDateTime + ".pdf";
+        }
+        else{
+           headerValue = "attachment; filename= CursosGeneral-" + currentDateTime + ".pdf";
+        }
+        response.setHeader(headerKey, headerValue);
+        //activo == 1 -> Listar todos los cursos activos
+        //activo == 0 -> Listado GENERAL de cursos
+        this.pdfService.exportCursos(response, visible);
+    }
+
+    @GetMapping("/docente/pdf")
+    public void ExportarDocentesPDF(HttpServletResponse response, @RequestParam(required = false, name="activo") Integer activo) throws IOException{
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue;
+        if (activo == null || activo.intValue() == 0){
+            headerValue = "attachment; filename= DocentesGeneral-" + currentDateTime + ".pdf";
+
+        }
+        else{
+            headerValue = "attachment; filename= DocentesActivos-" + currentDateTime + ".pdf";
+        }
+
+        response.setHeader(headerKey, headerValue);
+        //activo == 1 -> Listar todos los cursos activos
+        //activo == 0 -> Listado GENERAL de cursos
+        this.pdfService.exportDocentes(response, activo);
     }
 
     public void exportarInscripcionesGeneral(HttpServletResponse response) throws IOException {

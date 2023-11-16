@@ -2,16 +2,24 @@ package com.longdrink.rest_api.utils;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import com.longdrink.rest_api.model.Alumno;
 import com.longdrink.rest_api.model.Curso;
+import com.longdrink.rest_api.model.Inscripcion;
 import com.longdrink.rest_api.model.Profesor;
 import com.longdrink.rest_api.services.AlumnoService;
 import com.longdrink.rest_api.services.CursoService;
+import com.longdrink.rest_api.services.InscripcionService;
 import com.longdrink.rest_api.services.ProfesorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import com.lowagie.text.Document;
@@ -34,10 +42,13 @@ public class ExportarPdf{
     CursoService cursoService = new CursoService();
     @Autowired
     ProfesorService profesorService = new ProfesorService();
+    @Autowired
+    InscripcionService inscripcionService = new InscripcionService();
 
     List<Alumno> listadoAlumnos;
     List<Curso> listadoCursos;
     List<Profesor> listadoProfesores;
+    List<Inscripcion> listadoInscripciones;
 
     public void exportAlumnos(HttpServletResponse response, int activos) throws IOException{
         
@@ -380,6 +391,159 @@ public class ExportarPdf{
         //Se agregan las dos tablas al documento
         document.add(tablaTitulo);
         document.add(tablaDocentes);
+        document.close();
+    }
+
+    public void exportInscripcion(HttpServletResponse response, int tipo, int codigo) throws IOException{
+
+        Document document = new Document(PageSize.A4);
+        PdfWriter.getInstance(document, response.getOutputStream());
+
+        document.open();
+
+        //Se modifica el tamaño y el color de la fuente
+        Font fuenteTitulo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20, Color.white);
+        Font fuenteTituloColumnas = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Color.white);
+        // Font fuenteCeldas = FontFactory.getFont(FontFactory.HELVETICA, 10, Color.black);
+
+        //Se redimensiona el documento, tanto su tamaño como los márgenes
+        document.setPageSize(PageSize.LETTER.rotate());
+        document.setMargins(-20, -20, 40, 20);
+        //Se abre el documento para que tome los cambios en las dimensiones
+        document.open();
+
+        //Se agrega una tabla solo para el título
+        PdfPTable tablaTitulo = new PdfPTable(1);
+        PdfPCell celda = null;
+
+        //Se hacen modificaciones de estilo al titulo, en ese caso de la celda que se encontrará en el título
+        celda = new PdfPCell(new Phrase("Listado de Inscripciones", fuenteTitulo));
+        if (tipo == 1){
+            listadoInscripciones = inscripcionService.listarPorAlumno(Long.valueOf(codigo));
+        }
+        else if (tipo == 2){
+            listadoInscripciones = inscripcionService.listarPorCurso(Long.valueOf(codigo));
+        }
+        else if (tipo == 0){
+            listadoInscripciones = inscripcionService.listarInscripciones();
+        }
+        celda.setBorder(0);
+        celda.setBackgroundColor(new Color(253, 36, 76));
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(30);
+
+        tablaTitulo.addCell(celda);
+        tablaTitulo.setSpacingAfter(30);
+
+
+        //Se crea la tabla de titulo
+        PdfPTable tablaInscripciones = new PdfPTable(8);
+        tablaInscripciones.setWidths(new float[] {1f, 1.5f, 3.5f, 1.5f, 1.5f, 2f, 2f, 2f});
+
+        celda = new PdfPCell(new Phrase("Código", fuenteTituloColumnas));
+        celda.setBackgroundColor(Color.LIGHT_GRAY);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaInscripciones.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Alumno", fuenteTituloColumnas));
+        celda.setBackgroundColor(Color.LIGHT_GRAY);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaInscripciones.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Curso", fuenteTituloColumnas));
+        celda.setBackgroundColor(Color.LIGHT_GRAY);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaInscripciones.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Fecha Inicio", fuenteTituloColumnas));
+        celda.setBackgroundColor(Color.LIGHT_GRAY);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaInscripciones.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Fecha Fin", fuenteTituloColumnas));
+        celda.setBackgroundColor(Color.LIGHT_GRAY);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaInscripciones.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Fecha Inscripcion", fuenteTituloColumnas));
+        celda.setBackgroundColor(Color.LIGHT_GRAY);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaInscripciones.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Fecha Terminado", fuenteTituloColumnas));
+        celda.setBackgroundColor(Color.LIGHT_GRAY);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaInscripciones.addCell(celda);
+
+        celda = new PdfPCell(new Phrase("Turno", fuenteTituloColumnas));
+        celda.setBackgroundColor(Color.LIGHT_GRAY);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setPadding(10);
+        tablaInscripciones.addCell(celda);
+
+        //Se agrega a la tabla los datos de los cliente y se agrega una celda con cada dato del cliente
+        listadoInscripciones.forEach(inscripcion -> {
+            //ODIO TRABAJAR CON FECHAS -- TE ODIO TIPO DE DATO DATE!!!!!!!!!
+            SimpleDateFormat deStringAFecha = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat deFechaAString = new SimpleDateFormat("dd-MM-yyyy");
+
+
+            Date fechaInicioFormateada;
+            Date fechaFinalFormateada;
+            Date fechaTerminadoFormateada = null;
+            Date fechaInscripcionFormateada;
+            String fechaInicioString;
+            String fechaFinalString;
+            String fechaTerminadoString;
+            String fechaInscripcionString;
+            try {
+                fechaInicioFormateada = deStringAFecha.parse(inscripcion.getFechaInicio().toString());
+                fechaFinalFormateada = deStringAFecha.parse(inscripcion.getFechaFinal().toString());
+                if (inscripcion.getFechaTerminado() != null){
+                    fechaTerminadoFormateada = deStringAFecha.parse(inscripcion.getFechaTerminado().toString());
+                }
+                fechaInscripcionFormateada = deStringAFecha.parse(inscripcion.getFechaInscripcion().toString());
+                
+                fechaInicioString = deFechaAString.format(fechaInicioFormateada);
+                fechaFinalString = deFechaAString.format(fechaFinalFormateada);
+                fechaTerminadoString = fechaTerminadoFormateada == null ? "En Curso" : deFechaAString.format(fechaTerminadoFormateada);
+                fechaInscripcionString = deFechaAString.format(fechaInscripcionFormateada);
+
+
+                tablaInscripciones.addCell(inscripcion.getCodInscripcion().toString());
+                tablaInscripciones.addCell(inscripcion.getAlumno().getNombre() + " " + inscripcion.getAlumno().getApellidoPaterno());
+                tablaInscripciones.addCell(inscripcion.getCurso().getNombre());
+                tablaInscripciones.addCell(fechaInicioString);
+                tablaInscripciones.addCell(fechaFinalString);
+                tablaInscripciones.addCell(fechaTerminadoString);
+                tablaInscripciones.addCell(fechaInscripcionString);
+                tablaInscripciones.addCell(inscripcion.getTurno().getNombre());
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
+        });
+
+        //Se agregan las dos tablas al documento
+        document.add(tablaTitulo);
+        document.add(tablaInscripciones);
         document.close();
     }
     

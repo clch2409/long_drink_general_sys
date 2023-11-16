@@ -196,6 +196,30 @@ public class ReportesController {
         this.pdfService.exportDocentes(response, activo);
     }
 
+    @GetMapping("/inscripciones/pdf")
+    public void ExportarInscripcionesPDF(HttpServletResponse response, @RequestParam(required = false, name="tipo") int tipo, @RequestParam(required = false, name="cod") int codigo) throws IOException{
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "";
+        if (tipo == 1){
+            headerValue = "attachment; filename= InscripcionesPorAlumno-" + currentDateTime + ".pdf";
+        }
+        else if (tipo == 2){
+            headerValue = "attachment; filename= InscripcionesPorCurso-" + currentDateTime + ".pdf";
+        }
+        else if (tipo == 0){
+            headerValue = "attachment; filename= InscripcionesGeneral-" + currentDateTime + ".pdf";
+        }
+
+        response.setHeader(headerKey, headerValue);
+        //activo == 1 -> Listar todos los cursos activos
+        //activo == 0 -> Listado GENERAL de cursos
+        this.pdfService.exportInscripcion(response, tipo, codigo);
+    }
+
     public void exportarInscripcionesGeneral(HttpServletResponse response) throws IOException {
         List<Inscripcion> listaInscripciones = inscripcionService.listarInscripciones();
         ExportarExcel exportador = new ExportarExcel(listaInscripciones,1L); //General.

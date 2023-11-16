@@ -24,4 +24,7 @@ export class CursoService {
     return this.http.get<Curso>(API+'/curso/'+cod);
   }
   
+  getCursosDisponibles(): Observable<Curso[]>{
+    return this.http.get<Curso[]>(API+'/curso/disponibles');
+  }
 }

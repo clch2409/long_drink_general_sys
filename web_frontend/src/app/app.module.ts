@@ -31,15 +31,12 @@ import { DetalleCursoAlumnoComponent } from './components/modulo_alumnos/detalle
 import { MisCursosProfesorComponent } from './components/modulo_profesores/mis-cursos-profesor/mis-cursos-profesor.component';
 import { DetalleCursoProfesorComponent } from './components/modulo_profesores/detalle-curso-profesor/detalle-curso-profesor.component';
 import { MatTableModule } from '@angular/material/table';
-<<<<<<< Updated upstream
 import { ExportarAlumnosComponent } from './components/modulo_admin/exportaciones/exportar-alumnos/exportar-alumnos.component';
 import { ExportarDocentesComponent } from './components/modulo_admin/exportaciones/exportar-docentes/exportar-docentes.component';
 import { ExportarCursosComponent } from './components/modulo_admin/exportaciones/exportar-cursos/exportar-cursos.component';
 import { ExportarInscripcionesComponent } from './components/modulo_admin/exportaciones/exportar-inscripciones/exportar-inscripciones.component';
 import { ExportarGeneralComponent } from './components/modulo_admin/exportaciones/exportar-general/exportar-general.component' 
-=======
 import { InscripcionAlumnoComponent } from './components/modulo_admin/alumno/inscripcion-alumno/inscripcion-alumno.component' 
->>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -60,15 +57,12 @@ import { InscripcionAlumnoComponent } from './components/modulo_admin/alumno/ins
     DetalleCursoAlumnoComponent,
     MisCursosProfesorComponent,
     DetalleCursoProfesorComponent,
-<<<<<<< Updated upstream
     ExportarAlumnosComponent,
     ExportarDocentesComponent,
     ExportarCursosComponent,
     ExportarInscripcionesComponent,
     ExportarGeneralComponent,
-=======
     InscripcionAlumnoComponent,
->>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,

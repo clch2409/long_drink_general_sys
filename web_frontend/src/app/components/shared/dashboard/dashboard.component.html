@@ -50,7 +50,6 @@
 
 			<mat-expansion-panel [class.mat-elevation-z0]="true">
 				<mat-expansion-panel-header>
-<<<<<<< Updated upstream
 					<mat-icon>leaderboard</mat-icon>
 					Reportes
 				</mat-expansion-panel-header>
@@ -81,24 +80,18 @@
 				</mat-nav-list>
 			</mat-expansion-panel>
 
-			<mat-list-item [routerLink]="['/dashboard', 'inscripciones']">
-				<mat-icon>description</mat-icon><span>Inscripciones</span>
-			</mat-list-item>
-=======
+			<mat-expansion-panel [class.mat-elevation-z0]="true">
+				<mat-expansion-panel-header>
 					<mat-icon>description</mat-icon>
 					Inscripciones
 				</mat-expansion-panel-header>
-				<mat-nav-list>
-					<a mat-list-item [routerLink]="['/dashboard', 'inscripciones']">
-						<span>Listado</span>
-					</a>
-					<a mat-list-item [routerLink]="['/dashboard', 'nuevo-alumno']">
-						<span>Nuevo Alumno</span>
-					</a>
-				</mat-nav-list>
+				<mat-list-item [routerLink]="['/dashboard', 'inscripciones']">
+					<span>Listado</span>
+				</mat-list-item>
+				<mat-list-item [routerLink]="['/dashboard', 'nuevo-alumno']">
+					<span>Nuevo Alumno</span>
+				</mat-list-item>
 			</mat-expansion-panel>
-			
->>>>>>> Stashed changes
 
 			<mat-list-item>
 				<span>{{rol}}</span>

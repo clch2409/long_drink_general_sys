@@ -1,1 +1,43 @@
-<p>exportar-inscripciones works!</p>
+<div class="container container-fluid mt-5">
+    <div class="card border-danger">
+        <div class="card-header text-center fw-bold bg-danger text-light">
+          <h5>Exportar Inscripciones</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p class="card-text text-center fw-lighter">Por favor, seleccione las opciones a continuación para la generación de un reporte de inscripciones.</p>
+          <div class="row">
+            <div class="col-2">
+                <h6>Tipo de Reporte</h6>
+                <select class="form-select" id="tipo" #tipoI (change)="setTipo(tipoI.value)">
+                    <option value="general"selected>GENERALES</option>
+                    <option value="curso">POR CURSO</option>
+                    <option value="alumno">POR ALUMNO</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <h6>Formato de Archivo</h6>
+                <select class="form-select" id="formato" #formatoI (change)="setFormato(formatoI.value)">
+                    <option value="excel"selected>EXCEL</option>
+                    <option value="csv">CSV</option>
+                    <option value="pdf">PDF</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <h6>DNI Estudiante</h6>
+                <input type="text" class="form-control" id="dniEstudiante" #dniEstudiante [disabled] = "this.estadoDni" maxlength="8" minlength="8">
+            </div>
+            <div class="col-3">
+                <h6>Curso</h6>
+                <select class="form-select" id="nombreCurso" #nombreCurso [disabled] = "this.estadoCurso" (change)="setCurso(nombreCurso.value)">
+                    <option *ngFor="let curso of listaCursos" [value] ="curso.codCurso">{{curso.nombre}}</option>
+                </select>
+                
+            </div>
+            <div class="col-2 mt-4">
+                <a class="btn-success btn" (click)="descargarArchivoI()">Descargar</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>

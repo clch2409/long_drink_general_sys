@@ -1,1 +1,32 @@
-<p>exportar-docentes works!</p>
+<div class="container container-fluid mt-5">
+    <div class="card border-warning">
+        <div class="card-header text-center fw-bold bg-warning text-light">
+          <h5>Exportar Docentes</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p class="card-text text-center fw-lighter">Por favor, seleccione las opciones a continuación para la generación de un reporte de docentes.</p>
+          <div class="row">
+            <div class="col-4">
+                <h6>Tipo de Reporte</h6>
+                <select class="form-select" id="tipo" #docenteTipo (change)="setTipo(docenteTipo.value)">
+                    <option value="general" selected>GENERAL</option>
+                    <option value="activos" >ACTIVOS</option>
+                    <option value="disponibles" >DISPONIBLES - SIN CURSO ASIGNADO</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <h6>Formato de Archivo</h6>
+                <select class="form-select" id="formato" #docenteFormato (change)="setFormato(docenteFormato.value)">
+                    <option value="excel"selected>EXCEL</option>
+                    <option value="csv">CSV</option>
+                    <option value="pdf">PDF</option>
+                </select>
+            </div>
+            <div class="col-4 mt-4">
+                <a class="btn-success btn" (click)="descargarArchivoD()" >Descargar</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>

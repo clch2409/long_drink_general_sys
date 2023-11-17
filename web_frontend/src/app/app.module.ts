@@ -34,7 +34,10 @@ import { MatTableModule } from '@angular/material/table';
 import { ExportarAlumnosComponent } from './components/modulo_admin/exportaciones/exportar-alumnos/exportar-alumnos.component';
 import { ExportarDocentesComponent } from './components/modulo_admin/exportaciones/exportar-docentes/exportar-docentes.component';
 import { ExportarCursosComponent } from './components/modulo_admin/exportaciones/exportar-cursos/exportar-cursos.component';
-import { ExportarInscripcionesComponent } from './components/modulo_admin/exportaciones/exportar-inscripciones/exportar-inscripciones.component' 
+import { ExportarInscripcionesComponent } from './components/modulo_admin/exportaciones/exportar-inscripciones/exportar-inscripciones.component';
+import { ExportarGeneralComponent } from './components/modulo_admin/exportaciones/exportar-general/exportar-general.component' 
+import { InscripcionAlumnoComponent } from './components/modulo_admin/alumno/inscripcion-alumno/inscripcion-alumno.component' 
+import { GuiasEstudioComponent } from './components/modulo_admin/curso/guias-estudio/guias-estudio.component' 
 
 @NgModule({
   declarations: [
@@ -59,6 +62,9 @@ import { ExportarInscripcionesComponent } from './components/modulo_admin/export
     ExportarDocentesComponent,
     ExportarCursosComponent,
     ExportarInscripcionesComponent,
+    ExportarGeneralComponent,
+    InscripcionAlumnoComponent,
+    GuiasEstudioComponent,
   ],
   imports: [
     BrowserModule,

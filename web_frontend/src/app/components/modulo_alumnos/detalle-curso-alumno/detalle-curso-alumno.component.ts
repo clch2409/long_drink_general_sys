@@ -7,6 +7,7 @@ import { CursoService } from 'src/app/services/curso.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { StorageService } from 'src/app/services/storage.service';
 import Swal from 'sweetalert2';
+const API = "http://localhost:8080/api/v1";
 
 @Component({
   selector: 'app-detalle-curso-alumno',
@@ -50,6 +51,7 @@ export class DetalleCursoAlumnoComponent implements OnInit{
   }
 
   descargarGuia(codGuia: number | any): void{
+    window.location.href=API+`/tema/descargar_guia?codTema=${codGuia}`;
     Swal.fire({
       title: "Descargando guía...",
       text: "Estas descargando la guía de estudio: " + codGuia,

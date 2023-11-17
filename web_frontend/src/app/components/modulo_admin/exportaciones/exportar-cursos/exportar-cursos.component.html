@@ -1,1 +1,31 @@
-<p>exportar-cursos works!</p>
+<div class="container container-fluid mt-5">
+    <div class="card border-success">
+        <div class="card-header text-center fw-bold bg-success text-light">
+          <h5>Exportar Cursos</h5>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p class="card-text text-center fw-lighter">Por favor, seleccione las opciones a continuación para la generación de un reporte de cursos.</p>
+          <div class="row">
+            <div class="col-4">
+                <h6>Tipo de Reporte</h6>
+                <select class="form-select" id="tipo" #cursoTipo (change)="setTipo(cursoTipo.value)">
+                    <option value="general" selected>GENERAL</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <h6>Formato de Archivo</h6>
+                <select class="form-select" id="formato" #cursoFormato (change)="setFormato(cursoFormato.value)">
+                    <option value="excel"selected>EXCEL</option>
+                    <option value="csv">CSV</option>
+                    <option value="pdf">PDF</option>
+                </select>
+            </div>
+            <div class="col-4 mt-4">
+                <a class="btn-success btn" (click)="descargarArchivoC()" >Descargar</a>
+            </div>
+    
+        </div>
+        </div>
+    </div>
+    </div>

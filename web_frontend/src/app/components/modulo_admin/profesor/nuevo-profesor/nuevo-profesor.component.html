@@ -1,55 +1,67 @@
 <div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="rounded-4 shadow p-4 border border-2 border-primary">
                 <h2 class="fw-bold fst-italic text-primary text-center mb-4 text-decoration-underline fs-2">Registro de
                     Docentes</h2>
                 <form class="form container" (ngSubmit)="registrarProfesor()">
-                    <div class="mb-3">
-                        <label for="nombre" class="fw-bold form-label">Nombres</label>
-                        <input type="text" class="text-uppercase fw-medium form-control" id="nombre"
-                            [(ngModel)]="profesor.nombre" name="nombre" required maxlength="25" autofocus>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="nombre" class="fw-bold form-label">Nombres</label>
+                            <input type="text" class="text-uppercase fw-medium form-control" id="nombre"
+                                [(ngModel)]="profesor.nombre" name="nombre" required maxlength="25" autofocus>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="apellidoPaterno" class="fw-bold form-label">Apellido Paterno</label>
+                            <input type="text" class="text-uppercase fw-medium form-control" id="apellidoPaterno"
+                                [(ngModel)]="profesor.apellidoPaterno" name="apellidoPaterno" required maxlength="25">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="apellidoMaterno" class="fw-bold form-label">Apellido Materno</label>
+                            <input type="text" class="text-uppercase fw-medium form-control" id="apellidoMaterno"
+                                [(ngModel)]="profesor.apellidoMaterno" name="apellidoMaterno" required maxlength="25">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="apellidoPaterno" class="fw-bold form-label">Apellido Paterno</label>
-                        <input type="text" class="text-uppercase fw-medium form-control" id="apellidoPaterno"
-                            [(ngModel)]="profesor.apellidoPaterno" name="apellidoPaterno" required maxlength="25">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="dni" class="fw-bold form-label">DNI</label>
+                            <input type="text" class="text-uppercase fw-medium form-control" id="dni"
+                                [(ngModel)]="profesor.dni" name="dni" minlength="8" maxlength="12" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="telefono" class="fw-bold form-label">Telefono</label>
+                            <input type="text" class="text-uppercase fw-medium form-control" id="telefono"
+                                [(ngModel)]="profesor.telefono" name="telefono" minlength="9" maxlength="15" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="email" class="fw-bold form-label">E-mail</label>
+                            <input type="email" class="text-uppercase fw-medium form-control" id="email"
+                                [(ngModel)]="profesor.email" name="email" required maxlength="50">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="apellidoMaterno" class="fw-bold form-label">Apellido Materno</label>
-                        <input type="text" class="text-uppercase fw-medium form-control" id="apellidoMaterno"
-                            [(ngModel)]="profesor.apellidoMaterno" name="apellidoMaterno" required maxlength="25">
-                    </div>
-                    <div class="mb-3">
-                        <label for="dni" class="fw-bold form-label">DNI</label>
-                        <input type="text" class="text-uppercase fw-medium form-control" id="dni"
-                            [(ngModel)]="profesor.dni" name="dni" minlength="8" maxlength="12" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="telefono" class="fw-bold form-label">Telefono</label>
-                        <input type="text" class="text-uppercase fw-medium form-control" id="telefono"
-                            [(ngModel)]="profesor.telefono" name="telefono" minlength="9" maxlength="15" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="fw-bold form-label">E-mail</label>
-                        <input type="email" class="text-uppercase fw-medium form-control" id="email"
-                            [(ngModel)]="profesor.email" name="email" required maxlength="50">
-                    </div>
-                    <div class="mb-3">
-                        <label for="contrasena" class="fw-bold form-label">Contraseña</label>
-                        <input type="password" class="text-uppercase fw-medium form-control" id="contrasena"
-                            [(ngModel)]="profesor.contrasena" name="contrasena" required minlength="5" maxlength="25">
-                    </div>
-                    <div class="mb-3">
-                        <label for="fechaContratacion" class="fw-bold form-label">Fecha de Contratación</label>
-                        <input type="date" class="text-uppercase fw-medium form-control" id="fechaContratacion"
-                            [(ngModel)]="fechaContratacionFormatted" name="fechaContratacion">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="contrasena" class="fw-bold form-label">Contraseña</label>
+                            <input type="password" class="text-uppercase fw-medium form-control" id="contrasena"
+                                [(ngModel)]="profesor.contrasena" name="contrasena" required minlength="5" maxlength="25">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="fechaContratacion" class="fw-bold form-label">Fecha de Contratación</label>
+                            <input type="date" class="text-uppercase fw-medium form-control" id="fechaContratacion"
+                                [(ngModel)]="fechaContratacionFormatted" name="fechaContratacion">
+                        </div>
                     </div>
                     <br>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="fw-bold btn btn-primary fs-5">Guardar</button>
-                        <button type="button" class="fw-bold btn btn-secondary fs-5" (click)="limpiarDatos()">Limpiar</button>
-                        <a class="fw-bold btn btn-danger fs-5" [routerLink]="['/dashboard/docentes']">Cancelar</a>
+                    <div class="row">
+                        <div class="col-md-4 mb-3 text-center">
+                            <button type="submit" class="fw-bold btn btn-primary fs-5">Guardar</button>
+                        </div>
+                        <div class="col-md-4 mb-3 text-center">
+                            <button type="button" class="fw-bold btn btn-secondary fs-5" (click)="limpiarDatos()">Limpiar</button>
+                        </div>
+                        <div class="col-md-4 mb-3 text-center">
+                            <a class="fw-bold btn btn-danger fs-5" [routerLink]="['/dashboard/docentes']">Cancelar</a>
+                        </div>
                     </div>
                 </form>
             </div>

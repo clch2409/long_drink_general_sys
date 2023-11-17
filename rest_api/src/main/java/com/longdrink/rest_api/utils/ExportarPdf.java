@@ -394,7 +394,7 @@ public class ExportarPdf{
         document.close();
     }
 
-    public void exportInscripcion(HttpServletResponse response, int tipo, int codigo) throws IOException{
+    public void exportInscripcion(HttpServletResponse response, int tipo, String codigo) throws IOException{
 
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -419,12 +419,12 @@ public class ExportarPdf{
         //Se hacen modificaciones de estilo al titulo, en ese caso de la celda que se encontrará en el título
         celda = new PdfPCell(new Phrase("Listado de Inscripciones", fuenteTitulo));
         if (tipo == 1){
-            listadoInscripciones = inscripcionService.listarPorAlumno(Long.valueOf(codigo));
+            listadoInscripciones = inscripcionService.listarPorDniAlumno(codigo);
         }
         else if (tipo == 2){
             listadoInscripciones = inscripcionService.listarPorCurso(Long.valueOf(codigo));
         }
-        else if (tipo == 0){
+        else{
             listadoInscripciones = inscripcionService.listarInscripciones();
         }
         celda.setBorder(0);

@@ -16,6 +16,12 @@ public class TemaService {
 
     public List<Tema> listarTemasPorCurso(Long codCurso){ return temaDAO.findAllByCursosCodCurso(codCurso); }
 
+    public Tema obtenerTema(Long codTema){
+        try{
+            return temaDAO.findById(codTema).get();
+        }
+        catch(Exception ex){ return null; }
+    }
     public Tema guardar(Tema t){
         t.setCodTema(0L);
         return temaDAO.save(t);

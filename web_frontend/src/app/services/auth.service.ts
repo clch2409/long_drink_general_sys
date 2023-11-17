@@ -41,4 +41,12 @@ export class AuthService {
       httpOptions
     );
   }
+
+  registroAlumno(alumnoData: any): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'registro_alumno',
+      alumnoData,
+      httpOptions
+    );
+  }
 }

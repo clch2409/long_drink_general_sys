@@ -17,9 +17,6 @@ export class InscripcionService {
 
   constructor(private http: HttpClient) { }
 
-
-  
-
   getInscripciones(): Observable<Inscripcion[]>{
     return this.http.get<Inscripcion[]>(API+'/inscripcion');
   }
@@ -60,4 +57,11 @@ export class InscripcionService {
     return this.http.get<Inscripcion>(API+`/inscripcion/por_cod?codInscripcion=${codInscripcion}`);
   }
 
+  registroInscripcion(inscripcionData: any): Observable<any> {
+    return this.http.post(
+      API + '/inscripcion',
+      inscripcionData,
+      httpOptions
+    );
+  }
 }

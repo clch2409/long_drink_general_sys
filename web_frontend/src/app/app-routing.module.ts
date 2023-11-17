@@ -40,7 +40,7 @@ const routes: Routes = [
   ]},
   { path: 'p', component: DashboardComponent, title: 'Long Drink - Área Docente', children: [
     { path: 'mis-cursos', component: MisCursosProfesorComponent, title: 'Long Drink - Mis Cursos' },
-    { path: 'mi-curso', component: DetalleCursoProfesorComponent, title: 'Long Drink - Curso: xxxx'},
+    { path: 'mi-curso/:codprof/:codcur', component: DetalleCursoProfesorComponent, title: 'Long Drink - Curso: xxxx'},
   ]}
 ];
 

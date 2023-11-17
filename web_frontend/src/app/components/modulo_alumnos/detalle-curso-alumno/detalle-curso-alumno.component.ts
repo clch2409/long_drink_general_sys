@@ -31,7 +31,7 @@ export class DetalleCursoAlumnoComponent implements OnInit{
 
   getInscripcion():void{
     this.inscripcionService.getInscripcionPorCod(this.codInscripcion).subscribe({
-      next: (data) =>{
+      next: (data: Inscripcion) =>{
         this.inscripcion = data;
         this.enriquecerInscripcion(this.inscripcion);
         console.log(this.inscripcion);

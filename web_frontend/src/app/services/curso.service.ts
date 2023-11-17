@@ -20,7 +20,7 @@ export class CursoService {
     return this.http.get<Curso[]>(API+'/curso/activos');
   }
 
-  getCurso(cod: number): Observable<Curso>{
+  getCurso(cod?: number): Observable<Curso>{
     return this.http.get<Curso>(API+'/curso/'+cod);
   }
   

@@ -18,7 +18,7 @@ export class AlumnoService {
     return this.http.get<Alumno[]>(API+'/alumno/activos')
   }
 
-  getAlumnoCod(codAlumno: number): Observable<Alumno>{
+  getAlumnoCod(codAlumno?: number): Observable<Alumno>{
     return this.http.get<Alumno>(API+`/alumno/por_cod?codAlum=${codAlumno}`)
   }
 

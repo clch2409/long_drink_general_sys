@@ -36,6 +36,7 @@ export class MisCursosComponent implements OnInit {
         this.inscripciones = data;
         this.llenarCursos(this.inscripciones);
         this.enriquecerInscripciones(this.inscripciones);
+        console.log(this.storageService.obtenerUsuario())
       },
       error: (err) =>{
         console.log(err)

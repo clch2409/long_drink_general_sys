@@ -1,7 +1,7 @@
 import { Deserializable } from "./deserializable.model";
 
 export class Turno implements Deserializable{
-    nombre: string | undefined;
+    nombre: string="";
     codTurno: number | undefined;
     horaInicio: string | undefined;
     horaFin: string | undefined;

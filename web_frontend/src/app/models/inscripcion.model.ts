@@ -14,9 +14,9 @@ export class Inscripcion implements Deserializable {
     fechaFinal?: Date;
     fechaInscripcion?: Date;
     fechaTerminado?: Date;
-    alumno?: Alumno;
-    curso?: Curso;
-    turno?: Turno;
+    alumno: Alumno = new Alumno;
+    curso: Curso = new Curso;
+    turno: Turno = new Turno;
 
     deserializable(input: any): this {
         Object.assign(this, input);

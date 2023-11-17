@@ -124,7 +124,7 @@ public class AuthController {
         if(u.getRol().getCodRol() == 2L){
             Profesor p = profesorService.getPorCodUsuario(u.getCodUsuario());
             String nombreCompleto = p.getNombre() +" "+p.getApellidoPaterno()+" "+p.getApellidoMaterno();
-            LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"DOCENTE");
+            LoginWebProfesor respuesta = new LoginWebProfesor(p.getCodProfesor(), u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"DOCENTE");
             return new ResponseEntity<>(respuesta,HttpStatus.OK);
         }
         if(u.getRol().getCodRol() == 1L){

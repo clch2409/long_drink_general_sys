@@ -12,6 +12,7 @@ export class Curso implements Deserializable {
     frecuencia?: string;
     imagen?: string;
     profesor?: {
+        codProfesor: number;
         nombre: string;
         dni: string;
         apellidoPaterno: string;

@@ -1,15 +1,17 @@
 package com.longdrink.rest_api.model.payload;
 
-public class LoginWeb {
+public class LoginWebProfesor {
+    private Long codProfesor;
     private String nombreUsuario;
     private String contrasena;
     private String email;
     private String nombreCompleto;
     private String rol;
 
-    public LoginWeb(){}
+    public LoginWebProfesor(){}
 
-    public LoginWeb(String nombreUsuario, String contrasena, String email, String nombreCompleto, String rol) {
+    public LoginWebProfesor(Long codProfesor, String nombreUsuario, String contrasena, String email, String nombreCompleto, String rol) {
+        this.codProfesor = codProfesor;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.email = email;
@@ -17,8 +19,14 @@ public class LoginWeb {
         this.rol = rol;
     }
 
-    
+    public Long getCodProfesor(){
+      return this.codProfesor;
+    }
 
+    public void setCodProfesor(Long codProfesor){
+      this.codProfesor = codProfesor;
+    }
+    
     public String getNombreUsuario() {
         return nombreUsuario;
     }

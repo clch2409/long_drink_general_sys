@@ -14,11 +14,11 @@ export class MiCuentaComponent implements OnInit {
   constructor(private storageService: StorageService, private router: Router, private authService: AuthService) { }
   ngOnInit(): void {
     this.storageService.comprobarSesion();
+    var usuario = this.storageService.obtenerUsuario();
     let username = document.getElementById("nombreUsuario") as HTMLInputElement;
     let nombre = document.getElementById("nombre") as HTMLInputElement;
     let email = document.getElementById("email") as HTMLInputElement;
     let rol = document.getElementById("rol") as HTMLInputElement;
-    let usuario = this.storageService.obtenerUsuario();
     username.value = usuario.nombreUsuario;
     nombre.value = usuario.nombreCompleto;
     email.value = usuario.email;

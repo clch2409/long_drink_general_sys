@@ -1,45 +1,24 @@
-package com.longdrink.rest_api.model;
+package com.longdrink.rest_api.model.payload;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import com.longdrink.rest_api.model.Curso;
 
 
 import java.io.Serializable;
 import java.util.List;
 
-
-@Entity(name = "Tema")
-@Table(name = "tema")
-public class Tema implements Serializable {
-    @Id
-    @Column(name = "cod_tema")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("codTema")
+public class TemaCurso implements Serializable {
     private Long codTema;
-
-    @Column(length = 30)
     private String nombre;
-
-    private String ficha; //Url?
-
-    @JsonBackReference
-    @ManyToMany(mappedBy = "temas")
+    private String ficha;
     private List<Curso> cursos;
 
-    public Tema(){}
+    public TemaCurso(){}
 
-    public Tema(Long codTema, String nombre, String ficha, List<Curso> cursos) {
+    public TemaCurso(Long codTema, String nombre, String ficha, List<Curso> cursos) {
         this.codTema = codTema;
         this.nombre = nombre;
         this.ficha = ficha;
         this.cursos = cursos;
-    }
-
-    public Tema(Long codTema, String nombre, String ficha) {
-        this.codTema = codTema;
-        this.nombre = nombre;
-        this.ficha = ficha;
     }
 
     public Long getCodTema() {

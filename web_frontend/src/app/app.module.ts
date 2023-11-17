@@ -37,6 +37,7 @@ import { ExportarCursosComponent } from './components/modulo_admin/exportaciones
 import { ExportarInscripcionesComponent } from './components/modulo_admin/exportaciones/exportar-inscripciones/exportar-inscripciones.component';
 import { ExportarGeneralComponent } from './components/modulo_admin/exportaciones/exportar-general/exportar-general.component' 
 import { InscripcionAlumnoComponent } from './components/modulo_admin/alumno/inscripcion-alumno/inscripcion-alumno.component' 
+import { GuiasEstudioComponent } from './components/modulo_admin/curso/guias-estudio/guias-estudio.component' 
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { InscripcionAlumnoComponent } from './components/modulo_admin/alumno/ins
     ExportarInscripcionesComponent,
     ExportarGeneralComponent,
     InscripcionAlumnoComponent,
+    GuiasEstudioComponent,
   ],
   imports: [
     BrowserModule,

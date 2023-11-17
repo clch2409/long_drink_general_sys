@@ -1,0 +1,74 @@
+<div class="container container-fluid mt-3">
+<div class="card border-warning">
+    <div class="card-header text-center fw-bold bg-warning text-dark">
+      GUÍAS DE ESTUDIO
+    </div>
+    <div class="card-body">
+      <div class="container row">
+      <p class="card-text fw-light text-start fs-6">A continuación puede visualizar un listado de guías de estudio y los cursos a los cuales han sido asignadas. Recuerde que las guías de estudio sin cursos asignados muestran la columna de cursos en blanco.</p>
+      
+      <div class="container col-6">
+      <table class="table table-striped table-bordered border-warning table-sm">
+        <thead>
+          <tr>
+            <th class="text-center">GUÍA DE ESTUDIO</th>
+            <th class="text-center">CURSOS ASIGNADOS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of listaTemas">
+            <th>{{t.nombre}}</th>
+            <th class="text-start">
+              <ul *ngFor="let c of t.cursos" style="list-style-type: none;">
+                <li>{{c.nombre}}</li>
+              </ul>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      
+      <div class="container col-4" >
+      <table class="table table-striped table-bordered border-warning table-sm ">
+        <thead>
+          <tr>
+            <th class="text-center">GUÍA DE ESTUDIO</th>
+            <th class="text-center col-2">DESCARGAR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of listaTemas">
+            <th>{{t.nombre}}</th>
+            <th class="text-start">
+              <a (click)="descargarGuia(t.codTema)" class="btn btn-sm btn-danger">DESCARGAR</a>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container col-6">
+      <div class="card mt-3">
+        <div class="card-header text-center fw-bold">
+          SUBIDA DE GUÍAS DE ESTUDIO
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Nombre Guía</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" #nombreDoc placeholder="COCTELERIA AVANZADA" minlength="5" maxlength="30">
+          </div>
+          <div class="mb-3">
+            <label for="subidaDoc" class="form-label">Documento</label>
+            <input class="form-control" type="file" id="subidaDoc"  (change)="seleccionarArchivo($event)">
+          </div>
+          <div class="container text-center">
+          <button class="btn btn-success" (click)="subirGuia(nombreDoc.value)">SUBIR</button>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    </div>
+  </div>
+</div>

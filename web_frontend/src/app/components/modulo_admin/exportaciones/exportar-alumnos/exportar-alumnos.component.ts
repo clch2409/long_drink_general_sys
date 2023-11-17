@@ -37,7 +37,7 @@ export class ExportarAlumnosComponent implements OnInit {
       window.location.href=API+"/reporte/alumno/pdf?activo=1"
     }
     else if(this.tipo === 'general' && this.formato === 'pdf'){
-      window.location.href=API+"/reporte/alumno/csv?activo=0"
+      window.location.href=API+"/reporte/alumno/pdf?activo=0"
     }
     else if(this.tipo === 'activos' && this.formato === 'csv'){
       window.location.href=API+"/reporte/alumno/csv?tipo=1"

@@ -1,11 +1,13 @@
 package com.longdrink.rest_api.controller;
 
+import com.longdrink.rest_api.model.Alumno;
+import com.longdrink.rest_api.model.Curso;
 import com.longdrink.rest_api.model.Inscripcion;
+import com.longdrink.rest_api.model.Turno;
 import com.longdrink.rest_api.model.payload.DetalleInscripcion;
+import com.longdrink.rest_api.model.payload.InsertInscripcion;
 import com.longdrink.rest_api.model.payload.Mensaje;
-import com.longdrink.rest_api.services.AlumnoService;
-import com.longdrink.rest_api.services.CursoService;
-import com.longdrink.rest_api.services.InscripcionService;
+import com.longdrink.rest_api.services.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,10 @@ public class InscripcionController {
     private AlumnoService alumnoService;
     @Autowired
     private CursoService cursoService;
+    @Autowired
+    private TurnoService turnoService;
+    @Autowired(required = true)
+    private EmailService emailService;
 
     @GetMapping
     public ResponseEntity<?> listarInscripciones(){
@@ -180,6 +186,60 @@ public class InscripcionController {
                     HttpStatus.NOT_FOUND);
         }
     }
-    //TODO: Matricular alumno ya registrado, el cual termino curso anterior.
 
+    //Inscripción para alumno ya registrado. Procede en caso el alumno haya terminado cursos anteriores, se encuentre habilitado y el curso tenga vacantes disponibles.
+    @PostMapping()
+    public ResponseEntity<?> inscribirAlumnoExistente(@RequestBody InsertInscripcion ins){
+        Alumno alumno = alumnoService.getPorCod(ins.getCodAlumno());
+        Curso curso = cursoService.getPorCod(ins.getCodCurso());
+        if(alumno == null){
+            return new ResponseEntity<>(new Mensaje("Ups! Alumno no encontrado o deshabilitado.",400),HttpStatus.BAD_REQUEST);
+        }
+        if(curso == null){
+            return new ResponseEntity<>(new Mensaje("Ups! Curso no encontrado!",400),HttpStatus.BAD_REQUEST);
+        }
+        if(!alumno.isActivo()){
+            return new ResponseEntity<>(new Mensaje("Ups! Alumno deshabilitado.",400),HttpStatus.BAD_REQUEST);
+        }
+        boolean cursoLleno = cursoService.cursoLleno(curso.getCodCurso());
+        if(cursoLleno){
+            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no cuenta con vacantes disponibles.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        List<Inscripcion> inscripcionesAlumno = inscripcionService.listarPorAlumno(alumno.getCodAlumno());
+        boolean cursoEnProceso = true;
+        if(!inscripcionesAlumno.isEmpty()){
+            int c = 0;
+            for(Inscripcion i: inscripcionesAlumno){
+                if(i.getFechaTerminado() != null){
+                    c++;
+                }
+            }
+            if(c == inscripcionesAlumno.size()){
+                cursoEnProceso = false;
+            }
+        }
+        if(cursoEnProceso){
+            return new ResponseEntity<>(new Mensaje("Error! El alumno seleccionado debe terminar sus cursos en proceso.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        List<Turno> listaTurnos = turnoService.listarTurnoPorCurso(curso.getCodCurso());
+        if(listaTurnos.isEmpty()){
+            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no tiene turnos asignados.",400),
+                    HttpStatus.BAD_REQUEST);
+        }
+        //Insert de datos!!
+        try{
+            Inscripcion i = new Inscripcion(0L,ins.getFechaInicio(),
+                    ins.getFechaFinal(),ins.getFechaInscripcion(),
+                    null,true,alumno,
+                    curso,listaTurnos.get(0));
+            Inscripcion inscripcionGuardada = inscripcionService.guardar(i);
+            emailService.enviarEmailNuevaInscripcion(alumno,curso,inscripcionGuardada);
+            return new ResponseEntity<>(inscripcionGuardada,HttpStatus.CREATED);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

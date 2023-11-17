@@ -1,0 +1,30 @@
+<div class="container container-fluid mt-3">
+    <div class="card border-warning">
+        <div class="card-header text-center fw-bold bg-warning text-dark">
+            GUÍAS DE ESTUDIO
+        </div>
+        <div class="card-body">
+            <div class="container row">
+                <p class="card-text fw-light text-center fs-6">A continuación puede seleccionar un curso para asignarle
+                    guías de estudio. Recuerde que puede asignar tantas guías de estudio como el curso requiera.</p>
+
+                <div class="container row">
+                    <div class="container col-6">
+                        <select class="form-select" id="nombreCurso" #nombreCurso  (change)="setCurso(nombreCurso.value)">
+                            <option *ngFor="let curso of listaCursos" [value] ="curso.codCurso">{{curso.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="container col-4">
+                        <div class="form-check" *ngFor="let t of listaTemas">
+                            <input class="form-check-input" type="checkbox" value="t.codTema" id="check" [checked]="">
+                            <label class="form-check-label" for="check">
+                              {{t.nombre}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

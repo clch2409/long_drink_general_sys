@@ -3,6 +3,7 @@ import { Curso } from 'src/app/models/curso.model';
 import { CursoService } from 'src/app/services/curso.service';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-inscripcion-alumno',
@@ -29,10 +30,13 @@ export class InscripcionAlumnoComponent implements OnInit {
 
   constructor(
     private cursoService: CursoService,
-    private authService: AuthService
+    private authService: AuthService,
+    private storageService: StorageService
   ) { }
 
   ngOnInit(): void {
+    this.storageService.comprobarSesion();
+    this.storageService.denegarAcceso("ALUMNOyDOCENTE");
     this.cursoService.getCursosDisponibles().subscribe(
       (cursos) => {
         this.cursosDisponibles = cursos;

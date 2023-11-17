@@ -207,16 +207,16 @@ public class InscripcionController {
                     HttpStatus.BAD_REQUEST);
         }
         List<Inscripcion> inscripcionesAlumno = inscripcionService.listarPorAlumno(alumno.getCodAlumno());
-        boolean cursoEnProceso = true;
+        boolean cursoEnProceso = false;
         if(!inscripcionesAlumno.isEmpty()){
             int c = 0;
             for(Inscripcion i: inscripcionesAlumno){
-                if(i.getFechaTerminado() != null){
+                if(i.getFechaTerminado() == null){
                     c++;
                 }
             }
-            if(c == inscripcionesAlumno.size()){
-                cursoEnProceso = false;
+            if(c > 0){
+                cursoEnProceso = true;
             }
         }
         if(cursoEnProceso){

@@ -35,7 +35,7 @@ public class Profesor implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_contratacion")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaContratacion")
     private Date fechaContratacion;
 

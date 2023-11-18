@@ -1,4 +1,6 @@
 <div class="container d-flex flex-column align-items-center">
+    <img src="https://i.imgur.com/D6fzgoS.gif" alt="" srcset="">
+    <h1 class="text-center text-danger">Me encuentro trabajando en esto actualmente... Parece que va por buen camino.</h1>
     <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Inscripciones</h1>
     <div class="search-bar mb-4">
         <label for="buscar" class="fw-bold me-2">Buscar</label>
@@ -22,32 +24,27 @@
                     <th class="fw-bold align-middle">Curso</th>
                     <th class="fw-bold align-middle">Alumno</th>
                     <th class="fw-bold align-middle">DNI</th>
-                    <th class="fw-bold align-middle">Fecha de Solicitud</th>
+                    <th class="fw-bold align-middle">Fecha de Inscripción</th>
+                    <th class="fw-bold align-middle">Inicio Curso</th>
+                    <th class="fw-bold align-middle">Fin Curso</th>
                     <th class="fw-bold align-middle">Estado</th>
                     <th class="fw-bold align-middle" colspan="2">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let inscripcion of inscripciones" class="text-center">
-                    <td class="fw-medium align-middle">{{ inscripcion.curso?.descripcion }}</td>
-                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.nombre }} {{
+                    <td class="fw-medium align-middle">{{ inscripcion.curso.nombre }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.alumno.nombre }} {{
                         inscripcion.alumno?.apellidoPaterno }} {{ inscripcion.alumno?.apellidoMaterno }}</td>
                     <td class="fw-medium align-middle">{{ inscripcion.alumno?.dni }}</td>
                     <td class="fw-medium align-middle">{{ inscripcion.fechaInscripcion | date }}</td>
-                    <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.estado  == false && inscripcion.fechaTerminado === inscripcion.fechaInscripcion">RECHAZADO</td>
-                    <td class="fw-bold align-middle text-success" *ngIf="inscripcion.estado  == true">APROBADO</td>
-                    <td class="fw-bold align-middle text-primary" *ngIf="inscripcion.estado  == false && inscripcion.fechaTerminado == null">PENDIENTE</td>
-                    <!----CASO PENDIENTE-->
-                    <td class="d-flex justify-content-center align-items-center btn-group-vertical" *ngIf="inscripcion.estado  == false && inscripcion.fechaTerminado == null">
-                        <a class="btn btn-success  fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.inscripcionPk?.codAlumno,inscripcion.inscripcionPk?.codCurso]">Detalles</a>
-                        <a class="btn btn-warning  fw-bold" 
-                        (click)="aprobarSolicitud(inscripcion.inscripcionPk?.codAlumno,inscripcion.inscripcionPk?.codCurso, 
-                        inscripcion.curso?.descripcion,inscripcion.alumno?.nombre,
-                        inscripcion.alumno?.apellidoPaterno,inscripcion.alumno?.apellidoMaterno, inscripcion.fechaInscripcion)">Aprobar</a>
-                    </td>
-                
-                    <td class="d-flex justify-content-center align-content-around" *ngIf="inscripcion.estado  == true || inscripcion.estado == false && inscripcion.fechaTerminado === inscripcion.fechaInscripcion">
-                        <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.inscripcionPk?.codAlumno,inscripcion.inscripcionPk?.codCurso]">Detalles</a>
+                    <td class="fw-medium align-middle">{{ inscripcion.fechaInicio | date }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.fechaFinal | date }}</td>
+                    <td class="fw-bold align-middle text-success" *ngIf="inscripcion.fechaTerminado == null">EN PROCESO</td>
+                    <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.fechaTerminado  == inscripcion.fechaFinal">TERMINADO</td>
+                    <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.fechaTerminado  != null && inscripcion.fechaTerminado != inscripcion.fechaFinal">RETIRADO</td>
+                    <td class="d-flex justify-content-center align-content-around" >
+                        <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.alumno,inscripcion.curso]">Detalles</a>
                     </td>
                 </tr>
             </tbody>

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Alumno } from '../models/alumno.model';
 const API = 'http://localhost:8080/api/v1';
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type' : 'application/json'})
+}; 
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +27,10 @@ export class AlumnoService {
 
   getAlumnoDni(dni: string): Observable<Alumno>{
     return this.http.get<Alumno>(API+`/alumno/${dni}`)
+  }
+
+  editarAlumno(carga: any): Observable<any>{
+    return this.http.put(API+`/alumno`,carga,httpOptions);
   }
   
 }

@@ -1,21 +1,15 @@
-import { Alumno } from "./alumno.model";
-import { Curso } from "./curso.model";
 import { Deserializable } from "./deserializable.model";
 import { Turno } from "./turno.model";
 
 export class Inscripcion implements Deserializable {
     codInscripcion?: number;
-    inscripcionPk?: {
-        codAlumno: number;
-        codCurso: number;
-    };
     estado?: boolean;
     fechaInicio?: Date;
     fechaFinal?: Date;
     fechaInscripcion?: Date;
     fechaTerminado?: Date;
-    alumno: Alumno = new Alumno;
-    curso: Curso = new Curso;
+    alumno?: number | any;
+    curso?: number | any;
     turno: Turno = new Turno;
 
     deserializable(input: any): this {

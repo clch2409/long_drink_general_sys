@@ -68,11 +68,11 @@ export class ListadoInscripcionesComponent {
 
   enriquecerInscripciones(inscripciones: Inscripcion[]): void {
     for (const inscripcion of inscripciones) {
-      if (inscripcion.inscripcionPk) {
-        this.getAlumnoCod(inscripcion.inscripcionPk.codAlumno).subscribe((alumno: Alumno) => {
+      if (inscripcion.codInscripcion) {
+        this.getAlumnoCod(inscripcion.alumno).subscribe((alumno: Alumno) => {
           inscripcion.alumno = alumno;
         });
-        this.getCursoCod(inscripcion.inscripcionPk.codCurso).subscribe((curso: Curso) => {
+        this.getCursoCod(inscripcion.curso).subscribe((curso: Curso) => {
           inscripcion.curso = curso;
         });
       }
@@ -261,42 +261,6 @@ export class ListadoInscripcionesComponent {
     });
   }
 
-  aprobarSolicitud(codAlum?: number, codCurso?: number, curso?: string, nombreAlum?: string, apePa?: string, apeMa?: string, fecha?: string | Date): void{
-    var textoSolicitud = `Usted esta a punto de aceptar la siguiente solicitud:
-    ALUMNO: ${apePa}  ${apeMa} ${nombreAlum}
-    CURSO: ${curso}
-    FECHA SOLICITUD: ${fecha}
-    `
-    Swal.fire({
-      title:'Confirmación de Solicitud.',
-      text:textoSolicitud,
-      icon:'question',
-      showCancelButton: true,
-      cancelButtonText: 'CANCELAR',
-      confirmButtonColor: '#129C1A',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'APROBAR',
-    }).then((result) => {
-      if(result.isConfirmed){
-        this.confirmarSolicitud(codAlum,codCurso);
-        console.log('Solicitud confirmada....');
-      }
-    })
-  }
-
-  confirmarSolicitud(codAlum?: number, codCurso?: number): void{
-    this.inscripcionService.confirmarInscripcion(codCurso,codAlum).subscribe({
-      next: (data) =>{
-        Swal.fire('Éxito', 'Solicitud de inscripción aceptada correctamente.', 'success').then(() =>{
-          window.location.reload();
-        });
-      },
-      error: (err) => {
-        console.log(err);
-        Swal.fire('Error!', 'Ups! Imposible aceptar solicitud de inscripción. Comuniquese con el área IT.', 'error');
-      }
-    });
-  }
 
   recargarPagina(): void{
     window.location.reload();

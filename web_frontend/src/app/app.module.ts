@@ -39,7 +39,10 @@ import { ExportarGeneralComponent } from './components/modulo_admin/exportacione
 import { InscripcionAlumnoComponent } from './components/modulo_admin/alumno/inscripcion-alumno/inscripcion-alumno.component' 
 import { GuiasEstudioComponent } from './components/modulo_admin/curso/guias-estudio/guias-estudio.component';
 import { SetGuiasEstudioComponent } from './components/modulo_admin/curso/set-guias-estudio/set-guias-estudio.component';
-import { InscripcionAlumnoAntiguoComponent } from './components/modulo_admin/alumno/inscripcion-alumno-antiguo/inscripcion-alumno-antiguo.component' 
+import { InscripcionAlumnoAntiguoComponent } from './components/modulo_admin/alumno/inscripcion-alumno-antiguo/inscripcion-alumno-antiguo.component';
+import { EditarAlumnoComponent } from './components/modulo_admin/alumno/editar-alumno/editar-alumno.component';
+import { EditarProfesorComponent } from './components/modulo_admin/profesor/editar-profesor/editar-profesor.component';
+import { EditarCursoComponent } from './components/modulo_admin/curso/editar-curso/editar-curso.component' 
 
 @NgModule({
   declarations: [
@@ -69,6 +72,9 @@ import { InscripcionAlumnoAntiguoComponent } from './components/modulo_admin/alu
     GuiasEstudioComponent,
     SetGuiasEstudioComponent,
     InscripcionAlumnoAntiguoComponent,
+    EditarAlumnoComponent,
+    EditarProfesorComponent,
+    EditarCursoComponent,
   ],
   imports: [
     BrowserModule,

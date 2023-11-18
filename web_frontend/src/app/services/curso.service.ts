@@ -38,5 +38,8 @@ export class CursoService {
       httpOptions
     )
   }
+  editarCurso(carga: any): Observable<any>{
+    return this.http.put(API+`/curso`,carga,httpOptions);
+  }
   
 }

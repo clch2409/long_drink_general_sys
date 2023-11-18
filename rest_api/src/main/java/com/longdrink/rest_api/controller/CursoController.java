@@ -4,12 +4,14 @@ import com.longdrink.rest_api.model.Curso;
 import com.longdrink.rest_api.model.Inscripcion;
 import com.longdrink.rest_api.model.Profesor;
 import com.longdrink.rest_api.model.Turno;
+import com.longdrink.rest_api.model.payload.EditarCurso;
 import com.longdrink.rest_api.model.payload.InsertCurso;
 import com.longdrink.rest_api.model.payload.Mensaje;
 import com.longdrink.rest_api.services.CursoService;
 import com.longdrink.rest_api.services.InscripcionService;
 import com.longdrink.rest_api.services.ProfesorService;
 import com.longdrink.rest_api.services.TurnoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/curso")
@@ -142,5 +145,39 @@ public class CursoController {
         Curso cursoGuardado = cursoService.actualizar(curso);
         return new ResponseEntity<>(cursoGuardado,HttpStatus.OK);
     }
-    //TODO: Asignacion de temas a cursos ---> Subida de archivos pdf??
+
+    @PutMapping()
+    @CrossOrigin(allowedHeaders = "*",origins = "*")
+    public ResponseEntity<?> editarCurso(@RequestBody EditarCurso carga){
+        Curso c = cursoService.getPorCod(carga.getCodCurso());
+        Profesor p = profesorService.getPorCod(carga.getCodProfesor());
+        List<Profesor> listaDisponibles = profesorService.listarActivosNoAsignados();
+        if(c == null || p == null){
+            return new ResponseEntity<>(new Mensaje("Ups! Curso o profesor no encontrados",400),HttpStatus.BAD_REQUEST);
+        }
+        if(!Objects.equals(c.getProfesor().getCodProfesor(), p.getCodProfesor()) && !(listaDisponibles.contains(p))){
+            return new ResponseEntity<>(new Mensaje("Ups! El profesor seleccionado no esta disponible.",400),HttpStatus.BAD_REQUEST);
+        }
+        EditarCurso limpiarDatos = carga.limpiarDatos();
+        boolean datosValidos = limpiarDatos.validarDatos();
+        if(!datosValidos){
+            return new ResponseEntity<>(new Mensaje("Ups! Datos de formato incorrecto ingresados.",400),HttpStatus.BAD_REQUEST);
+        }
+        //Update de datos!!
+        try{
+            c.setNombre(limpiarDatos.getNombre());
+            c.setDescripcion(limpiarDatos.getDescripcion());
+            c.setDuracion(limpiarDatos.getDuracion());
+            c.setFrecuencia(limpiarDatos.getFrecuencia());
+            c.setMensualidad(limpiarDatos.getMensualidad());
+            c.setVisibilidad(limpiarDatos.isVisibilidad());
+            c.setProfesor(p);
+            Curso cursoActualizado = cursoService.actualizar(c);
+            return new ResponseEntity<>(cursoActualizado,HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Error! Imposible actualizar datos. Intente nuevamente.",500),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //TODO: Asignacion de temas a cursos.
 }

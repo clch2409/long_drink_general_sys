@@ -1,0 +1,44 @@
+<div class="container py-4">
+    <div class="card border-primary-subtle">
+        <div class="card-header text-center bg-primary text-light fw-bold">
+          Editando alumno: {{codAlumno}}
+        </div>
+        <div class="card-body">
+            <p class="card-text text-center fw-light">A continuación, se presentan los datos del alumno seleccionado. Puede modificarlos para su actualización. Los datos no alterados permanecerán iguales. Recuerde que el nombre de usuario asignado al alumno no será alterado.</p>
+            <div class="row">
+                <div class="col">
+                    <label for="codigoAlumno" class="form-label">Código del Alumno</label>
+                    <input type="text" class="form-control" id="codigoAlumno" [disabled]="true" value="{{codAlumno}}">
+    
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" #nombre minlength="1" maxlength="50">
+    
+                    <label for="apPaterno" class="form-label">Apellido Paterno</label>
+                    <input type="text" class="form-control" id="apPaterno" #apPaterno minlength="1" maxlength="25">
+    
+                </div>
+                <div class="col">
+                    <label for="apMaterno" class="form-label">Apellido Materno</label>
+                    <input type="text" class="form-control" id="apMaterno" #apMaterno minlength="1" maxlength="25">
+
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" #telefono maxlength="9">
+    
+                    <label for="activo" class="form-label ">Estado</label>
+                    <select class="form-select" id="activo" #activo>
+                        <option   [value] ="true" selected>ACTIVO</option>
+                        <option   [value] ="false">INACTIVO</option>
+                    </select>
+                </div>
+                <div class="row mt-3">
+                    <div class="col text-center">
+                        <a class="btn btn-success fw-bold" (click)="onSubmit(this.nombre.value,this.apPaterno.value,this.apMaterno.value,this.telefono.value,this.activo.value)">ACTUALIZAR</a>
+                        <a class="btn btn-danger ms-5 fw-bold" [routerLink]="['/dashboard/alumnos']">CANCELAR</a>
+                    </div>
+                </div>
+            </div>
+          
+         
+        </div>
+      </div>
+    </div>

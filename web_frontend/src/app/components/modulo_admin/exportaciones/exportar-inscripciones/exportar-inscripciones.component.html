@@ -1,41 +1,41 @@
 <div class="container container-fluid mt-5">
     <div class="card border-danger">
         <div class="card-header text-center fw-bold bg-danger text-light">
-          <h5>Exportar Inscripciones</h5>
+          <h5 class="fw-bold">Exportar Inscripciones</h5>
         </div>
         <div class="card-body">
           <h5 class="card-title"></h5>
-          <p class="card-text text-center fw-lighter">Por favor, seleccione las opciones a continuación para la generación de un reporte de inscripciones.</p>
+          <p class="card-text text-center fw-medium">Por favor, seleccione las opciones a continuación para la generación de un reporte de inscripciones.</p>
           <div class="row">
             <div class="col-2">
-                <h6>Tipo de Reporte</h6>
-                <select class="form-select" id="tipo" #tipoI (change)="setTipo(tipoI.value)">
-                    <option value="general"selected>GENERALES</option>
-                    <option value="curso">POR CURSO</option>
-                    <option value="alumno">POR ALUMNO</option>
+                <h6 class="fw-bold">Tipo de Reporte</h6>
+                <select class="form-select fw-medium" id="tipo" #tipoI (change)="setTipo(tipoI.value)">
+                    <option class="fw-medium" value="general"selected>GENERALES</option>
+                    <option class="fw-medium" value="curso">POR CURSO</option>
+                    <option class="fw-medium" value="alumno">POR ALUMNO</option>
                 </select>
             </div>
             <div class="col-3">
-                <h6>Formato de Archivo</h6>
-                <select class="form-select" id="formato" #formatoI (change)="setFormato(formatoI.value)">
-                    <option value="excel"selected>EXCEL</option>
-                    <option value="csv">CSV</option>
-                    <option value="pdf">PDF</option>
+                <h6 class="fw-bold">Formato de Archivo</h6>
+                <select class="form-select fw-medium" id="formato" #formatoI (change)="setFormato(formatoI.value)">
+                    <option class="fw-medium" value="excel"selected>EXCEL</option>
+                    <option class="fw-medium" value="csv">CSV</option>
+                    <option class="fw-medium" value="pdf">PDF</option>
                 </select>
             </div>
             <div class="col-2">
-                <h6>DNI Estudiante</h6>
-                <input type="text" class="form-control" id="dniEstudiante" #dniEstudiante [disabled] = "this.estadoDni" maxlength="8" minlength="8">
+                <h6 class="fw-bold">DNI Estudiante</h6>
+                <input type="text" class="form-control fw-medium" id="dniEstudiante" #dniEstudiante [disabled] = "this.estadoDni" maxlength="8" minlength="8">
             </div>
             <div class="col-3">
-                <h6>Curso</h6>
-                <select class="form-select" id="nombreCurso" #nombreCurso [disabled] = "this.estadoCurso" (change)="setCurso(nombreCurso.value)">
-                    <option *ngFor="let curso of listaCursos" [value] ="curso.codCurso">{{curso.nombre}}</option>
+                <h6 class="fw-bold">Curso</h6>
+                <select class="form-select fw-medium" id="nombreCurso" #nombreCurso [disabled] = "this.estadoCurso" (change)="setCurso(nombreCurso.value)">
+                    <option class="fw-medium" *ngFor="let curso of listaCursos" [value] ="curso.codCurso">{{curso.nombre}}</option>
                 </select>
                 
             </div>
             <div class="col-2 mt-4">
-                <a class="btn-success btn" (click)="descargarArchivoI()">Descargar</a>
+                <a class="btn-success btn fw-bold" (click)="descargarArchivoI()">Descargar</a>
             </div>
         </div>
         </div>

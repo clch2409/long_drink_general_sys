@@ -5,25 +5,25 @@
     </div>
     <div class="card-body">
       <h5 class="card-title"></h5>
-      <p class="card-text text-center fw-lighter">Por favor, seleccione las opciones a continuación para la generación de un reporte de estudiantes.</p>
+      <p class="card-text text-center fw-medium">Por favor, seleccione las opciones a continuación para la generación de un reporte de estudiantes.</p>
       <div class="row">
         <div class="col-4">
-            <h6>Tipo de Reporte</h6>
-            <select class="form-select" id="tipo" #tipo (change)="setTipo(tipo.value)">
-                <option value="activos"selected>ALUMNOS ACTIVOS</option>
-                <option value="general">GENERAL</option>
+            <h6 class="fw-bold">Tipo de Reporte</h6>
+            <select class="form-select fw-medium" id="tipo" #tipo (change)="setTipo(tipo.value)">
+                <option class="fw-medium" value="activos"selected>ALUMNOS ACTIVOS</option>
+                <option class="fw-medium" value="general">GENERAL</option>
             </select>
         </div>
         <div class="col-4">
-            <h6>Formato de Archivo</h6>
-            <select class="form-select" id="formato" #formato (change)="setFormato(formato.value)">
-                <option value="excel"selected>EXCEL</option>
-                <option value="csv">CSV</option>
-                <option value="pdf">PDF</option>
+            <h6 class="fw-bold">Formato de Archivo</h6>
+            <select class="form-select fw-medium" id="formato" #formato (change)="setFormato(formato.value)">
+                <option class="fw-medium" value="excel"selected>EXCEL</option>
+                <option class="fw-medium" value="csv">CSV</option>
+                <option class="fw-medium" value="pdf">PDF</option>
             </select>
         </div>
         <div class="col-4 mt-4">
-            <a class="btn-success btn" (click)="descargarArchivo()" >Descargar</a>
+            <a class="btn-success btn fw-bold" (click)="descargarArchivo()" >Descargar</a>
         </div>
     </div>
     </div>

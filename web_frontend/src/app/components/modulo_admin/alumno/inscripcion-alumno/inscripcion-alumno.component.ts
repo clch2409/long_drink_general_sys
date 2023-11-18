@@ -37,7 +37,7 @@ export class InscripcionAlumnoComponent implements OnInit {
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     this.storageService.denegarAcceso("ALUMNOyDOCENTE");
-    this.cursoService.getCursosDisponibles().subscribe(
+    this.cursoService.getCursosActivos().subscribe(
       (cursos) => {
         this.cursosDisponibles = cursos;
       },
@@ -185,6 +185,15 @@ export class InscripcionAlumnoComponent implements OnInit {
     nombreInput.focus();
   }
 
+  limpiarError() {
+    this.selectedCurso = undefined
+    this.selectedCursoNombreTurno = ''
+    this.fechaInicio = ''
+    this.fechaFinal = ''
+    const today = new Date();
+    this.fechaInscripcion = today.toISOString().split('T')[0];
+  }
+
   onSubmit(): void {
     if (!this.nombre || !this.apellidoPaterno || !this.apellidoMaterno || !this.dni || !this.telefono || !this.email || !this.selectedCursoCod || !this.selectedTurnoCod || !this.fechaInicio || !this.fechaFinal || !this.fechaInscripcion) {
       Swal.fire('Error', 'Por favor, complete todos los campos correctamente.', 'error').then(() => {
@@ -195,21 +204,21 @@ export class InscripcionAlumnoComponent implements OnInit {
 
     if (!this.validarNombre(this.nombre)) {
       Swal.fire('Error', 'Por favor, ingrese un nombre válido sin caracteres numéricos.', 'error').then(() => {
-        this.limpiarCampos();
+        this.limpiarNombre();
       });
       return;
     }
 
     if (!this.validarApellido(this.apellidoPaterno)) {
       Swal.fire('Error', 'El apellido paterno no puede contener caracteres numéricos.', 'error').then(() => {
-        this.limpiarCampos();
+        this.limpiarPaterno();
       });
       return;
     }
 
     if (!this.validarApellido(this.apellidoMaterno)) {
       Swal.fire('Error', 'El apellido materno no puede contener caracteres numéricos.', 'error').then(() => {
-        this.limpiarCampos();
+        this.limpiarMaterno();
       });
       return;
     }
@@ -258,11 +267,60 @@ export class InscripcionAlumnoComponent implements OnInit {
         return;
       },
       (error) => {
-        console.error('Error al registrar al alumno', error);
-        Swal.fire('Error','Ups! El DNI o E-Mail ingresado ya se encuentran registrados. Intente de nuevo.', 'error').then(() => {
-          this.limpiarEmailYDni();
-        });
-        return;
-      });
-  }
+        let errorMessage = 'Error! Ha sucedido en error en el guardado de datos.';
+  
+        if (error.error && error.error.mensaje) {
+          errorMessage = error.error.mensaje;
+  
+          // Manejar diferentes mensajes de error
+          switch (errorMessage.toLowerCase()) {
+            case 'error! el dni ingresado ya pertenece a una cuenta registrada.':
+              Swal.fire('Error', 'El DNI ingresado ya pertenece a una cuenta registrada.', 'error').then(() => {
+                this.limpiarDni();
+              });
+              break;
+            case 'error! el e-mail ingresado ya pertenece a una cuenta registrada.':
+              Swal.fire('Error', 'El E-Mail ingresado ya pertenece a una cuenta registrada.', 'error').then(() => {
+                this.limpiarEmail();
+              });
+              break;
+            case 'error! el curso seleccionado no tiene turno asignado!':
+              Swal.fire('Error', 'El curso seleccionado no tiene turno asignado!', 'error').then(() => {
+                this.limpiarError();
+              });
+              break;
+            case 'error! el curso seleccionado no existe!':
+              Swal.fire('Error', 'El curso seleccionado no existe!', 'error').then(() => {
+                this.limpiarError();
+              });
+              break;
+            case 'error! el curso seleccionado no tiene turno asignado!':
+              Swal.fire('Error', 'El curso seleccionado no tiene turno asignado!', 'error').then(() => {
+                this.limpiarError();
+              });
+              break;
+            case 'error! los datos ingresados no cuentan con el formato requerido.':
+              Swal.fire('Error', 'Los datos ingresados no cuentan con el formato requerido.', 'error').then(() => {
+                this.limpiarCampos();
+              });
+              break;
+            case 'error! el curso seleccionado no cuenta con vacantes disponibles.':
+              Swal.fire('Error', 'El curso seleccionado no cuenta con vacantes disponibles.', 'error').then(() => {
+                this.limpiarError();
+              });
+              break;
+            default:
+              Swal.fire('Error', errorMessage, 'error').then(() => {
+                this.limpiarCampos();
+              });
+              break;
+          }
+        } else {
+          Swal.fire('Error', errorMessage, 'error').then(() => {
+            this.limpiarCampos();
+          });
+        }
+      }
+    );
+  }  
 }

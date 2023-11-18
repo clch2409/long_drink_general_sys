@@ -123,7 +123,7 @@ public class CursoController {
                     limpiarDatos.getDescripcion(),limpiarDatos.getMensualidad(),
                     limpiarDatos.getDuracion(),limpiarDatos.getCantidadAlumnos(),
                     limpiarDatos.isVisibilidad(),limpiarDatos.getFrecuencia(),
-                    limpiarDatos.getImagen(),profesor,turnos);
+                    "https://i.imgur.com/APbzr19.jpg",profesor,turnos);
             Curso cursoGuardado = cursoService.guardar(curso);
             return new ResponseEntity<>(cursoGuardado,HttpStatus.CREATED);
         }

@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Curso } from '../models/curso.model';
 
 const API = 'http://localhost:8080/api/v1';
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type' : 'application/json'})
+}; 
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +30,13 @@ export class CursoService {
   getCursosDisponibles(): Observable<Curso[]>{
     return this.http.get<Curso[]>(API+'/curso/disponibles');
   }
+
+  nuevoCurso(carga: any): Observable<any>{
+    return this.http.post(
+      API+`/curso`,
+      carga,
+      httpOptions
+    )
+  }
+  
 }

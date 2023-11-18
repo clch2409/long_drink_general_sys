@@ -4,6 +4,11 @@
             <th mat-header-cell *matHeaderCellDef class="text-dark">Código</th>
             <td mat-cell *matCellDef="let c"> {{c.codCurso}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef class="text-dark">Nombre</th>
+            <td mat-cell *matCellDef="let c"> {{c.nombre}} </td>
+        </ng-container>
     
         <ng-container matColumnDef="descripcion">
             <th mat-header-cell *matHeaderCellDef class="text-dark">Descripción</th>

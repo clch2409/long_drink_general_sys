@@ -21,4 +21,8 @@ export class ProfesorService {
   getProfesorDNI(dni: string): Observable<any>{
     return this.http.get<any>(API+'/profesor/'+dni);
   }
+
+  getProfesoresDisponibles(): Observable<Profesor[]>{
+    return this.http.get<Profesor[]>(API+`/profesor/disponibles`);
+  }
 }

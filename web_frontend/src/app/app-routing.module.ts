@@ -22,6 +22,7 @@ import { InscripcionAlumnoComponent } from './components/modulo_admin/alumno/ins
 import { GuiasEstudioComponent } from './components/modulo_admin/curso/guias-estudio/guias-estudio.component';
 import { SetGuiasEstudioComponent } from './components/modulo_admin/curso/set-guias-estudio/set-guias-estudio.component';
 import { InscripcionAlumnoAntiguoComponent } from './components/modulo_admin/alumno/inscripcion-alumno-antiguo/inscripcion-alumno-antiguo.component';
+import { NuevoCursoComponent } from './components/modulo_admin/curso/nuevo-curso/nuevo-curso.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, title: 'Long Drink - Inicio de Sesión' },
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: 'nuevo-alumno', component: InscripcionAlumnoComponent, title: 'Long Drink - Inscripción: Nuevo Alumno' },
   { path: 'guias-estudio', component: GuiasEstudioComponent, title: 'Long Drink - Gestión de Guías de Estudio' },
   { path: 'definir-ge', component: SetGuiasEstudioComponent, title: 'Long Drink - Configurar Guías de Estudio' },
-  { path: 'antiguo-alumno', component: InscripcionAlumnoAntiguoComponent, title: 'Long Drink - Inscripción: Alumno Existente' }
+  { path: 'antiguo-alumno', component: InscripcionAlumnoAntiguoComponent, title: 'Long Drink - Inscripción: Alumno Existente' },
+  { path: 'nuevo-curso', component: NuevoCursoComponent, title: 'Long Drink - Nuevo Curso'}
   ]
   },  
   { path: 'a', component: DashboardComponent, title: 'Long Drink - Área Estudiantil', children: [

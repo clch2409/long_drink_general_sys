@@ -1,1 +1,55 @@
-<h1>Nuevo Curso works!</h1>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="rounded-4 shadow p-4 border border-2 border-primary">
+                <h2 class="fw-bold fst-italic text-primary text-center mb-4 text-decoration-underline fs-2">Nuevo Curso</h2>
+                    <div class="row">
+                        <div class="col">
+                            <label for="nombreCurso" class="form-label">Nombre del Curso</label>
+                            <input type="text" class="form-control" id="nombreCurso" placeholder="COCTELERÍA BÁSICA II" minlength="5" maxlength="100" #nombreCurso>
+
+                            <label for="descripcionCurso" class="form-label mt-3">Descripción del Curso</label>
+                            <textarea class="form-control" id="descripcionCurso" rows="3" minlength="5" maxlength="100" #descripcionCurso></textarea>
+
+                            <label for="turno" class="form-label mt-3">Turno</label>
+                            <select class="form-select" id="turno" #turno>
+                                <option *ngFor="let t of listaTurnos" [value] ="t.codTurno">{{t.nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="duracionCurso" class="form-label">Duración del Curso - Semanas</label>
+                            <input type="number" class="form-control" id="duracionCurso" placeholder="4" #duracionCurso>
+
+                            <label for="cantidadAlumnos" class="form-label mt-3">Cantidad de Alumnos</label>
+                            <input type="number" class="form-control" id="cantidadAlumnos" placeholder="8" #cantidadAlumnos>
+
+                            <label for="frecuencia" class="form-label mt-5 pt-3">Frecuencia</label>
+                            <select class="form-select" id="frecuencia" #frecuencia>
+                                <option *ngFor="let f of listaFrecuencias" [value] ="f">{{f}}</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="mensualidad" class="form-label">Mensualidad</label>
+                            <input type="number" class="form-control" id="mensualidad" placeholder="100" #mensualidad>
+
+                            <label for="profesor" class="form-label mt-3">Docente</label>
+                            <select class="form-select" id="profesor" #profesor>
+                                <option *ngFor="let p of listaProfesores" [value] ="p.codProfesor">{{p.nombre}} {{p.apellidoPaterno}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4 mb-3 text-center">
+                            <a class="fw-bold btn btn-primary fs-5" (click)="onSubmit(this.nombreCurso.value,this.duracionCurso.value,this.mensualidad.value,this.descripcionCurso.value,this.cantidadAlumnos.value,this.profesor.value,this.turno.value,this.frecuencia.value,true)">Guardar</a>
+                        </div>
+                        <div class="col-md-4 mb-3 text-center">
+                            <button type="button" class="fw-bold btn btn-secondary fs-5" (click)="limpiarCampos()">Limpiar</button>
+                        </div>
+                        <div class="col-md-4 mb-3 text-center">
+                            <a class="fw-bold btn btn-danger fs-5" [routerLink]="['/dashboard']">Cancelar</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.MyAccountFragment">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
@@ -96,48 +95,19 @@
             app:layout_constraintVertical_bias="0.497" />
 
 
-        <TextView
-            android:id="@+id/my_account_password_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:labelFor="@+id/my_account_password"
-            android:text="Contraseña"
-            app:layout_constraintBottom_toTopOf="@+id/my_account_password"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.159"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <EditText
-            android:id="@+id/my_account_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.268"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.672" />
-
-
         <Button
             android:id="@+id/my_account_change_password"
             android:layout_width="150sp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
             android:text="Cambiar Contraseña"
+            android:textColor="@color/light_red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.457"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.913"
-            android:textColor="@color/light_red"
-            android:backgroundTint="@color/dark_blue"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/my_account_email"
+            app:layout_constraintVertical_bias="0.3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

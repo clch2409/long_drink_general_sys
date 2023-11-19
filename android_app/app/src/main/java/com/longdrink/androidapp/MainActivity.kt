@@ -30,11 +30,17 @@ class MainActivity : AppCompatActivity() {
     private var listadoInscripcionesTerminadas = mutableListOf<Inscripcion>()
     //private var hasInscription = false
     private var codAlum by Delegates.notNull<Long>()
+    private var email by Delegates.notNull<String>()
+    private var usuario by Delegates.notNull<String>()
+    private var nombreCompleto by Delegates.notNull<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         codAlum = intent.getLongExtra("codAlum", 0)
+        email = intent.getStringExtra("email")!!
+        usuario = intent.getStringExtra("usuario")!!
+        nombreCompleto = intent.getStringExtra("nombreCompleto")!!
         binding = ActivityMainBinding.inflate(layoutInflater)
         retrofit = getRetrofit()
         setSupportActionBar(binding.mainToolbar)
@@ -112,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     runOnUiThread{
                         //hasInscription = inscripcion.fechaInicio != ""
-                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcionActiva, codAlum, listadoInscripcionesTerminadas)
+                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcionActiva, codAlum, listadoInscripcionesTerminadas, email, usuario, nombreCompleto)
                         binding.mainViewpager.adapter = adapter
 
                     }

@@ -1,7 +1,6 @@
 package com.longdrink.androidapp.model
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 /** --------------------- LOGIN AND REGISTER RELATED DATA CLASSES ----------------------------------*/
 data class LoginWebResponse(
@@ -119,4 +118,5 @@ data class Inscripcion(
     @SerializedName("estado") var estado: Boolean = false,
 
 )
+
 

@@ -1,6 +1,4 @@
-<div class="container d-flex flex-column align-items-center">
-    <img src="https://i.imgur.com/D6fzgoS.gif" alt="" srcset="">
-    <h1 class="text-center text-danger">Me encuentro trabajando en esto actualmente... Parece que va por buen camino.</h1>
+<div class="container d-flex flex-column align-items-center mb-5">
     <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Inscripciones</h1>
     <div class="search-bar mb-4">
         <label for="buscar" class="fw-bold me-2">Buscar</label>
@@ -12,9 +10,9 @@
         <button class="fw-bold btn btn-primary me-2" (click)="buscarInscripciones()">Buscar</button>
         <label for="ver" class="fw-bold me-2">Ver</label>
         <select id="ver" class="fw-medium" [(ngModel)]="filtroSeleccionado" (change)="filtrarInscripciones()">
-            <option value="pendientes">Solicitudes Pendientes</option>
-            <option value="aceptadas">Solicitudes Aceptadas</option>
-            <option value="generales">Solicitudes Generales</option>
+            <option value="en_proceso">En Proceso</option>
+            <option value="retirados">Retirado / Finalizado</option>
+            <option value="generales">General</option>
         </select>
     </div>
     <div class="table-container" *ngIf="mostrarTabla">
@@ -44,7 +42,7 @@
                     <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.fechaTerminado  == inscripcion.fechaFinal">TERMINADO</td>
                     <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.fechaTerminado  != null && inscripcion.fechaTerminado != inscripcion.fechaFinal">RETIRADO</td>
                     <td class="d-flex justify-content-center align-content-around" >
-                        <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.alumno,inscripcion.curso]">Detalles</a>
+                        <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.codInscripcion]">Detalles</a>
                     </td>
                 </tr>
             </tbody>

@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'alumnos', component: ListadoAlumnosComponent, title: 'Long Drink - Listado Alumnos' },
   { path: 'docentes', component: ListadoProfesoresComponent, title: 'Long Drink - Listado Profesores' },
   { path: 'nuevo-docente', component: NuevoProfesorComponent, title: 'Long Drink - Nuevo Profesor' },
-  { path: 'detalle-inscripcion/:codalum/:codcurso', component: DetalleInscripcionComponent, title: 'Long Drink - Detalle Inscripción' },
+  { path: 'detalle-inscripcion/:codins', component: DetalleInscripcionComponent, title: 'Long Drink - Detalle Inscripción' },
   { path: 'mi-cuenta', component: MiCuentaComponent, title: 'Long Drink - Mi Cuenta' },
   { path: 'exp/cursos', component: ExportarCursosComponent, title: 'Long Drink - Reporte de Cursos'},
   { path: 'exp/alumnos', component: ExportarAlumnosComponent, title: 'Long Drink - Reporte de Alumnos'},

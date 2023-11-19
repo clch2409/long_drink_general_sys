@@ -25,7 +25,7 @@ public class InscripcionService {
         return inscripcionDAO.findAllByEstado();
     }
 
-    public List<Inscripcion> listarPendientes(){ return inscripcionDAO.findAllByPendiente(); }
+    public List<Inscripcion> listarEnCurso(){ return inscripcionDAO.findAllByEnCurso(); }
 
     public List<Inscripcion> listarInscripciones(){ return (List<Inscripcion>) inscripcionDAO.findAll(); }
 

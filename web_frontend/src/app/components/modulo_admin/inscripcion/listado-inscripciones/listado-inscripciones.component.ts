@@ -19,7 +19,7 @@ export class ListadoInscripcionesComponent {
   cursos: Curso[] = [];
   comboBoxSeleccionado: string = 'porCurso';
   valorInput: any;
-  filtroSeleccionado: string = 'pendientes';
+  filtroSeleccionado: string = 'en_proceso';
   mostrarTabla: boolean = false;
 
   constructor(private storageService: StorageService, private router: Router, private inscripcionService: InscripcionService, private cursoService: CursoService, private alumnoService: AlumnoService) { }
@@ -27,18 +27,18 @@ export class ListadoInscripcionesComponent {
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     this.storageService.denegarAcceso('ALUMNOyDOCENTE');
-    this.getInscripcionesPendientes();
+    this.getInscripcionesEnProceso();
   }
 
-  getInscripcionesPendientes(): void {
-    this.inscripcionService.getInscripcionesPendientes().subscribe({
+  getInscripcionesEnProceso(): void {
+    this.inscripcionService.getInscripcionesEnProceso().subscribe({
       next: (data) => {
         const inscripciones = data as Inscripcion[];
         if (inscripciones.length === 0) {
           Swal.fire({
             icon: 'info',
             title: 'Información',
-            text: 'Actualmente no hay inscripciones pendientes.',
+            text: 'Actualmente no hay cursos en proceso.',
           });
           this.mostrarTabla = false;
         } else {
@@ -51,7 +51,7 @@ export class ListadoInscripcionesComponent {
           Swal.fire({
             icon: 'info',
             title: 'Información',
-            text: 'Actualmente no hay inscripciones pendientes. Mostrando inscripciones generales..',
+            text: 'Actualmente no hay cursos en proceso. Mostrando listado general...',
           }).then(() => {
             this.valorInput = '';
             this.filtroSeleccionado = 'generales';
@@ -165,7 +165,7 @@ export class ListadoInscripcionesComponent {
   }
 
   getInscripcionesAceptadas(): void {
-    this.inscripcionService.getInscripcionesAceptadas().subscribe({
+    this.inscripcionService.getInscripcionesRetiradoTerminado().subscribe({
       next: (data) => {
         this.inscripciones = data;
         console.log(this.inscripciones);
@@ -207,26 +207,26 @@ export class ListadoInscripcionesComponent {
   }
 
   filtrarInscripciones(): void {
-    if (this.filtroSeleccionado === 'pendientes') {
-      this.inscripcionService.getInscripcionesPendientes().subscribe({
+    if (this.filtroSeleccionado === 'en_proceso') {
+      this.inscripcionService.getInscripcionesEnProceso().subscribe({
         next: (data) => {
           const inscripciones = data as Inscripcion[];
           this.enriquecerInscripciones(inscripciones);
           this.valorInput = '';
         },
         error: (err) => {
-          this.mostrarAlerta('Felicidades! No tiene solicitudes pendientes por aceptar.');
+          this.mostrarAlerta('Ups! Parece que no hay cursos en proceso actualmente.');
         }
       });
-    } else if (this.filtroSeleccionado === 'aceptadas') {
-      this.inscripcionService.getInscripcionesAceptadas().subscribe({
+    } else if (this.filtroSeleccionado === 'retirados') {
+      this.inscripcionService.getInscripcionesRetiradoTerminado().subscribe({
         next: (data) => {
           const inscripciones = data as Inscripcion[];
           this.enriquecerInscripciones(inscripciones);
           this.valorInput = '';
         },
         error: (err) => {
-          this.mostrarError('Imposible recuperar listado de inscripciones aceptadas. Intente nuevamente.');
+          this.mostrarError('Imposible recuperar listado de alumnos retirados de cursos. Intente nuevamente.');
         }
       });
     } else if (this.filtroSeleccionado === 'generales') {

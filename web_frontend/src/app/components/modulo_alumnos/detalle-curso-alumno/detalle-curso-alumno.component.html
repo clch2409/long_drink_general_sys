@@ -19,7 +19,7 @@
                         <h6 class="col fw-bolder">HORA INICIO: <p class="fw-lighter pt-2" >{{inscripcion.curso.turnos?.at(0)?.horaInicio}}</p></h6>
                         <h6 class="col fw-bolder">HORA FIN: <p class="fw-lighter pt-2" >{{inscripcion.curso.turnos?.at(0)?.horaFin}}</p></h6>
                         <h6 class="col fw-bolder">DOCENTE: <p class="fw-lighter pt-2" >{{inscripcion.curso.profesor?.nombre}} {{inscripcion.curso.profesor?.apellidoPaterno}}</p></h6>
-                        <h6 class="col fw-bolder" *ngFor="let t of inscripcion.curso?.temas">TEMAS: <p class="fw-lighter pt-2" >{{t.nombre}}</p></h6>
+                        <h6 class="col fw-bolder">TEMAS: <p *ngFor="let t of inscripcion.curso?.temas" class="fw-lighter " >{{t.nombre}}</p></h6>
                     </div>
                     <div class="container row mt-3" *ngIf="inscripcion.fechaTerminado == null">
                         <div class="col text-center">

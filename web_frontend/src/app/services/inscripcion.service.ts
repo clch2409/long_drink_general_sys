@@ -21,12 +21,12 @@ export class InscripcionService {
     return this.http.get<Inscripcion[]>(API+'/inscripcion');
   }
 
-  getInscripcionesPendientes(): Observable<Inscripcion[]>{
-    return this.http.get<Inscripcion[]>(API+'/inscripcion/pendientes');
+  getInscripcionesEnProceso(): Observable<Inscripcion[]>{
+    return this.http.get<Inscripcion[]>(API+'/inscripcion/en_proceso');
   } 
 
-  getInscripcionesAceptadas(): Observable<Inscripcion[]>{
-    return this.http.get<Inscripcion[]>(API+'/inscripcion/aceptadas');
+  getInscripcionesRetiradoTerminado(): Observable<Inscripcion[]>{
+    return this.http.get<Inscripcion[]>(API+'/inscripcion/retirado_terminado');
   } 
 
   getInscripcionesPorAlumno(codAlumno: number): Observable<Inscripcion[]>{
@@ -49,8 +49,8 @@ export class InscripcionService {
     return this.http.post(API+`/inscripcion/rechazar_inscripcion?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
   }
 
-  detalleInscripcion(codCurso?: number, codAlumno?: number): Observable<DetalleInscripcion>{
-    return this.http.get<DetalleInscripcion>(API+`/inscripcion/detalle?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);
+  detalleInscripcion(codInscripcion?: number): Observable<DetalleInscripcion>{
+    return this.http.get<DetalleInscripcion>(API+`/inscripcion/detalle?codInscripcion=${codInscripcion}`,httpOptions);
   }
 
   getInscripcionPorCod(codInscripcion?: number): Observable<Inscripcion>{
@@ -63,5 +63,9 @@ export class InscripcionService {
       inscripcionData,
       httpOptions
     );
+  }
+
+  retirarAlumno(codInscripcion?: number): Observable<any>{
+    return this.http.put(API+`/inscripcion/retirar?codInscripcion=${codInscripcion}`,httpOptions);
   }
 }

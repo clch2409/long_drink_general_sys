@@ -66,6 +66,9 @@ class LoginActivity : AppCompatActivity() {
             else {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 intent.putExtra("codAlum", response.body()?.codAlumno)
+                intent.putExtra("email", response.body()?.email)
+                intent.putExtra("usuario", response.body()?.nombreUsuario)
+                intent.putExtra("nombreCompleto", response.body()?.nombreCompleto)
                 startActivity(intent)
                 finish()
             }

@@ -10,6 +10,9 @@ import com.longdrink.androidapp.databinding.ActivityCourseDescriptionBinding
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.Date
 import kotlin.properties.Delegates
 
 class CourseDescriptionActivity : AppCompatActivity() {
@@ -47,9 +50,9 @@ class CourseDescriptionActivity : AppCompatActivity() {
         courseData.fechaTerminadoInscripcion = intent.getStringExtra("fechaTerminado").toString()
 
         binding.courseDescriptionName.text = courseData.nombre
-        binding.courseDescriptionPrice.text = "Mensualidad: ${courseData.mensualidad.toString()}"
-        binding.courseDescriptionDuration.text = "Duración: ${courseData.duracion} semanas"
-        binding.courseDescriptionFrecuency.text = "Frecuencia: ${courseData.frecuencia}"
+        binding.courseDescriptionStart.text = "Inicio del Curso: ${mostrarFecha(courseData.fechaInicioInscripcion!!)}"
+        binding.courseDescriptionEnd.text = "Finalización del curso: ${mostrarFecha(courseData.fechaTerminadoInscripcion!!)}"
+        binding.courseDescriptionState.text = "Estado: ${validarTerminadoRetirado(courseData)}"
         Picasso.get().load(courseData.imagen).into(binding.courseDescriptionImage)
         binding.courseDescriptionCertificate.setOnClickListener { showSnackbar("No Funcionando 🤡") }
     }
@@ -73,5 +76,24 @@ class CourseDescriptionActivity : AppCompatActivity() {
 
     private fun showSnackbar(text : String){
         this.runOnUiThread { Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG).show() }
+    }
+
+    private fun mostrarFecha(fecha : String) : String{
+        var deStringAFecha = SimpleDateFormat("yyyy-MM-dd")
+        var deFechaAString = SimpleDateFormat("dd-MM-yyyy")
+
+        var fechaDate : Date = deStringAFecha.parse(fecha)
+        var fechaString : String = deFechaAString.format(fechaDate)
+
+        return fechaString
+    }
+
+    private fun validarTerminadoRetirado(cursoTerminado : ListItemCursoTerminado) : String{
+        if (!cursoTerminado.estadoInscripcion!! && cursoTerminado.fechaTerminadoInscripcion == cursoTerminado.fechaInscripcion){
+            return "Retirado"
+        }
+        else{
+            return "Terminado"
+        }
     }
 }

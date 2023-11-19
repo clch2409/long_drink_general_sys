@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.snackbar.Snackbar
 import com.longdrink.androidapp.R
+import com.longdrink.androidapp.databinding.FragmentMyAccountBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +24,11 @@ class MyAccountFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var binding : FragmentMyAccountBinding
+    private var email = ""
+    private var usuario = ""
+    private var nombreCompleto = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,8 +41,33 @@ class MyAccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_account, container, false)
+        email = requireArguments().getString("email")!!
+        usuario = requireArguments().getString("usuario")!!
+        nombreCompleto = requireArguments().getString("nombreCompleto")!!
+        binding = FragmentMyAccountBinding.inflate(layoutInflater)
+
+        placeInfo(email, usuario, nombreCompleto)
+        binding.myAccountChangePassword.setOnClickListener {
+            showSnackbar("Estamos trabajando en ello")
+        }
+
+        return binding.root
+    }
+
+    private fun placeInfo(vararg datos : String){
+        binding.myAccountEmail.hint = datos[0]
+        binding.myAccountUsername.hint = datos[1]
+        binding.myAccountFullname.hint = datos[2]
+    }
+
+    private fun showSnackbar(mensaje : String){
+        activity?.runOnUiThread{ Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_LONG).show() }
+    }
+
+    private fun disableInputs(){
+        binding.myAccountEmail.isEnabled = false
+        binding.myAccountUsername.isEnabled = false
+        binding.myAccountFullname.isEnabled = false
     }
 
     companion object {

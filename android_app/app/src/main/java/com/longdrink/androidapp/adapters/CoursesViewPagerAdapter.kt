@@ -18,7 +18,10 @@ class CoursesViewPagerAdapter(
     lifecycle: Lifecycle,
     private var inscription : Inscripcion,
     private var codAlum : Long,
-    private var listadoInscripcion : List<Inscripcion>
+    private var listadoInscripcion : List<Inscripcion>,
+    private var email : String,
+    private var usuario : String,
+    private var nombreCompleto : String
 ) : FragmentStateAdapter(fragmentManager, lifecycle){
     override fun getItemCount(): Int {
         return 3
@@ -48,7 +51,9 @@ class CoursesViewPagerAdapter(
             }
             fragment
         } else{
+            bundle = bundleOf(Pair("email", email), Pair("usuario", usuario), Pair("nombreCompleto", nombreCompleto))
             fragment = MyAccountFragment()
+            fragment.arguments = bundle
         }
 
         return fragment

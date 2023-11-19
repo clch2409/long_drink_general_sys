@@ -14,23 +14,27 @@ export class DetalleInscripcionComponent implements OnInit {
   detalle: DetalleInscripcion = new DetalleInscripcion();
   codAlum?: number;
   codCurso?: number;
+  codInscripcion?: number;
   estado = ''
+  fechaFutura = false;
   constructor(private storageService: StorageService, private router: Router, private inscripcionService: InscripcionService, private route: ActivatedRoute) { }
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     this.storageService.denegarAcceso('ALUMNOyDOCENTE');
     this.codAlum = this.route.snapshot.params['codalum']
-    this.codCurso = this.route.snapshot.params['codcurso']
+    this.codInscripcion = this.route.snapshot.params['codins']
     this.obtenerDetalles();
     
   }
 
   obtenerDetalles(): void{
-    this.inscripcionService.detalleInscripcion(this.codCurso,this.codAlum).subscribe({
+    this.inscripcionService.detalleInscripcion(this.codInscripcion).subscribe({
       next: (data) =>{
         this.detalle = data;
         console.log(this.detalle)
         this.definirEstado();
+        this.fechaFutura = this.comprobarFecha();
+        console.log(this.comprobarFecha())
       },
       error: (err) => {
         console.log(err);
@@ -52,91 +56,66 @@ export class DetalleInscripcionComponent implements OnInit {
     let estado = this.detalle.estado as boolean;
     let fechaT = this.detalle.fechaTerminado;
     let fechaI = this.detalle.fechaInscripcion;
-    if(estado as boolean == false && fechaT == null){
-      this.estado = 'PENDIENTE';
+    let fechaInicio = this.detalle.fechaInicio;
+    let fechaF = this.detalle.fechaFinal;
+    if(fechaT == null){
+      this.estado = 'EN PROCESO';
     }
-    if(estado as boolean == true && fechaT == null || fechaT != null){
-      this.estado = 'ACEPTADA';
+    if(fechaF === fechaT){
+      this.estado = 'TERMINADO';
     }
-    if(estado as boolean == false && fechaT == fechaI){
-      this.estado = 'RECHAZADA';
+    if(fechaT === fechaInicio){
+      this.estado = 'RETIRADO';
     }
-    console.log(this.estado);
   }
 
-  aprobarSolicitud(codAlum?: number, codCurso?: number, curso?: string, nombreAlum?: string, apePa?: string, apeMa?: string, fecha?: string | Date): void{
-    var textoSolicitud = `Usted esta a punto de aceptar la siguiente solicitud:
-    ALUMNO: ${apePa}  ${apeMa} ${nombreAlum}
-    CURSO: ${curso}
-    FECHA SOLICITUD: ${fecha}
-    `
+  comprobarFecha(): boolean{
+    let fechaFinal = new Date(this.detalle.fechaFinal!);
+    let retorno = new Date().getTime() - fechaFinal.getTime();
+    if(retorno < 0){
+      return true; //Fecha en el futuro, retorna true. Ok.
+    }
+    return false;
+  }
+
+  retirarAlumno(): void{
+    var textoRetiro = `Usted esta a punto de retirar al siguiente alumno: 
+    ALUMNO: ${this.detalle.nombre} ${this.detalle.apellidoPaterno} ${this.detalle.apellidoMaterno}
+    CURSO: ${this.detalle.descripcion}
+    FECHA INICIO: ${this.detalle.fechaInicio}
+    FECHA FIN: ${this.detalle.fechaFinal}
+    FECHA INSCRIPCIÓN: ${this.detalle.fechaInscripcion}
+    `;
+
     Swal.fire({
       title:'Confirmación de Solicitud.',
-      text:textoSolicitud,
-      icon:'question',
-      showCancelButton: true,
-      cancelButtonText: 'CANCELAR',
-      confirmButtonColor: '#129C1A',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'APROBAR',
-    }).then((result) => {
-      if(result.isConfirmed){
-        this.confirmarSolicitud(codAlum,codCurso);
-        console.log('Solicitud confirmada....');
-      }
-    })
-  }
-
-  confirmarSolicitud(codAlum?: number, codCurso?: number): void{
-    this.inscripcionService.confirmarInscripcion(codCurso,codAlum).subscribe({
-      next: (data) =>{
-        Swal.fire('Éxito', 'Solicitud de inscripción aceptada correctamente.', 'success').then(() =>{
-          this.router.navigate(['/dashboard/inscripciones']);
-        });
-        
-        //this.recargarPagina();
-      },
-      error: (err) => {
-        console.log(err);
-        Swal.fire('Error!', 'Ups! Imposible aceptar solicitud de inscripción. Comuniquese con el área IT.', 'error');
-      }
-    });
-  }
-
-  rechazarSolicitud(codAlum?: number, codCurso?: number, curso?: string, nombreAlum?: string, apePa?: string, apeMa?: string, fecha?: string | Date): void{
-    var textoSolicitud = `Usted esta a punto de rechazar la siguiente solicitud:
-    ALUMNO: ${apePa}  ${apeMa} ${nombreAlum}
-    CURSO: ${curso}
-    FECHA SOLICITUD: ${fecha}
-    `
-    Swal.fire({
-      title:'Confirmación de Solicitud.',
-      text:textoSolicitud,
+      text:textoRetiro,
       icon:'question',
       showCancelButton: true,
       cancelButtonText: 'CANCELAR',
       confirmButtonColor: '#d33',
       cancelButtonColor: '#000',
-      confirmButtonText: 'RECHAZAR',
+      confirmButtonText: 'RETIRAR ALUMNO',
     }).then((result) => {
       if(result.isConfirmed){
-        this.denegarSolicitud(codAlum,codCurso);
+        this.enviarRetiro();
       }
     })
   }
 
-  denegarSolicitud(codAlum?: number, codCurso?: number): void{
-    this.inscripcionService.rechazarInscripcion(codCurso,codAlum).subscribe({
+
+  enviarRetiro(): void{
+    this.inscripcionService.retirarAlumno(this.codInscripcion).subscribe({
       next: (data) =>{
-        Swal.fire('Éxito', 'Solicitud de inscripción rechazada correctamente.', 'success').then(() =>{
+        Swal.fire('Éxito', 'Alumno retirado del curso exitosamente.', 'success').then(() =>{
           this.router.navigate(['/dashboard/inscripciones']);
         });
       },
-      error: (err) => {
+      error: (err) =>{
+        Swal.fire('Error!', 'Ups! Imposible retirar al alumno. Comuniquese con el área IT.', 'error');
         console.log(err);
-        Swal.fire('Error!', 'Ups! Imposible rechazar solicitud de inscripción. Comuniquese con el área IT.', 'error');
       }
-    });
+    })
   }
 
 }

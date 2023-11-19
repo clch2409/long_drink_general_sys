@@ -32,23 +32,17 @@
             <h6>FECHA INICIO: {{detalle.fechaInicio | date}}</h6>
             <h6>FECHA FINAL: {{detalle.fechaFinal | date}}</h6>
             <h6>FECHA TERMINADO: {{detalle.fechaTerminado == null? '---------': detalle.fechaTerminado | date}}</h6>
-            <h6 *ngIf="estado === 'PENDIENTE'" class="fw-bold text-primary">ESTADO: SOLICITUD {{estado}}</h6>
-            <h6 *ngIf="estado === 'ACEPTADA'" class="fw-bold text-success">ESTADO: SOLICITUD {{estado}}</h6>
-            <h6 *ngIf="estado === 'RECHAZADA'" class="fw-bold text-danger">ESTADO: SOLICITUD {{estado}}</h6>
+            <h6 *ngIf="estado === 'EN PROCESO'" class="fw-bold text-primary">ESTADO: CURSO {{estado}}</h6>
+            <h6 *ngIf="estado === 'TERMINADO'" class="fw-bold text-success">ESTADO: CURSO {{estado}}</h6>
+            <h6 *ngIf="estado === 'RETIRADO'" class="fw-bold text-danger">ESTADO: ALUMNO {{estado}}</h6>
             <hr>
-            <div class="text-center" *ngIf="estado =='PENDIENTE'">
+            <div class="text-center" *ngIf="estado =='EN PROCESO' && fechaFutura == true">
                 <div class="btn-group" role="group" >
-                    <button type="button" class="btn btn-danger fw-bold" (click)="rechazarSolicitud(detalle.codAlumno,detalle.codCurso,detalle.descripcion,detalle.nombre,detalle.apellidoPaterno,detalle.apellidoMaterno,detalle.fechaInscripcion)">RECHAZAR</button>
-                    <a type="button" class="btn btn-warning fw-bold" [routerLink]="['/dashboard','inscripciones']">ATRAS</a>
-                    <button type="button" class="btn btn-success fw-bold" (click)="aprobarSolicitud(detalle.codAlumno,detalle.codCurso,detalle.descripcion,detalle.nombre,detalle.apellidoPaterno,detalle.apellidoMaterno,detalle.fechaInscripcion)">ACEPTAR</button>
-                  </div>
-            </div>
-            <div class="text-center" *ngIf="estado =='ACEPTADA'">
-                <div class="btn-group" role="group" >
+                    <a type="button" class="btn btn-danger fw-bold" (click)="retirarAlumno()">RETIRAR ALUMNO</a>
                     <a type="button" class="btn btn-warning fw-bold" [routerLink]="['/dashboard','inscripciones']">ATRAS</a>
                   </div>
             </div>
-            <div class="text-center" *ngIf="estado =='RECHAZADA'">
+            <div class="text-center" *ngIf="estado =='TERMINADO' || estado == 'RETIRADO'">
                 <div class="btn-group" role="group" >
                     <a type="button" class="btn btn-warning fw-bold" [routerLink]="['/dashboard','inscripciones']">ATRAS</a>
                   </div>

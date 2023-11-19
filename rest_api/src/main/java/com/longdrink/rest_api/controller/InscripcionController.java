@@ -40,18 +40,19 @@ public class InscripcionController {
         }
         return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
     }
-    @GetMapping("/pendientes")
+    // ->> "Cursos en  proceso"
+    @GetMapping("/en_proceso")
     public ResponseEntity<?> listarInscripcionesPendientes(){
-        List<Inscripcion> listaInscripciones = inscripcionService.listarPendientes();
+        List<Inscripcion> listaInscripciones = inscripcionService.listarEnCurso();
         if(listaInscripciones.isEmpty()){
             return new ResponseEntity<>(
-                    new Mensaje("Ups! No hemos podido recuperar solicitudes de inscripcion pendientes. Parece ser que estas al día!", 404),
+                    new Mensaje("Ups! No hemos podido recuperar datos de inscripciones con cursos en proceso.", 404),
                     HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
     }
 
-    @GetMapping("/aceptadas")
+    @GetMapping("/retirado_terminado")
     public ResponseEntity<?> listarInscripcionesAceptadas(){
         List<Inscripcion> listaInscripciones = inscripcionService.listarPorEstado();
         if(listaInscripciones.isEmpty()){
@@ -175,8 +176,8 @@ public class InscripcionController {
         try{
             Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion).get();
             DetalleInscripcion retorno = new DetalleInscripcion();
-            BeanUtils.copyProperties(retorno,ins.getAlumno());
             BeanUtils.copyProperties(retorno,ins.getCurso());
+            BeanUtils.copyProperties(retorno,ins.getAlumno());
             BeanUtils.copyProperties(retorno,ins);
             return new ResponseEntity<>(retorno,HttpStatus.OK);
         }
@@ -241,5 +242,21 @@ public class InscripcionController {
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/retirar")
+    @CrossOrigin(allowedHeaders = "*",origins = "*")
+    public ResponseEntity<?> retirarAlumno(@RequestParam Long codInscripcion){
+        Inscripcion ins = new Inscripcion();
+        try{
+            ins = inscripcionService.buscarPorPk(codInscripcion).get();
+        }
+        catch(Exception ex){ ins = null; }
+        if(ins == null){
+            return new ResponseEntity<>(new Mensaje("Ups! Inscripcion no encontrada.",404),HttpStatus.NOT_FOUND);
+        }
+        ins.setFechaTerminado(ins.getFechaInicio());
+        Inscripcion insActualizada = inscripcionService.actualizar(ins);
+        return new ResponseEntity<>(insActualizada,HttpStatus.OK);
     }
 }

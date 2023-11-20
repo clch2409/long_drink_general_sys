@@ -15,11 +15,11 @@ public interface IInscripcionDAO extends CrudRepository<Inscripcion,Long> {
 
     List<Inscripcion> findAllByAlumnoDni(String dni);
 
-    @Query("SELECT I FROM Inscripcion I WHERE I.estado = true")
+    @Query("SELECT I FROM Inscripcion I WHERE I.fechaFinal = I.fechaTerminado OR I.fechaTerminado != null")
     List<Inscripcion> findAllByEstado();
 
-    @Query("SELECT I FROM Inscripcion I WHERE I.estado = false AND I.fechaTerminado = null")
-    List<Inscripcion> findAllByPendiente();
+    @Query("SELECT I FROM Inscripcion I WHERE I.fechaTerminado = null")
+    List<Inscripcion> findAllByEnCurso();
 
     List<Inscripcion> findAllByEstadoAndCursoCodCurso(boolean estado, Long CodCurso);
 

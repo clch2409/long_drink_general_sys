@@ -17,6 +17,7 @@ export class SetGuiasEstudioComponent implements OnInit{
   listaTemas: TemaCurso[] = [];
   cursoSeleccionado = 1;
   temasSeleccionados: Tema[] = [];
+  listaCodigos: number[] = [];
   
   constructor(private storageService: StorageService, private cursoService: CursoService, private temaService: TemaService) {}
   ngOnInit(): void {
@@ -25,6 +26,9 @@ export class SetGuiasEstudioComponent implements OnInit{
     this.llenarCursos();
     this.llenarTemas();
   }
+  /* 
+    Planeado para tercer sprint, probablemente haya una mejor forma de hacerlo sin checks.
+  */
 
   llenarCursos(): void{
     this.cursoService.getCursos().subscribe({
@@ -54,15 +58,47 @@ export class SetGuiasEstudioComponent implements OnInit{
     this.setTemas(curso);
   }
 
-  setTemas(curso: number): void{
+  setTemas(curso: number): void{ //Llenar temas de curso en especifico.
     this.temaService.obtenerTemaPorCurso(curso).subscribe({
       next: (data) => {
         this.temasSeleccionados = data;
         console.log(this.temasSeleccionados);
+        this.setCheck();
       },
       error: (err) =>{
         console.log(err)
       }
+    })
+  }
+
+  setCheck(): void{
+    this.listaTemas.forEach((e) =>{
+      this.temasSeleccionados.forEach((x) =>{
+        if(this.temasSeleccionados.find(i => i.codTema === e.codTema)){
+          e.checked = true;
+        }
+        else{
+          e.checked = false;
+        }
+      })
+    })
+    this.listaCodigos.length = 0;
+    this.temasSeleccionados.forEach((i) =>{
+      var cod: number = +i.codTema!;
+      this.listaCodigos.push(cod);
+    })
+    console.log(this.listaCodigos);
+  }
+
+  checkChange(codTema: number | any){
+    var cod: number = +codTema;
+    this.listaCodigos.push(cod);
+    console.log(this.listaCodigos);
+  }
+
+  uncheckAll(): void{
+    this.listaTemas.forEach((e) =>{
+      e.checked = false;
     })
   }
 

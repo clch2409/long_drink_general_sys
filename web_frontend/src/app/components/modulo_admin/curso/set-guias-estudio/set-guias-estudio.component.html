@@ -16,7 +16,7 @@
                     </div>
                     <div class="container col-4">
                         <div class="form-check" *ngFor="let t of listaTemas">
-                            <input class="form-check-input" type="checkbox" value="t.codTema" id="check" [checked]="">
+                            <input class="form-check-input" type="checkbox" value="t.codTema" id="check" [checked]="t.checked" #checks (change)="checkChange(t.codTema)">
                             <label class="form-check-label fw-medium" for="check">
                               {{t.nombre}}
                             </label>

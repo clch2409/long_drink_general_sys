@@ -6,6 +6,7 @@ export class TemaCurso implements Deserializable{
     nombre?: string;
     ficha?: string;
     cursos?: Curso [];
+    checked?: boolean;
     deserializable(input: any): this {
         Object.assign(this, input);
         return this;

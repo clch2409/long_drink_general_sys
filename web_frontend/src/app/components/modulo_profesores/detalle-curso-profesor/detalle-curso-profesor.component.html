@@ -13,7 +13,7 @@
                         <h6 class="col fw-bolder" *ngIf="curso.frecuencia == 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{curso.frecuencia}} - Lunes / Miercoles / Viernes</p></h6>
                         <h6 class="col fw-bolder" *ngIf="curso.frecuencia != 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{curso.frecuencia}}</p></h6>
                         <h6 class="col fw-bolder">TURNOS: </h6>
-                        <h6 class="col fw-bolder" *ngFor="let i of listadoTurnos">
+                        <h6 class="col fw-bolder" *ngFor="let i of curso.turnos">
                             <p>{{i.nombre}} -> {{i.horaInicio}}-{{i.horaFin}}</p>
                         </h6>
                         <h6 class="col fw-bolder" *ngIf="inscripciones.length == 0">
@@ -31,10 +31,19 @@
                             </svg>
                         <h5 class="text-center my-3">No cuenta con alumnos matriculados por el momento.</h5>
                     </div>
-                    <table class="row table">
-                        <tbody *ngIf="inscripciones.length != 0">
+                    <table class="row table table-bordered border-primary" *ngIf="inscripciones.length != 0">
+                        <thead>
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>APELLIDO</th>
+                                <th>TELÉFONO</th>
+                            </tr>
+                        </thead>
+                        <tbody >
                             <tr *ngFor="let i of listadoAlumno">
-                                <td>{{i.nombre}} {{i.nombre}}</td>
+                                <td>{{i.nombre}}</td>
+                                <td>{{i.apellidoPaterno}}</td>
+                                <td>{{i.telefono}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -35,6 +35,7 @@ class CoursesViewHolder(view: View, private var codAlum : Long) : RecyclerView.V
     private fun sendToCourseDetail(cursoTerminado : ListItemCursoTerminado){
         val intent = Intent(this.itemView.context, CourseDescriptionActivity::class.java)
         intent.apply {
+            putExtra("courseData",cursoTerminado)
             putExtra("courseName", cursoTerminado.descripcion)
             putExtra("image", cursoTerminado.imagen)
             putExtra("fechaInicio", cursoTerminado.fechaInicioInscripcion)

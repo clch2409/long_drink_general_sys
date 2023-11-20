@@ -19,7 +19,6 @@ class CourseDescriptionActivity : AppCompatActivity() {
     private lateinit var binding : ActivityCourseDescriptionBinding
     private lateinit var courseData : ListItemCursoTerminado
     private var codAlum by Delegates.notNull<Long>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,6 +28,7 @@ class CourseDescriptionActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24)
         codAlum = intent.getLongExtra("codAlum", 0)
+        courseData = intent.getSerializableExtra("courseData",) as ListItemCursoTerminado
         /** Verificar si funciona el action bar del boton atrás*/
         initUI()
 

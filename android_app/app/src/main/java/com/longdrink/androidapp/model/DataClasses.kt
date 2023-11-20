@@ -1,6 +1,7 @@
 package com.longdrink.androidapp.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /** --------------------- LOGIN AND REGISTER RELATED DATA CLASSES ----------------------------------*/
 data class LoginWebResponse(
@@ -55,7 +56,7 @@ data class Curso(
     @SerializedName("temas") var temas : List<Tema> = emptyList(),
 )
 
-data class ListItemCursoTerminado(
+data class ListItemCursoTerminado (
     @SerializedName("codCurso") var codCurso : Long = 0L,
     @SerializedName("nombre") var nombre : String = "",
     @SerializedName("descripcion") var descripcion : String = "",
@@ -73,7 +74,8 @@ data class ListItemCursoTerminado(
     var fechaFinalInscripcion : String?,
     var fechaInscripcion : String?,
     var estadoInscripcion : Boolean?
-)
+) : Serializable
+
 /** --------------------- TEACHER RELATED DATA CLASSES ----------------------------------*/
 
 data class Profesor(
@@ -85,7 +87,7 @@ data class Profesor(
     @SerializedName("apellidoPaterno") var apellidoPaterno : String = "",
     @SerializedName("apellidoMaterno") var apellidoMaterno : String = "",
     @SerializedName("fechaContratacion") var fechaContratacion : String = "",
-)
+) : Serializable
 
 /** --------------------- TURN DATA CLASSES ----------------------------------*/
 
@@ -94,7 +96,7 @@ data class Turno(
     @SerializedName("nombre") var nombre : String = "",
     @SerializedName("horaInicio") var horaInicio : String = "",
     @SerializedName("horaFin") var horaFin : String = ""
-)
+) : Serializable
 
 /** --------------------- CLASS DATA CLASSES ----------------------------------*/
 
@@ -102,7 +104,7 @@ data class Tema(
     @SerializedName("codTema") var codTema : Long,
     @SerializedName("nombre") var nombre : String,
     @SerializedName("ficha") var ficha : String
-)
+) : Serializable
 
 /** --------------------- INSCRIPTION RELATED DATA CLASSES ----------------------------------*/
 

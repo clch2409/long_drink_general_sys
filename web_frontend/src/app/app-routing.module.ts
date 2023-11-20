@@ -55,10 +55,12 @@ const routes: Routes = [
   { path: 'a', component: DashboardComponent, title: 'Long Drink - Área Estudiantil', children: [
     { path: 'mis-cursos', component: MisCursosComponent, title: 'Long Drink - Mis Cursos' },
     { path: 'mi-curso/:codalum/:codins/:codcurso', component: DetalleCursoAlumnoComponent, title: 'Long Drink - Curso: xxxx'},
+    { path: 'mi-cuenta', component: MiCuentaComponent, title: 'Long Drink - Mi Cuenta' }
   ]},
   { path: 'p', component: DashboardComponent, title: 'Long Drink - Área Docente', children: [
     { path: 'mis-cursos', component: MisCursosProfesorComponent, title: 'Long Drink - Mis Cursos' },
     { path: 'mi-curso/:codprof/:codcur', component: DetalleCursoProfesorComponent, title: 'Long Drink - Curso: xxxx'},
+    { path: 'mi-cuenta', component: MiCuentaComponent, title: 'Long Drink - Mi Cuenta' }
   ]}
 ];
 

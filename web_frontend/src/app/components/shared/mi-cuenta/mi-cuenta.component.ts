@@ -7,11 +7,13 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-mi-cuenta',
   templateUrl: './mi-cuenta.component.html',
-  styleUrls: ['./mi-cuenta.component.css']
+  styleUrls: ['./mi-cuenta.component.css'],
 })
 export class MiCuentaComponent implements OnInit {
   
   constructor(private storageService: StorageService, private router: Router, private authService: AuthService) { }
+
+
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     var usuario = this.storageService.obtenerUsuario();

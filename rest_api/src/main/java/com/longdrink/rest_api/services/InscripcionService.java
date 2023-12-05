@@ -17,10 +17,6 @@ public class InscripcionService {
         return inscripcionDAO.findAllByAlumnoCodAlumno(codAlumno);
     }
 
-    public List<Inscripcion> listarPorCurso(Long codCurso){
-        return inscripcionDAO.findAllByCursoCodCurso(codCurso);
-    }
-
     public List<Inscripcion> listarPorEstado(){
         return inscripcionDAO.findAllByEstado();
     }
@@ -28,8 +24,6 @@ public class InscripcionService {
     public List<Inscripcion> listarEnCurso(){ return inscripcionDAO.findAllByEnCurso(); }
 
     public List<Inscripcion> listarInscripciones(){ return (List<Inscripcion>) inscripcionDAO.findAll(); }
-
-    public List<Inscripcion> listarPorEstado_Curso(boolean estado, Long codCurso){ return inscripcionDAO.findAllByEstadoAndCursoCodCurso(estado,codCurso); }
 
     public List<Inscripcion> listarPorDniAlumno(String dni){ return inscripcionDAO.findAllByAlumnoDni(dni); }
 
@@ -50,8 +44,8 @@ public class InscripcionService {
         return inscripcionDAO.findByCodInscripcion(codInscripcion);
     }
 
-    public List<Inscripcion> listarPorEstado_FechaTerminado_Curso(boolean estado, Date fechaTerminado, Long codCurso){
-        return inscripcionDAO.findAllByEstadoAndFechaTerminadoAndCursoCodCurso(estado,fechaTerminado,codCurso);
+    public List<Inscripcion> listarPorEstado_FechaTerminado_Curso(boolean estado, Date fechaTerminado){
+        return inscripcionDAO.findAllByEstadoAndFechaTerminado(estado,fechaTerminado);
     }
 
     public List<Inscripcion> listarPorEstado_FechaTerminado(boolean estado, Date fechaTerminado){

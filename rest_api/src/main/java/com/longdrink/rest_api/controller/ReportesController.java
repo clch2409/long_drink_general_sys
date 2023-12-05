@@ -102,6 +102,7 @@ public class ReportesController {
         }
     }
 
+    //TODO: SPT3 - REDISEÑAR.
     @GetMapping("/inscripcion/excel")
     public void exportarInscripcionExcel(HttpServletResponse response,@RequestParam(required = false,name = "tipo") Integer tipo,
                                          @RequestParam(required = false, name = "dni") String dni,
@@ -123,12 +124,12 @@ public class ReportesController {
         }
         else if(tipo == 2){
             if(cursoService.getPorCod(codCurso) != null){
-                if(!cursoService.getPorCod(codCurso).getInscripciones().isEmpty()){
-                    List<Inscripcion> listaInscripciones = inscripcionService.listarPorCurso(codCurso);
-                    ExportarExcel exportador = new ExportarExcel(listaInscripciones,1L); //Por curso.
-                    exportador.exportarInscripcion(response);
-                }
-                else{ exportarInscripcionesGeneral(response); }  //Generales.
+//                if(!cursoService.getPorCod(codCurso).getInscripciones().isEmpty()){
+//                    List<Inscripcion> listaInscripciones = inscripcionService.listarPorCurso(codCurso);
+//                    ExportarExcel exportador = new ExportarExcel(listaInscripciones,1L); //Por curso.
+//                    exportador.exportarInscripcion(response);
+//                }
+//                else{ exportarInscripcionesGeneral(response); }  //Generales.
             }
             else{ exportarInscripcionesGeneral(response); }
         }
@@ -309,6 +310,7 @@ public class ReportesController {
         }
         writer.close();
     }
+    //TODO: SPT3 - REDISEÑAR
     @GetMapping("/inscripcion/csv")
     public void exportarInscripcionesCSV(HttpServletResponse response,@RequestParam(required = false,name = "tipo") Integer tipo,
                                          @RequestParam(required = false, name = "dni") String dni,
@@ -330,15 +332,15 @@ public class ReportesController {
         }
         else if(tipo == 2){
             if(cursoService.getPorCod(codCurso) != null){
-                listaInscripciones = inscripcionService.listarPorCurso(codCurso);
+                //listaInscripciones = inscripcionService.listarPorCurso(codCurso);
             }else { listaInscripciones = inscripcionService.listarInscripciones(); }
         }
         else{ listaInscripciones = inscripcionService.listarInscripciones(); }
         ICsvBeanWriter writer = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
         writer.writeHeader(csvHeader);
-        for(Inscripcion i: listaInscripciones){
-            writer.write(i,nameMapping);
-        }
+//        for(Inscripcion i: listaInscripciones){
+//            writer.write(i,nameMapping);
+//        }
         writer.close();
 
     }

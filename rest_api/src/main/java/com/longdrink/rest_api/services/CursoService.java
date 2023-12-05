@@ -52,8 +52,9 @@ public class CursoService {
     }
 
     //Comprobar curso con vacantes libres.
+    //TODO: SPT3 REDISEÑAR.
     public boolean cursoLleno(Long codCurso){
-        List<Inscripcion> listaInscripciones = inscripcionDAO.findAllByEstadoAndFechaTerminadoAndCursoCodCurso(true,null,codCurso);
+        List<Inscripcion> listaInscripciones = inscripcionDAO.findAllByEstadoAndFechaTerminado(true,null);
         if(listaInscripciones.isEmpty()){ //Lista vacia.
             return false; //El curso no esta lleno.
         }
@@ -64,10 +65,11 @@ public class CursoService {
                 for(Inscripcion i : listaInscripciones){
                     c++;
                 }
-                if(c < curso.getCantidadAlumnos()){
-                    return false;
-                }
-                else{ return true; }
+//                if(c < curso.getCantidadAlumnos()){
+//                    return false;
+//                }
+//                else{ return true; }
+                return true;
             }
             catch(Exception ex){ return false; } //Curso con vacantes disponibles o no existente.
         }

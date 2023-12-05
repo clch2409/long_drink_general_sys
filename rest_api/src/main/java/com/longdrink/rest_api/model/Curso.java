@@ -26,10 +26,6 @@ public class Curso implements Serializable {
 
     private byte duracion;
 
-    @Column(name = "cantidad_alumnos")
-    @JsonProperty("cantidadAlumnos")
-    private byte cantidadAlumnos;
-
     private boolean visibilidad;
 
     @Column(length = 50)
@@ -57,40 +53,35 @@ public class Curso implements Serializable {
     private List<Tema> temas;
 
     @JsonBackReference
-    @JsonIgnore
     @OneToMany(mappedBy = "curso")
-    private List<Inscripcion> inscripciones;
+    private List<Seccion> secciones;
 
     public Curso(){}
 
-    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, byte cantidadAlumnos, boolean visibilidad, String frecuencia, String imagen, Profesor profesor, List<Turno> turnos, List<Tema> temas, List<Inscripcion> inscripciones) {
+    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, boolean visibilidad, String frecuencia, String imagen, Profesor profesor, List<Turno> turnos, List<Tema> temas, List<Seccion> secciones) {
         this.codCurso = codCurso;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.mensualidad = mensualidad;
         this.duracion = duracion;
-        this.cantidadAlumnos = cantidadAlumnos;
         this.visibilidad = visibilidad;
         this.frecuencia = frecuencia;
         this.imagen = imagen;
         this.profesor = profesor;
         this.turnos = turnos;
         this.temas = temas;
-        this.inscripciones = inscripciones;
+        this.secciones = secciones;
     }
 
-    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, byte cantidadAlumnos, boolean visibilidad, String frecuencia, String imagen, Profesor profesor, List<Turno> turnos) {
+    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, boolean visibilidad, String frecuencia, String imagen) {
         this.codCurso = codCurso;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.mensualidad = mensualidad;
         this.duracion = duracion;
-        this.cantidadAlumnos = cantidadAlumnos;
         this.visibilidad = visibilidad;
         this.frecuencia = frecuencia;
         this.imagen = imagen;
-        this.profesor = profesor;
-        this.turnos = turnos;
     }
 
     public Long getCodCurso() {
@@ -123,14 +114,6 @@ public class Curso implements Serializable {
 
     public void setDuracion(byte duracion) {
         this.duracion = duracion;
-    }
-
-    public byte getCantidadAlumnos() {
-        return cantidadAlumnos;
-    }
-
-    public void setCantidadAlumnos(byte cantidadAlumnos) {
-        this.cantidadAlumnos = cantidadAlumnos;
     }
 
     public boolean isVisibilidad() {
@@ -181,13 +164,6 @@ public class Curso implements Serializable {
         this.temas = temas;
     }
 
-    public List<Inscripcion> getInscripciones() {
-        return inscripciones;
-    }
-
-    public void setInscripciones(List<Inscripcion> inscripciones) {
-        this.inscripciones = inscripciones;
-    }
 
     public String getNombre() {
         return nombre;
@@ -195,5 +171,13 @@ public class Curso implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public List<Seccion> getSecciones() {
+        return secciones;
+    }
+
+    public void setSecciones(List<Seccion> secciones) {
+        this.secciones = secciones;
     }
 }

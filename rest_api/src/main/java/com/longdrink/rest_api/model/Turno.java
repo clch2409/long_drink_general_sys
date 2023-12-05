@@ -40,17 +40,26 @@ public class Turno implements Serializable {
 
     @JsonBackReference
     @OneToMany(mappedBy = "turno")
-    private List<Inscripcion> inscripciones;
+    private List<Seccion> secciones;
 
     public Turno(){}
 
-    public Turno(Long codTurno, String nombre, Date horaInicio, Date horaFin, List<Curso> cursos, List<Inscripcion> inscripciones) {
+    public Turno(Long codTurno, String nombre, Date horaInicio, Date horaFin, List<Curso> cursos) {
         this.codTurno = codTurno;
         this.nombre = nombre;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.cursos = cursos;
-        this.inscripciones = inscripciones;
+
+    }
+
+    public Turno(Long codTurno, String nombre, Date horaInicio, Date horaFin, List<Curso> cursos, List<Seccion> secciones) {
+        this.codTurno = codTurno;
+        this.nombre = nombre;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.cursos = cursos;
+        this.secciones = secciones;
     }
 
     public Long getCodTurno() {
@@ -93,11 +102,11 @@ public class Turno implements Serializable {
         this.cursos = cursos;
     }
 
-    public List<Inscripcion> getInscripciones() {
-        return inscripciones;
+    public List<Seccion> getSecciones() {
+        return secciones;
     }
 
-    public void setInscripciones(List<Inscripcion> inscripciones) {
-        this.inscripciones = inscripciones;
+    public void setSecciones(List<Seccion> secciones) {
+        this.secciones = secciones;
     }
 }

@@ -260,16 +260,16 @@ public class ExportarPdf{
         tablaCursos.addCell(celda);
 
 
-
+        //TODO: SPT3 REDISEÑAR.
         //Se agrega a la tabla los datos de los cliente y se agrega una celda con cada dato del cliente
         listadoCursos.forEach(curso -> {
-            int cantidad = (int)curso.getCantidadAlumnos();
+            //int cantidad = (int)curso.getCantidadAlumnos();
             tablaCursos.addCell(curso.getCodCurso().toString());
             tablaCursos.addCell(curso.getNombre());
             tablaCursos.addCell(curso.getDescripcion());
             tablaCursos.addCell("S/." + curso.getMensualidad());
             tablaCursos.addCell(curso.getDuracion() + " semanas");
-            tablaCursos.addCell(cantidad+"");
+            //tablaCursos.addCell(cantidad+"");
             tablaCursos.addCell(curso.getFrecuencia());
             tablaCursos.addCell(curso.getProfesor().getNombre() + " " + curso.getProfesor().getApellidoPaterno());
         });
@@ -392,6 +392,7 @@ public class ExportarPdf{
         document.close();
     }
 
+    //TODO: SPT3 - REDISEÑAR.
     public void exportInscripcion(HttpServletResponse response, int tipo, String codigo) throws IOException{
 
         Document document = new Document(PageSize.A4);
@@ -420,7 +421,7 @@ public class ExportarPdf{
             listadoInscripciones = inscripcionService.listarPorDniAlumno(codigo);
         }
         else if (tipo == 2){
-            listadoInscripciones = inscripcionService.listarPorCurso(Long.valueOf(codigo));
+            //listadoInscripciones = inscripcionService.listarPorCurso(Long.valueOf(codigo));
         }
         else{
             listadoInscripciones = inscripcionService.listarInscripciones();
@@ -511,27 +512,27 @@ public class ExportarPdf{
             String fechaTerminadoString;
             String fechaInscripcionString;
             try {
-                fechaInicioFormateada = deStringAFecha.parse(inscripcion.getFechaInicio().toString());
-                fechaFinalFormateada = deStringAFecha.parse(inscripcion.getFechaFinal().toString());
+                //fechaInicioFormateada = deStringAFecha.parse(inscripcion.getFechaInicio().toString());
+                //fechaFinalFormateada = deStringAFecha.parse(inscripcion.getFechaFinal().toString());
                 if (inscripcion.getFechaTerminado() != null){
                     fechaTerminadoFormateada = deStringAFecha.parse(inscripcion.getFechaTerminado().toString());
                 }
                 fechaInscripcionFormateada = deStringAFecha.parse(inscripcion.getFechaInscripcion().toString());
                 
-                fechaInicioString = deFechaAString.format(fechaInicioFormateada);
-                fechaFinalString = deFechaAString.format(fechaFinalFormateada);
+                //fechaInicioString = deFechaAString.format(fechaInicioFormateada);
+                //fechaFinalString = deFechaAString.format(fechaFinalFormateada);
                 fechaTerminadoString = fechaTerminadoFormateada == null ? "En Curso" : deFechaAString.format(fechaTerminadoFormateada);
                 fechaInscripcionString = deFechaAString.format(fechaInscripcionFormateada);
 
 
                 tablaInscripciones.addCell(inscripcion.getCodInscripcion().toString());
                 tablaInscripciones.addCell(inscripcion.getAlumno().getNombre() + " " + inscripcion.getAlumno().getApellidoPaterno());
-                tablaInscripciones.addCell(inscripcion.getCurso().getNombre());
-                tablaInscripciones.addCell(fechaInicioString);
-                tablaInscripciones.addCell(fechaFinalString);
+                //tablaInscripciones.addCell(inscripcion.getCurso().getNombre());
+                //tablaInscripciones.addCell(fechaInicioString);
+                //tablaInscripciones.addCell(fechaFinalString);
                 tablaInscripciones.addCell(fechaTerminadoString);
                 tablaInscripciones.addCell(fechaInscripcionString);
-                tablaInscripciones.addCell(inscripcion.getTurno().getNombre());
+                //tablaInscripciones.addCell(inscripcion.getTurno().getNombre());
 
             } catch (ParseException e) {
                 e.printStackTrace();

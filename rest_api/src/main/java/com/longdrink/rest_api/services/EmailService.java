@@ -49,7 +49,7 @@ public class EmailService {
 
     }
 
-    @Async //Algo falla? Posiblemente sea tu hombre.
+    @Async //TODO: SPT3 - REDISEÑAR
     public void enviarEmailNuevaInscripcion(Alumno a, Curso c, Inscripcion i){
         try{
             SimpleMailMessage mensaje = new SimpleMailMessage();
@@ -59,8 +59,8 @@ public class EmailService {
                     "A continuación adjuntamos los datos de tu inscripción para que puedas asistir a tus clases programadas.\n"+
                     "CURSO MATRICULADO: "+c.getNombre()+"\n"+
                     "MENSUALIDAD: "+c.getMensualidad()+"\n"+
-                    "PRIMER DÍA DE CLASES: "+new SimpleDateFormat("dd-MM-yyyy").format(i.getFechaInicio())+"\n"+
-                    "ÚLTIMO DÍA DE CLASES: "+new SimpleDateFormat("dd-MM-yyyy").format(i.getFechaFinal())+"\n"+
+                    //"PRIMER DÍA DE CLASES: "+new SimpleDateFormat("dd-MM-yyyy").format(i.getFechaInicio())+"\n"+
+                    //"ÚLTIMO DÍA DE CLASES: "+new SimpleDateFormat("dd-MM-yyyy").format(i.getFechaFinal())+"\n"+
                     "FRECUENCIA: "+c.getFrecuencia()+"\n"+
                     "HORA INICIO: "+new SimpleDateFormat("HH:mm").format(c.getTurnos().get(0).getHoraInicio())+" HORA FIN: "+new SimpleDateFormat("HH:mm").format(c.getTurnos().get(0).getHoraFin())+"\n\n"+
                     "Te recordamos que puedes iniciar sesión tanto en nuestra página web como en nuestro aplicativo móvil con tus credenciales de siempre.\n"+

@@ -26,6 +26,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
@@ -51,9 +52,6 @@ public class ExportarPdf{
     List<Inscripcion> listadoInscripciones;
 
     public void exportAlumnos(HttpServletResponse response, int activos) throws IOException{
-        
-        
-        
 
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -545,6 +543,77 @@ public class ExportarPdf{
         document.add(tablaTitulo);
         document.add(tablaInscripciones);
         document.close();
+    }
+
+
+    public void exportCertificado(HttpServletResponse response, Alumno al, Curso cur) throws IOException{
+
+
+        Font fuenteCertifica = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 40);
+        Font fuenteNombre = FontFactory.getFont(FontFactory.HELVETICA, 25);
+
+        Document document = new Document(PageSize.A4);
+        PdfWriter.getInstance(document, response.getOutputStream());
+
+        document.setPageSize(PageSize.LETTER.rotate());
+        document.setMargins(-20, -20, 40, 20);
+        document.open();
+
+        PdfPTable tablaImagen = new PdfPTable(1);
+        PdfPCell celda = null;
+
+
+        String direccion = System.getProperty("user.dir");
+        Image imagen;
+        imagen = Image.getInstance(direccion + "/src/main/resources/images/logo_longdrink-removebg-preview.png");
+        imagen.scaleAbsoluteHeight(150);
+        imagen.scaleAbsoluteWidth(250);
+        celda = new PdfPCell(imagen);
+        celda.setPaddingTop(50);
+        celda.setBorder(0);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        tablaImagen.addCell(celda);
+
+        PdfPTable tablaCertifica = new PdfPTable(1);
+        celda = new PdfPCell(new Phrase("Certifica a: ", fuenteCertifica));
+        celda.setBorder(0);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        tablaCertifica.addCell(celda);
+
+        PdfPTable tablaNombre = new PdfPTable(1);
+        celda = new PdfPCell(new Phrase(al.getNombre().toString() + " " + al.getApellidoPaterno().toString() + " " + al.getApellidoMaterno().toString(), fuenteNombre));
+        celda.setBorder(0);
+        celda.setBorderWidthBottom(2);
+        celda.setBorderColor(new Color(158, 46, 30));
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setPaddingTop(50);
+        celda.setPaddingBottom(15);
+        tablaNombre.addCell(celda);
+
+        PdfPTable tablaCulminado = new PdfPTable(1);
+        celda = new PdfPCell(new Phrase("Por haber culminado satisfactoriamente el curso de: ", fuenteNombre));
+        celda.setBorder(0);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setPaddingTop(40);
+        tablaCulminado.addCell(celda);
+
+        PdfPTable tablaCurso = new PdfPTable(1);
+        celda = new PdfPCell(new Phrase(cur.getNombre().toUpperCase(), fuenteCertifica));
+        celda.setBorder(0);
+        celda.setVerticalAlignment(Element.ALIGN_CENTER);
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setPaddingTop(40);
+        tablaCurso.addCell(celda);
+        
+        document.add(tablaImagen);
+        document.add(tablaCertifica);
+        document.add(tablaNombre);
+        document.add(tablaCulminado);
+        document.add(tablaCurso);
     }
     
 }

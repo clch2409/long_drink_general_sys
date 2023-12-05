@@ -195,8 +195,8 @@ public class ReportesController {
         }
 
         response.setHeader(headerKey, headerValue);
-        //activo == 1 -> Listar todos los cursos activos
-        //activo == 0 -> Listado GENERAL de cursos
+        //activo == 1 -> Listar todos los docentes activos
+        //activo == 0 -> Listado GENERAL de docentes
         this.pdfService.exportDocentes(response, activo);
     }
 
@@ -223,6 +223,22 @@ public class ReportesController {
         //activo == 0 -> Listado GENERAL de cursos
         this.pdfService.exportInscripcion(response, tipo, codigo);
     }
+
+
+    @GetMapping("/certificado/pdf")
+    public void exportarCertificadoPDF(HttpServletResponse response, @RequestParam(name="codAlum") Long codAlum, @RequestParam(name="codCurso") Long codCurso) throws IOException {
+        response.setContentType("application/pdf");
+
+        Alumno alumno = alumnoService.getPorCod(codAlum);
+        Curso curso = cursoService.getPorCod(codCurso);
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=Certificado" + alumno.getNombre() + alumno.getApellidoPaterno() + alumno.getApellidoMaterno() + ".pdf";
+
+        response.setHeader(headerKey, headerValue);
+        this.pdfService.exportCertificado(response, alumno, curso);
+    }
+
 
     @GetMapping("/profesor/csv")
     public void exportarProfesoresCSV(HttpServletResponse response, @RequestParam(required = false,name = "tipo") Integer tipo) throws IOException {

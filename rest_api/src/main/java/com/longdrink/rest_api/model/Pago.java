@@ -34,6 +34,8 @@ public class Pago implements Serializable {
 
     private String descripcion;
 
+    private double total;
+
     @JsonIgnore
     @MapsId("codAlumno")
     @ManyToOne
@@ -45,12 +47,13 @@ public class Pago implements Serializable {
 
     public Pago(){}
 
-    public Pago(Long codPago, Date fechaPago, Date fechaVencimiento, boolean estado, String descripcion, Alumno alumno, List<DetallePago> detallePagos) {
+    public Pago(Long codPago, Date fechaPago, Date fechaVencimiento, boolean estado, String descripcion, double total, Alumno alumno, List<DetallePago> detallePagos) {
         this.codPago = codPago;
         this.fechaPago = fechaPago;
         this.fechaVencimiento = fechaVencimiento;
         this.estado = estado;
         this.descripcion = descripcion;
+        this.total = total;
         this.alumno = alumno;
         this.detallePagos = detallePagos;
     }
@@ -109,5 +112,13 @@ public class Pago implements Serializable {
 
     public void setDetallePagos(List<DetallePago> detallePagos) {
         this.detallePagos = detallePagos;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

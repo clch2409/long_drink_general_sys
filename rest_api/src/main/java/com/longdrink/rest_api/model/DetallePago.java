@@ -22,7 +22,6 @@ public class DetallePago implements Serializable {
     @Column(name = "subTotal")
     @JsonProperty("subTotal")
     private double subTotal;
-    private double total;
     @JsonIgnore
     @MapsId("codPago")
     @ManyToOne
@@ -31,13 +30,12 @@ public class DetallePago implements Serializable {
 
     public DetallePago(){}
 
-    public DetallePago(Long codDetallePago, String concepto, double monto, double montoMora, double subTotal, double total, Pago pago) {
+    public DetallePago(Long codDetallePago, String concepto, double monto, double montoMora, double subTotal, Pago pago) {
         this.codDetallePago = codDetallePago;
         this.concepto = concepto;
         this.monto = monto;
         this.montoMora = montoMora;
         this.subTotal = subTotal;
-        this.total = total;
         this.pago = pago;
     }
 
@@ -79,14 +77,6 @@ public class DetallePago implements Serializable {
 
     public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
     }
 
     public Pago getPago() {

@@ -45,11 +45,12 @@ class MyAccountFragment : Fragment() {
         usuario = requireArguments().getString("usuario")!!
         nombreCompleto = requireArguments().getString("nombreCompleto")!!
         binding = FragmentMyAccountBinding.inflate(layoutInflater)
-
+        disableInputs()
         placeInfo(email, usuario, nombreCompleto)
         binding.myAccountChangePassword.setOnClickListener {
-            showSnackbar("Estamos trabajando en ello")
+            showSnackbar("Estamos trabajando en ello 🛠️")
         }
+
 
         return binding.root
     }

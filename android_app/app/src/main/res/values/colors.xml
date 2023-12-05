@@ -15,5 +15,7 @@
     <color name="light_red_error">#5BEA5455</color>
     <color name="dark_beige">#E4DCCF</color>
     <color name="dark_blue">#002B5B</color>
+    <color name="transparent_dark_blue">#90002B5B</color>
     <color name="dark_red">#B31312</color>
+    <color name="transparent_dark_red">#90B31312</color>
 </resources>

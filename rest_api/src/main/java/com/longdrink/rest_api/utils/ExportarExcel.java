@@ -142,7 +142,7 @@ public class ExportarExcel {
             crearCelda(fila,columnaActual++,c.getFrecuencia(),estilo);
             crearCelda(fila,columnaActual++,c.getDuracion() + " SEMANAS",estilo);
             crearCelda(fila,columnaActual++,c.getMensualidad(),estilo);
-            crearCelda(fila,columnaActual++,c.getCantidadAlumnos(),estilo);
+            //crearCelda(fila,columnaActual++,c.getCantidadAlumnos(),estilo);
             crearCelda(fila,columnaActual++,c.getProfesor().getNombre() + " "+c.getProfesor().getApellidoPaterno(),estilo);
             crearCelda(fila,columnaActual++,c.isVisibilidad(),estilo);
         }
@@ -195,7 +195,7 @@ public class ExportarExcel {
             crearCelda(fila,columnaActual++,a.getTelefono(),estilo);
             crearCelda(fila,columnaActual++,a.getUsuario().getNombreUsuario(),estilo);
             if(!a.getInscripciones().isEmpty()){
-                crearCelda(fila,columnaActual++,a.getInscripciones().get(a.getInscripciones().size() - 1).getCurso().getNombre(),estilo);
+                //crearCelda(fila,columnaActual++,a.getInscripciones().get(a.getInscripciones().size() - 1).getCurso().getNombre(),estilo);
             }
             else{
                 crearCelda(fila,columnaActual++,"N/A",estilo);
@@ -232,7 +232,7 @@ public class ExportarExcel {
         crearCelda(fila,7,"FECHA FIN",estilo);
         crearCelda(fila,8,"ESTADO",estilo);
     }
-
+    //TODO: SPT3 - REDISEÑAR.
     private void escribirInscripcion(){
         int filaActual = 1;
         CellStyle estilo = libro.createCellStyle();
@@ -247,12 +247,12 @@ public class ExportarExcel {
             Row fila = hoja.createRow(filaActual++);
             int columnaActual = 0;
             crearCelda(fila,columnaActual++,i.getCodInscripcion(),estilo);
-            crearCelda(fila,columnaActual++,i.getCurso().getNombre(),estilo);
-            crearCelda(fila,columnaActual++,i.getCurso().getFrecuencia(),estilo);
-            crearCelda(fila,columnaActual++,i.getCurso().getTurnos().get(0).getNombre(),estilo);
-            crearCelda(fila,columnaActual++,i.getFechaInscripcion(),estiloFecha);
-            crearCelda(fila,columnaActual++,i.getFechaInicio(),estiloFecha);
-            crearCelda(fila,columnaActual++,i.getFechaFinal() == null ? "N/A" : i.getFechaFinal(),i.getFechaFinal() == null ? estilo : estiloFecha);
+//            crearCelda(fila,columnaActual++,i.getCurso().getNombre(),estilo);
+//            crearCelda(fila,columnaActual++,i.getCurso().getFrecuencia(),estilo);
+//            crearCelda(fila,columnaActual++,i.getCurso().getTurnos().get(0).getNombre(),estilo);
+//            crearCelda(fila,columnaActual++,i.getFechaInscripcion(),estiloFecha);
+//            crearCelda(fila,columnaActual++,i.getFechaInicio(),estiloFecha);
+//            crearCelda(fila,columnaActual++,i.getFechaFinal() == null ? "N/A" : i.getFechaFinal(),i.getFechaFinal() == null ? estilo : estiloFecha);
             crearCelda(fila,columnaActual++,i.getFechaTerminado() == null ? "N/A" : i.getFechaTerminado(),i.getFechaTerminado() == null ? estilo : estiloFecha);
             crearCelda(fila,columnaActual++,i.getFechaTerminado() == null ? "EN PROCESO" : "TERMINADO",estilo);
         }

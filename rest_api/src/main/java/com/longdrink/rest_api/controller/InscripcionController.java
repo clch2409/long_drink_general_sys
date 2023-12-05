@@ -85,16 +85,17 @@ public class InscripcionController {
         return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
     }
 
-    @GetMapping("/por_curso")
-    public ResponseEntity<?> listarPorCurso(@RequestParam Long codCurso){
-        List<Inscripcion> listaInscripciones = inscripcionService.listarPorCurso(codCurso);
-        if(listaInscripciones.isEmpty()){
-            return new ResponseEntity<>(
-                    new Mensaje("Ups! El curso ingresado no posee alumnos inscritos.", 404),
-                    HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
-    }
+    //TODO: SPT3 - REDISEÑAR
+//    @GetMapping("/por_curso")
+//    public ResponseEntity<?> listarPorCurso(@RequestParam Long codCurso){
+//        List<Inscripcion> listaInscripciones = inscripcionService.listarPorCurso(codCurso);
+//        if(listaInscripciones.isEmpty()){
+//            return new ResponseEntity<>(
+//                    new Mensaje("Ups! El curso ingresado no posee alumnos inscritos.", 404),
+//                    HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
+//    }
 
     @GetMapping("/por_cod")
     public ResponseEntity<?> getPorCod(@RequestParam Long codInscripcion){
@@ -171,12 +172,12 @@ public class InscripcionController {
         }
     } */
 
-    @GetMapping("/detalle")
+    @GetMapping("/detalle") //TODO: SPT3 - REDISEÑAR.
     public ResponseEntity<?> detalleInscripcion(@RequestParam Long codInscripcion){
         try{
             Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion).get();
             DetalleInscripcion retorno = new DetalleInscripcion();
-            BeanUtils.copyProperties(retorno,ins.getCurso());
+            //BeanUtils.copyProperties(retorno,ins.getCurso());
             BeanUtils.copyProperties(retorno,ins.getAlumno());
             BeanUtils.copyProperties(retorno,ins);
             return new ResponseEntity<>(retorno,HttpStatus.OK);
@@ -189,6 +190,7 @@ public class InscripcionController {
     }
 
     //Inscripción para alumno ya registrado. Procede en caso el alumno haya terminado cursos anteriores, se encuentre habilitado y el curso tenga vacantes disponibles.
+    //TODO: SPT3 - REDISEÑAR.
     @PostMapping()
     public ResponseEntity<?> inscribirAlumnoExistente(@RequestBody InsertInscripcion ins){
         Alumno alumno = alumnoService.getPorCod(ins.getCodAlumno());
@@ -231,19 +233,20 @@ public class InscripcionController {
         }
         //Insert de datos!!
         try{
-            Inscripcion i = new Inscripcion(0L,ins.getFechaInicio(),
-                    ins.getFechaFinal(),ins.getFechaInscripcion(),
-                    null,true,alumno,
-                    curso,listaTurnos.get(0));
-            Inscripcion inscripcionGuardada = inscripcionService.guardar(i);
-            emailService.enviarEmailNuevaInscripcion(alumno,curso,inscripcionGuardada);
-            return new ResponseEntity<>(inscripcionGuardada,HttpStatus.CREATED);
+//            Inscripcion i = new Inscripcion(0L,ins.getFechaInicio(),
+//                    ins.getFechaFinal(),ins.getFechaInscripcion(),
+//                    null,true,alumno,
+//                    curso,listaTurnos.get(0));
+//            Inscripcion inscripcionGuardada = inscripcionService.guardar(i);
+//            emailService.enviarEmailNuevaInscripcion(alumno,curso,inscripcionGuardada);
+            return new ResponseEntity<>(null,HttpStatus.CREATED); //inscripcionGuardada
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    //TODO: SPT3 - REDISEÑAR.
     @PutMapping("/retirar")
     @CrossOrigin(allowedHeaders = "*",origins = "*")
     public ResponseEntity<?> retirarAlumno(@RequestParam Long codInscripcion){
@@ -255,7 +258,7 @@ public class InscripcionController {
         if(ins == null){
             return new ResponseEntity<>(new Mensaje("Ups! Inscripcion no encontrada.",404),HttpStatus.NOT_FOUND);
         }
-        ins.setFechaTerminado(ins.getFechaInicio());
+        //ins.setFechaTerminado(ins.getFechaInicio());
         Inscripcion insActualizada = inscripcionService.actualizar(ins);
         return new ResponseEntity<>(insActualizada,HttpStatus.OK);
     }

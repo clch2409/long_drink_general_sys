@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface IAsistenciaDAO extends CrudRepository<Asistencia,Long> {
-    public List<Asistencia> findAllByInscripcionCodInscripcion(Long codInscripcion);
+    List<Asistencia> findAllByInscripcionCodInscripcion(Long codInscripcion);
 }

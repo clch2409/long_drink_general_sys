@@ -167,7 +167,7 @@ public class AuthController {
         }
     }
 
-    //TODO: Testear.....
+    //TODO: SPT3 - REDISEÑAR
     @PostMapping("/registro_alumno")
     public ResponseEntity<?> registroAlumno(@RequestBody RegistroAlumno ra){
         EmailValidator em = EmailValidator.getInstance();
@@ -219,11 +219,11 @@ public class AuthController {
                     limpiarDatos.getApellidoMaterno(),limpiarDatos.getDni(),
                     limpiarDatos.getTelefono(),true,usuarioGuardado);
             Alumno alumnoGuardado = alumnoService.guardar(alumno);
-            Inscripcion inscripcion = new Inscripcion(0L,ra.getFechaInicio(),
-                    ra.getFechaFinal(),ra.getFechaInscripcion(),
-                    null,true,new Alumno(alumnoGuardado.getCodAlumno()),
-                    c,listaTurnos.get(0));
-            Inscripcion inscripcionGuardada = inscripcionService.guardar(inscripcion);
+//            Inscripcion inscripcion = new Inscripcion(0L,ra.getFechaInicio(),
+//                    ra.getFechaFinal(),ra.getFechaInscripcion(),
+//                    null,true,new Alumno(alumnoGuardado.getCodAlumno()),
+//                    c,listaTurnos.get(0));
+//            Inscripcion inscripcionGuardada = inscripcionService.guardar(inscripcion);
             emailService.enviarEmailInscripcion(limpiarDatos,c.getNombre(),c.getFrecuencia(),listaTurnos.get(0));
             return new ResponseEntity<>(ra,HttpStatus.CREATED);
         }

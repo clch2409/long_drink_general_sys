@@ -16,18 +16,6 @@ public class Inscripcion implements Serializable {
     @JsonProperty("codInscripcion")
     private Long codInscripcion;
 
-    @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
-    @JsonProperty("fechaInicio")
-    private Date fechaInicio;
-
-    @Column(name = "fecha_final")
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
-    @JsonProperty("fechaFinal")
-    private Date fechaFinal;
-
     @Column(name = "fecha_inscripcion")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
@@ -50,59 +38,33 @@ public class Inscripcion implements Serializable {
     @JoinColumn(name = "cod_alumno")
     private Alumno alumno;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codCurso")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonManagedReference
-    //@MapsId("codCurso") ->> TODO.
-    @ManyToOne
-    @JoinColumn(name = "cod_curso")
-    private Curso curso;
-
-
-    @JsonManagedReference
-    //@MapsId("codTurno") ->> TODO.
-    @ManyToOne
-    @JoinColumn(name = "cod_turno")
-    private Turno turno;
-
     @OneToMany(mappedBy = "inscripcion")
     private List<Asistencia> asistencias;
 
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "cod_seccion")
+    private Seccion seccion;
+
     public Inscripcion(){}
 
-    public Inscripcion(Long codInscripcion, Date fechaInicio, Date fechaFinal, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Curso curso, Turno turno, List<Asistencia> asistencias) {
+    public Inscripcion(Long codInscripcion, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, List<Asistencia> asistencias, Seccion seccion) {
         this.codInscripcion = codInscripcion;
-        this.fechaInicio = fechaInicio;
-        this.fechaFinal = fechaFinal;
         this.fechaInscripcion = fechaInscripcion;
         this.fechaTerminado = fechaTerminado;
         this.estado = estado;
         this.alumno = alumno;
-        this.curso = curso;
-        this.turno = turno;
         this.asistencias = asistencias;
+        this.seccion = seccion;
     }
 
-    public Inscripcion(Date fechaInicio, Date fechaFinal, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Curso curso) {
-        this.fechaInicio = fechaInicio;
-        this.fechaFinal = fechaFinal;
-        this.fechaInscripcion = fechaInscripcion;
-        this.fechaTerminado = fechaTerminado;
-        this.estado = estado;
-        this.alumno = alumno;
-        this.curso = curso;
-    }
-
-    public Inscripcion(Long codInscripcion, Date fechaInicio, Date fechaFinal, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Curso curso, Turno turno) {
+    public Inscripcion(Long codInscripcion, Date fechaInscripcion, Date fechaTerminado, boolean estado, Alumno alumno, Seccion seccion) {
         this.codInscripcion = codInscripcion;
-        this.fechaInicio = fechaInicio;
-        this.fechaFinal = fechaFinal;
         this.fechaInscripcion = fechaInscripcion;
         this.fechaTerminado = fechaTerminado;
         this.estado = estado;
         this.alumno = alumno;
-        this.curso = curso;
-        this.turno = turno;
+        this.seccion = seccion;
     }
 
     public Long getCodInscripcion() {
@@ -111,22 +73,6 @@ public class Inscripcion implements Serializable {
 
     public void setCodInscripcion(Long codInscripcion) {
         this.codInscripcion = codInscripcion;
-    }
-
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public Date getFechaFinal() {
-        return fechaFinal;
-    }
-
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
     }
 
     public Date getFechaInscripcion() {
@@ -161,21 +107,6 @@ public class Inscripcion implements Serializable {
         this.alumno = alumno;
     }
 
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
-
-    public Turno getTurno() {
-        return turno;
-    }
-
-    public void setTurno(Turno turno) {
-        this.turno = turno;
-    }
 
     public List<Asistencia> getAsistencias() {
         return asistencias;
@@ -183,5 +114,13 @@ public class Inscripcion implements Serializable {
 
     public void setAsistencias(List<Asistencia> asistencias) {
         this.asistencias = asistencias;
+    }
+
+    public Seccion getSeccion() {
+        return seccion;
+    }
+
+    public void setSeccion(Seccion seccion) {
+        this.seccion = seccion;
     }
 }

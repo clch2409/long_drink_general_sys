@@ -67,7 +67,7 @@ public class CursoController {
         return new ResponseEntity<>(curso,HttpStatus.OK);
     }
 
-    //Cursos con vacantes disponibles.
+    //Cursos con vacantes disponibles. TODO: SPT3 - REDISEÑAR.
     @GetMapping("/disponibles")
     public ResponseEntity<?> getDisponibles(){
         List<Inscripcion> listaInscripcion = inscripcionService.listarPorEstado_FechaTerminado(true,null);
@@ -78,16 +78,16 @@ public class CursoController {
         LocalDateTime fechaActual = LocalDateTime.now();
         Instant instant = fechaActual.atZone(ZoneId.systemDefault()).toInstant();
         Date fecha = Date.from(instant);
-        for(Inscripcion i: listaInscripcion){
-            if(i.getFechaFinal().after(fecha)){
-                filtro.add(i);
-            }
-        }
-        for(Inscripcion i: filtro){
-            if(!cursoService.cursoLleno(i.getCurso().getCodCurso())){
-                retorno.add(i.getCurso());
-            }
-        }
+//        for(Inscripcion i: listaInscripcion){
+//            if(i.getFechaFinal().after(fecha)){
+//                filtro.add(i);
+//            }
+//        }
+//        for(Inscripcion i: filtro){
+//            if(!cursoService.cursoLleno(i.getCurso().getCodCurso())){
+//                retorno.add(i.getCurso());
+//            }
+//        }
         if(!listaCursos.isEmpty()){
             retorno.addAll(listaCursos);
         }
@@ -97,7 +97,7 @@ public class CursoController {
         return new ResponseEntity<>(retorno,HttpStatus.OK);
     }
 
-    //Nuevo curso, con profesor asignado.
+    //Nuevo curso, con profesor asignado. TODO: SPT3 - REDISEÑAR.
     @PostMapping
     public ResponseEntity<?> nuevoCurso(@RequestBody InsertCurso c){
         List<Profesor> profesoresDisponibles = profesorService.listarActivosNoAsignados();
@@ -122,13 +122,13 @@ public class CursoController {
         try{
             List<Turno> turnos = new ArrayList<>();
             turnos.add(turno);
-            Curso curso = new Curso(0L,limpiarDatos.getNombre(),
-                    limpiarDatos.getDescripcion(),limpiarDatos.getMensualidad(),
-                    limpiarDatos.getDuracion(),limpiarDatos.getCantidadAlumnos(),
-                    limpiarDatos.isVisibilidad(),limpiarDatos.getFrecuencia(),
-                    "https://i.imgur.com/APbzr19.jpg",profesor,turnos);
-            Curso cursoGuardado = cursoService.guardar(curso);
-            return new ResponseEntity<>(cursoGuardado,HttpStatus.CREATED);
+//            Curso curso = new Curso(0L,limpiarDatos.getNombre(),
+//                    limpiarDatos.getDescripcion(),limpiarDatos.getMensualidad(),
+//                    limpiarDatos.getDuracion(),limpiarDatos.getCantidadAlumnos(),
+//                    limpiarDatos.isVisibilidad(),limpiarDatos.getFrecuencia(),
+//                    "https://i.imgur.com/APbzr19.jpg",profesor,turnos);
+//            Curso cursoGuardado = cursoService.guardar(curso);
+            return new ResponseEntity<>(null,HttpStatus.CREATED); //cursoGuardado
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Ups! Ha sucedido un error interno del servidor",500),HttpStatus.INTERNAL_SERVER_ERROR);

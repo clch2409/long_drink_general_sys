@@ -615,6 +615,7 @@ public class ExportarPdf{
         document.add(tablaNombre);
         document.add(tablaCulminado);
         document.add(tablaCurso);
+        document.close();
     }
     
 }

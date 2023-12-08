@@ -1,5 +1,6 @@
 package com.longdrink.androidapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.snackbar.Snackbar
 import com.longdrink.androidapp.R
+import com.longdrink.androidapp.RecoveryActivity
 import com.longdrink.androidapp.databinding.FragmentMyAccountBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,7 +50,7 @@ class MyAccountFragment : Fragment() {
         disableInputs()
         placeInfo(email, usuario, nombreCompleto)
         binding.myAccountChangePassword.setOnClickListener {
-            showSnackbar("Estamos trabajando en ello 🛠️")
+            goToRecovery()
         }
 
 
@@ -69,6 +71,10 @@ class MyAccountFragment : Fragment() {
         binding.myAccountEmail.isEnabled = false
         binding.myAccountUsername.isEnabled = false
         binding.myAccountFullname.isEnabled = false
+    }
+
+    private fun goToRecovery(){
+        startActivity(Intent(activity, RecoveryActivity::class.java))
     }
 
     companion object {

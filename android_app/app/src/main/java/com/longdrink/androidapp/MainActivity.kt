@@ -12,6 +12,7 @@ import com.longdrink.androidapp.adapters.CoursesViewPagerAdapter
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.ActivityMainBinding
 import com.longdrink.androidapp.model.Inscripcion
+import com.longdrink.androidapp.retrofit.Api
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,8 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter : CoursesViewPagerAdapter
     private lateinit var binding : ActivityMainBinding
-    private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
-    private lateinit var retrofit : Retrofit
+    private var apiService : ApiService? = null
     private var inscripcionActiva = Inscripcion()
     private var listadoInscripcionesTerminadas = mutableListOf<Inscripcion>()
     //private var hasInscription = false
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         usuario = intent.getStringExtra("usuario")!!
         nombreCompleto = intent.getStringExtra("nombreCompleto")!!
         binding = ActivityMainBinding.inflate(layoutInflater)
-        retrofit = getRetrofit()
+        apiService = Api.apiService
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.setLogo(R.mipmap.ic_logo_foreground)
         initUi()
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch{
             try{
                 val response : Response<List<Inscripcion>> =
-                    retrofit.create(ApiService::class.java).listarInscripcionesByAlumnoId(codAlum)
+                    apiService!!.listarInscripcionesByAlumnoId(codAlum)
 
                 if (response.isSuccessful){
                     Log.i("INSCRIPCION", response.body().toString())
@@ -128,13 +128,5 @@ class MainActivity : AppCompatActivity() {
                 Log.e("ERROR EN OBTENER INSCRIPCION", ex.toString())
             }
         }
-    }
-
-    private fun getRetrofit() : Retrofit {
-        return Retrofit
-            .Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
     }
 }

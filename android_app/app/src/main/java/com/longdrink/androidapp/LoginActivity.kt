@@ -11,6 +11,7 @@ import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.ActivityLoginBinding
 import com.longdrink.androidapp.model.LoginSendData
 import com.longdrink.androidapp.model.LoginWebResponse
+import com.longdrink.androidapp.retrofit.Api
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,13 +22,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var retrofit : Retrofit
-    private val BASE_URL: String = "http://10.0.2.2:8080/api/v1/"
+    private var apiService: ApiService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        retrofit = getRetrofit()
+        apiService = Api.apiService
 
         binding.btnIniciar.setOnClickListener {
             val username = binding.txtUsuario.text.toString()
@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch{
             val response : Response<LoginWebResponse>  =
-                retrofit.create(ApiService::class.java).iniciarSesion(sendData)
+                apiService!!.iniciarSesion(sendData)
 
             if (response.code() == 401){
                  showSnackbar("Sus datos no coinciden, intente de nuevo")
@@ -97,13 +97,5 @@ class LoginActivity : AppCompatActivity() {
 
     private fun goToForgot(){
         showSnackbar("Estamos trabajando en ello \uD83D\uDEE0")
-    }
-
-    private fun getRetrofit() : Retrofit{
-        return Retrofit
-            .Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
     }
 }

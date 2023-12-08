@@ -13,6 +13,7 @@ import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.FragmentMyCourseBinding
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.Tema
+import com.longdrink.androidapp.retrofit.Api
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,12 +37,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class MyCourseFragment : Fragment() {
     private lateinit var binding : FragmentMyCourseBinding
-    private lateinit var retrofit : Retrofit
     private var codCurso : Long = 0
     private var fechaFinal : String = ""
-    private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
     private val listadoTemas : List<Tema> = emptyList()
     private lateinit var recyclerViewAdapter : TemasRecyclerViewAdapter
+    private var apiService : ApiService? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +49,7 @@ class MyCourseFragment : Fragment() {
     ): View? {
 
         binding = FragmentMyCourseBinding.inflate(inflater)
-        retrofit = getRetrofit()
+        apiService = Api.apiService
         codCurso = requireArguments().getLong("codCurso")
         fechaFinal = requireArguments().getString("fechaFinal").toString()
         getCourseInfo()
@@ -83,7 +83,7 @@ class MyCourseFragment : Fragment() {
             try {
                 if (codCurso != 0L){
                     val response : Response<Curso> =
-                        retrofit.create(ApiService :: class.java).findCursoById(codCurso)
+                        apiService!!.findCursoById(codCurso)
 
                     if (response.body() != null){
                         activity?.runOnUiThread{
@@ -97,14 +97,6 @@ class MyCourseFragment : Fragment() {
                 Log.e("ERROR EN LA OBTENCION DE CURSOS", ex.toString())
             }
         }
-    }
-
-    private fun getRetrofit(): Retrofit{
-        return Retrofit
-            .Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
     }
 
 

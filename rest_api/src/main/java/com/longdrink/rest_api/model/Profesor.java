@@ -15,30 +15,23 @@ public class Profesor implements Serializable {
     @Column(name = "cod_profesor")
     @JsonProperty("codProfesor")
     private Long codProfesor;
-
     @Column(length = 50)
     private String nombre;
-
     @Column(name = "apellido_paterno",length = 25)
     @JsonProperty("apellidoPaterno")
     private String apellidoPaterno;
-
     @Column(name = "apellido_materno",length = 25)
     @JsonProperty("apellidoMaterno")
     private String apellidoMaterno;
-
     @Column(length = 12)
     private String dni;
-
     @Column(length = 15)
     private String telefono;
-
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_contratacion")
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaContratacion")
     private Date fechaContratacion;
-
     private boolean activo;
 
     @JsonIgnore
@@ -48,7 +41,7 @@ public class Profesor implements Serializable {
 
     @JsonBackReference
     @OneToMany(mappedBy = "profesor")
-    private List<Curso> cursos;
+    private List<Seccion> secciones;
 
     public Profesor(){}
 
@@ -62,7 +55,6 @@ public class Profesor implements Serializable {
         this.fechaContratacion = fechaContratacion;
         this.activo = activo;
         this.usuario = usuario;
-        this.cursos = cursos;
     }
 
     public Profesor(Long codProfesor, String nombre, String apellidoPaterno, String apellidoMaterno, String dni, String telefono, Date fechaContratacion, boolean activo, Usuario usuario) {
@@ -149,11 +141,11 @@ public class Profesor implements Serializable {
         this.usuario = usuario;
     }
 
-    public List<Curso> getCursos() {
-        return cursos;
+    public List<Seccion> getSecciones() {
+        return secciones;
     }
 
-    public void setCursos(List<Curso> cursos) {
-        this.cursos = cursos;
+    public void setSecciones(List<Seccion> secciones) {
+        this.secciones = secciones;
     }
 }

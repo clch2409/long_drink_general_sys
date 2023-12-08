@@ -9,6 +9,8 @@ import { AlumnoService } from 'src/app/services/alumno.service';
 import { CursoService } from 'src/app/services/curso.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { StorageService } from 'src/app/services/storage.service';
+import Swal from 'sweetalert2';
+const API = "http://localhost:8080/api/v1";
 
 @Component({
   selector: 'app-detalle-curso-profesor',
@@ -42,7 +44,7 @@ export class DetalleCursoProfesorComponent implements OnInit{
       this.inscripcionService.getInscripcionesPorCurso(codCurso).subscribe({
         next: (data : Inscripcion[]) => {
           this.inscripciones = data
-          this.enriquecerInscripcion(data)
+          console.log(this.inscripciones);
         }
       })
     }catch(err){
@@ -51,31 +53,20 @@ export class DetalleCursoProfesorComponent implements OnInit{
     }
   }
 
-  enriquecerInscripcion(inscripciones : Inscripcion[]) : void{
-    inscripciones.forEach(inscripcion =>{
-      var codCurso = inscripcion.curso
-      var codAlumno = inscripcion.alumno
-      this.getAlumnoCod(codAlumno).subscribe({
-        next: (data : Alumno) =>{
-          inscripcion.alumno = data
-          this.listadoAlumno.push(inscripcion.alumno)
-        }
-      })
-  
-      this.getCursoCod(codCurso).subscribe({
-        next: (data : Curso) =>{
-          inscripcion.curso = data
-        }
-      })
-      this.listadoTurnos.push(inscripcion.turno)
-    })
-  }
-
   getCursoCod(codCurso: number | any): any {
     return this.cursoService.getCurso(codCurso);
   }
 
   getAlumnoCod(codAlumno: number | any): any {
     return this.alumnoService.getAlumnoCod(codAlumno);
+  }
+
+  descargarGuia(codGuia: number | any): void{
+    window.location.href=API+`/tema/descargar_guia?codTema=${codGuia}`;
+    Swal.fire({
+      title: "Descargando guía...",
+      text: "Estas descargando la guía de estudio: " + codGuia,
+      icon: "info"
+    });
   }
 }

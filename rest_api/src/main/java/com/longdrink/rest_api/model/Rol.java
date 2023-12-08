@@ -14,7 +14,6 @@ public class Rol implements Serializable {
     @Column(name = "cod_rol")
     @JsonProperty("codRol")
     private Long codRol;
-
     @Column(length = 15)
     private String nombre;
 

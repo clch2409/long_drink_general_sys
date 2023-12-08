@@ -1,8 +1,11 @@
 package com.longdrink.rest_api.model.payload;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.sql.Insert;
+
+import java.util.Date;
 
 public class InsertCurso {
     private String nombre;
@@ -10,11 +13,15 @@ public class InsertCurso {
     private String frecuencia;
     private String imagen;
     private byte duracion;
-    private byte cantidadAlumnos;
     private double mensualidad;
     private boolean visibilidad;
     private Long codProfesor;
     private Long codTurno;
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
+    private Date fechaInicio;
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
+    private Date fechaFinal;
+    private int maxAlumnos;
 
     @JsonIgnore
     public InsertCurso limpiarDatos(){
@@ -24,8 +31,7 @@ public class InsertCurso {
             frecuencia = frecuencia.trim();
             return new InsertCurso(StringUtils.capitalize(nombre), StringUtils.capitalize(descripcion),
                     StringUtils.capitalize(frecuencia), imagen.trim(),
-                    duracion, cantidadAlumnos, mensualidad,
-                    visibilidad, codProfesor, codTurno);
+                    duracion, mensualidad, visibilidad, codProfesor, codTurno, fechaInicio, fechaFinal, maxAlumnos);
         }
         catch(Exception ex){ return null; }
     }
@@ -37,24 +43,26 @@ public class InsertCurso {
                 this.frecuencia.length() >= 1 && this.frecuencia.length() <= 50 &&
                 this.imagen.length() >= 1 && this.imagen.length() <= 255 &&
                 this.duracion >= 1 && this.duracion <= 50 &&
-                this.cantidadAlumnos >= 8 && this.cantidadAlumnos <= 20 &&
                 this.mensualidad >= 1 && this.mensualidad <= 1000 &&
-                this.codProfesor > 0L && this.codTurno > 0L;
+                this.codProfesor > 0L && this.codTurno > 0L &&
+                this.maxAlumnos >= 1 && this.maxAlumnos <=30;
     }
 
     public InsertCurso(){}
 
-    public InsertCurso(String nombre, String descripcion, String frecuencia, String imagen, byte duracion, byte cantidadAlumnos, double mensualidad, boolean visibilidad, Long codProfesor, Long codTurno) {
+    public InsertCurso(String nombre, String descripcion, String frecuencia, String imagen, byte duracion, double mensualidad, boolean visibilidad, Long codProfesor, Long codTurno, Date fechaInicio, Date fechaFinal, int maxAlumnos) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.frecuencia = frecuencia;
         this.imagen = imagen;
         this.duracion = duracion;
-        this.cantidadAlumnos = cantidadAlumnos;
         this.mensualidad = mensualidad;
         this.visibilidad = visibilidad;
         this.codProfesor = codProfesor;
         this.codTurno = codTurno;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+        this.maxAlumnos = maxAlumnos;
     }
 
     public String getNombre() {
@@ -97,14 +105,6 @@ public class InsertCurso {
         this.duracion = duracion;
     }
 
-    public byte getCantidadAlumnos() {
-        return cantidadAlumnos;
-    }
-
-    public void setCantidadAlumnos(byte cantidadAlumnos) {
-        this.cantidadAlumnos = cantidadAlumnos;
-    }
-
     public double getMensualidad() {
         return mensualidad;
     }
@@ -135,5 +135,29 @@ public class InsertCurso {
 
     public void setCodTurno(Long codTurno) {
         this.codTurno = codTurno;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFinal() {
+        return fechaFinal;
+    }
+
+    public void setFechaFinal(Date fechaFinal) {
+        this.fechaFinal = fechaFinal;
+    }
+
+    public int getMaxAlumnos() {
+        return maxAlumnos;
+    }
+
+    public void setMaxAlumnos(int maxAlumnos) {
+        this.maxAlumnos = maxAlumnos;
     }
 }

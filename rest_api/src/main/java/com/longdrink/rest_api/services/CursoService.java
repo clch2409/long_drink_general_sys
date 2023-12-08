@@ -13,7 +13,6 @@ import java.util.List;
 public class CursoService {
     @Autowired
     private ICursoDAO cursoDAO;
-
     @Autowired
     private IInscripcionDAO inscripcionDAO;
 
@@ -51,27 +50,27 @@ public class CursoService {
         return false;
     }
 
-    //Comprobar curso con vacantes libres.
-    //TODO: SPT3 REDISEÑAR.
-    public boolean cursoLleno(Long codCurso){
-        List<Inscripcion> listaInscripciones = inscripcionDAO.findAllByEstadoAndFechaTerminado(true,null);
-        if(listaInscripciones.isEmpty()){ //Lista vacia.
-            return false; //El curso no esta lleno.
-        }
-        else{
-            try{
-                int c = 0;
-                Curso curso = cursoDAO.findById(codCurso).get();
-                for(Inscripcion i : listaInscripciones){
-                    c++;
-                }
-//                if(c < curso.getCantidadAlumnos()){
-//                    return false;
+//    //Comprobar curso con vacantes libres.
+//    //TODO: SPT3  ---->>> MOVIDO A SeccionService / vacantesDisponibles(Long codCurso) **Eliminar en los proximos días.
+//    public boolean cursoLleno(Long codCurso){
+//        List<Inscripcion> listaInscripciones = inscripcionDAO.findAllByEstadoAndFechaTerminado(true,null);
+//        if(listaInscripciones.isEmpty()){ //Lista vacia.
+//            return false; //El curso no esta lleno.
+//        }
+//        else{
+//            try{
+//                int c = 0;
+//                Curso curso = cursoDAO.findById(codCurso).get();
+//                for(Inscripcion i : listaInscripciones){
+//                    c++;
 //                }
-//                else{ return true; }
-                return true;
-            }
-            catch(Exception ex){ return false; } //Curso con vacantes disponibles o no existente.
-        }
-    }
+////                if(c < curso.getCantidadAlumnos()){
+////                    return false;
+////                }
+////                else{ return true; }
+//                return true;
+//            }
+//            catch(Exception ex){ return false; } //Curso con vacantes disponibles o no existente.
+//        }
+//    }
 }

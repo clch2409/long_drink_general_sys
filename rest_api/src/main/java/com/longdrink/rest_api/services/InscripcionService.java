@@ -13,6 +13,7 @@ import java.util.Optional;
 public class InscripcionService {
     @Autowired
     private IInscripcionDAO inscripcionDAO;
+
     public List<Inscripcion> listarPorAlumno(Long codAlumno){
         return inscripcionDAO.findAllByAlumnoCodAlumno(codAlumno);
     }
@@ -40,8 +41,8 @@ public class InscripcionService {
         return inscripcionDAO.save(i);
     }
 
-    public Optional<Inscripcion> buscarPorPk(Long codInscripcion){
-        return inscripcionDAO.findByCodInscripcion(codInscripcion);
+    public Inscripcion buscarPorPk(Long codInscripcion){
+        return inscripcionDAO.findById(codInscripcion).orElse(null);
     }
 
     public List<Inscripcion> listarPorEstado_FechaTerminado_Curso(boolean estado, Date fechaTerminado){
@@ -50,5 +51,9 @@ public class InscripcionService {
 
     public List<Inscripcion> listarPorEstado_FechaTerminado(boolean estado, Date fechaTerminado){
         return inscripcionDAO.findAllByEstadoAndFechaTerminado(estado,fechaTerminado);
+    }
+
+    public List<Inscripcion> listarPorSeccion(Long codSeccion){
+        return inscripcionDAO.findAllBySeccionCodSeccion(codSeccion);
     }
 }

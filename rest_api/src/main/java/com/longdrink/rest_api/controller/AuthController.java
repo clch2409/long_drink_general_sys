@@ -31,6 +31,8 @@ public class AuthController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired(required = true)
     private EmailService emailService;
+    @Autowired
+    private SeccionService seccionService;
 
     @PostMapping("/registro_docente")
     public ResponseEntity<?> registroDocente(@RequestBody RegistroDocente reg){
@@ -163,20 +165,19 @@ public class AuthController {
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Imposible actualizar datos de la cuenta.",500),
-                    HttpStatus.INTERNAL_SERVER_ERROR); //TODO: Tal vez algo falle aqui!
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //TODO: SPT3 - REDISEÑAR
+    //TODO: SPT3 - R.C MODIFICAR EN FRONT
     @PostMapping("/registro_alumno")
     public ResponseEntity<?> registroAlumno(@RequestBody RegistroAlumno ra){
         EmailValidator em = EmailValidator.getInstance();
         Alumno a = alumnoService.getPorDNI(ra.getDni());
         Profesor p = profesorService.getPorDNI(ra.getDni());
         Usuario u = usuarioService.getPorEmail(ra.getEmail());
-        Curso c = cursoService.getPorCod(ra.getCodCurso());
-        List<Turno> listaTurnos = turnoService.listarTurnoPorCurso(c.getCodCurso());
-        boolean cursoLleno = cursoService.cursoLleno(c.getCodCurso()); //Chequear esto...!
+        Seccion s = seccionService.obtenerSeccion(ra.getCodSeccion());
+        boolean seccionVacia = seccionService.vacantesDisponibles(ra.getCodSeccion());
         if(a != null || p != null){
             return new ResponseEntity<>(new Mensaje("Error! El DNI ingresado ya pertenece a una cuenta registrada.",400),
                     HttpStatus.BAD_REQUEST);
@@ -185,15 +186,14 @@ public class AuthController {
             return new ResponseEntity<>(new Mensaje("Error! El E-Mail ingresado ya pertenece a una cuenta registrada.",400),
                     HttpStatus.BAD_REQUEST);
         }
-        if(c == null){
-            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no existe!",400),
+        if(s == null){
+            return new ResponseEntity<>(new Mensaje("Error! La sección seleccionada no existe!",400),
                     HttpStatus.BAD_REQUEST);
         }
-        if(listaTurnos.isEmpty()){
-            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no tiene turno asignado!",400),
+        if(s.getTurno() == null){
+            return new ResponseEntity<>(new Mensaje("Error! La sección seleccionada no tiene turno asignado!",400),
                     HttpStatus.BAD_REQUEST);
         }
-
         RegistroAlumno limpiarDatos = ra.limpiarDatos();
         limpiarDatos.setContrasena(limpiarDatos.getDni()+limpiarDatos.getApellidoPaterno().substring(0,1));
         limpiarDatos.setNombreUsuario(limpiarDatos.generarNombreUsuario());
@@ -204,7 +204,7 @@ public class AuthController {
             return new ResponseEntity<>(new Mensaje("Error! Los datos ingresados no cuentan con el formato requerido.",400),
                     HttpStatus.BAD_REQUEST);
         }
-        if(cursoLleno){
+        if(!seccionVacia){
             return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no cuenta con vacantes disponibles.",400),
                     HttpStatus.BAD_REQUEST);
         }
@@ -219,13 +219,11 @@ public class AuthController {
                     limpiarDatos.getApellidoMaterno(),limpiarDatos.getDni(),
                     limpiarDatos.getTelefono(),true,usuarioGuardado);
             Alumno alumnoGuardado = alumnoService.guardar(alumno);
-//            Inscripcion inscripcion = new Inscripcion(0L,ra.getFechaInicio(),
-//                    ra.getFechaFinal(),ra.getFechaInscripcion(),
-//                    null,true,new Alumno(alumnoGuardado.getCodAlumno()),
-//                    c,listaTurnos.get(0));
-//            Inscripcion inscripcionGuardada = inscripcionService.guardar(inscripcion);
-            emailService.enviarEmailInscripcion(limpiarDatos,c.getNombre(),c.getFrecuencia(),listaTurnos.get(0));
-            return new ResponseEntity<>(ra,HttpStatus.CREATED);
+            Inscripcion inscripcion = new Inscripcion(0L,limpiarDatos.getFechaInscripcion(),
+                    null,true,alumnoGuardado,s);
+            Inscripcion inscripcionGuardada = inscripcionService.guardar(inscripcion);
+            emailService.enviarEmailInscripcion(limpiarDatos,s);
+            return new ResponseEntity<>(ra.limpiarDatos(),HttpStatus.CREATED);
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);

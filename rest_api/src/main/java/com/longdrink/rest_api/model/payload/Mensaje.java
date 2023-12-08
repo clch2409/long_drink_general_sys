@@ -1,7 +1,5 @@
 package com.longdrink.rest_api.model.payload;
 
-
-
 public class Mensaje {
     private String mensaje;
     private int estado;
@@ -28,6 +26,5 @@ public class Mensaje {
     public void setEstado(int estado) {
         this.estado = estado;
     }
-
     
 }

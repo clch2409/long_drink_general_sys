@@ -32,5 +32,4 @@ public class PagoController {
         return new ResponseEntity<>(listaPagos,HttpStatus.OK);
     }
 
-    //TODO: Nuevo pago, actualizar y cambiar estado -- Incluye DetallePago en una sola solicitud.
 }

@@ -1,16 +1,10 @@
 package com.longdrink.rest_api.controller;
 
-import com.longdrink.rest_api.model.Curso;
-import com.longdrink.rest_api.model.Inscripcion;
-import com.longdrink.rest_api.model.Profesor;
-import com.longdrink.rest_api.model.Turno;
+import com.longdrink.rest_api.model.*;
 import com.longdrink.rest_api.model.payload.EditarCurso;
 import com.longdrink.rest_api.model.payload.InsertCurso;
 import com.longdrink.rest_api.model.payload.Mensaje;
-import com.longdrink.rest_api.services.CursoService;
-import com.longdrink.rest_api.services.InscripcionService;
-import com.longdrink.rest_api.services.ProfesorService;
-import com.longdrink.rest_api.services.TurnoService;
+import com.longdrink.rest_api.services.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +30,8 @@ public class CursoController {
     private ProfesorService profesorService;
     @Autowired
     private TurnoService turnoService;
+    @Autowired
+    private SeccionService seccionService;
 
     @GetMapping
     public ResponseEntity<?> get(){
@@ -67,37 +63,7 @@ public class CursoController {
         return new ResponseEntity<>(curso,HttpStatus.OK);
     }
 
-    //Cursos con vacantes disponibles. TODO: SPT3 - REDISEÑAR.
-    @GetMapping("/disponibles")
-    public ResponseEntity<?> getDisponibles(){
-        List<Inscripcion> listaInscripcion = inscripcionService.listarPorEstado_FechaTerminado(true,null);
-        List<Inscripcion> filtro = new ArrayList<>();
-        List<Curso> listaCursos = cursoService.listarCursosSinInscripciones();
-        List<Curso> retorno = new ArrayList<>();
-        int c = 0;
-        LocalDateTime fechaActual = LocalDateTime.now();
-        Instant instant = fechaActual.atZone(ZoneId.systemDefault()).toInstant();
-        Date fecha = Date.from(instant);
-//        for(Inscripcion i: listaInscripcion){
-//            if(i.getFechaFinal().after(fecha)){
-//                filtro.add(i);
-//            }
-//        }
-//        for(Inscripcion i: filtro){
-//            if(!cursoService.cursoLleno(i.getCurso().getCodCurso())){
-//                retorno.add(i.getCurso());
-//            }
-//        }
-        if(!listaCursos.isEmpty()){
-            retorno.addAll(listaCursos);
-        }
-        if(retorno.isEmpty()){
-            return new ResponseEntity<>(new Mensaje("Ups! No se encontraron cursos con vacantes disponibles.",404),HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(retorno,HttpStatus.OK);
-    }
-
-    //Nuevo curso, con profesor asignado. TODO: SPT3 - REDISEÑAR.
+    //Nuevo curso, con profesor y sección asignada. TODO: SPT3 - RC. MODIFICAR FRONT.
     @PostMapping
     public ResponseEntity<?> nuevoCurso(@RequestBody InsertCurso c){
         List<Profesor> profesoresDisponibles = profesorService.listarActivosNoAsignados();
@@ -122,13 +88,18 @@ public class CursoController {
         try{
             List<Turno> turnos = new ArrayList<>();
             turnos.add(turno);
-//            Curso curso = new Curso(0L,limpiarDatos.getNombre(),
-//                    limpiarDatos.getDescripcion(),limpiarDatos.getMensualidad(),
-//                    limpiarDatos.getDuracion(),limpiarDatos.getCantidadAlumnos(),
-//                    limpiarDatos.isVisibilidad(),limpiarDatos.getFrecuencia(),
-//                    "https://i.imgur.com/APbzr19.jpg",profesor,turnos);
-//            Curso cursoGuardado = cursoService.guardar(curso);
-            return new ResponseEntity<>(null,HttpStatus.CREATED); //cursoGuardado
+            Curso curso = new Curso(0L,limpiarDatos.getNombre(),
+                    limpiarDatos.getDescripcion(),limpiarDatos.getMensualidad(),
+                    limpiarDatos.getDuracion(), limpiarDatos.isVisibilidad(),limpiarDatos.getFrecuencia(),
+                    "https://i.imgur.com/APbzr19.jpg",turnos);
+            Curso cursoGuardado = cursoService.guardar(curso);
+
+            Seccion seccion = new Seccion(0L,seccionService.generarNombre(cursoGuardado.getCodCurso()),
+                    limpiarDatos.getFechaInicio(), limpiarDatos.getFechaFinal(),
+                    true,limpiarDatos.getMaxAlumnos(),
+                    cursoGuardado,cursoGuardado.getTurnos().get(0),profesor);
+            seccionService.guardar(seccion);
+            return new ResponseEntity<>(cursoGuardado,HttpStatus.CREATED); //cursoGuardado
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Ups! Ha sucedido un error interno del servidor",500),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -146,17 +117,12 @@ public class CursoController {
         return new ResponseEntity<>(cursoGuardado,HttpStatus.OK);
     }
 
-    @PutMapping()
+    @PutMapping() //TODO: SPT3 - R.C MODIFICAR FRONT.
     @CrossOrigin(allowedHeaders = "*",origins = "*")
     public ResponseEntity<?> editarCurso(@RequestBody EditarCurso carga){
         Curso c = cursoService.getPorCod(carga.getCodCurso());
-        Profesor p = profesorService.getPorCod(carga.getCodProfesor());
-        List<Profesor> listaDisponibles = profesorService.listarActivosNoAsignados();
-        if(c == null || p == null){
+        if(c == null){
             return new ResponseEntity<>(new Mensaje("Ups! Curso o profesor no encontrados",400),HttpStatus.BAD_REQUEST);
-        }
-        if(!Objects.equals(c.getProfesor().getCodProfesor(), p.getCodProfesor()) && !(listaDisponibles.contains(p))){
-            return new ResponseEntity<>(new Mensaje("Ups! El profesor seleccionado no esta disponible.",400),HttpStatus.BAD_REQUEST);
         }
         EditarCurso limpiarDatos = carga.limpiarDatos();
         boolean datosValidos = limpiarDatos.validarDatos();
@@ -167,11 +133,9 @@ public class CursoController {
         try{
             c.setNombre(limpiarDatos.getNombre());
             c.setDescripcion(limpiarDatos.getDescripcion());
-            c.setDuracion(limpiarDatos.getDuracion());
             c.setFrecuencia(limpiarDatos.getFrecuencia());
             c.setMensualidad(limpiarDatos.getMensualidad());
             c.setVisibilidad(limpiarDatos.isVisibilidad());
-            c.setProfesor(p);
             Curso cursoActualizado = cursoService.actualizar(c);
             return new ResponseEntity<>(cursoActualizado,HttpStatus.OK);
         }
@@ -179,5 +143,5 @@ public class CursoController {
             return new ResponseEntity<>(new Mensaje("Error! Imposible actualizar datos. Intente nuevamente.",500),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //TODO: Asignacion de temas a cursos.
+
 }

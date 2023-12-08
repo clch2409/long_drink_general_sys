@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class EditarCurso {
     private Long codCurso;
-    private Long codProfesor;
     private String nombre;
     private String descripcion;
-    private byte duracion;
     private String frecuencia;
     private double mensualidad;
     private boolean visibilidad;
@@ -15,9 +13,9 @@ public class EditarCurso {
     @JsonIgnore
     public EditarCurso limpiarDatos(){
         try{
-            return new EditarCurso(this.codCurso,this.codProfesor,
+            return new EditarCurso(this.codCurso,
                     this.nombre.trim().toUpperCase(),
-                    this.descripcion.trim(),this.duracion,
+                    this.descripcion.trim(),
                     this.frecuencia.trim(),this.mensualidad,
                     this.visibilidad);
         }
@@ -28,17 +26,15 @@ public class EditarCurso {
     public boolean validarDatos(){
         return this.nombre.length() >= 1 && this.nombre.length() <= 100 &&
                 this.descripcion.length() >= 1 && this.descripcion.length() <= 150 &&
-                this.frecuencia.length() > 1 && this.duracion >= 1 && this.duracion <= 50 &&
+                this.frecuencia.length() > 1 &&
                 this.mensualidad >= 1 && this.mensualidad <= 1000;
     }
     public EditarCurso(){}
 
-    public EditarCurso(Long codCurso, Long codProfesor, String nombre, String descripcion, byte duracion, String frecuencia, double mensualidad, boolean visibilidad) {
+    public EditarCurso(Long codCurso, String nombre, String descripcion, String frecuencia, double mensualidad, boolean visibilidad) {
         this.codCurso = codCurso;
-        this.codProfesor = codProfesor;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.duracion = duracion;
         this.frecuencia = frecuencia;
         this.mensualidad = mensualidad;
         this.visibilidad = visibilidad;
@@ -52,28 +48,12 @@ public class EditarCurso {
         this.codCurso = codCurso;
     }
 
-    public Long getCodProfesor() {
-        return codProfesor;
-    }
-
-    public void setCodProfesor(Long codProfesor) {
-        this.codProfesor = codProfesor;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public byte getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(byte duracion) {
-        this.duracion = duracion;
     }
 
     public String getFrecuencia() {

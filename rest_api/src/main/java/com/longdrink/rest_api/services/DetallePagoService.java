@@ -26,5 +26,4 @@ public class DetallePagoService {
         return detallePagoDAO.save(dp);
     }
 
-
 }

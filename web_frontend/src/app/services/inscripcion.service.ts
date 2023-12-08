@@ -8,7 +8,7 @@ const API = 'http://localhost:8080/api/v1';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type' : 'application/json'})
-}; 
+};
 
 @Injectable({
   providedIn: 'root'
@@ -23,23 +23,23 @@ export class InscripcionService {
 
   getInscripcionesEnProceso(): Observable<Inscripcion[]>{
     return this.http.get<Inscripcion[]>(API+'/inscripcion/en_proceso');
-  } 
+  }
 
   getInscripcionesRetiradoTerminado(): Observable<Inscripcion[]>{
     return this.http.get<Inscripcion[]>(API+'/inscripcion/retirado_terminado');
-  } 
+  }
 
   getInscripcionesPorAlumno(codAlumno: number): Observable<Inscripcion[]>{
     return this.http.get<Inscripcion[]>(API+`/inscripcion/por_alumno?codAlumno=${codAlumno}`);
-  } 
+  }
 
   getInscripcionesDniAlumno(dni: string): Observable<Inscripcion[]>{
     return this.http.get<Inscripcion[]>(API+`/inscripcion/por_dni?dni=${dni}`);
   }
 
   getInscripcionesPorCurso(codCurso: number): Observable<Inscripcion[]>{
-    return this.http.get<Inscripcion[]>(API+`/inscripcion/por_curso?codCurso=${codCurso}`);
-  } 
+    return this.http.get<Inscripcion[]>(API+`/inscripcion/por_seccion?codSeccion=${codCurso}`);
+  }
 
   confirmarInscripcion(codCurso?: number, codAlumno?: number): Observable<any>{
     return this.http.post(API+`/inscripcion/confirmar_inscripcion?codAlumno=${codAlumno}&codCurso=${codCurso}`,httpOptions);

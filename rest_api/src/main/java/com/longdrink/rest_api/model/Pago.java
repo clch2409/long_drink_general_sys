@@ -17,23 +17,18 @@ public class Pago implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("codPago")
     private Long codPago;
-
     @Column(name = "fecha_pago")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaPago")
     private Date fechaPago;
-
     @Column(name = "fecha_vencimiento")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaVencimiento")
     private Date fechaVencimiento;
-
     private boolean estado;
-
     private String descripcion;
-
     private double total;
 
     @JsonIgnore

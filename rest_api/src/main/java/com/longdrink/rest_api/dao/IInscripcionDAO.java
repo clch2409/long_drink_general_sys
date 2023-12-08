@@ -23,4 +23,6 @@ public interface IInscripcionDAO extends CrudRepository<Inscripcion,Long> {
 
     List<Inscripcion> findAllByEstadoAndFechaTerminado(boolean estado, Date fechaTerminado);
 
+    List<Inscripcion> findAllBySeccionCodSeccion(Long codSeccion);
+
 }

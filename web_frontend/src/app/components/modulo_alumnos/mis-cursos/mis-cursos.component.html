@@ -5,16 +5,16 @@
         <div class="card-body">
             <div class="row justify-content-center" *ngIf="cursosActivos.length != 0">
                 <div class="card col ms-1 me-1" style="max-width: 16rem;" *ngFor="let i of cursosActivos">
-                    <img src="{{i.curso.imagen}}" class="card-img-top">
+                    <img src="{{i.seccion?.curso?.imagen}}" class="card-img-top">
                     <div class="card-body">
-                      <h5 class="card-title">{{i.curso.nombre}}</h5>
-                      <p class="card-text">{{i.curso.descripcion}}</p>
-                      <p class="fw-bold text-center">Primer Día de Clases: {{i.fechaInicio}}</p>
+                      <h5 class="card-title">{{i.seccion?.curso?.nombre}}</h5>
+                      <p class="card-text">{{i.seccion?.curso?.descripcion}}</p>
+                      <p class="fw-bold text-center">Primer Día de Clases: {{i.seccion?.fechaInicio}}</p>
                       <div class="container text-center">
-                        <a [routerLink]="['/a/mi-curso',codAlumno,i.codInscripcion,i.curso.codCurso]" class="btn btn-success">Detalles</a>
+                        <a [routerLink]="['/a/mi-curso',codAlumno,i.codInscripcion,i.seccion?.curso?.codCurso]" class="btn btn-success">Detalles</a>
                       </div>
                     </div>
-                </div>     
+                </div>
             </div>
             <div class="container text-center" *ngIf="cursosActivos.length == 0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
@@ -32,13 +32,13 @@
         <div class="card-body">
             <div class="row justify-content-center" *ngIf="cursosTerminados.length != 0;">
                 <div class="card col ms-1 me-1" style="max-width: 16rem;" *ngFor="let i of cursosTerminados">
-                    <img src="{{i.curso.imagen}}" class="card-img-top" style="max-height: 150px;">
+                    <img src="{{i.seccion?.curso?.imagen}}" class="card-img-top" style="max-height: 150px;">
                     <div class="card-body">
-                      <h5 class="card-title">{{i.curso.nombre}}</h5>
-                      <p class="card-text">{{i.curso.descripcion}}</p>
+                      <h5 class="card-title">{{i.seccion?.curso?.nombre}}</h5>
+                      <p class="card-text">{{i.seccion?.curso?.descripcion}}</p>
                       <p class="fw-bold text-danger">Finalizado el: {{i.fechaTerminado}}</p>
                       <div class="container text-center">
-                        <a [routerLink]="['/a/mi-curso',codAlumno,i.codInscripcion,i.curso.codCurso]" class="btn btn-success">Detalles</a>
+                        <a [routerLink]="['/a/mi-curso',codAlumno,i.codInscripcion,i.seccion?.curso?.codCurso]" class="btn btn-success">Detalles</a>
                       </div>
                     </div>
                 </div>

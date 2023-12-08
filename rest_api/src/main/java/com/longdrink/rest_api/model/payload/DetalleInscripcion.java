@@ -1,6 +1,7 @@
 package com.longdrink.rest_api.model.payload;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.longdrink.rest_api.model.Inscripcion;
 
 import java.util.Date;
 
@@ -60,6 +61,29 @@ public class DetalleInscripcion {
         this.fechaInscripcion = fechaInscripcion;
         this.fechaTerminado = fechaTerminado;
         this.estado = estado;
+    }
+
+    public void setProperties(Inscripcion i){
+        this.codCurso = i.getSeccion().getCurso().getCodCurso();
+        this.descripcion = i.getSeccion().getCurso().getDescripcion();
+        this.mensualidad = i.getSeccion().getCurso().getMensualidad();
+        this.duracion = i.getSeccion().getCurso().getDuracion();
+        this.cantidadAlumnos = (byte)i.getSeccion().getMaxAlumnos();
+        this.visibilidad = i.getSeccion().getCurso().isVisibilidad();
+        this.imagen = i.getSeccion().getCurso().getImagen();
+        this.frecuencia = i.getSeccion().getCurso().getFrecuencia();
+        this.codAlumno = i.getAlumno().getCodAlumno();
+        this.nombre = i.getAlumno().getNombre();
+        this.apellidoPaterno = i.getAlumno().getApellidoPaterno();
+        this.apellidoMaterno = i.getAlumno().getApellidoMaterno();
+        this.dni = i.getAlumno().getDni();
+        this.telefono = i.getAlumno().getTelefono();
+        this.activo = i.getAlumno().isActivo();
+        this.fechaInicio = i.getSeccion().getFechaInicio();
+        this.fechaFinal = i.getSeccion().getFechaFinal();
+        this.fechaInscripcion = i.getFechaInscripcion();
+        this.fechaTerminado = i.getFechaTerminado();
+        this.estado = i.isEstado();
     }
 
     public Long getCodCurso() {

@@ -41,9 +41,9 @@ export class DetalleCursoAlumnoComponent implements OnInit{
   }
 
   enriquecerInscripcion(inscripcion: Inscripcion): void {
-    this.getCursoCod(inscripcion.curso).subscribe((curso: Curso) => {
+    this.getCursoCod(inscripcion.seccion?.curso?.codCurso).subscribe((curso: Curso) => {
         this.inscripcion.curso = curso;
-    }); 
+    });
   }
 
   getCursoCod(codCurso: number | any): any {

@@ -43,7 +43,7 @@ export class ListadoInscripcionesComponent {
           this.mostrarTabla = false;
         } else {
           this.mostrarTabla = true;
-          this.enriquecerInscripciones(inscripciones);
+          //this.enriquecerInscripciones(inscripciones);
         }
       },
       error: (err) => {
@@ -64,9 +64,9 @@ export class ListadoInscripcionesComponent {
         }
       }
     });
-  }  
+  }
 
-  enriquecerInscripciones(inscripciones: Inscripcion[]): void {
+/*   enriquecerInscripciones(inscripciones: Inscripcion[]): void {
     for (const inscripcion of inscripciones) {
       if (inscripcion.codInscripcion) {
         this.getAlumnoCod(inscripcion.alumno).subscribe((alumno: Alumno) => {
@@ -77,20 +77,20 @@ export class ListadoInscripcionesComponent {
         });
       }
     }
-    
+
     this.actualizarTabla(inscripciones);
-  }
+  } */
 
   buscarInscripciones(): void {
     const buscarPor = this.comboBoxSeleccionado;
     const valorInput = this.valorInput;
-  
+
     if (buscarPor === 'porCurso' && valorInput) {
       this.inscripcionService.getInscripcionesPorCurso(Number(valorInput)).subscribe({
         next: (data) => {
           if (data && Array.isArray(data)) {
             const inscripciones = data as Inscripcion[];
-            this.enriquecerInscripciones(inscripciones);
+            //this.enriquecerInscripciones(inscripciones);
           }
         },
         error: (err) => {
@@ -119,7 +119,7 @@ export class ListadoInscripcionesComponent {
         next: (data) => {
           if (data && Array.isArray(data)) {
             const inscripciones = data as Inscripcion[];
-            this.enriquecerInscripciones(inscripciones);
+            //this.enriquecerInscripciones(inscripciones);
           }
         },
         error: (err) => {
@@ -187,7 +187,7 @@ export class ListadoInscripcionesComponent {
   getInscripcionesCurso(codCurso: number): void {
     this.inscripcionService.getInscripcionesPorCurso(codCurso).subscribe({
       next: (data) => {
-        this.enriquecerInscripciones(data);
+        //this.enriquecerInscripciones(data);
       },
       error: (err) => { console.log(err); }
     });
@@ -196,7 +196,7 @@ export class ListadoInscripcionesComponent {
   getInscripcionesDniAlumno(dni: string): void {
     this.inscripcionService.getInscripcionesDniAlumno(dni).subscribe({
       next: (data) => {
-        this.enriquecerInscripciones(data);
+        //this.enriquecerInscripciones(data);
       },
       error: (err) => { console.log(err); }
     });
@@ -211,7 +211,7 @@ export class ListadoInscripcionesComponent {
       this.inscripcionService.getInscripcionesEnProceso().subscribe({
         next: (data) => {
           const inscripciones = data as Inscripcion[];
-          this.enriquecerInscripciones(inscripciones);
+          //this.enriquecerInscripciones(inscripciones);
           this.valorInput = '';
         },
         error: (err) => {
@@ -222,7 +222,7 @@ export class ListadoInscripcionesComponent {
       this.inscripcionService.getInscripcionesRetiradoTerminado().subscribe({
         next: (data) => {
           const inscripciones = data as Inscripcion[];
-          this.enriquecerInscripciones(inscripciones);
+          //this.enriquecerInscripciones(inscripciones);
           this.valorInput = '';
         },
         error: (err) => {
@@ -233,7 +233,7 @@ export class ListadoInscripcionesComponent {
       this.inscripcionService.getInscripciones().subscribe({
         next: (data) => {
           const inscripciones = data as Inscripcion[];
-          this.enriquecerInscripciones(inscripciones);
+          //this.enriquecerInscripciones(inscripciones);
           this.valorInput = '';
         },
         error: (err) => {
@@ -241,7 +241,7 @@ export class ListadoInscripcionesComponent {
         }
       });
     }
-  }  
+  }
 
   mostrarError(mensaje: string): void{
     Swal.fire({

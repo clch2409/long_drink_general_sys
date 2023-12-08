@@ -15,7 +15,6 @@ public class AlumnoService {
     @Autowired
     private IAlumnoDAO alumnoDAO;
 
-
     public List<Alumno> listarAlumnos(){ return (List<Alumno>) alumnoDAO.findAll(); }
 
     public List<Alumno> listarAlumnosActivos(){ return alumnoDAO.findAllByActivo(); }

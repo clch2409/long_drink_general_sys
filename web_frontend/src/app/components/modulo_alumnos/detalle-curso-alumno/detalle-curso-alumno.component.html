@@ -1,44 +1,45 @@
 <div class="container my-4 mx-4 d-flex align-items-center row ">
     <div class="">
         <div class="card">
-            <h5 class="card-header text-center">{{inscripcion.curso.nombre}}</h5>
+            <h5 class="card-header text-center">{{inscripcion.seccion?.curso?.nombre}}</h5>
             <h5 class="text-center mt-3 text-danger" *ngIf="inscripcion.fechaTerminado != null">CURSO FINALIZADO EL DÍA: {{inscripcion.fechaTerminado}}</h5>
             <div class="card-body">
                 <div class="container row">
-                    <img src="{{inscripcion.curso.imagen}}" class="col img img-thumbnail me-3" style="max-width: 400px; max-height: 400px;">
+                    <img src="{{inscripcion.seccion?.curso?.imagen}}" class="col img img-thumbnail me-3" style="max-width: 400px; max-height: 400px;">
                     <div class="container col">
-                        <h5 class="col">{{inscripcion.curso.nombre}}</h5>
-                        <h6 class="col fw-bolder">DESCRIPCIÓN CURSO: <p class="fw-lighter pt-2" >{{inscripcion.curso.descripcion}}</p></h6>
-                        <h6 class="col fw-bolder">DURACIÓN: <p class="fw-lighter pt-2" >{{inscripcion.curso.duracion}} Semanas</p></h6>
-                        <h6 class="col fw-bolder" *ngIf="inscripcion.curso?.frecuencia == 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{inscripcion.curso.frecuencia}} - Lunes / Miercoles / Viernes</p></h6>
-                        <h6 class="col fw-bolder" *ngIf="inscripcion.curso?.frecuencia != 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{inscripcion.curso.frecuencia}}</p></h6>
-                        <h6 class="col fw-bolder">TURNO: <p class="fw-lighter pt-2" >{{inscripcion.curso.turnos?.at(0)?.nombre}}</p></h6>
+                        <h6 class="col fw-bolder">DESCRIPCIÓN CURSO: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.curso?.descripcion}}</p></h6>
+                        <h6 class="col fw-bolder">DURACIÓN: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.curso?.duracion}} Semanas</p></h6>
+                        <h6 class="col fw-bolder" *ngIf="inscripcion.curso?.frecuencia == 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{inscripcion.seccion?.curso?.frecuencia}} - Lunes / Miercoles / Viernes</p></h6>
+                        <h6 class="col fw-bolder" *ngIf="inscripcion.curso?.frecuencia != 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{inscripcion.seccion?.curso?.frecuencia}}</p></h6>
+                        <h6 class="col fw-bolder">TURNO: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.curso?.turnos?.at(0)?.nombre}}</p></h6>
                     </div>
                     <div class="container col pb-3">
                         <hr class="invisible">
-                        <h6 class="col fw-bolder">HORA INICIO: <p class="fw-lighter pt-2" >{{inscripcion.curso.turnos?.at(0)?.horaInicio}}</p></h6>
-                        <h6 class="col fw-bolder">HORA FIN: <p class="fw-lighter pt-2" >{{inscripcion.curso.turnos?.at(0)?.horaFin}}</p></h6>
-                        <h6 class="col fw-bolder">DOCENTE: <p class="fw-lighter pt-2" >{{inscripcion.curso.profesor?.nombre}} {{inscripcion.curso.profesor?.apellidoPaterno}}</p></h6>
-                        <h6 class="col fw-bolder">TEMAS: <p *ngFor="let t of inscripcion.curso?.temas" class="fw-lighter " >{{t.nombre}}</p></h6>
+                        <h6 class="col fw-bolder">HORA INICIO: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.curso?.turnos?.at(0)?.horaInicio}}</p></h6>
+                        <h6 class="col fw-bolder">HORA FIN: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.curso?.turnos?.at(0)?.horaFin}}</p></h6>
+                        <h6 class="col fw-bolder">DOCENTE: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.profesor?.nombre}} {{inscripcion.seccion?.profesor?.apellidoPaterno}}</p></h6>
+                        <h6 class="col fw-bolder" *ngIf="inscripcion.curso.temas.length >= 1">TEMAS: <p *ngFor="let t of inscripcion.curso?.temas" class="fw-lighter pt-2" >{{t.nombre}}</p></h6>
+                        <h6 class="col fw-bolder" *ngIf="inscripcion.curso.temas.length == 0">TEMAS: <p class="fw-lighter pt-2">¡No hay temas registrados actualmente!</p></h6>
                     </div>
                     <div class="container row mt-3" *ngIf="inscripcion.fechaTerminado == null">
                         <div class="col text-center">
                             <h4>Guías de Estudio</h4>
                         </div>
-                        <table class="row table">
+                        <table class="row table" *ngIf="inscripcion.curso.temas.length >=1">
                             <tbody>
-                                <tr *ngFor="let i of inscripcion.curso?.temas">
+                                <tr *ngFor="let i of inscripcion.seccion?.curso?.temas">
                                     <td>{{i.nombre}}</td>
                                     <td><a (click)="descargarGuia(i.codTema)" class="btn btn-outline-primary">DESCARGAR</a></td>
                                 </tr>
                             </tbody>
                         </table>
+                        <h5 class="text-center fw-light" *ngIf="inscripcion.curso.temas.length == 0">Ups! No se han encontrado guías de estudio.</h5>
                     </div>
                 </div>
 
         </div>
     </div>
-    
+
 
     </div>
 </div>

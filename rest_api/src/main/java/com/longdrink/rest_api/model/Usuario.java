@@ -14,16 +14,12 @@ public class Usuario implements Serializable {
     @Column(name = "cod_usuario")
     @JsonProperty("codUsuario")
     private Long codUsuario;
-
     @Column(name = "nombre_usuario",length = 50)
     @JsonProperty("nombreUsuario")
     private String nombreUsuario;
-
     private String contrasena;
-
     @Column(length = 50)
     private String email;
-
     private boolean activo;
 
     @ManyToOne()

@@ -15,25 +15,20 @@ public class Inscripcion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("codInscripcion")
     private Long codInscripcion;
-
     @Column(name = "fecha_inscripcion")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaInscripcion")
     private Date fechaInscripcion;
-
     @Column(name = "fecha_terminado")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaTerminado")
     private Date fechaTerminado;
-
     private boolean estado;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codAlumno")
     @JsonIdentityReference(alwaysAsId = true)
-    //@JsonManagedReference
-    //@MapsId("codAlumno") ->> TODO.
     @ManyToOne
     @JoinColumn(name = "cod_alumno")
     private Alumno alumno;

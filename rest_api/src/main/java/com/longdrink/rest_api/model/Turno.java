@@ -18,16 +18,13 @@ public class Turno implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("codTurno")
     private Long codTurno;
-
     @Column(length = 25)
     private String nombre;
-
     @Column(name = "hora_inicio")
     @Temporal(TemporalType.TIME)
     @JsonProperty("horaInicio")
     @JsonFormat(pattern = "HH:mm:ss",timezone = "GMT-5")
     private Date horaInicio;
-
     @Column(name = "hora_fin")
     @Temporal(TemporalType.TIME)
     @JsonProperty("horaFin")

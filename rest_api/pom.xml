@@ -106,6 +106,13 @@
 			<version>2.4.0</version>
 		</dependency>
 		<!--Fin: Exportación CSV-->
+		<!--Inicio: Números romanos-->
+		<dependency>
+			<groupId>com.github.fracpete</groupId>
+			<artifactId>romannumerals4j</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<!--Fin: Números romanos-->
 	</dependencies>
 
 	<build>

@@ -17,11 +17,9 @@ public class Tema implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("codTema")
     private Long codTema;
-
     @Column(length = 30)
     private String nombre;
-
-    private String ficha; //Url?
+    private String ficha; //Localización de archivo en sistema de archivos.
 
     @JsonBackReference
     @ManyToMany(mappedBy = "temas")

@@ -14,24 +14,18 @@ public class Alumno implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("codAlumno")
     private Long codAlumno;
-
     @Column(length = 50)
     private String nombre;
-
     @Column(name = "apellido_paterno",length = 25)
     @JsonProperty("apellidoPaterno")
     private String apellidoPaterno;
-
     @Column(name = "apellido_materno",length = 25)
     @JsonProperty("apellidoMaterno")
     private String apellidoMaterno;
-
     @Column(length = 12)
     private String dni;
-
     @Column(length = 15)
     private String telefono;
-
     private boolean activo;
 
     @JsonIgnore

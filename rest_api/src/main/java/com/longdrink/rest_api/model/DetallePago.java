@@ -22,6 +22,7 @@ public class DetallePago implements Serializable {
     @Column(name = "subTotal")
     @JsonProperty("subTotal")
     private double subTotal;
+
     @JsonIgnore
     @MapsId("codPago")
     @ManyToOne

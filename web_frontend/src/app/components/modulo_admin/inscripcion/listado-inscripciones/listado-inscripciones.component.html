@@ -32,15 +32,15 @@
             <tbody>
                 <tr *ngFor="let inscripcion of inscripciones" class="text-center">
                     <td class="fw-medium align-middle">{{ inscripcion.curso.nombre }}</td>
-                    <td class="fw-medium align-middle">{{ inscripcion.alumno.nombre }} {{
+                    <td class="fw-medium align-middle">{{ inscripcion.alumno?.nombre }} {{
                         inscripcion.alumno?.apellidoPaterno }} {{ inscripcion.alumno?.apellidoMaterno }}</td>
                     <td class="fw-medium align-middle">{{ inscripcion.alumno?.dni }}</td>
                     <td class="fw-medium align-middle">{{ inscripcion.fechaInscripcion | date }}</td>
-                    <td class="fw-medium align-middle">{{ inscripcion.fechaInicio | date }}</td>
-                    <td class="fw-medium align-middle">{{ inscripcion.fechaFinal | date }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.seccion?.fechaInicio | date }}</td>
+                    <td class="fw-medium align-middle">{{ inscripcion.seccion?.fechaFinal | date }}</td>
                     <td class="fw-bold align-middle text-success" *ngIf="inscripcion.fechaTerminado == null">EN PROCESO</td>
-                    <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.fechaTerminado  == inscripcion.fechaFinal">TERMINADO</td>
-                    <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.fechaTerminado  != null && inscripcion.fechaTerminado != inscripcion.fechaFinal">RETIRADO</td>
+                    <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.fechaTerminado  == inscripcion.seccion?.fechaFinal">TERMINADO</td>
+                    <td class="fw-bold align-middle text-danger" *ngIf="inscripcion.fechaTerminado  != null && inscripcion.fechaTerminado != inscripcion.seccion?.fechaFinal">RETIRADO</td>
                     <td class="d-flex justify-content-center align-content-around" >
                         <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/detalle-inscripcion',inscripcion.codInscripcion]">Detalles</a>
                     </td>

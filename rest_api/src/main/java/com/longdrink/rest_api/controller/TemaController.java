@@ -72,27 +72,6 @@ public class TemaController {
         return new ResponseEntity<>(listaTemas,HttpStatus.OK);
     }
 
-    /* TODO: A eliminar en los proximos días.
-    @PostMapping
-    public ResponseEntity<?> post(@RequestBody InsertTema t){
-        if(!(t.getNombre().length() >= 1 && t.getNombre().length() <=30 && t.getFicha().length() >=1)) {
-            return new ResponseEntity<>(new Mensaje("Error! Formato de tema incorrecto.",400),
-                    HttpStatus.BAD_REQUEST);
-        }
-        try{
-            Tema tema = new Tema();
-            BeanUtils.copyProperties(t,tema);
-            tema.setCodTema(0L);
-            tema = temaService.guardar(tema);
-            return new ResponseEntity<>(tema,HttpStatus.OK);
-        }
-        catch(Exception ex){
-            return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    */
-
     @PostMapping("/subir_guia")
     public ResponseEntity<?> subirGuiaEstudio(@RequestParam("archivo")MultipartFile archivo, @RequestParam("nombreGuia") String nombreGuia){
         if(nombreGuia.length() >= 1 && nombreGuia.length() <= 30) {

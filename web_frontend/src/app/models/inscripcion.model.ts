@@ -1,16 +1,17 @@
+import { Alumno } from "./alumno.model";
 import { Deserializable } from "./deserializable.model";
+import { Seccion } from "./seccion.model";
 import { Turno } from "./turno.model";
 
 export class Inscripcion implements Deserializable {
     codInscripcion?: number;
     estado?: boolean;
-    fechaInicio?: Date;
-    fechaFinal?: Date;
     fechaInscripcion?: Date;
     fechaTerminado?: Date;
-    alumno?: number | any;
+    alumno?: Alumno;
     curso?: number | any;
     turno: Turno = new Turno;
+    seccion?: Seccion;
 
     deserializable(input: any): this {
         Object.assign(this, input);
@@ -32,4 +33,4 @@ export class Inscripcion implements Deserializable {
         }
         return 'INDEFINIDO'
       }
-}  
+}

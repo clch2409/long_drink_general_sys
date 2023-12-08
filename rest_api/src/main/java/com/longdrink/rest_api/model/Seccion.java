@@ -26,7 +26,6 @@ public class Seccion implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
     @JsonProperty("fechaInicio")
     private Date fechaInicio;
-
     @Column(name = "fecha_final")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT-5")
@@ -45,13 +44,18 @@ public class Seccion implements Serializable {
     @JoinColumn(name = "cod_turno")
     private Turno turno;
 
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "cod_profesor")
+    private Profesor profesor;
+
     @JsonBackReference
     @OneToMany(mappedBy = "seccion")
     private List<Inscripcion> inscripciones;
 
     public Seccion(){}
 
-    public Seccion(Long codSeccion, String nombre, Date fechaInicio, Date fechaFinal, boolean estado, int maxAlumnos, Curso curso, Turno turno, List<Inscripcion> inscripciones) {
+    public Seccion(Long codSeccion, String nombre, Date fechaInicio, Date fechaFinal, boolean estado, int maxAlumnos, Curso curso, Turno turno) {
         this.codSeccion = codSeccion;
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
@@ -60,7 +64,6 @@ public class Seccion implements Serializable {
         this.maxAlumnos = maxAlumnos;
         this.curso = curso;
         this.turno = turno;
-        this.inscripciones = inscripciones;
     }
 
     public Seccion(Long codSeccion, String nombre, Date fechaInicio, Date fechaFinal, boolean estado, int maxAlumnos) {
@@ -70,6 +73,18 @@ public class Seccion implements Serializable {
         this.fechaFinal = fechaFinal;
         this.estado = estado;
         this.maxAlumnos = maxAlumnos;
+    }
+
+    public Seccion(Long codSeccion, String nombre, Date fechaInicio, Date fechaFinal, boolean estado, int maxAlumnos, Curso curso, Turno turno, Profesor profesor) {
+        this.codSeccion = codSeccion;
+        this.nombre = nombre;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+        this.estado = estado;
+        this.maxAlumnos = maxAlumnos;
+        this.curso = curso;
+        this.turno = turno;
+        this.profesor = profesor;
     }
 
     public Long getCodSeccion() {
@@ -142,5 +157,13 @@ public class Seccion implements Serializable {
 
     public void setInscripciones(List<Inscripcion> inscripciones) {
         this.inscripciones = inscripciones;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
     }
 }

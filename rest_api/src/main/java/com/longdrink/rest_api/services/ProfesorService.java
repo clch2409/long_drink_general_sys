@@ -1,22 +1,49 @@
 package com.longdrink.rest_api.services;
 
 import com.longdrink.rest_api.dao.IProfesorDAO;
+import com.longdrink.rest_api.dao.ISeccionDAO;
+import com.longdrink.rest_api.model.Curso;
 import com.longdrink.rest_api.model.Profesor;
+import com.longdrink.rest_api.model.Seccion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProfesorService {
     @Autowired
     private IProfesorDAO profesorDAO;
+    @Autowired
+    private ISeccionDAO seccionDAO;
 
     public List<Profesor> listarProfesores(){ return (List<Profesor>) profesorDAO.findAll(); }
 
     public List<Profesor> listarActivos(){ return profesorDAO.findAllByActivo(); }
 
-    public List<Profesor> listarActivosNoAsignados(){ return profesorDAO.findActivosNoAsignados(); }
+    public List<Profesor> listarActivosNoAsignados(){
+        List<Profesor> listaProfesores = (List<Profesor>) profesorDAO.findAll();
+        List<Profesor> retorno = new ArrayList<Profesor>();
+        for(Profesor p: listaProfesores){
+            List<Seccion> listaSecciones = p.getSecciones();
+            if(listaSecciones.isEmpty()){ //Sin secciones asignadas? Profesor disponible.
+                retorno.add(p);
+            }
+            else{
+                int c = 0;
+                for(Seccion s: listaSecciones){ //Contar secciones en proceso/activas.
+                    if(s.isEstado()){
+                        c++;
+                    }
+                }
+                if(c <= 0){ //Si no hay secciones activas, el profesor esta disponible.
+                    retorno.add(p);
+                }
+            }
+        }
+        return retorno;
+    }
 
     public Profesor getPorCod(Long cod){
         try{

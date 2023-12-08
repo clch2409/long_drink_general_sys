@@ -21,22 +21,12 @@ public class Curso implements Serializable {
     private String nombre;
     @Column(length = 150)
     private String descripcion;
-
     private double mensualidad;
-
     private byte duracion;
-
     private boolean visibilidad;
-
     @Column(length = 50)
     private String frecuencia;
-
     private String imagen;
-
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "cod_profesor")
-    private Profesor profesor;
 
     @JsonManagedReference
     @ManyToMany
@@ -58,7 +48,7 @@ public class Curso implements Serializable {
 
     public Curso(){}
 
-    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, boolean visibilidad, String frecuencia, String imagen, Profesor profesor, List<Turno> turnos, List<Tema> temas, List<Seccion> secciones) {
+    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, boolean visibilidad, String frecuencia, String imagen, List<Turno> turnos, List<Tema> temas, List<Seccion> secciones) {
         this.codCurso = codCurso;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -67,7 +57,6 @@ public class Curso implements Serializable {
         this.visibilidad = visibilidad;
         this.frecuencia = frecuencia;
         this.imagen = imagen;
-        this.profesor = profesor;
         this.turnos = turnos;
         this.temas = temas;
         this.secciones = secciones;
@@ -82,6 +71,18 @@ public class Curso implements Serializable {
         this.visibilidad = visibilidad;
         this.frecuencia = frecuencia;
         this.imagen = imagen;
+    }
+
+    public Curso(Long codCurso, String nombre, String descripcion, double mensualidad, byte duracion, boolean visibilidad, String frecuencia, String imagen, List<Turno> turnos) {
+        this.codCurso = codCurso;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.mensualidad = mensualidad;
+        this.duracion = duracion;
+        this.visibilidad = visibilidad;
+        this.frecuencia = frecuencia;
+        this.imagen = imagen;
+        this.turnos = turnos;
     }
 
     public Long getCodCurso() {
@@ -140,14 +141,6 @@ public class Curso implements Serializable {
         this.imagen = imagen;
     }
 
-    public Profesor getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
-    }
-
     public List<Turno> getTurnos() {
         return turnos;
     }
@@ -180,4 +173,5 @@ public class Curso implements Serializable {
     public void setSecciones(List<Seccion> secciones) {
         this.secciones = secciones;
     }
+
 }

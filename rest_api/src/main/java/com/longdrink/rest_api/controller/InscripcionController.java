@@ -1,19 +1,17 @@
 package com.longdrink.rest_api.controller;
 
-import com.longdrink.rest_api.model.Alumno;
-import com.longdrink.rest_api.model.Curso;
-import com.longdrink.rest_api.model.Inscripcion;
-import com.longdrink.rest_api.model.Turno;
+import com.longdrink.rest_api.model.*;
+import com.longdrink.rest_api.model.dto.InscripcionDTO;
 import com.longdrink.rest_api.model.payload.DetalleInscripcion;
 import com.longdrink.rest_api.model.payload.InsertInscripcion;
 import com.longdrink.rest_api.model.payload.Mensaje;
 import com.longdrink.rest_api.services.*;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,6 +27,9 @@ public class InscripcionController {
     private TurnoService turnoService;
     @Autowired(required = true)
     private EmailService emailService;
+
+    @Autowired
+    private SeccionService seccionService;
 
     @GetMapping
     public ResponseEntity<?> listarInscripciones(){
@@ -85,128 +86,60 @@ public class InscripcionController {
         return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
     }
 
-    //TODO: SPT3 - REDISEÑAR
-//    @GetMapping("/por_curso")
-//    public ResponseEntity<?> listarPorCurso(@RequestParam Long codCurso){
-//        List<Inscripcion> listaInscripciones = inscripcionService.listarPorCurso(codCurso);
-//        if(listaInscripciones.isEmpty()){
-//            return new ResponseEntity<>(
-//                    new Mensaje("Ups! El curso ingresado no posee alumnos inscritos.", 404),
-//                    HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(listaInscripciones,HttpStatus.OK);
-//    }
+
+    @GetMapping("/por_seccion")
+    public ResponseEntity<?> listarPorSeccion(@RequestParam Long codSeccion){
+        List<Inscripcion> listaInscripciones = inscripcionService.listarPorSeccion(codSeccion);
+        List<InscripcionDTO> retorno = new ArrayList<>();
+        if(listaInscripciones.isEmpty()){
+            return new ResponseEntity<>(
+                    new Mensaje("Ups! La sección ingresada no posee alumnos inscritos.", 404),
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(convertListToDTO(listaInscripciones),HttpStatus.OK);
+    }
 
     @GetMapping("/por_cod")
     public ResponseEntity<?> getPorCod(@RequestParam Long codInscripcion){
-        try{
-            Inscripcion retorno = inscripcionService.buscarPorPk(codInscripcion).get();
-            if(retorno.getCodInscripcion() != 0L){
-                return new ResponseEntity<>(retorno,HttpStatus.OK);
-            }
-            return new ResponseEntity<>(new Mensaje("Ups! Datos de inscripción no encontrados.",404),HttpStatus.NOT_FOUND);
-        }
-        catch(Exception ex){
-            return new ResponseEntity<>(new Mensaje("Ups! Datos de inscripción no encontrados.",404),HttpStatus.NOT_FOUND);
-        }
-    }
-    /* TODO: Eliminar en próximos días.
-    @PostMapping() //Diseñado para app Movil.
-    public ResponseEntity<?> agregarInscripcion(@RequestBody InsertInscripcion ins){
-        Alumno alumno = alumnoService.getPorCod(ins.getCodAlumno());
-        Curso curso = cursoService.getPorCod(ins.getCodCurso());
-        if(alumno == null || curso == null){
-            return new ResponseEntity<>(
-                    new Mensaje("Ups! Imposible registrar, alumno o curso no encontrados.", 404),
-                    HttpStatus.NOT_FOUND);
-        }
-        List<Inscripcion> conteoIns = inscripcionService.listarPorEstado_Curso(true,curso.getCodCurso());
-        if(!(conteoIns.size() < curso.getCantidadAlumnos())){ //Comprobar si el curso tiene capacidad para otro registro.
-            return new ResponseEntity<>(
-                    new Mensaje("Ups! Capacidad maxima de alumnos alcanzada. Curso de ID: "+curso.getCantidadAlumnos(), 404),
-                    HttpStatus.BAD_REQUEST);
-        }
-        //Insertar Inscripcion...!
-        try{
-            Inscripcion registrarInscripcion = new Inscripcion(new InscripcionPk(alumno.getCodAlumno(),curso.getCodCurso()),ins.getFechaInicio(),ins.getFechaFinal(),ins.getFechaInscripcion(),null,false,alumno,curso);
-            Inscripcion registro = inscripcionService.guardar(registrarInscripcion);
-            return new ResponseEntity<>(registro,HttpStatus.CREATED);
-        }
-        catch(Exception ex){
-            return new ResponseEntity<>(
-                    new Mensaje("Error! Ha sucedido un error en el guardado de datos.", 500),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    } */
-
-    /* TODO: Eliminar en próximos días.
-    @PostMapping("/confirmar_inscripcion")
-    public ResponseEntity<?> confirmarInscripcion(@RequestParam Long codInscripcion){
-        try{
-            Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion).get();
-            ins.setEstado(true);
-            inscripcionService.guardar(ins);
-            return new ResponseEntity<>(ins,HttpStatus.OK);
-        }
-        catch(Exception ex){
-            return new ResponseEntity<>(
-                    new Mensaje("Error! Datos de inscripción no encontrados.", 404),
-                    HttpStatus.NOT_FOUND);
-        }
-    } */
-
-    /* TODO: Eliminar en próximos días.
-    @PostMapping("/rechazar_inscripcion")
-    public ResponseEntity<?> rechazarInscripcion(@RequestParam Long codInscripcion){
-        try{
-            Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion).get();
-            ins.setEstado(false);
-            ins.setFechaTerminado(ins.getFechaInscripcion());
-            inscripcionService.guardar(ins);
-            return new ResponseEntity<>(ins,HttpStatus.OK);
-        }
-        catch(Exception ex){
-            return new ResponseEntity<>(
-                    new Mensaje("Error! Datos de inscripción no encontrados.", 404),
-                    HttpStatus.NOT_FOUND);
-        }
-    } */
-
-    @GetMapping("/detalle") //TODO: SPT3 - REDISEÑAR.
-    public ResponseEntity<?> detalleInscripcion(@RequestParam Long codInscripcion){
-        try{
-            Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion).get();
-            DetalleInscripcion retorno = new DetalleInscripcion();
-            //BeanUtils.copyProperties(retorno,ins.getCurso());
-            BeanUtils.copyProperties(retorno,ins.getAlumno());
-            BeanUtils.copyProperties(retorno,ins);
+        Inscripcion retorno = inscripcionService.buscarPorPk(codInscripcion);
+        if(retorno != null){
             return new ResponseEntity<>(retorno,HttpStatus.OK);
         }
-        catch(Exception ex){
+        return new ResponseEntity<>(new Mensaje("Ups! Datos de inscripción no encontrados.",404),HttpStatus.NOT_FOUND);
+
+    }
+
+    @GetMapping("/detalle")
+    public ResponseEntity<?> detalleInscripcion(@RequestParam Long codInscripcion){
+        Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion);
+        if(ins == null){
             return new ResponseEntity<>(
                     new Mensaje("Error! Datos de inscripción no encontrados.", 404),
                     HttpStatus.NOT_FOUND);
         }
+        DetalleInscripcion retorno = new DetalleInscripcion();
+        retorno.setProperties(ins);
+        return new ResponseEntity<>(retorno,HttpStatus.OK);
     }
 
     //Inscripción para alumno ya registrado. Procede en caso el alumno haya terminado cursos anteriores, se encuentre habilitado y el curso tenga vacantes disponibles.
-    //TODO: SPT3 - REDISEÑAR.
+    //TODO: SPT3 - R.C MODIFICAR EN FRONT.
     @PostMapping()
     public ResponseEntity<?> inscribirAlumnoExistente(@RequestBody InsertInscripcion ins){
         Alumno alumno = alumnoService.getPorCod(ins.getCodAlumno());
-        Curso curso = cursoService.getPorCod(ins.getCodCurso());
+        Seccion seccion = seccionService.obtenerSeccion(ins.getCodSeccion());
         if(alumno == null){
             return new ResponseEntity<>(new Mensaje("Ups! Alumno no encontrado o deshabilitado.",400),HttpStatus.BAD_REQUEST);
         }
-        if(curso == null){
-            return new ResponseEntity<>(new Mensaje("Ups! Curso no encontrado!",400),HttpStatus.BAD_REQUEST);
+        if(seccion == null){
+            return new ResponseEntity<>(new Mensaje("Ups! Seccion no encontrado!",400),HttpStatus.BAD_REQUEST);
         }
         if(!alumno.isActivo()){
             return new ResponseEntity<>(new Mensaje("Ups! Alumno deshabilitado.",400),HttpStatus.BAD_REQUEST);
         }
-        boolean cursoLleno = cursoService.cursoLleno(curso.getCodCurso());
-        if(cursoLleno){
-            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no cuenta con vacantes disponibles.",400),
+        boolean seccionVacia = seccionService.vacantesDisponibles(seccion.getCodSeccion());
+        if(!seccionVacia){
+            return new ResponseEntity<>(new Mensaje("Error! La sección seleccionada no cuenta con vacantes disponibles.",400),
                     HttpStatus.BAD_REQUEST);
         }
         List<Inscripcion> inscripcionesAlumno = inscripcionService.listarPorAlumno(alumno.getCodAlumno());
@@ -226,40 +159,45 @@ public class InscripcionController {
             return new ResponseEntity<>(new Mensaje("Error! El alumno seleccionado debe terminar sus cursos en proceso.",400),
                     HttpStatus.BAD_REQUEST);
         }
-        List<Turno> listaTurnos = turnoService.listarTurnoPorCurso(curso.getCodCurso());
+        List<Turno> listaTurnos = turnoService.listarTurnoPorCurso(seccion.getCurso().getCodCurso());
         if(listaTurnos.isEmpty()){
-            return new ResponseEntity<>(new Mensaje("Error! El curso seleccionado no tiene turnos asignados.",400),
+            return new ResponseEntity<>(new Mensaje("Error! La sección seleccionada no tiene turno asignados.",400),
                     HttpStatus.BAD_REQUEST);
         }
         //Insert de datos!!
         try{
-//            Inscripcion i = new Inscripcion(0L,ins.getFechaInicio(),
-//                    ins.getFechaFinal(),ins.getFechaInscripcion(),
-//                    null,true,alumno,
-//                    curso,listaTurnos.get(0));
-//            Inscripcion inscripcionGuardada = inscripcionService.guardar(i);
-//            emailService.enviarEmailNuevaInscripcion(alumno,curso,inscripcionGuardada);
-            return new ResponseEntity<>(null,HttpStatus.CREATED); //inscripcionGuardada
+            Inscripcion i = new Inscripcion(0L,ins.getFechaInscripcion(),
+                    null,true,alumno,seccion);
+            Inscripcion inscripcionGuardada = inscripcionService.guardar(i);
+            emailService.enviarEmailNuevaInscripcion(alumno,seccion,inscripcionGuardada);
+            return new ResponseEntity<>(inscripcionGuardada,HttpStatus.CREATED);
         }
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //TODO: SPT3 - REDISEÑAR.
+    //TODO: SPT3 - C.H TESTEAR EN FRONT.
     @PutMapping("/retirar")
     @CrossOrigin(allowedHeaders = "*",origins = "*")
     public ResponseEntity<?> retirarAlumno(@RequestParam Long codInscripcion){
-        Inscripcion ins = new Inscripcion();
-        try{
-            ins = inscripcionService.buscarPorPk(codInscripcion).get();
-        }
-        catch(Exception ex){ ins = null; }
+        Inscripcion ins = inscripcionService.buscarPorPk(codInscripcion);
         if(ins == null){
             return new ResponseEntity<>(new Mensaje("Ups! Inscripcion no encontrada.",404),HttpStatus.NOT_FOUND);
         }
-        //ins.setFechaTerminado(ins.getFechaInicio());
+        ins.setFechaTerminado(ins.getSeccion().getFechaInicio());
         Inscripcion insActualizada = inscripcionService.actualizar(ins);
         return new ResponseEntity<>(insActualizada,HttpStatus.OK);
     }
+
+    public List<InscripcionDTO> convertListToDTO(List<Inscripcion> listaInscripcion){
+        List<InscripcionDTO> retorno = new ArrayList<>();
+        for(Inscripcion i: listaInscripcion){
+            InscripcionDTO ins = new InscripcionDTO();
+            ins.setProperties(i);
+            retorno.add(ins);
+        }
+        return retorno;
+    }
+
 }

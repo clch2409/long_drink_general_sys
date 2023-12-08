@@ -271,7 +271,7 @@ public class ExportarPdf{
             tablaCursos.addCell(curso.getDuracion() + " semanas");
             //tablaCursos.addCell(cantidad+"");
             tablaCursos.addCell(curso.getFrecuencia());
-            tablaCursos.addCell(curso.getProfesor().getNombre() + " " + curso.getProfesor().getApellidoPaterno());
+            //tablaCursos.addCell(curso.getProfesor().getNombre() + " " + curso.getProfesor().getApellidoPaterno());
         });
 
         //Se agregan las dos tablas al documento

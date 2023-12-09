@@ -121,9 +121,8 @@ public class ExportarExcel {
         crearCelda(fila,3,"FRECUENCIA",estilo);
         crearCelda(fila,4,"DURACIÓN",estilo);
         crearCelda(fila,5,"MENSUALIDAD",estilo);
-        crearCelda(fila,6,"CANTIDAD ALUMNOS",estilo);
-        crearCelda(fila,7,"PROFESOR",estilo);
-        crearCelda(fila,8,"VISIBLE",estilo);
+        crearCelda(fila,6,"CANTIDAD SECCIONES",estilo);
+        crearCelda(fila,7,"VISIBLE",estilo);
     }
 
     private void escribirCursos(){
@@ -142,8 +141,7 @@ public class ExportarExcel {
             crearCelda(fila,columnaActual++,c.getFrecuencia(),estilo);
             crearCelda(fila,columnaActual++,c.getDuracion() + " SEMANAS",estilo);
             crearCelda(fila,columnaActual++,c.getMensualidad(),estilo);
-            crearCelda(fila,columnaActual++,c.getSecciones(),estilo); //TODO: SPT3 - TESTEAR.
-            //crearCelda(fila,columnaActual++,c.getProfesor().getNombre() + " "+c.getProfesor().getApellidoPaterno(),estilo);
+            crearCelda(fila,columnaActual++,c.getSecciones().size(),estilo);
             crearCelda(fila,columnaActual++,c.isVisibilidad(),estilo);
         }
     }
@@ -196,7 +194,6 @@ public class ExportarExcel {
             crearCelda(fila,columnaActual++,a.getUsuario().getNombreUsuario(),estilo);
             if(!a.getInscripciones().isEmpty()){
                 crearCelda(fila,columnaActual++,a.getInscripciones().get(a.getInscripciones().size() - 1).getSeccion().getCurso().getNombre(),estilo);
-                //TODO: SPT3 - TESTEAR 198
             }
             else{
                 crearCelda(fila,columnaActual++,"N/A",estilo);
@@ -225,13 +222,14 @@ public class ExportarExcel {
         estilo.setFont(fuente);
         crearCelda(fila,0,"COD. INSCRIPCIÓN",estilo);
         crearCelda(fila,1,"CURSO",estilo);
-        crearCelda(fila,2,"FRECUENCIA",estilo);
-        crearCelda(fila,3,"TURNO",estilo);
-        crearCelda(fila,4,"FECHA DE INSCRIPCIÓN",estilo);
-        crearCelda(fila,5,"FECHA INICIO",estilo);
-        crearCelda(fila,6,"FECHA FIN - PROGRAMADA",estilo);
-        crearCelda(fila,7,"FECHA FIN",estilo);
-        crearCelda(fila,8,"ESTADO",estilo);
+        crearCelda(fila,2,"SECCIÓN",estilo);
+        crearCelda(fila,3,"FRECUENCIA",estilo);
+        crearCelda(fila,4,"TURNO",estilo);
+        crearCelda(fila,5,"FECHA DE INSCRIPCIÓN",estilo);
+        crearCelda(fila,6,"FECHA INICIO",estilo);
+        crearCelda(fila,7,"FECHA FIN - PROGRAMADA",estilo);
+        crearCelda(fila,8,"FECHA FIN",estilo);
+        crearCelda(fila,9,"ESTADO",estilo);
     }
     //TODO: SPT3 - TESTEAR
     private void escribirInscripcion(){
@@ -249,6 +247,7 @@ public class ExportarExcel {
             int columnaActual = 0;
             crearCelda(fila,columnaActual++,i.getCodInscripcion(),estilo);
             crearCelda(fila,columnaActual++,i.getSeccion().getCurso().getNombre(),estilo);
+            crearCelda(fila,columnaActual++,i.getSeccion().getNombre(),estilo);
             crearCelda(fila,columnaActual++,i.getSeccion().getCurso().getFrecuencia(),estilo);
             crearCelda(fila,columnaActual++,i.getSeccion().getCurso().getTurnos().get(0).getNombre(),estilo);
             crearCelda(fila,columnaActual++,i.getFechaInscripcion(),estiloFecha);

@@ -5,6 +5,7 @@ import com.longdrink.rest_api.model.Asistencia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +19,10 @@ public class AsistenciaService {
 
     public List<Asistencia> asistenciaPorAlumno(Long codInscripcion){
         return asistenciaDAO.findAllByInscripcionCodInscripcion(codInscripcion);
+    }
+
+    public Asistencia asistenciaPorFecha(Date fechaAsistencia){
+        return asistenciaDAO.findByFechaAsistencia(fechaAsistencia);
     }
 
     public Asistencia guardarAsistencia(Asistencia a){

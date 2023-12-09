@@ -40,6 +40,8 @@ public class SeccionService {
         return seccionDAO.findAllByEstado(estado);
     }
 
+    public List<Seccion> findAllByCursoCodCurso(Long codCurso){ return seccionDAO.findAllByCursoCodCurso(codCurso); }
+
     public List<Seccion> listarVacantesDisponibles(){
         List<Seccion> listaSecciones = seccionDAO.findAllByEstado(true);
         List<Seccion> retorno = new ArrayList<>();

@@ -3,6 +3,7 @@ package com.longdrink.rest_api.controller;
 import com.longdrink.rest_api.model.*;
 import com.longdrink.rest_api.model.payload.*;
 import com.longdrink.rest_api.services.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,8 @@ public class AuthController {
     private EmailService emailService;
     @Autowired
     private SeccionService seccionService;
+
+    private String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}|;:,<.>/?";
 
     @PostMapping("/registro_docente")
     public ResponseEntity<?> registroDocente(@RequestBody RegistroDocente reg){
@@ -120,7 +123,6 @@ public class AuthController {
             Alumno a = alumnoService.getPorCodUsuario(u.getCodUsuario());
             String nombreCompleto = a.getNombre()+" "+a.getApellidoPaterno()+" "+a.getApellidoMaterno();
             LoginMovil respuesta = new LoginMovil(a.getCodAlumno(),u.getCodUsuario(),u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
-            //LoginWeb respuesta = new LoginWeb(u.getNombreUsuario(),"<-CONTRASEÑA->",u.getEmail(),nombreCompleto,"ALUMNO");
             return new ResponseEntity<>(respuesta,HttpStatus.OK);
         }
         if(u.getRol().getCodRol() == 2L){
@@ -228,6 +230,18 @@ public class AuthController {
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Ha sucedido en error en el guardado de datos.",500),HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/recuperar_cuenta")
+    public ResponseEntity<?> recuperarCuenta(@RequestParam String email){
+        Usuario u = usuarioService.getPorEmail(email);
+        if(u != null){
+            String newPassword = RandomStringUtils.random(10,characters);
+            u.setContrasena(bCryptPasswordEncoder.encode(newPassword));
+            usuarioService.actualizar(u);
+            emailService.enviarEmailRecuperarCuenta(email,u.getNombreUsuario(),newPassword);
+        }
+        return new ResponseEntity<>("Solicitud en proceso. Revise su bandeja de e-mail para continuar el proceso de recuperación de cuenta.",HttpStatus.OK);
     }
 
 }

@@ -56,4 +56,8 @@ public class InscripcionService {
     public List<Inscripcion> listarPorSeccion(Long codSeccion){
         return inscripcionDAO.findAllBySeccionCodSeccion(codSeccion);
     }
+
+    public List<Inscripcion> findAllBySeccionCodCurso(Long codCurso){
+        return inscripcionDAO.findAllBySeccionCursoCodCurso(codCurso);
+    }
 }

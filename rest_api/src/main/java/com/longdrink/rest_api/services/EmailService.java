@@ -41,9 +41,8 @@ public class EmailService {
             mailSender.send(mensaje);
         }
         catch(Exception ex){
-            System.out.println(ex.getMessage());
+            System.out.println(ex.getLocalizedMessage());
         }
-
     }
 
     @Async
@@ -68,8 +67,28 @@ public class EmailService {
             mailSender.send(mensaje);
         }
         catch(Exception ex){
-            System.out.println(ex.getMessage());
+            System.out.println(ex.getLocalizedMessage());
         }
+    }
 
+    @Async
+    public void enviarEmailRecuperarCuenta(String email, String username, String password){
+        try{
+            SimpleMailMessage mensaje = new SimpleMailMessage();
+            mensaje.setTo(email);
+            mensaje.setSubject("Long Drink Bar - Recuperación de cuenta");
+            mensaje.setText("¡Hola! Has recibo este e-mail debido a que has solicitado la recuperación de tu cuenta de usuario. \n"+
+                    "A continuación tienes las nuevas credenciales de acceso a tu cuenta asociada a este email.\n"+
+                    "NOMBRE DE USUARIO: "+username+"\n"+
+                    "CONTRASEÑA: "+password+"\n"+
+                    "Te recordamos que debes cambiar tu contraseña a la brevedad posible por razones de seguridad. Puedes hacerlo iniciando sesión en la web institucional o en tu aplicativo móvil.\n"+
+                    "Recuerda no compartir tus credenciales con nadie.\n¿Dudas? ¡Consultas? ¿Sugerencias? Comunicarse con administración: 994245306\n"+
+                    "Este es un e-mail generado automaticamente y no recibe respuestas de ningun tipo.");
+            mensaje.setFrom("sistemas.it.longdrink@gmail.com");
+            mailSender.send(mensaje);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getLocalizedMessage());
+        }
     }
 }

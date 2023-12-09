@@ -25,4 +25,6 @@ public interface IInscripcionDAO extends CrudRepository<Inscripcion,Long> {
 
     List<Inscripcion> findAllBySeccionCodSeccion(Long codSeccion);
 
+    List<Inscripcion> findAllBySeccionCursoCodCurso(Long codCurso);
+
 }

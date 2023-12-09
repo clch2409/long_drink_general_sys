@@ -25,11 +25,7 @@ public class UsuarioService {
     }
 
     public Usuario getPorEmail(String email){
-        try{
-            Usuario u = usuarioDAO.findByEmail(email).get();
-            return u;
-        }
-        catch(Exception ex){ return null; }
+        return usuarioDAO.findByEmail(email).orElse(null);
     }
 
     public Usuario getPorCod(Long cod){

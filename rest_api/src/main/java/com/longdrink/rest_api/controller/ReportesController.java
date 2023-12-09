@@ -1,13 +1,7 @@
 package com.longdrink.rest_api.controller;
 
-import com.longdrink.rest_api.model.Alumno;
-import com.longdrink.rest_api.model.Curso;
-import com.longdrink.rest_api.model.Inscripcion;
-import com.longdrink.rest_api.model.Profesor;
-import com.longdrink.rest_api.services.AlumnoService;
-import com.longdrink.rest_api.services.CursoService;
-import com.longdrink.rest_api.services.InscripcionService;
-import com.longdrink.rest_api.services.ProfesorService;
+import com.longdrink.rest_api.model.*;
+import com.longdrink.rest_api.services.*;
 import com.longdrink.rest_api.utils.ExportarExcel;
 import com.longdrink.rest_api.utils.ExportarPdf;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +16,7 @@ import org.supercsv.prefs.CsvPreference;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +32,8 @@ public class ReportesController {
     private AlumnoService alumnoService;
     @Autowired
     private InscripcionService inscripcionService;
+    @Autowired
+    private SeccionService seccionService;
     @Autowired
     private ExportarPdf pdfService;
 
@@ -124,12 +121,16 @@ public class ReportesController {
         }
         else if(tipo == 2){
             if(cursoService.getPorCod(codCurso) != null){
-//                if(!cursoService.getPorCod(codCurso).getInscripciones().isEmpty()){
-//                    List<Inscripcion> listaInscripciones = inscripcionService.listarPorCurso(codCurso);
-//                    ExportarExcel exportador = new ExportarExcel(listaInscripciones,1L); //Por curso.
-//                    exportador.exportarInscripcion(response);
-//                }
-//                else{ exportarInscripcionesGeneral(response); }  //Generales.
+                if(!cursoService.getPorCod(codCurso).getSecciones().isEmpty()){
+                    List<Inscripcion> inscripciones = new ArrayList<>();
+                    List<Seccion> listaSecciones = seccionService.findAllByCursoCodCurso(codCurso);
+                    listaSecciones.forEach((e)-> {
+                        inscripciones.addAll(e.getInscripciones());
+                    });
+                    ExportarExcel exportador = new ExportarExcel(inscripciones,1L); //Por curso.
+                    exportador.exportarInscripcion(response);
+                }
+                else{ exportarInscripcionesVacio(response); }  //Generales.
             }
             else{ exportarInscripcionesGeneral(response); }
         }
@@ -278,8 +279,8 @@ public class ReportesController {
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=cursos_" + currentDate + ".csv";
         response.setHeader(headerKey,headerValue);
-        String[] csvHeader = {"COD. CURSO","NOMBRE","DESCRIPCION","FRECUENCIA","DURACION","MENSUALIDAD","CANTIDAD ALUMNOS","VISIBLE"};
-        String[] nameMapping = {"codCurso","nombre","descripcion","frecuencia","duracion","mensualidad","cantidadAlumnos","visibilidad"};
+        String[] csvHeader = {"COD. CURSO","NOMBRE","DESCRIPCION","FRECUENCIA","DURACION","MENSUALIDAD","VISIBLE"};
+        String[] nameMapping = {"codCurso","nombre","descripcion","frecuencia","duracion","mensualidad","visibilidad"};
         List<Curso> listaCurso = cursoService.listarCursos();
         ICsvBeanWriter writer = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
         writer.writeHeader(csvHeader);
@@ -323,8 +324,8 @@ public class ReportesController {
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=inscripciones_" + currentDate + ".csv";
         response.setHeader(headerKey,headerValue);
-        String[] csvHeader = {"COD. INSCRIPCION","FECHA_INSCRIPCION","FECHA_INICIO","FECHA_FIN","FECHA_TERMINADO","ESTADO"};
-        String[] nameMapping = {"codInscripcion","fechaInscripcion","fechaInicio","fechaFinal","fechaTerminado","estado"};
+        String[] csvHeader = {"COD. INSCRIPCION","FECHA_INSCRIPCION","FECHA_TERMINADO","ESTADO"};
+        String[] nameMapping = {"codInscripcion","fechaInscripcion","fechaTerminado","estado"};
         if(tipo == 1){
             if(alumnoService.getPorDNI(dni) != null){
                 listaInscripciones = inscripcionService.listarPorDniAlumno(dni);
@@ -332,15 +333,15 @@ public class ReportesController {
         }
         else if(tipo == 2){
             if(cursoService.getPorCod(codCurso) != null){
-                //listaInscripciones = inscripcionService.listarPorCurso(codCurso);
+                listaInscripciones = inscripcionService.findAllBySeccionCodCurso(codCurso);
             }else { listaInscripciones = inscripcionService.listarInscripciones(); }
         }
         else{ listaInscripciones = inscripcionService.listarInscripciones(); }
         ICsvBeanWriter writer = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
         writer.writeHeader(csvHeader);
-//        for(Inscripcion i: listaInscripciones){
-//            writer.write(i,nameMapping);
-//        }
+        for(Inscripcion i: listaInscripciones){
+            writer.write(i,nameMapping);
+        }
         writer.close();
 
     }
@@ -348,6 +349,12 @@ public class ReportesController {
     public void exportarInscripcionesGeneral(HttpServletResponse response) throws IOException {
         List<Inscripcion> listaInscripciones = inscripcionService.listarInscripciones();
         ExportarExcel exportador = new ExportarExcel(listaInscripciones,1L); //General.
+        exportador.exportarInscripcion(response);
+    }
+
+    public void exportarInscripcionesVacio(HttpServletResponse response) throws IOException {
+        List<Inscripcion> lista = new ArrayList<>();
+        ExportarExcel exportador = new ExportarExcel(lista,1L); //General.
         exportador.exportarInscripcion(response);
     }
 

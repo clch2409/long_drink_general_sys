@@ -32,7 +32,6 @@ public class Pago implements Serializable {
     private double total;
 
     @JsonIgnore
-    @MapsId("codAlumno")
     @ManyToOne
     @JoinColumn(name = "cod_alumno")
     private Alumno alumno;
@@ -51,6 +50,16 @@ public class Pago implements Serializable {
         this.total = total;
         this.alumno = alumno;
         this.detallePagos = detallePagos;
+    }
+
+    public Pago(Long codPago, Date fechaPago, Date fechaVencimiento, boolean estado, String descripcion, double total, Alumno alumno) {
+        this.codPago = codPago;
+        this.fechaPago = fechaPago;
+        this.fechaVencimiento = fechaVencimiento;
+        this.estado = estado;
+        this.descripcion = descripcion;
+        this.total = total;
+        this.alumno = alumno;
     }
 
     public Long getCodPago() {

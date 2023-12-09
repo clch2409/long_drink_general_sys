@@ -20,11 +20,7 @@ public class AlumnoService {
     public List<Alumno> listarAlumnosActivos(){ return alumnoDAO.findAllByActivo(); }
 
     public Alumno getPorDNI(String dni){
-        try{
-            Alumno a = alumnoDAO.findByDni(dni).get();
-            return a;
-        }
-        catch(Exception ex){ return null; }
+        return alumnoDAO.findByDni(dni).orElse(null);
     }
 
     public Alumno getPorCod(Long cod){

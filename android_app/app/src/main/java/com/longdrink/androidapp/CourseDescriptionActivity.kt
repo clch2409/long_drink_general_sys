@@ -62,11 +62,11 @@ class CourseDescriptionActivity : AppCompatActivity() {
         sendToMain()
     }*/
 
-    private fun sendToInscription(){
+    /*private fun sendToInscription(){
         val intent = Intent(applicationContext, InscriptionActivity::class.java)
         intent.putExtra("codAlum", codAlum)
         startActivity(intent)
-    }
+    }*/
 
     private fun goToMain(){
         var intent = Intent(this@CourseDescriptionActivity, MainActivity::class.java)

@@ -1,10 +1,12 @@
 package com.longdrink.androidapp.api
 
+import com.longdrink.androidapp.model.CambiarCredenciales
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.Inscripcion
 import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.longdrink.androidapp.model.LoginSendData
 import com.longdrink.androidapp.model.LoginWebResponse
+import com.longdrink.androidapp.model.Mensaje
 import com.longdrink.androidapp.model.RegisterResponse
 import com.longdrink.androidapp.model.RegisterSendData
 import okhttp3.ResponseBody
@@ -24,6 +26,9 @@ interface ApiService {
 
     @POST("auth/registro")
     suspend fun registroAlumno(@Body registro : RegisterSendData) : Response<RegisterResponse>
+
+    @POST("auth/cambiar_credenciales")
+    suspend fun cambiarCredenciales(@Body cambiarCredenciales : CambiarCredenciales) : Response<Mensaje>
 
     /** ---------------------------- COURSES RELATED METHODS --------------------------*/
 

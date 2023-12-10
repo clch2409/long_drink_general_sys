@@ -15,6 +15,7 @@ import com.longdrink.androidapp.databinding.FragmentCoursesBinding
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.Inscripcion
 import com.longdrink.androidapp.model.ListItemCursoTerminado
+import com.longdrink.androidapp.retrofit.Api
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,11 +30,10 @@ private const val ARG_PARAM2 = "param2"
 class CoursesFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
+    private var apiService : ApiService? = null
     private lateinit var binding : FragmentCoursesBinding
     private lateinit var adapter : CourseRecyclerViewAdapter
-    private lateinit var retrofit: Retrofit
     private var codAlum by Delegates.notNull<Long>()
-    private val BASE_URL = "http://10.0.2.2:8080/api/v1/"
     private val cursosTerminadosFiltrados = mutableListOf<ListItemCursoTerminado>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class CoursesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCoursesBinding.inflate(inflater)
-        retrofit = getRetrofi()
+        apiService = apiService
         codAlum = requireArguments().getLong("codAlum")
         getCursos()
         return binding.root
@@ -70,7 +70,7 @@ class CoursesFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response : Response<List<ListItemCursoTerminado>> =
-                    retrofit.create(ApiService::class.java).listarCursos()
+                    apiService!!.listarCursos()
                 if (response.isSuccessful){
                     val myResponse : List<ListItemCursoTerminado>? = response.body()
                     if (myResponse != null){
@@ -87,7 +87,7 @@ class CoursesFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response : Response<List<Inscripcion>> =
-                    retrofit.create(ApiService::class.java).listarInscripcionesByAlumnoId(codAlum)
+                    apiService!!.listarInscripcionesByAlumnoId(codAlum)
                 if (response.isSuccessful){
                     val myResponse : List<Inscripcion>? = response.body()
                     if (myResponse != null){
@@ -112,14 +112,6 @@ class CoursesFragment : Fragment() {
                 Log.i("ERROR", ex.toString())
             }
         }
-    }
-
-    private fun getRetrofi() : Retrofit{
-        return Retrofit
-            .Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
     }
 
     companion object {

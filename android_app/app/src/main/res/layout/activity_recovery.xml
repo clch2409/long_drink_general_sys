@@ -8,14 +8,14 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
+        android:id="@+id/recovery_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/dark_blue"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:subtitleTextColor="@color/white"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:id="@+id/recovery_info"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Para el cambio de credenciales es necesario que llene todos."
+            android:text="Para el cambio de credenciales es necesario que llene todos los campos.\nSi no desea cambiar su correo, ingrese el mismo correo para antiguo como para nuevo"
             android:layout_centerHorizontal="true"
             android:textSize="15sp"
             android:layout_marginTop="20dp"
@@ -53,6 +53,7 @@
             android:layout_marginTop="60dp"
             android:padding="10dp"
             android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:drawableLeft="@drawable/baseline_alternate_email_24"
             android:drawablePadding="10dp"/>
 
@@ -67,6 +68,7 @@
             android:layout_marginTop="30dp"
             android:padding="10dp"
             android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:drawableLeft="@drawable/baseline_shield_24"
             android:drawablePadding="10dp"/>
 
@@ -81,6 +83,7 @@
             android:layout_marginTop="30dp"
             android:padding="10dp"
             android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:drawableLeft="@drawable/baseline_alternate_email_24"
             android:drawablePadding="10dp"/>
 
@@ -95,6 +98,7 @@
             android:layout_marginTop="30dp"
             android:padding="10dp"
             android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:drawableLeft="@drawable/baseline_shield_24"
             android:drawablePadding="10dp"/>
 

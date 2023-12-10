@@ -40,6 +40,18 @@ data class RegisterResponse(
     @SerializedName("dni") val dni : String,
 )
 
+data class CambiarCredenciales(
+    @SerializedName("contrasenaAntigua") val contrasenaAntigua : String,
+    @SerializedName("nuevaContrasena") val nuevaContrasena : String,
+    @SerializedName("emailAntiguo") val emailAntiguo : String,
+    @SerializedName("emailNuevo") val emailNuevo : String,
+)
+
+data class Mensaje(
+    @SerializedName("mensaje") val mensaje : String,
+    @SerializedName("estado") val estado : Integer
+)
+
 /** --------------------- COURSES RELATED DATA CLASSES ----------------------------------*/
 data class Curso(
     @SerializedName("codCurso") var codCurso : Long = 0L,

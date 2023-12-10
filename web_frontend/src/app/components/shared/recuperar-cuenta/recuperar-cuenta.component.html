@@ -1,0 +1,38 @@
+<body class="vh-100 bg-light-subtle">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-xl-6 mx-auto">
+        <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+          <div class="card-body p-4 p-sm-5">
+            <div class="container text-center">
+              <img src="https://i.imgur.com/SePeNBz.png" style="width: 350px; height: 100px;">
+            </div>
+            <h5 class="card-title text-center mb-3 fw-light fs-5 mt-3">RECUPERACIÓN DE CUENTA</h5>
+            <hr>
+            <div class="container text-center mb-4">
+              <h6 class="fw-lighter fw-bold">¡Bienvenido! En esta sección podrá recuperar las credenciales de su cuenta en caso las haya olvidado.</h6>
+              <p class="fw-light">A continuación debe llenar el formulario por completo, posteriormente y siempre que el e-mail ingresado sea correcto, llegara un correo a su bandeja de entrada con instrucciones para recuperar el acceso a su cuenta. <br>Recuerde revisar su bandeja de spam. <br>El e-mail puede tardar hasta 5 minutos en llegar.</p>
+            </div>
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" name="email"
+                autofocus placeholder="E-Mail" required [(ngModel)]="email">
+                <label for="floatingInputUsername">E-Mail</label>
+              </div>
+              <div class="d-grid mb-2">
+                <button class="btn btn-success btn-login fw-bold text-uppercase" type="submit">CONTINUAR</button>
+              </div>
+              <div class="d-grid mb-2">
+                  <a class="btn btn-secondary btn-login fw-bold text-uppercase" type="button" [routerLink]="'/'">ATRÁS</a>
+              </div>
+            </form>
+            <hr>
+            <div class="container text-center">
+              <a class="fw-light" href="mailto:sistemas.it@longdrink.pe">¿Problemas para recuperar su cuenta? Click aquí para comunicarse con administración.</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

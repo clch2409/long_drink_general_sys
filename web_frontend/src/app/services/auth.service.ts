@@ -7,7 +7,7 @@ const AUTH_API = 'http://localhost:8080/api/v1/auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type' : 'application/json'})
-}; 
+};
 
 
 @Injectable({
@@ -48,5 +48,9 @@ export class AuthService {
       alumnoData,
       httpOptions
     );
+  }
+
+  recuperarCuenta(email: string): Observable<any>{
+    return this.http.post(AUTH_API + `recuperar_cuenta?email=${email}`,'',httpOptions);
   }
 }

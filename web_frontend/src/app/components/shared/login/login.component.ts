@@ -33,17 +33,9 @@ export class LoginComponent implements OnInit {
       }
       if(this.sesionIniciada == true && this.rol === 'DOCENTE'){
         this.router.navigate(['/p']);
-        //this.intentoFallido = true;
-        //this.mensajeError = 'Error! Su cuenta no tiene los permisos necesarios para iniciar sesión en esta área. Comuniquese con administración.'
-        //this.mostrarMensaje(this.mensajeError);
-        //this.storageService.limpiarCredenciales();
       }
       if(this.sesionIniciada == true && this.rol === 'ALUMNO'){
         this.router.navigate(['/a']);
-        //this.intentoFallido = true;
-        //this.mensajeError = 'Error! Su cuenta no tiene los permisos necesarios para iniciar sesión en esta área. Usted debe iniciar sesión desde su App Movil "Long Drink".'
-        //this.mostrarMensaje(this.mensajeError);
-        //this.storageService.limpiarCredenciales();
       }
   }
 
@@ -62,7 +54,7 @@ export class LoginComponent implements OnInit {
         this.mostrarMensaje(this.mensajeError);
       }
     });
-  }  
+  }
   limpiarCampos() {
     this.loginData.nombreUsuario = '';
     this.loginData.contrasena = '';
@@ -90,7 +82,7 @@ export class LoginComponent implements OnInit {
   enProgreso(): void{
     Swal.fire('Ups!',"Trabajo en progreso",'info');
   }
-  
+
   imagenesLogin = [
     "https://i.imgur.com/EjSEAEc.jpg",
     "https://i.imgur.com/AdyE4jy.jpg",
@@ -105,5 +97,5 @@ export class LoginComponent implements OnInit {
   ]
 
   enlaceImagen = this.imagenesLogin[Math.floor(Math.random() * this.imagenesLogin.length)];
-  
+
 }

@@ -42,7 +42,8 @@ import { SetGuiasEstudioComponent } from './components/modulo_admin/curso/set-gu
 import { InscripcionAlumnoAntiguoComponent } from './components/modulo_admin/alumno/inscripcion-alumno-antiguo/inscripcion-alumno-antiguo.component';
 import { EditarAlumnoComponent } from './components/modulo_admin/alumno/editar-alumno/editar-alumno.component';
 import { EditarProfesorComponent } from './components/modulo_admin/profesor/editar-profesor/editar-profesor.component';
-import { EditarCursoComponent } from './components/modulo_admin/curso/editar-curso/editar-curso.component' 
+import { EditarCursoComponent } from './components/modulo_admin/curso/editar-curso/editar-curso.component';
+import { RecuperarCuentaComponent } from './components/shared/recuperar-cuenta/recuperar-cuenta.component' 
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { EditarCursoComponent } from './components/modulo_admin/curso/editar-cur
     EditarAlumnoComponent,
     EditarProfesorComponent,
     EditarCursoComponent,
+    RecuperarCuentaComponent,
   ],
   imports: [
     BrowserModule,

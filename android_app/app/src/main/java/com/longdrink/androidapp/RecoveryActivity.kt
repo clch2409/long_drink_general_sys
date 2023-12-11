@@ -1,118 +1,54 @@
 package com.longdrink.androidapp
 
-import android.content.DialogInterface
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
-import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.ActivityRecoveryBinding
-import com.longdrink.androidapp.model.CambiarCredenciales
 import com.longdrink.androidapp.model.Mensaje
 import com.longdrink.androidapp.retrofit.Api
 import com.longdrink.androidapp.utils.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.internal.Util
 import retrofit2.Response
 
 class RecoveryActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityRecoveryBinding
-    private lateinit var apiService : ApiService
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityRecoveryBinding.inflate(layoutInflater)
-        apiService = Api.apiService
-        setSupportActionBar(binding.recoveryToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24)
-
 
         binding.recoveryButton.setOnClickListener {
-            if (verificarVacio()){
-                Utils.showSnackbar("Llene todos los campos requeridos, por favor.", binding.root)
-            }
-            else{
-                enviarDatos(obtenerDatos())
+            if (checkEmpty()){
+                Utils.showSnackbar("Ingrese el correo solicitado", binding.root)
+            }else{
+                recuperarCuenta(binding.recoveryEmail.text.toString())
             }
         }
-
 
         setContentView(binding.root)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
-    private fun obtenerDatos(): CambiarCredenciales {
-        val viejoEmail = binding.oldEmail.text.toString()
-        val nuevoEmail = binding.newEmail.text.toString()
-        val viejaContra = binding.oldPassword.text.toString()
-        val nuevaContra = binding.newPassword.text.toString()
-
-        return CambiarCredenciales(viejaContra, nuevaContra, viejoEmail, nuevoEmail)
-    }
-
-    private fun enviarDatos(cambiarCredenciales: CambiarCredenciales){
+    private fun recuperarCuenta(email : String){
         CoroutineScope(Dispatchers.IO).launch {
             try{
-                val response : Response<Mensaje> = apiService.cambiarCredenciales(cambiarCredenciales)
+                val response : Response<Mensaje?> =
+                    Api.apiService.recuperarCredenciales(email)
 
-                var alertDialog : AlertDialog.Builder? = null
-
-                if (!response.isSuccessful){
-                    alertDialog = Utils.showDialog("Verificar Datos", "Verifique que sus datos hayan sido ingresados correctamente, por favor", applicationContext)
-                    alertDialog.setNeutralButton("OK") { _:DialogInterface?, _: Int ->
-                    }
-                } else{
-                    alertDialog = Utils.showDialog("Datos Actualizados","!Felicidades, datos actualizados correctamente 🥳! ¿Desea regresar al Menú Principal?", applicationContext)
-                    alertDialog.setPositiveButton("SI") { _: DialogInterface?, _: Int ->
-                        clearBoxes();
-                        goToMain()
-                    }
-                    alertDialog.setNegativeButton("NO") { _: DialogInterface, _: Int ->
-                        clearBoxes()
-                    }
-                }
-
-                alertDialog.create()
-                alertDialog.show()
-
-            }catch (ex : Exception){
+                Log.i("RECOVERY", response.message().toString())
+            }
+            catch(ex : Exception){
                 Log.e("RECOVERY ACTIVITY", ex.toString())
             }
         }
     }
 
-    private fun verificarVacio() : Boolean{
-        val oldEmail = binding.oldEmail.text
-        val newEmail = binding.newEmail.text
-        val newPass = binding.newPassword.text
-        val oldPass = binding.oldPassword.text
-
-        return oldPass.isEmpty() || newPass.isEmpty() || newEmail.isEmpty() || oldEmail.isEmpty()
-    }
-
-    private fun clearBoxes(){
-        binding.oldEmail.text.clear()
-        binding.newEmail.text.clear()
-        binding.oldPassword.text.clear()
-        binding.newPassword.text.clear()
-    }
-
-    /*private fun mostrarSnackbar(mensaje : String){
-        Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_LONG).show();
-    }*/
-
-    private fun goToMain(){
-        finish()
-        val intent = Intent(this@RecoveryActivity, MainActivity::class.java)
-        startActivity(intent)
+    private fun checkEmpty() : Boolean{
+        return binding.recoveryEmail.text.isEmpty()
     }
 }

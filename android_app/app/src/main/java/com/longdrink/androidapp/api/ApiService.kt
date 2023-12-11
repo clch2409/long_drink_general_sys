@@ -31,6 +31,9 @@ interface ApiService {
     @POST("auth/cambiar_credenciales")
     suspend fun cambiarCredenciales(@Body cambiarCredenciales : CambiarCredenciales) : Response<Mensaje>
 
+    @POST("auth/recuperar_cuenta")
+    suspend fun recuperarCredenciales(@Query("email") email : String) : Response<Mensaje?>
+
     /** ---------------------------- COURSES RELATED METHODS --------------------------*/
 
     @GET("curso")

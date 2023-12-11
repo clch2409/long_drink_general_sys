@@ -1,117 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecoveryActivity"
-    android:orientation="vertical">
+    tools:context=".RecoveryActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/recovery_toolbar"
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:id="@+id/recovery_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logo_grande_negro"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/recovery_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/dark_blue"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:subtitleTextColor="@color/white"
-        app:titleTextColor="@color/white"/>
+        android:layout_below="@id/recovery_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="Recuperar Credenciales"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
+    <TextView
+        android:id="@+id/recovery_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recovery_title"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text='Se le enviará, al correo que usted ha registrado, unas credenciales por defecto, de esta manera, usted deberá de cambiar dichas credenciales en el apartado de "Cambiar Credenciales" en la pestaña de "Mi Cuenta"'
+        android:textAlignment="center"
+        android:textSize="17sp"/>
 
-        <TextView
-            android:id="@+id/recovery_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cambio de Credenciales"
-            android:layout_centerHorizontal="true"
-            android:textSize="25sp"
-            android:layout_marginTop="15dp"/>
+    <EditText
+        android:id="@+id/recovery_email"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/recovery_information"
+        android:inputType="textEmailAddress"
+        android:layout_centerHorizontal="true"
+        android:hint="Nuevo Email"
+        android:background="@color/transparent_dark_blue"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/baseline_alternate_email_24"
+        android:drawablePadding="10dp"/>
 
-        <TextView
-            android:id="@+id/recovery_info"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:text="Para el cambio de credenciales es necesario que llene todos los campos.\nSi no desea cambiar su correo, ingrese el mismo correo para antiguo como para nuevo"
-            android:layout_centerHorizontal="true"
-            android:textSize="15sp"
-            android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:layout_below="@+id/recovery_title"/>
+    <Button
+        android:id="@+id/recovery_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambiar Credenciales"
+        android:layout_below="@id/recovery_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/dark_blue"/>
 
-        <EditText
-            android:id="@+id/old_email"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/recovery_info"
-            android:layout_centerHorizontal="true"
-            android:hint="Antiguo Email"
-            android:background="@color/transparent_dark_red"
-            android:layout_marginTop="60dp"
-            android:padding="10dp"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/baseline_alternate_email_24"
-            android:drawablePadding="10dp"/>
-
-        <EditText
-            android:id="@+id/old_password"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/old_email"
-            android:layout_centerHorizontal="true"
-            android:hint="Antigua Contraseña"
-            android:background="@color/transparent_dark_red"
-            android:layout_marginTop="30dp"
-            android:padding="10dp"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/baseline_shield_24"
-            android:drawablePadding="10dp"/>
-
-        <EditText
-            android:id="@+id/new_email"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/old_password"
-            android:layout_centerHorizontal="true"
-            android:hint="Nuevo Email"
-            android:background="@color/transparent_dark_blue"
-            android:layout_marginTop="30dp"
-            android:padding="10dp"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/baseline_alternate_email_24"
-            android:drawablePadding="10dp"/>
-
-        <EditText
-            android:id="@+id/new_password"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/new_email"
-            android:layout_centerHorizontal="true"
-            android:hint="Nueva Contraseña"
-            android:background="@color/transparent_dark_blue"
-            android:layout_marginTop="30dp"
-            android:padding="10dp"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:drawableLeft="@drawable/baseline_shield_24"
-            android:drawablePadding="10dp"/>
-
-        <Button
-            android:id="@+id/recovery_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cambiar Credenciales"
-            android:layout_below="@+id/new_password"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/dark_blue"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

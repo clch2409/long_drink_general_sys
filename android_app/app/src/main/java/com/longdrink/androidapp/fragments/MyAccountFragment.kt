@@ -6,10 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.snackbar.Snackbar
 import com.longdrink.androidapp.PaymentsActivity
-import com.longdrink.androidapp.R
-import com.longdrink.androidapp.RecoveryActivity
+import com.longdrink.androidapp.ChangeCredentialsActivity
 import com.longdrink.androidapp.databinding.FragmentMyAccountBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -81,7 +79,7 @@ class MyAccountFragment : Fragment() {
     }
 
     private fun goToRecovery(){
-        startActivity(Intent(activity, RecoveryActivity::class.java))
+        startActivity(Intent(activity, ChangeCredentialsActivity::class.java))
     }
 
     private fun goToPayments(){

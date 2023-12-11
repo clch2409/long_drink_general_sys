@@ -37,7 +37,7 @@ class PaymentsActivity : AppCompatActivity() {
 
     override fun onNavigateUp(): Boolean {
         finish()
-        true
+        return true
     }
 
     private fun initUi(listadoPagos : List<Pago> = emptyList()){

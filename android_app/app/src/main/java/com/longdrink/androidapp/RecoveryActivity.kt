@@ -1,10 +1,11 @@
 package com.longdrink.androidapp
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AlertDialog
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.ActivityRecoveryBinding
 import com.longdrink.androidapp.model.CambiarCredenciales
@@ -33,7 +34,7 @@ class RecoveryActivity : AppCompatActivity() {
 
         binding.recoveryButton.setOnClickListener {
             if (verificarVacio()){
-                mostrarSnackbar("Llene todos los campos requeridos, por favor.")
+                Utils.showSnackbar("Llene todos los campos requeridos, por favor.", binding.root)
             }
             else{
                 enviarDatos(obtenerDatos())
@@ -63,12 +64,26 @@ class RecoveryActivity : AppCompatActivity() {
             try{
                 val response : Response<Mensaje> = apiService.cambiarCredenciales(cambiarCredenciales)
 
+                var alertDialog : AlertDialog.Builder? = null
+
                 if (!response.isSuccessful){
-                    mostrarSnackbar("Verifique los datos que ha ingresado, pueden no ser correctos")
+                    alertDialog = Utils.showDialog("Verificar Datos", "Verifique que sus datos hayan sido ingresados correctamente, por favor", applicationContext)
+                    alertDialog.setNeutralButton("OK") { _:DialogInterface?, _: Int ->
+                    }
+                } else{
+                    alertDialog = Utils.showDialog("Datos Actualizados","!Felicidades, datos actualizados correctamente 🥳! ¿Desea regresar al Menú Principal?", applicationContext)
+                    alertDialog.setPositiveButton("SI") { _: DialogInterface?, _: Int ->
+                        clearBoxes();
+                        goToMain()
+                    }
+                    alertDialog.setNegativeButton("NO") { _: DialogInterface, _: Int ->
+                        clearBoxes()
+                    }
                 }
-                else{
-                    mostrarSnackbar("Credenciales actualizadas!")
-                }
+
+                alertDialog.create()
+                alertDialog.show()
+                
             }catch (ex : Exception){
                 Log.e("RECOVERY ACTIVITY", ex.toString())
             }
@@ -84,9 +99,16 @@ class RecoveryActivity : AppCompatActivity() {
         return oldPass.isEmpty() || newPass.isEmpty() || newEmail.isEmpty() || oldEmail.isEmpty()
     }
 
-    private fun mostrarSnackbar(mensaje : String){
-        Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_LONG).show();
+    private fun clearBoxes(){
+        binding.oldEmail.text.clear()
+        binding.newEmail.text.clear()
+        binding.oldPassword.text.clear()
+        binding.newPassword.text.clear()
     }
+
+    /*private fun mostrarSnackbar(mensaje : String){
+        Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_LONG).show();
+    }*/
 
     private fun goToMain(){
         finish()

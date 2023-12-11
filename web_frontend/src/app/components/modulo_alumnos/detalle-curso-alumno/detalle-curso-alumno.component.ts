@@ -34,17 +34,11 @@ export class DetalleCursoAlumnoComponent implements OnInit{
     this.inscripcionService.getInscripcionPorCod(this.codInscripcion).subscribe({
       next: (data: Inscripcion) =>{
         this.inscripcion = data;
-        this.enriquecerInscripcion(this.inscripcion);
         console.log(this.inscripcion);
       }
     })
   }
 
-  enriquecerInscripcion(inscripcion: Inscripcion): void {
-    this.getCursoCod(inscripcion.seccion?.curso?.codCurso).subscribe((curso: Curso) => {
-        this.inscripcion.curso = curso;
-    });
-  }
 
   getCursoCod(codCurso: number | any): any {
     return this.cursoService.getCurso(codCurso);

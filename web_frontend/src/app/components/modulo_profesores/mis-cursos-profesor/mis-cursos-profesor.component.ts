@@ -25,9 +25,6 @@ export class MisCursosProfesorComponent implements OnInit{
   seccionesDocente: Seccion[] = [];
   codProfesor : number = 0;
 
-
-
-
   getSecciones(): void{
     this.seccionService.getSecciones().subscribe({
       next: (data) =>{

@@ -18,9 +18,6 @@ export class MisCursosComponent implements OnInit {
       this.codAlumno = this.storageService.obtenerUsuario().codAlumno;
       this.getInscripciones();
       this.getCursos();
-      console.log(this.inscripciones);
-      console.log(this.cursosActivos);
-      console.log(this.cursosTerminados);
   }
   inscripciones: Inscripcion[] = [];
   cursosActivos: Inscripcion[] = [];
@@ -35,7 +32,7 @@ export class MisCursosComponent implements OnInit {
       next: (data) =>{
         this.inscripciones = data;
         this.llenarCursos(this.inscripciones);
-        this.enriquecerInscripciones(this.inscripciones);
+        //this.enriquecerInscripciones(this.inscripciones);
         console.log(this.storageService.obtenerUsuario())
       },
       error: (err) =>{
@@ -78,7 +75,7 @@ export class MisCursosComponent implements OnInit {
         this.getCursoCod(codCurso).subscribe((curso: Curso) => {
           inscripcion.curso = curso;
         });
-      
+
     }
   }
 

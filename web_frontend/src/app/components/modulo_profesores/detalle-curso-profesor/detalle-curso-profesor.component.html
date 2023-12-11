@@ -5,17 +5,17 @@
             <h5 class="card-header text-center">{{curso.nombre}}</h5>
             <div class="card-body">
                 <div class="container row">
-                    <img src="{{curso.imagen}}" class="col img img-thumbnail me-3" style="max-width: 400px; max-height: 400px;">
+                    <img src="{{seccion?.curso?.imagen}}" class="col img img-thumbnail me-3" style="max-width: 400px; max-height: 400px;">
                     <div class="container col">
                         <h5 class="col">{{curso.nombre}}</h5>
-                        <h6 class="col fw-bolder">DESCRIPCIÓN CURSO: <p class="fw-lighter pt-2" >{{curso.descripcion}}</p></h6>
-                        <h6 class="col fw-bolder">INICIO DEL CURSO: <p class="fw-lighter pt-2" >{{inscripciones[0].seccion?.fechaInicio}}</p></h6>
-                        <h6 class="col fw-bolder">FIN DEL CURSO: <p class="fw-lighter pt-2" >{{inscripciones[0].seccion?.fechaFinal}}</p></h6>
+                        <h6 class="col fw-bolder">DESCRIPCIÓN CURSO: <p class="fw-lighter pt-2" >{{seccion?.curso?.descripcion}}</p></h6>
+                        <h6 class="col fw-bolder">INICIO DEL CURSO: <p class="fw-lighter pt-2" >{{seccion?.fechaInicio}}</p></h6>
+                        <h6 class="col fw-bolder">FIN DEL CURSO: <p class="fw-lighter pt-2" >{{seccion?.fechaFinal}}</p></h6>
                         <h6 class="col fw-bolder">DURACIÓN: <p class="fw-lighter pt-2" >{{curso.duracion}} Semanas</p></h6>
-                        <h6 class="col fw-bolder" *ngIf="curso.frecuencia == 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{curso.frecuencia}} - Lunes / Miercoles / Viernes</p></h6>
-                        <h6 class="col fw-bolder" *ngIf="curso.frecuencia != 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{curso.frecuencia}}</p></h6>
+                        <h6 class="col fw-bolder" *ngIf="seccion?.curso?.frecuencia == 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{seccion?.curso?.frecuencia}} - Lunes / Miercoles / Viernes</p></h6>
+                        <h6 class="col fw-bolder" *ngIf="seccion?.curso?.frecuencia != 'Interdiario'">FRECUENCIA: <p class="fw-lighter pt-2">{{seccion?.curso?.frecuencia}}</p></h6>
                         <h6 class="col fw-bolder">TURNOS: </h6>
-                        <h6 class="col fw-bolder" *ngFor="let i of curso.turnos">
+                        <h6 class="col fw-bolder" *ngFor="let i of seccion?.curso?.turnos">
                             <p>{{i.nombre}} -> {{i.horaInicio}}-{{i.horaFin}}</p>
                         </h6>
                     </div>
@@ -30,7 +30,9 @@
                             </svg>
                         <h5 class="text-center my-3">No cuenta con alumnos matriculados por el momento.</h5>
                     </div>
-                    <table class="row table table-bordered border-primary" *ngIf="inscripciones.length != 0">
+                    <hr>
+                    <div class="container">
+                      <table class="table table-bordered table-sm" *ngIf="inscripciones.length != 0">
                         <thead>
                             <tr>
                                 <th>NOMBRE</th>
@@ -46,19 +48,23 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
                     <div class="container row mt-3">
                         <div class="col text-center">
                             <h4>Temas del Curso</h4>
                         </div>
+                        <h5 *ngIf="seccion?.curso?.temas?.length == 0" class="text-center fw-light">Ups! El curso no tiene temas asignados.</h5>
+                        <div class="container" *ngIf="seccion?.curso?.temas?.length!! >= 1">
                         <table class="row table">
                             <tbody>
-                                <tr *ngFor="let i of curso.temas">
+                                <tr *ngFor="let i of seccion?.curso?.temas">
                                     <td>{{i.nombre}}</td>
                                     <td><a class="btn btn-outline-primary" (click)="descargarGuia(i.codTema)">DESCARGAR</a></td>
                                 </tr>
                             </tbody>
                         </table>
+                      </div>
                     </div>
                 </div>
             </div>

@@ -18,14 +18,14 @@
                         <h6 class="col fw-bolder">HORA INICIO: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.curso?.turnos?.at(0)?.horaInicio}}</p></h6>
                         <h6 class="col fw-bolder">HORA FIN: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.curso?.turnos?.at(0)?.horaFin}}</p></h6>
                         <h6 class="col fw-bolder">DOCENTE: <p class="fw-lighter pt-2" >{{inscripcion.seccion?.profesor?.nombre}} {{inscripcion.seccion?.profesor?.apellidoPaterno}}</p></h6>
-                        <h6 class="col fw-bolder" *ngIf="inscripcion.curso.temas.length >= 1">TEMAS: <p *ngFor="let t of inscripcion.curso?.temas" class="fw-lighter pt-2" >{{t.nombre}}</p></h6>
-                        <h6 class="col fw-bolder" *ngIf="inscripcion.curso.temas.length == 0">TEMAS: <p class="fw-lighter pt-2">¡No hay temas registrados actualmente!</p></h6>
+                        <h6 class="col fw-bolder" *ngIf="inscripcion.seccion?.curso?.temas?.length!! >= 1">TEMAS: <p *ngFor="let t of inscripcion.seccion?.curso?.temas" class="fw-lighter pt-2" >{{t.nombre}}</p></h6>
+                        <h6 class="col fw-bolder" *ngIf="inscripcion.seccion?.curso?.temas?.length == 0">TEMAS: <p class="fw-lighter pt-2">¡No hay temas registrados actualmente!</p></h6>
                     </div>
                     <div class="container row mt-3" *ngIf="inscripcion.fechaTerminado == null">
                         <div class="col text-center">
                             <h4>Guías de Estudio</h4>
                         </div>
-                        <table class="row table" *ngIf="inscripcion.curso.temas.length >=1">
+                        <table class="row table" *ngIf="inscripcion.seccion?.curso?.temas!!.length >=1">
                             <tbody>
                                 <tr *ngFor="let i of inscripcion.seccion?.curso?.temas">
                                     <td>{{i.nombre}}</td>
@@ -33,7 +33,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <h5 class="text-center fw-light" *ngIf="inscripcion.curso.temas.length == 0">Ups! No se han encontrado guías de estudio.</h5>
+                        <h5 class="text-center fw-light" *ngIf="inscripcion.seccion?.curso?.temas?.length == 0">Ups! No se han encontrado guías de estudio.</h5>
                     </div>
                     <div class="container row mt-3" *ngIf="inscripcion.fechaTerminado != null && inscripcion.seccion?.fechaFinal == inscripcion.fechaTerminado">
                         <div class="col text-center">
@@ -47,7 +47,5 @@
 
         </div>
     </div>
-
-
     </div>
 </div>

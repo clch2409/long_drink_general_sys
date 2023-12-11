@@ -29,7 +29,7 @@ export class InscripcionService {
     return this.http.get<Inscripcion[]>(API+'/inscripcion/retirado_terminado');
   }
 
-  getInscripcionesPorAlumno(codAlumno: number): Observable<Inscripcion[]>{
+  getInscripcionesPorAlumno(codAlumno?: number): Observable<Inscripcion[]>{
     return this.http.get<Inscripcion[]>(API+`/inscripcion/por_alumno?codAlumno=${codAlumno}`);
   }
 

@@ -7,11 +7,11 @@
                   <div class="card col ms-1 me-1" style="max-width: 16rem;" *ngFor="let i of seccionesDocente">
                       <img src="{{i.curso?.imagen}}" class="card-img-top">
                       <div class="card-body">
-                        <h5 class="card-title">{{i.nombre}}</h5>
+                        <h5 class="card-title">{{i.curso?.nombre}}</h5>
                         <p class="card-text">{{i.curso?.descripcion}}</p>
                         <!-- <p class="fw-bold text-center">Primer Día de Clases: {{i.fechaInicio}}</p> -->
                         <div class="container text-center">
-                          <a [routerLink]="['/p/mi-curso', codProfesor, i.curso?.codCurso]" class="btn btn-success">Detalles</a>
+                          <a [routerLink]="['/p/mi-curso', codProfesor, i.codSeccion]" class="btn btn-success">Detalles</a>
                         </div>
                       </div>
                   </div>

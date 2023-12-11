@@ -1,0 +1,74 @@
+<div class="container py-3">
+  <div class="row justify-content-center">
+    <div class="col-md-12 py-3 px-4">
+      <div class="card">
+        <div class="card-header text-center">
+          <h5>Pagados</h5>
+        </div>
+        <div class="card-body">
+          <div class="container text-center" *ngIf="listaPagados.length == 0">
+            <mat-icon class="customIconSize">payments</mat-icon>
+            <h5 class="card-title" >Ups! Usted no cuenta con pagos realizados.</h5>
+          </div>
+          <div class="container" *ngIf="listaPagados.length >= 1">
+            <table class="table table-bordered ">
+              <thead>
+                <tr>
+                  <th>Referencia</th>
+                  <th>Descripción</th>
+                  <th>Fecha de Pago</th>
+                  <th>Total</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let lp of listaPagados">
+                  <td>{{lp.codPago}}</td>
+                  <td>{{lp.descripcion}}</td>
+                  <td>{{lp.fechaPago | date}}</td>
+                  <td>S./ {{lp.total}}</td>
+                  <td><a class="btn btn-primary btn-sm" (click)="verDetallePago(lp.codPago)">DETALLE</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 py-3 px-4">
+      <div class="card">
+        <div class="card-header text-center">
+          <h5>Pendientes de Pago</h5>
+        </div>
+        <div class="card-body">
+          <div class="container text-center" *ngIf="listaPendientes.length == 0">
+            <mat-icon class="customIconSize">task_alt</mat-icon>
+            <h5 class="card-title">Usted no cuenta con pagos pendientes.</h5>
+          </div>
+          <div class="container" *ngIf="listaPendientes.length >= 1">
+            <table class="table table-bordered ">
+              <thead>
+                <tr>
+                  <th>Descripción</th>
+                  <th>Fecha de Vencimiento</th>
+                  <th>Total</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let lp of listaPendientes">
+                  <td>{{lp.descripcion}}</td>
+                  <td>{{lp.fechaVencimiento | date}}</td>
+                  <td>S./ {{lp.total}}</td>
+                  <td><a class="btn btn-primary btn-sm" (click)="verDetallePendiente(lp.codPago)">DETALLE</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

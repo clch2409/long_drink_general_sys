@@ -83,7 +83,7 @@ class RecoveryActivity : AppCompatActivity() {
 
                 alertDialog.create()
                 alertDialog.show()
-                
+
             }catch (ex : Exception){
                 Log.e("RECOVERY ACTIVITY", ex.toString())
             }

@@ -51,7 +51,7 @@ class CoursesViewPagerAdapter(
             }
             fragment
         } else{
-            bundle = bundleOf(Pair("email", email), Pair("usuario", usuario), Pair("nombreCompleto", nombreCompleto))
+            bundle = bundleOf(Pair("codAlumno", codAlum), Pair("email", email), Pair("usuario", usuario), Pair("nombreCompleto", nombreCompleto))
             fragment = MyAccountFragment()
             fragment.arguments = bundle
         }

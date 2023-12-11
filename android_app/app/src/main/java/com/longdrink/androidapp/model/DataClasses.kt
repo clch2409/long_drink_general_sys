@@ -2,6 +2,7 @@ package com.longdrink.androidapp.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.Date
 
 /** --------------------- LOGIN AND REGISTER RELATED DATA CLASSES ----------------------------------*/
 data class LoginWebResponse(
@@ -133,4 +134,12 @@ data class Inscripcion(
 
 )
 
-
+/** --------------------- PAYMENTS RELATED DATA CLASSES ----------------------------------*/
+data class Pago(
+    @SerializedName("codPago") var codPago : Long = 0L,
+    @SerializedName("fechaPago") var fechaPago : Date,
+    @SerializedName("fechaVencimiento") var fechaVencimiento : Date,
+    @SerializedName("estado") var estado : Boolean,
+    @SerializedName("descripcion") var descripcion : String,
+    @SerializedName("total") var total : Double
+)

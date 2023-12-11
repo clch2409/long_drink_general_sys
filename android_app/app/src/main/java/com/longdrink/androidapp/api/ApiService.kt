@@ -7,6 +7,7 @@ import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.longdrink.androidapp.model.LoginSendData
 import com.longdrink.androidapp.model.LoginWebResponse
 import com.longdrink.androidapp.model.Mensaje
+import com.longdrink.androidapp.model.Pago
 import com.longdrink.androidapp.model.RegisterResponse
 import com.longdrink.androidapp.model.RegisterSendData
 import okhttp3.ResponseBody
@@ -52,4 +53,9 @@ interface ApiService {
     @Streaming
     @GET("tema/descargar_guia")
     suspend fun descargarGuia(@Query("codTema") codTema : Long) : Response<ResponseBody>
+
+    /**----------------------------------------PAYMENTS RELATED METHODS------------------------------*/
+    @GET("pago")
+    suspend fun listarPagosAlumno(@Query("codAlumno") codAlumno : Long) : Response<List<Pago>>
+
 }

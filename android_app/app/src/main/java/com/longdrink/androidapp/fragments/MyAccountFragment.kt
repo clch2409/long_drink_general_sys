@@ -6,9 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.snackbar.Snackbar
-import com.longdrink.androidapp.R
-import com.longdrink.androidapp.RecoveryActivity
+import com.longdrink.androidapp.PaymentsActivity
+import com.longdrink.androidapp.ChangeCredentialsActivity
 import com.longdrink.androidapp.databinding.FragmentMyAccountBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,6 +29,7 @@ class MyAccountFragment : Fragment() {
     private var email = ""
     private var usuario = ""
     private var nombreCompleto = ""
+    private var codAlum = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +46,16 @@ class MyAccountFragment : Fragment() {
         email = requireArguments().getString("email")!!
         usuario = requireArguments().getString("usuario")!!
         nombreCompleto = requireArguments().getString("nombreCompleto")!!
+        codAlum = requireArguments().getLong("codAlum")
+
         binding = FragmentMyAccountBinding.inflate(layoutInflater)
         disableInputs()
         placeInfo(email, usuario, nombreCompleto)
         binding.myAccountChangePassword.setOnClickListener {
             goToRecovery()
+        }
+        binding.myAccountViewPayments.setOnClickListener {
+            goToPayments()
         }
 
 
@@ -63,9 +68,9 @@ class MyAccountFragment : Fragment() {
         binding.myAccountFullname.hint = datos[2]
     }
 
-    private fun showSnackbar(mensaje : String){
+    /*private fun showSnackbar(mensaje : String){
         activity?.runOnUiThread{ Snackbar.make(binding.root, mensaje, Snackbar.LENGTH_LONG).show() }
-    }
+    }*/
 
     private fun disableInputs(){
         binding.myAccountEmail.isEnabled = false
@@ -74,7 +79,13 @@ class MyAccountFragment : Fragment() {
     }
 
     private fun goToRecovery(){
-        startActivity(Intent(activity, RecoveryActivity::class.java))
+        startActivity(Intent(activity, ChangeCredentialsActivity::class.java))
+    }
+
+    private fun goToPayments(){
+        var intent = Intent(activity, PaymentsActivity::class.java)
+        intent.putExtra("codAlum", codAlum)
+        startActivity(intent)
     }
 
     companion object {

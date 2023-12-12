@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Curso } from 'src/app/models/curso.model';
-import { CursoService } from 'src/app/services/curso.service';
 import { AlumnoService } from 'src/app/services/alumno.service';
 import Swal from 'sweetalert2';
 import { StorageService } from 'src/app/services/storage.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
+import { SeccionService } from 'src/app/services/seccion.service';
 
 @Component({
   selector: 'app-inscripcion-alumno-antiguo',
@@ -12,26 +11,24 @@ import { InscripcionService } from 'src/app/services/inscripcion.service';
   styleUrls: ['./inscripcion-alumno-antiguo.component.css']
 })
 export class InscripcionAlumnoAntiguoComponent implements OnInit {
-  cursosDisponibles: Curso[] = [];
-  selectedCurso: number | undefined;
-  selectedCursoNombreTurno: string = '';
-  fechaInicio: string = '';
-  fechaInscripcion: string = '';
-  fechaFinal: string = '';
 
-  selectedCursoCod: number | undefined;
-  selectedTurnoCod: number | undefined;
-
-  nombre: string = '';
-  apellidoPaterno: string = '';
-  apellidoMaterno: string = '';
-  dni: string = '';
-  telefono: string = '';
-  email: string = '';
-  codAlumno: number = 0;
+  cursosDisponibles: any[] = [];
+  selectedCurso: any = {};
+  nombre: any;
+  apellidoPaterno: any;
+  apellidoMaterno: any;
+  dni: any;
+  email: any;
+  telefono: any;
+  turno: any;
+  seccion: any;
+  fechaInicio: any;
+  fechaFin: any;
+  fechaInscripcion: any;
+  codAlumno: any;
 
   constructor(
-    private cursoService: CursoService,
+    private seccionService: SeccionService,
     private storageService: StorageService,
     private alumnoService: AlumnoService,
     private inscripcionService: InscripcionService
@@ -40,16 +37,36 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     this.storageService.denegarAcceso("ALUMNOyDOCENTE");
-    this.cursoService.getCursosActivos().subscribe(
-      (cursos) => {
-        this.cursosDisponibles = cursos;
+    this.seccionService.getDisponibles().subscribe(
+      (data) => {
+        this.cursosDisponibles = data;
       },
       (error) => {
-        console.error('Error al obtener la lista de cursos disponibles:', error);
+        console.error('Error al obtener la lista de cursos disponibles', error);
       }
     );
     const today = new Date();
-    this.fechaInscripcion = today.toISOString().split('T')[0];
+    const dd: string | number = today.getDate();
+    const mm: string | number = today.getMonth() + 1;
+    const yyyy: number = today.getFullYear();
+
+    this.fechaInscripcion = `${yyyy}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
+  }
+
+  onCursoSelectionChange(): void {
+    if (this.selectedCurso && this.selectedCurso.curso) {
+      const cursoSeleccionado = this.selectedCurso.curso;
+
+      this.turno = cursoSeleccionado.turnos.length > 0 ? cursoSeleccionado.turnos[0].nombre : '';
+      this.seccion = this.selectedCurso.nombre;
+      this.fechaInicio = this.selectedCurso.fechaInicio;
+      this.fechaFin = this.selectedCurso.fechaFinal;
+    } else {
+      this.turno = '';
+      this.seccion = '';
+      this.fechaInicio = '';
+      this.fechaFin = '';
+    }
   }
 
   limpiarDniYEnfocar(): void {
@@ -121,98 +138,44 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
     );
   }
 
-  onCursoSelectionChange(): void {
-    if (this.selectedCurso) {
-      this.cursoService.getCurso(this.selectedCurso).subscribe(
-        (curso) => {
-          if (curso.turnos && curso.turnos.length > 0) {
-            this.selectedCursoNombreTurno = curso.turnos[0].nombre || '';
-            this.selectedCursoCod = curso.codCurso;
-            this.selectedTurnoCod = curso.turnos[0].codTurno;
-
-            const today = new Date();
-            const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-            this.fechaInicio = nextMonth.toISOString().split('T')[0];
-
-            if (curso.duracion) {
-              const duracionEnSemanas = curso.duracion;
-              const fechaInicio = new Date(this.fechaInicio);
-              const fechaFinal = new Date(fechaInicio.getTime() + duracionEnSemanas * 7 * 24 * 60 * 60 * 1000);
-              this.fechaFinal = fechaFinal.toISOString().split('T')[0];
-            } else {
-              console.error('El curso no tiene duración especificada.');
-              this.fechaFinal = '';
-            }
-          } else {
-            console.error('El curso no tiene turnos.');
-            this.selectedCursoNombreTurno = '';
-            this.selectedCursoCod = undefined;
-            this.selectedTurnoCod = undefined;
-            this.fechaInicio = '';
-            this.fechaFinal = '';
-          }
-        },
-        (error) => {
-          console.error('Error al obtener el curso:', error);
-          this.selectedCursoNombreTurno = '';
-          this.selectedCursoCod = undefined;
-          this.selectedTurnoCod = undefined;
-          this.fechaInicio = '';
-          this.fechaFinal = '';
-        }
-      );
-    } else {
-      this.selectedCursoNombreTurno = '';
-      this.selectedCursoCod = undefined;
-      this.selectedTurnoCod = undefined;
-      this.fechaInicio = '';
-      this.fechaFinal = '';
-    }
-  }
-
   limpiarCampos(): void {
     this.nombre = '';
     this.apellidoPaterno = '';
     this.apellidoMaterno = '';
     this.dni = '';
-    this.telefono = '';
     this.email = '';
-    this.selectedCurso = undefined
-    this.selectedCursoNombreTurno = ''
-    this.fechaInicio = ''
-    this.fechaFinal = ''
-    const today = new Date();
-    this.fechaInscripcion = today.toISOString().split('T')[0];
-    const dniInput = document.getElementById('alumnoDni') as HTMLInputElement;
-    dniInput.value = ''
-    dniInput.focus();
+    this.telefono = '';
+    this.selectedCurso = {};
+    this.turno = '';
+    this.seccion = '';
+    this.fechaInicio = '';
+    this.fechaFin = '';
+    const nombreInput = document.getElementById('nombre') as HTMLInputElement;
+    nombreInput.focus();
   }
 
   limpiarError() {
-    this.selectedCurso = undefined
-    this.selectedCursoNombreTurno = ''
-    this.fechaInicio = ''
-    this.fechaFinal = ''
-    const today = new Date();
-    this.fechaInscripcion = today.toISOString().split('T')[0];
+    this.selectedCurso = {};
+    this.turno = '';
+    this.seccion = '';
+    this.fechaInicio = '';
+    this.fechaFin = '';
+    const cursoInput = document.getElementById('curso') as HTMLInputElement;
+    cursoInput.focus();
   }
 
   onSubmit(): void {
-    if (!this.codAlumno || !this.selectedCursoCod || !this.fechaInicio || !this.fechaFinal || !this.fechaInscripcion || !this.fechaFinal) {
+    if (!this.codAlumno || !this.seccion || !this.fechaInscripcion) {
       Swal.fire('Error', 'Debe seleccionar un alumno y escoger un curso', 'error');
       return;
     }
   
     const alumnoData = {
       codAlumno: this.codAlumno,
-      codCurso: this.selectedCursoCod,
-      estado: true,
-      fechaInicio: this.fechaInicio,
-      fechaFinal: this.fechaFinal,
-      fechaInscripcion: this.fechaInscripcion,
-      fechaTerminado: this.fechaFinal
+      codSeccion: this.selectedCurso.codSeccion,
+      fechaInscripcion: this.fechaInscripcion
     };
-  
+  console.log(alumnoData);
     this.inscripcionService.registroInscripcion(alumnoData).subscribe(
       (response) => {
         console.log('Alumno inscrito con éxito', response);

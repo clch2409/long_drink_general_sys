@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Curso } from 'src/app/models/curso.model';
-import { CursoService } from 'src/app/services/curso.service';
-import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 import { StorageService } from 'src/app/services/storage.service';
+import { SeccionService } from 'src/app/services/seccion.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-inscripcion-alumno',
@@ -11,90 +10,59 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./inscripcion-alumno.component.css']
 })
 export class InscripcionAlumnoComponent implements OnInit {
-  cursosDisponibles: Curso[] = [];
-  selectedCurso: number | undefined;
-  selectedCursoNombreTurno: string = '';
-  fechaInicio: string = '';
-  fechaInscripcion: string = '';
-  fechaFinal: string = '';
-
-  selectedCursoCod: number | undefined;
-  selectedTurnoCod: number | undefined;
-
-  nombre: string = '';
-  apellidoPaterno: string = '';
-  apellidoMaterno: string = '';
-  dni: string = '';
-  telefono: string = '';
-  email: string = '';
+  cursosDisponibles: any[] = [];
+  selectedCurso: any = {};
+  nombre: any;
+  apellidoPaterno: any;
+  apellidoMaterno: any;
+  dni: any;
+  email: any;
+  telefono: any;
+  turno: any;
+  seccion: any;
+  fechaInicio: any;
+  fechaFin: any;
+  fechaInscripcion: any;
 
   constructor(
-    private cursoService: CursoService,
-    private authService: AuthService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private seccionService: SeccionService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     this.storageService.denegarAcceso("ALUMNOyDOCENTE");
-    this.cursoService.getCursosActivos().subscribe(
-      (cursos) => {
-        this.cursosDisponibles = cursos;
+
+    this.seccionService.getDisponibles().subscribe(
+      (data) => {
+        this.cursosDisponibles = data;
       },
       (error) => {
-        console.error('Error al obtener la lista de cursos disponibles:', error);
+        console.error('Error al obtener la lista de cursos disponibles', error);
       }
     );
     const today = new Date();
-    this.fechaInscripcion = today.toISOString().split('T')[0];
+    const dd: string | number = today.getDate();
+    const mm: string | number = today.getMonth() + 1;
+    const yyyy: number = today.getFullYear();
+
+    this.fechaInscripcion = `${yyyy}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
   }
 
   onCursoSelectionChange(): void {
-    if (this.selectedCurso) {
-      this.cursoService.getCurso(this.selectedCurso).subscribe(
-        (curso) => {
-          if (curso.turnos && curso.turnos.length > 0) {
-            this.selectedCursoNombreTurno = curso.turnos[0].nombre || '';
-            this.selectedCursoCod = curso.codCurso;
-            this.selectedTurnoCod = curso.turnos[0].codTurno;
+    if (this.selectedCurso && this.selectedCurso.curso) {
+      const cursoSeleccionado = this.selectedCurso.curso;
 
-            const today = new Date();
-            const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-            this.fechaInicio = nextMonth.toISOString().split('T')[0];
-
-            if (curso.duracion) {
-              const duracionEnSemanas = curso.duracion;
-              const fechaInicio = new Date(this.fechaInicio);
-              const fechaFinal = new Date(fechaInicio.getTime() + duracionEnSemanas * 7 * 24 * 60 * 60 * 1000);
-              this.fechaFinal = fechaFinal.toISOString().split('T')[0];
-            } else {
-              console.error('El curso no tiene duración especificada.');
-              this.fechaFinal = '';
-            }
-          } else {
-            console.error('El curso no tiene turnos.');
-            this.selectedCursoNombreTurno = '';
-            this.selectedCursoCod = undefined;
-            this.selectedTurnoCod = undefined;
-            this.fechaInicio = '';
-            this.fechaFinal = '';
-          }
-        },
-        (error) => {
-          console.error('Error al obtener el curso:', error);
-          this.selectedCursoNombreTurno = '';
-          this.selectedCursoCod = undefined;
-          this.selectedTurnoCod = undefined;
-          this.fechaInicio = '';
-          this.fechaFinal = '';
-        }
-      );
+      this.turno = cursoSeleccionado.turnos.length > 0 ? cursoSeleccionado.turnos[0].nombre : '';
+      this.seccion = this.selectedCurso.nombre;
+      this.fechaInicio = this.selectedCurso.fechaInicio;
+      this.fechaFin = this.selectedCurso.fechaFinal;
     } else {
-      this.selectedCursoNombreTurno = '';
-      this.selectedCursoCod = undefined;
-      this.selectedTurnoCod = undefined;
+      this.turno = '';
+      this.seccion = '';
       this.fechaInicio = '';
-      this.fechaFinal = '';
+      this.fechaFin = '';
     }
   }
 
@@ -173,29 +141,29 @@ export class InscripcionAlumnoComponent implements OnInit {
     this.apellidoPaterno = '';
     this.apellidoMaterno = '';
     this.dni = '';
-    this.telefono = '';
     this.email = '';
-    this.selectedCurso = undefined
-    this.selectedCursoNombreTurno = ''
-    this.fechaInicio = ''
-    this.fechaFinal = ''
-    const today = new Date();
-    this.fechaInscripcion = today.toISOString().split('T')[0];
+    this.telefono = '';
+    this.selectedCurso = {};
+    this.turno = '';
+    this.seccion = '';
+    this.fechaInicio = '';
+    this.fechaFin = '';
     const nombreInput = document.getElementById('nombre') as HTMLInputElement;
     nombreInput.focus();
   }
 
   limpiarError() {
-    this.selectedCurso = undefined
-    this.selectedCursoNombreTurno = ''
-    this.fechaInicio = ''
-    this.fechaFinal = ''
-    const today = new Date();
-    this.fechaInscripcion = today.toISOString().split('T')[0];
+    this.selectedCurso = {};
+    this.turno = '';
+    this.seccion = '';
+    this.fechaInicio = '';
+    this.fechaFin = '';
+    const cursoInput = document.getElementById('curso') as HTMLInputElement;
+    cursoInput.focus();
   }
 
   onSubmit(): void {
-    if (!this.nombre || !this.apellidoPaterno || !this.apellidoMaterno || !this.dni || !this.telefono || !this.email || !this.selectedCursoCod || !this.selectedTurnoCod || !this.fechaInicio || !this.fechaFinal || !this.fechaInscripcion) {
+    if (!this.nombre || !this.apellidoPaterno || !this.apellidoMaterno || !this.dni || !this.telefono || !this.email || !this.fechaInicio || !this.fechaFin || !this.fechaInscripcion) {
       Swal.fire('Error', 'Por favor, complete todos los campos correctamente.', 'error').then(() => {
         this.limpiarCampos();
       });
@@ -243,7 +211,6 @@ export class InscripcionAlumnoComponent implements OnInit {
       });
       return;
     }
-
     const alumnoData = {
       nombre: this.nombre,
       apellidoPaterno: this.apellidoPaterno,
@@ -251,28 +218,20 @@ export class InscripcionAlumnoComponent implements OnInit {
       dni: this.dni,
       telefono: this.telefono,
       email: this.email,
-      codCurso: this.selectedCursoCod,
-      codTurno: this.selectedTurnoCod,
-      fechaInicio: this.fechaInicio,
-      fechaFinal: this.fechaFinal,
+      codSeccion: this.selectedCurso.codSeccion,
       fechaInscripcion: this.fechaInscripcion
     };
-
+    console.log('Datos a enviar:', alumnoData);
     this.authService.registroAlumno(alumnoData).subscribe(
       (response) => {
-        console.log('Alumno registrado con éxito', response);
-        Swal.fire('Éxito', 'Alumno registrado con éxito', 'success').then(() => {
-          this.limpiarCampos();
-        });
-        return;
+        Swal.fire('¡Registro exitoso!', 'El alumno se ha registrado correctamente.', 'success');
       },
       (error) => {
         let errorMessage = 'Error! Ha sucedido en error en el guardado de datos.';
   
         if (error.error && error.error.mensaje) {
           errorMessage = error.error.mensaje;
-  
-          // Manejar diferentes mensajes de error
+
           switch (errorMessage.toLowerCase()) {
             case 'error! el dni ingresado ya pertenece a una cuenta registrada.':
               Swal.fire('Error', 'El DNI ingresado ya pertenece a una cuenta registrada.', 'error').then(() => {

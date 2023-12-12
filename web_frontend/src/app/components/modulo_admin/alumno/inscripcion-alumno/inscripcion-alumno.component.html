@@ -4,7 +4,7 @@
             <div class="rounded-4 shadow p-4 border border-2 border-primary">
                 <h2 class="fw-bold fst-italic text-primary text-center mb-4 text-decoration-underline fs-2">Inscripción
                     de Alumnos</h2>
-                <form class="form container" (ngSubmit)="onSubmit()" #formAlumno="ngForm">
+                <form class="form container" (ngSubmit)="onSubmit()">
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="nombre" class="fw-bold form-label">Nombres</label>
@@ -43,33 +43,39 @@
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="curso" class="fw-bold form-label">Curso</label>
-                            <select class="text-uppercase fw-medium form-control" id="curso" name="curso"
-                                [(ngModel)]="selectedCurso" (change)="onCursoSelectionChange()" required>
-                                <option *ngFor="let curso of cursosDisponibles" [value]="curso.codCurso">{{ curso.nombre
-                                    }}</option>
+                            <select class="text-uppercase fw-medium form-select" id="curso" name="curso" required
+                                [(ngModel)]="selectedCurso" (change)="onCursoSelectionChange()">
+                                <option *ngFor="let curso of cursosDisponibles" [ngValue]="curso">
+                                    {{ curso.curso.nombre }}
+                                </option>
                             </select>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="turno" class="fw-bold form-label">Turno</label>
                             <input type="text" class="text-uppercase fw-medium form-control" id="turno" name="turno"
-                                [value]="selectedCursoNombreTurno" readonly>
+                                readonly [(ngModel)]="turno">
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="fechaInicio" class="fw-bold form-label">Fecha de Inicio</label>
-                            <input type="date" class="text-uppercase fw-medium form-control" id="fechaInicio"
-                                name="fechaInicio" [(ngModel)]="fechaInicio" readonly required>
+                            <label for="seccion" class="fw-bold form-label">Seccion</label>
+                            <input type="text" class="text-uppercase fw-medium form-control" id="seccion" name="seccion"
+                                readonly required [(ngModel)]="seccion">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
+                            <label for="fechaInicio" class="fw-bold form-label">Fecha de Inicio</label>
+                            <input type="date" class="text-uppercase fw-medium form-control" id="fechaInicio"
+                                name="fechaInicio" readonly required [(ngModel)]="fechaInicio">
+                        </div>
+                        <div class="col-md-4 mb-3">
                             <label for="fechaFinal" class="fw-bold form-label">Fecha de Fin</label>
                             <input type="date" class="text-uppercase fw-medium form-control" id="fechaFinal"
-                                name="fechaFinal" [(ngModel)]="fechaFinal" readonly required>
+                                name="fechaFinal" readonly required [(ngModel)]="fechaFin">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="fechaInscripcion" class="fw-bold form-label">Fecha de Inscripción</label>
                             <input type="date" class="text-uppercase fw-medium form-control" id="fechaInscripcion"
-                                name="fechaInscripcion" [(ngModel)]="fechaInscripcion" readonly required>
+                                name="fechaInscripcion" readonly required [(ngModel)]="fechaInscripcion">
                         </div>
                     </div>
 

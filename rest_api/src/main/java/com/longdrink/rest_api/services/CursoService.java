@@ -23,11 +23,7 @@ public class CursoService {
     public List<Curso> listarCursosSinInscripciones(){ return cursoDAO.findSinInscripciones(); }
 
     public Curso getPorCod(Long cod){
-        try{
-            Curso c = cursoDAO.findById(cod).get();
-            return c;
-        }
-        catch(Exception ex){ return null; }
+        return cursoDAO.findById(cod).orElse(null);
     }
 
     public Curso guardar(Curso c){

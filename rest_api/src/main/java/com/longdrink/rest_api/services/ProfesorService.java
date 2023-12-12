@@ -46,10 +46,7 @@ public class ProfesorService {
     }
 
     public Profesor getPorCod(Long cod){
-        try{
-            return profesorDAO.findById(cod).get();
-        }
-        catch(Exception ex){ return null; }
+        return profesorDAO.findById(cod).orElse(null);
     }
 
     public Profesor getPorDNI(String dni){

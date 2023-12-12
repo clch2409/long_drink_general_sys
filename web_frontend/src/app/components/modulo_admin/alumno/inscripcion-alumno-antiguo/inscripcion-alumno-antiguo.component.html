@@ -46,7 +46,7 @@
                             <select class="text-uppercase fw-medium form-select" id="curso" name="curso" required
                                 [(ngModel)]="selectedCurso" (change)="onCursoSelectionChange()">
                                 <option *ngFor="let curso of cursosDisponibles" [ngValue]="curso">
-                                    {{ curso.curso.nombre }}
+                                    {{curso.curso.nombre +" - "+curso.turno.nombre}} <!---Modificar de ser necesario.-->
                                 </option>
                             </select>
                         </div>

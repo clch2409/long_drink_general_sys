@@ -18,10 +18,7 @@ public class TurnoService {
     public List<Turno> listarTurnoPorCurso(Long codCurso){ return turnoDAO.findAllByCursosCodCurso(codCurso); }
 
     public Turno getByCod(Long codTurno){
-        try{
-            return turnoDAO.findById(codTurno).get();
-        }
-        catch(Exception ex){ return null; }
+        return turnoDAO.findById(codTurno).orElse(null);
     }
 
     public Turno guardar(Turno t){

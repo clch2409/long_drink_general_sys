@@ -169,7 +169,7 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
       Swal.fire('Error', 'Debe seleccionar un alumno y escoger un curso', 'error');
       return;
     }
-  
+
     const alumnoData = {
       codAlumno: this.codAlumno,
       codSeccion: this.selectedCurso.codSeccion,
@@ -185,12 +185,12 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
       },
       (error) => {
         console.error('Error al inscribir al alumno', error);
-  
+
         let errorMessage = 'Error al procesar la solicitud. Intente de nuevo por favor.';
-  
+
         if (error.error && error.error.mensaje) {
           errorMessage = error.error.mensaje;
-  
+
           // Manejar diferentes mensajes de error
           switch (errorMessage.toLowerCase()) {
             case 'ups! alumno no encontrado o deshabilitado.':
@@ -241,5 +241,5 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
         }
       }
     );
-  }  
+  }
 }

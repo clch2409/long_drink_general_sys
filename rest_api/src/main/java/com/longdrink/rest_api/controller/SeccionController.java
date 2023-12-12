@@ -1,9 +1,12 @@
 package com.longdrink.rest_api.controller;
 
-import com.longdrink.rest_api.model.Inscripcion;
-import com.longdrink.rest_api.model.Seccion;
+import com.longdrink.rest_api.model.*;
+import com.longdrink.rest_api.model.payload.InsertSeccion;
 import com.longdrink.rest_api.model.payload.Mensaje;
+import com.longdrink.rest_api.services.CursoService;
+import com.longdrink.rest_api.services.ProfesorService;
 import com.longdrink.rest_api.services.SeccionService;
+import com.longdrink.rest_api.services.TurnoService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,12 @@ import java.util.List;
 public class SeccionController {
     @Autowired
     private SeccionService seccionService;
+    @Autowired
+    private CursoService cursoService;
+    @Autowired
+    private ProfesorService profesorService;
+    @Autowired
+    private TurnoService turnoService;
 
     @GetMapping()
     public ResponseEntity<?> get(){
@@ -98,6 +107,49 @@ public class SeccionController {
                     HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(seccionService.obtenerSeccion(codSeccion),HttpStatus.OK);
+    }
+
+    //Apertura de sección para un curso existente -- Cursos nuevos nacen con una seccion.
+    @PostMapping("/asignar_curso")
+    public ResponseEntity<?> asignarSeccionCurso(@RequestBody InsertSeccion iS){
+        Curso c = cursoService.getPorCod(iS.getCodCurso());
+        Profesor p = profesorService.getPorCod(iS.getCodProfesor());
+        Turno t = turnoService.getByCod(iS.getCodTurno());
+        if(c == null || !c.isVisibilidad()){
+            return new ResponseEntity<>(new Mensaje("Ups! El curso seleccionado no existe o no esta activo.",400),HttpStatus.BAD_REQUEST);
+        }
+        if(p == null || !p.isActivo()){
+            return new ResponseEntity<>(new Mensaje("Ups! El profesor seleccionado no existe o no esta activo.",400),HttpStatus.BAD_REQUEST);
+        }
+        if(t == null){
+            return new ResponseEntity<>(new Mensaje("Ups! El turno seleccionado no existe.",400),HttpStatus.BAD_REQUEST);
+        }
+        int conteoTurnos = 0;
+        for(Seccion s: c.getSecciones()){
+            if(s.getTurno().equals(t) && s.isEstado()){
+                conteoTurnos++;
+            }
+        }
+        if(conteoTurnos > 0){ //Si hay una seccion activa con el mismo turno....!
+            return new ResponseEntity<>(new Mensaje("Ups! Ya hay una sección existente para el curso seleccionado con el mismo turno.",400),HttpStatus.BAD_REQUEST);
+        }
+        if(!profesorService.listarActivosNoAsignados().contains(p)){
+            return new ResponseEntity<>(new Mensaje("Ups! El profesor seleccionado no esta disponible.",400),HttpStatus.BAD_REQUEST);
+        }
+        if(!iS.validarDatos()){
+            return new ResponseEntity<>(new Mensaje("Ups! Los datos ingresados no tienen el formato correcto.",400),HttpStatus.BAD_REQUEST);
+        }
+        //Insert de datos!
+        try{
+            Seccion seccion = new Seccion(0L,seccionService.generarNombre(c.getCodCurso()),
+                    iS.getFechaInicio(),iS.getFechaFinal(),
+                    true,iS.getMaxAlumnos(),c,t,p);
+            Seccion seccionGuardada = seccionService.guardar(seccion);
+            return new ResponseEntity<>(seccionGuardada,HttpStatus.CREATED); //Seccion creada y asignada a curso.
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Error! Imposible asignar sección a curso. Intente nuevamente.",500),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

@@ -115,7 +115,7 @@ public class SeccionService {
         }
         else{
             RomanNumeralFormat f = new RomanNumeralFormat();
-            retorno = f.format(listaSecciones.size())+"."+codCurso+"-"+Year.now().getValue();
+            retorno = f.format(listaSecciones.size()+1)+"."+codCurso+"-"+Year.now().getValue();
         }
         return retorno;
     }

@@ -44,7 +44,8 @@ import { EditarAlumnoComponent } from './components/modulo_admin/alumno/editar-a
 import { EditarProfesorComponent } from './components/modulo_admin/profesor/editar-profesor/editar-profesor.component';
 import { EditarCursoComponent } from './components/modulo_admin/curso/editar-curso/editar-curso.component';
 import { RecuperarCuentaComponent } from './components/shared/recuperar-cuenta/recuperar-cuenta.component';
-import { MisPagosComponent } from './components/modulo_alumnos/mis-pagos/mis-pagos.component' 
+import { MisPagosComponent } from './components/modulo_alumnos/mis-pagos/mis-pagos.component';
+import { MarcarAsistenciaComponent } from './components/modulo_alumnos/marcar-asistencia/marcar-asistencia.component' 
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { MisPagosComponent } from './components/modulo_alumnos/mis-pagos/mis-pag
     EditarCursoComponent,
     RecuperarCuentaComponent,
     MisPagosComponent,
+    MarcarAsistenciaComponent,
   ],
   imports: [
     BrowserModule,

@@ -28,6 +28,7 @@ import { EditarAlumnoComponent } from './components/modulo_admin/alumno/editar-a
 import { EditarCursoComponent } from './components/modulo_admin/curso/editar-curso/editar-curso.component';
 import { RecuperarCuentaComponent } from './components/shared/recuperar-cuenta/recuperar-cuenta.component';
 import { MisPagosComponent } from './components/modulo_alumnos/mis-pagos/mis-pagos.component';
+import { MarcarAsistenciaComponent } from './components/modulo_alumnos/marcar-asistencia/marcar-asistencia.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, title: 'Long Drink - Inicio de Sesión' },
@@ -59,7 +60,8 @@ const routes: Routes = [
     { path: 'mis-cursos', component: MisCursosComponent, title: 'Long Drink - Mis Cursos' },
     { path: 'mi-curso/:codalum/:codins/:codcurso', component: DetalleCursoAlumnoComponent, title: 'Long Drink - Curso: xxxx'},
     { path: 'mi-cuenta', component: MiCuentaComponent, title: 'Long Drink - Mi Cuenta' },
-    { path: 'pagos', component: MisPagosComponent, title: 'Long Drink - Mis Pagos' }
+    { path: 'pagos', component: MisPagosComponent, title: 'Long Drink - Mis Pagos' },
+    { path: 'asistencia', component: MarcarAsistenciaComponent, title: 'Long Drink - Marcado de Asistencia' }
   ]},
   { path: 'p', component: DashboardComponent, title: 'Long Drink - Área Docente', children: [
     { path: 'mis-cursos', component: MisCursosProfesorComponent, title: 'Long Drink - Mis Cursos' },

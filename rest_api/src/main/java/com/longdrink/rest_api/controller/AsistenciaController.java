@@ -1,5 +1,6 @@
 package com.longdrink.rest_api.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.longdrink.rest_api.model.Asistencia;
 import com.longdrink.rest_api.model.Inscripcion;
 import com.longdrink.rest_api.model.payload.MarcarAsistencia;
@@ -7,6 +8,7 @@ import com.longdrink.rest_api.model.payload.Mensaje;
 import com.longdrink.rest_api.services.AsistenciaService;
 import com.longdrink.rest_api.services.InscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,5 +70,22 @@ public class AsistenciaController {
         catch(Exception ex){
             return new ResponseEntity<>(new Mensaje("Error! Imposible marcar asistencia. Comuniquese con administración.",500),HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/comprobar")
+    public ResponseEntity<?> comprobarAsistencia(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaAsistencia, @RequestParam Long codInscripcion){
+        Inscripcion i = inscripcionService.buscarPorPk(codInscripcion);
+        if(i == null){
+            return new ResponseEntity<>(new Mensaje("Error! Datos de inscripción no encontrados.",404), HttpStatus.NOT_FOUND);
+        }
+        List<Asistencia> asistencias = asistenciaService.asistenciaPorAlumno(i.getCodInscripcion());
+        if(!asistencias.isEmpty()){
+            for(Asistencia a: asistencias){
+                if(a.getFechaAsistencia().equals(fechaAsistencia)){
+                    return new ResponseEntity<>(a,HttpStatus.OK);
+                }
+            }
+        }
+        return new ResponseEntity<>(new Mensaje("Error! Asistencia no encontrada. (Procede a marcar).",404),HttpStatus.NOT_FOUND);
     }
 }

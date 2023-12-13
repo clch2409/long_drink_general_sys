@@ -132,6 +132,10 @@
 				<mat-icon>payments</mat-icon><span>Mis Pagos</span>
 			</mat-list-item>
 
+      <mat-list-item [routerLink]="['/a','asistencia']">
+				<mat-icon>checklist</mat-icon><span>Asistencias</span>
+			</mat-list-item>
+
 			<mat-list-item [routerLink]="['/a','mi-cuenta']">
 				<mat-icon>description</mat-icon><span>Mi Cuenta</span>
 			</mat-list-item>
@@ -171,6 +175,22 @@
 
 	<div class="example-sidenav-content">
 		<router-outlet></router-outlet> <!----Saludos de parte del router outlet.-->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="toastAsistencia" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header text-bg-primary">
+          <mat-icon>how_to_reg</mat-icon>
+          <strong class="me-auto">Notificaciones</strong>
+          <!---<small>11 mins ago</small>-->
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-center">
+          <p class="fw-light">¡Hola! Te recordamos que puedes marcar tu asistencia.</p>
+          <div class="container text-center mt-2">
+            <a class="btn btn-sm btn-primary" [routerLink]="['/a','asistencia']">Marcar Asistencia</a>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
 
 </mat-sidenav-container>

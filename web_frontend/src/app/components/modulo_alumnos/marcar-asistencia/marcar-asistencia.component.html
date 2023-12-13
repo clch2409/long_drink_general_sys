@@ -1,0 +1,40 @@
+<div class="container py-3">
+  <div class="row justify-content-center">
+    <div class="col-md-12 py-3 px-4">
+      <div class="card">
+        <div class="card-header text-center">
+          <h5>Asistencias</h5>
+        </div>
+        <div class="card-body">
+          <div class="container text-center" *ngIf="inscripciones.length == 0">
+            <mat-icon class="customIconSize">school</mat-icon>
+            <h5 class="card-title">Ups! Usted no tiene clases programadas el día de hoy. Por tanto, no puede marcar asistencia.</h5>
+          </div>
+          <div class="container col-6 align-content-center" *ngIf="inscripciones.length >= 1">
+            <div class="container" *ngFor="let i of inscripciones">
+              <div class="card" >
+                <div class="card-header text-center bg-dark bg-gradient text-light fw-semibold">
+                  {{ i.seccion?.curso?.nombre }}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">DOCENTE: {{i.seccion?.profesor?.nombre +" "+ i.seccion?.profesor?.apellidoPaterno}}</h5>
+                  <p class="card-text">{{ i.seccion?.curso?.descripcion }}</p>
+                  <div class="container text-end">
+                      <h5 class="">Hora Inicio: <h6>{{i.seccion?.turno?.horaInicio}}</h6></h5>
+                      <h5 class="">Hora Fin: <h6>{{i.seccion?.turno?.horaFin}} </h6></h5>
+                  </div>
+                  <div class="container text-center">
+                    <button (click)="marcarAsistencia(i.codInscripcion!!)" class="btn {{colorBoton}} bg-gradient fw-semibold" [disabled]="estadoBoton">{{txtBoton}}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

@@ -1,9 +1,11 @@
 package com.longdrink.rest_api.controller;
 
+import com.longdrink.rest_api.model.Curso;
 import com.longdrink.rest_api.model.Tema;
 import com.longdrink.rest_api.model.payload.InsertTema;
 import com.longdrink.rest_api.model.payload.Mensaje;
 import com.longdrink.rest_api.model.payload.TemaCurso;
+import com.longdrink.rest_api.services.CursoService;
 import com.longdrink.rest_api.services.TemaService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -33,6 +35,9 @@ import java.util.Objects;
 public class TemaController {
     @Autowired
     private TemaService temaService;
+    @Autowired
+    private CursoService cursoService;
+
     @Value("${media.location}")
     String ruta;
 
@@ -109,5 +114,39 @@ public class TemaController {
             return new ResponseEntity<>(new Mensaje("Error! Guía de estudio no encontrada o corrupta.",404),HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(new Mensaje("Error! Guía de estudio no encontrada o corrupta.",404),HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> asignarGuias_Curso(@RequestBody List<Long> listaCodigos, @RequestParam Long codCurso){
+        List<Tema> listaTemas = new ArrayList<>();
+        Curso curso = cursoService.getPorCod(codCurso);
+        if(curso == null){
+            return new ResponseEntity<>(new Mensaje("Ups! Curso seleccionado no encontrado.",404),HttpStatus.NOT_FOUND);
+        }
+        listaCodigos.forEach((Long e) ->{
+            Tema t = temaService.obtenerTema(e);
+            if(t != null){
+                listaTemas.add(t);
+            }
+        });
+        if(listaTemas.isEmpty()){
+            return new ResponseEntity<>(new Mensaje("Ups! Guías de estudio a asignar no encontradas.",404),HttpStatus.NOT_FOUND);
+        }
+        //Search n' destroy de duplicados.
+        List<Tema> temasInsert = new ArrayList<>();
+        listaTemas.forEach((Tema t) ->{
+            if(!temasInsert.contains(t)){
+                temasInsert.add(t);
+            }
+        });
+        //Insert de datos.
+        try{
+            curso.setTemas(temasInsert);
+            Curso cursoGuardado = cursoService.actualizar(curso);
+            return new ResponseEntity<>(cursoGuardado,HttpStatus.OK);
+        }
+        catch(Exception ex){
+            return new ResponseEntity<>(new Mensaje("Error! Imposible asignar guías de estudio.",500),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -32,10 +32,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/recovery_title"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:text='Se le enviará, al correo que usted ha registrado, unas credenciales por defecto, de esta manera, usted deberá de cambiar dichas credenciales en el apartado de "Cambiar Credenciales" en la pestaña de "Mi Cuenta"'
         android:textAlignment="center"
-        android:textSize="17sp"/>
+        android:textSize="17sp" />
 
     <EditText
         android:id="@+id/recovery_email"

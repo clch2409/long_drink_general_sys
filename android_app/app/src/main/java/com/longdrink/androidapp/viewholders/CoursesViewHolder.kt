@@ -10,38 +10,39 @@ import com.longdrink.androidapp.InscriptionActivity
 import com.longdrink.androidapp.databinding.FragmentCoursesBinding
 import com.longdrink.androidapp.databinding.ListItemCoursesBinding
 import com.longdrink.androidapp.model.Curso
+import com.longdrink.androidapp.model.Inscripcion
 import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class CoursesViewHolder(view: View, private var codAlum : Long) : RecyclerView.ViewHolder(view) {
+class CoursesViewHolder(view: View, private var inscripcion : Inscripcion) : RecyclerView.ViewHolder(view) {
 
     private val binding = ListItemCoursesBinding.bind(view)
 
-    fun bind(cursoTerminado : ListItemCursoTerminado){
+    fun bind(inscripcion : Inscripcion){
         val formato = SimpleDateFormat("yyyy-MM-dd")
-        val fechaFinal = formato.parse(cursoTerminado.fechaTerminadoInscripcion)
+        val fechaFinal = formato.parse(inscripcion.fechaTerminado)
         formato.applyPattern("dd-MM-yyyy")
         val fechaFinalFormateada = formato.format(fechaFinal)
 
-        binding.courseName.text = cursoTerminado.nombre
+        binding.courseName.text = inscripcion.seccion.curso.nombre
         binding.courseFinishedDate.text = "Terminado el: $fechaFinalFormateada"
-        Picasso.get().load(cursoTerminado.imagen).into(binding.courseImage)
-        binding.courseButtonDetails.setOnClickListener { sendToCourseDetail(cursoTerminado) }
+        Picasso.get().load(inscripcion.seccion.curso.imagen).into(binding.courseImage)
+        binding.courseButtonDetails.setOnClickListener { sendToCourseDetail(inscripcion) }
     }
 
-    private fun sendToCourseDetail(cursoTerminado : ListItemCursoTerminado){
+    private fun sendToCourseDetail(inscripcion: Inscripcion){
         val intent = Intent(this.itemView.context, CourseDescriptionActivity::class.java)
         intent.apply {
-            putExtra("courseData",cursoTerminado)
-            putExtra("courseName", cursoTerminado.descripcion)
+            putExtra("inscripcion",inscripcion)
+            /*putExtra("courseName", cursoTerminado.descripcion)
             putExtra("image", cursoTerminado.imagen)
             putExtra("fechaInicio", cursoTerminado.fechaInicioInscripcion)
             putExtra("estado", cursoTerminado.estadoInscripcion)
-            putExtra("fechaTerminado", cursoTerminado.fechaTerminadoInscripcion)
-            putExtra("codAlum", codAlum)
+            putExtra("fechaTerminado", cursoTerminado.fechaTerminadoInscripcion)*/
+            putExtra("codAlum", inscripcion.codAlum)
         }
         ContextCompat.startActivity(this.itemView.context, intent, null)
     }

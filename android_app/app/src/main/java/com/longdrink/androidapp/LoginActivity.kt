@@ -96,6 +96,7 @@ class LoginActivity : AppCompatActivity() {
     }*/
 
     private fun goToForgot(){
-        showSnackbar("Estamos trabajando en ello \uD83D\uDEE0")
+        val intent = Intent(this@LoginActivity, RecoveryActivity::class.java)
+        startActivity(intent)
     }
 }

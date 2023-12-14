@@ -1,11 +1,14 @@
 package com.longdrink.androidapp.api
 
+import com.longdrink.androidapp.model.Alumno
+import com.longdrink.androidapp.model.Asistencia
 import com.longdrink.androidapp.model.CambiarCredenciales
 import com.longdrink.androidapp.model.Curso
 import com.longdrink.androidapp.model.Inscripcion
 import com.longdrink.androidapp.model.ListItemCursoTerminado
 import com.longdrink.androidapp.model.LoginSendData
 import com.longdrink.androidapp.model.LoginWebResponse
+import com.longdrink.androidapp.model.MarcarAsistencia
 import com.longdrink.androidapp.model.Mensaje
 import com.longdrink.androidapp.model.Pago
 import com.longdrink.androidapp.model.RegisterResponse
@@ -32,7 +35,7 @@ interface ApiService {
     suspend fun cambiarCredenciales(@Body cambiarCredenciales : CambiarCredenciales) : Response<Mensaje>
 
     @POST("auth/recuperar_cuenta")
-    suspend fun recuperarCredenciales(@Query("email") email : String) : Response<Mensaje?>
+    suspend fun recuperarCredenciales(@Query("email") email : String) : Response<ResponseBody>
 
     /** ---------------------------- COURSES RELATED METHODS --------------------------*/
 
@@ -49,6 +52,9 @@ interface ApiService {
     @GET("inscripcion/por_curso")
     suspend fun listarInscripcionesByCursoId(@Query("codCurso") codCurso : Long) : Response<List<Inscripcion>>
 
+    @GET("inscripcion/por_cod")
+    suspend fun buscarInscripcionPorCod(@Query("codInscripcion") codInscripcion : Long) : Response<Inscripcion>
+
     /*@POST("inscripcion")
     suspend fun realizarInscripcion(@Body inscripcion : InscripcionDetallada) : Response<Inscripcion>*/
 
@@ -61,4 +67,15 @@ interface ApiService {
     @GET("pago")
     suspend fun listarPagosAlumno(@Query("codAlumno") codAlumno : Long) : Response<List<Pago>>
 
+    /**----------------------------------------STUDENTS RELATED METHODS------------------------------*/
+    @GET("alumno/por_cod")
+    suspend fun buscarAlumnoPorID(@Query("codAlumno") codAlumno : Long) : Response<Alumno>
+
+    /**----------------------------------------STUDENTS RELATED METHODS------------------------------*/
+    @POST("asistencia")
+    suspend fun marcarAsistencia(@Body marcarAsistencia: MarcarAsistencia): Response<Asistencia>
+
+    @GET("asistencia/comprobar")
+    suspend fun comprobarAsistencia(@Query("fechaAsistencia") fechaAsistencia : String, @Query("codInscripcion") codInscripcion : Long)
+    : Response<Mensaje>
 }

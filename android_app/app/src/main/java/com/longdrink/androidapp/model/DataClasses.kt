@@ -13,12 +13,12 @@ data class LoginWebResponse(
     @SerializedName("email") val email : String,
     @SerializedName("nombreCompleto") val nombreCompleto : String,
     @SerializedName("rol") val rol : String
-)
+) : Serializable
 
 data class LoginSendData(
     @SerializedName("nombreUsuario") val nombreUsuario : String,
     @SerializedName("contrasena") val contrasena : String
-)
+) : Serializable
 
 data class RegisterSendData(
     @SerializedName("nombre") val nombre : String,
@@ -28,7 +28,7 @@ data class RegisterSendData(
     @SerializedName("telefono") val telefono : String,
     @SerializedName("email") val email : String,
     @SerializedName("contrasena") var contrasena : String
-)
+) : Serializable
 
 data class RegisterResponse(
     @SerializedName("codAlumno") val codAlumno : Long,
@@ -39,14 +39,14 @@ data class RegisterResponse(
     @SerializedName("apellidoPaterno") val apellidoPaterno : String,
     @SerializedName("apellidoMaterno") val apellidoMaterno : String,
     @SerializedName("dni") val dni : String,
-)
+) : Serializable
 
 data class CambiarCredenciales(
     @SerializedName("contrasenaAntigua") val contrasenaAntigua : String,
     @SerializedName("nuevaContrasena") val nuevaContrasena : String,
     @SerializedName("emailAntiguo") val emailAntiguo : String,
     @SerializedName("emailNuevo") val emailNuevo : String,
-)
+) : Serializable
 
 data class Mensaje(
     @SerializedName("mensaje") val mensaje : String,
@@ -64,10 +64,9 @@ data class Curso(
     @SerializedName("visibilidad") var visibilidad : Boolean = false,
     @SerializedName("frecuencia") var frecuencia : String = "",
     @SerializedName("imagen") var imagen : String = "",
-    @SerializedName("profesor") var profesor : Profesor = Profesor(),
     @SerializedName("turnos") var turnos : List<Turno> = emptyList(),
     @SerializedName("temas") var temas : List<Tema> = emptyList(),
-)
+) : Serializable
 
 data class ListItemCursoTerminado (
     @SerializedName("codCurso") var codCurso : Long = 0L,
@@ -123,16 +122,31 @@ data class Tema(
 
 data class Inscripcion(
     @SerializedName("codInscripcion") var codInscripcion : Long = 0L,
-    @SerializedName("fechaInicio") var fechaInicio: String = "",
-    @SerializedName("fechaFinal") var fechaFinal: String = "",
     @SerializedName("fechaInscripcion") var fechaInscripcion: String = "",
     @SerializedName("fechaTerminado") var fechaTerminado: String = "",
-    @SerializedName("alumno") var alumno: Long = 0L,
-    @SerializedName("curso") var curso: Long = 0L,
-    @SerializedName("turno") var turnos: Turno = Turno(),
     @SerializedName("estado") var estado: Boolean = false,
+    @SerializedName("alumno") var codAlum: Long,
+    @SerializedName("asistencias") var asistencias: List<Asistencia>,
+    @SerializedName("seccion") var seccion: Seccion,
 
-)
+
+) : Serializable
+
+data class Asistencia(
+    @SerializedName("codAsistencia") var codAsistencia: Long = 0L,
+    @SerializedName("fechaAsistencia") var fechaAsistencia: String,
+    @SerializedName("horaLlegada") var horaLlegada: String,
+    @SerializedName("estado") var estado: Boolean = false,
+    @SerializedName("inscripcion") var inscripcion: Inscripcion
+) : Serializable
+
+data class MarcarAsistencia(
+    @SerializedName("codInscripcion") var codInscripcion: Long = 0L,
+    @SerializedName("fechaAsistencia") var fechaAsistencia : String,
+    @SerializedName("horaLlegada") var horaLlegada: String,
+    @SerializedName("estado") var estado: Boolean,
+
+) : Serializable
 
 /** --------------------- PAYMENTS RELATED DATA CLASSES ----------------------------------*/
 data class Pago(
@@ -142,4 +156,29 @@ data class Pago(
     @SerializedName("estado") var estado : Boolean,
     @SerializedName("descripcion") var descripcion : String,
     @SerializedName("total") var total : Double
-)
+) : Serializable
+/** --------------------- SECTION RELATED DATA CLASSES ----------------------------------*/
+data class Seccion(
+    @SerializedName("codSeccion") var codSeccion : Long = 0L,
+    @SerializedName("nombre") var nombre : String = "",
+    @SerializedName("fechaInicio") var fechaInicio : String,
+    @SerializedName("fechaFinal") var fechaFinal : String,
+    @SerializedName("estado") var estado : Boolean,
+    @SerializedName("maxAlumnos") var maxAlumnos : Integer,
+    @SerializedName("curso") var curso : Curso,
+    @SerializedName("turno") var turno : Turno,
+    @SerializedName("profesor") var profesor : Profesor,
+) : Serializable
+
+data class Alumno(
+    @SerializedName("codAlumno") var codAlumno : Long = 0L,
+    @SerializedName("nombre") var nombre: String = "",
+    @SerializedName("apellidoPaterno") var apellidoPaterno: String = "",
+    @SerializedName("apellidoMaterno") var apellidoMaterno: String = "",
+    @SerializedName("dni") var dni : String = "",
+    @SerializedName("telefono") var telefono: String = "",
+    @SerializedName("activo") var activo: Boolean = false,
+    @SerializedName("inscripciones") var codInscripciones : List<Long> = emptyList(),
+    @SerializedName("pagos") var pagos : List<Pago> = emptyList(),
+
+    )

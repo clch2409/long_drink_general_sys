@@ -22,6 +22,10 @@
         <activity
             android:name=".ChangeCredentialsActivity"
             android:exported="true"
+            android:theme="@style/Theme.Android_app" />
+        <activity
+            android:name=".RecoveryActivity"
+            android:exported="true"
             android:label="@string/title_activity_recovery"
             android:theme="@style/Theme.Android_app" />
         <activity

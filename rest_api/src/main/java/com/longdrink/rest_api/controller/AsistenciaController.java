@@ -60,7 +60,7 @@ public class AsistenciaController {
         }
         //Insert de datos.
         try{
-            byte tipoAsistencia = 1;
+            int tipoAsistencia = 1;
             if(carga.getHoraLlegada().compareTo(i.getSeccion().getTurno().getHoraInicio()) > 0){ tipoAsistencia = 2; } //Luego de hora inicio. -- Llego tarde (2)
             if(carga.getHoraLlegada().compareTo(i.getSeccion().getTurno().getHoraFin()) > 0){ tipoAsistencia = 0; } //Luego de hora de fin. -- Ni siquiera llego (0 - FALTA)
             Asistencia a = new Asistencia(0L,carga.getFechaAsistencia(),carga.getHoraLlegada(),tipoAsistencia,i);

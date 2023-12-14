@@ -1,0 +1,101 @@
+<div class="container py-3">
+  <div class="row justify-content-center">
+    <div class="col-md-12 py-3 px-4">
+      <div class="card">
+        <div class="card-header text-center bg-primary bg-gradient text-light">
+          <h5>Gestión de Asistencias</h5>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <p class="text-center fw-semibold">Por favor, seleccione las opciones a continuación para visualizar
+              información acerca de las asistencias.</p>
+            <div class="row">
+              <div class="col-4">
+                <div class="mb-3">
+                  <label for="tipoBusqueda" class="form-label fw-bold">Tipo de Busqueda</label>
+                  <select class="form-select" id="tipoBusqueda" (change)="setEstados(tipoBusqueda.value)" #tipoBusqueda>
+                    <option value="1" selected>POR ALUMNO</option>
+                    <option value="2">POR SECCIÓN</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="mb-3">
+                  <label for="dniAlumno" class="form-label fw-bold">DNI Estudiante</label>
+                  <input type="text" class="form-control" id="dniAlumno" placeholder="00000000" maxlength="8"
+                    minlength="8" [disabled]="estadoDni">
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="mb-3">
+                  <label for="seccion" class="form-label fw-bold">Sección</label>
+                  <select class="form-select" id="seccion" [disabled]="estadoSeccion">
+                    <option [value]="s.codSeccion" *ngFor="let s of listaSecciones">{{s.nombre + " / "+s.curso?.nombre}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="">
+                  <div class="mb-3 text-center">
+                    <button class="btn btn-success bg-gradient me-3 fw-bold" (click)="visualizarAsistencias()">GENERAR</button>
+                    <button class="btn btn-danger bg-gradient fw-bold" (click)="resetear()">RESETEAR</button>
+                  </div>
+
+                </div>
+              </div>
+              <hr>
+              <div class="container" *ngIf="inscripcionesAlumno.length >= 1">
+
+                <div class="col">
+                  <ul class="list-group list-group-numbered" *ngFor="let a of inscripcionesAlumno">
+                    <h6>{{a.seccion?.curso?.nombre + " - INICIO CURSO: "+a.seccion?.fechaInicio +" FINAL CURSO: "+a.seccion?.fechaFinal}}</h6>
+                    <div class="container" *ngIf="a.asistencias?.length!! <= 0">
+                      <h5 class="text-danger text-center fw-semibold">ALUMNO NO REGISTRA ASISTENCIAS AL CURSO</h5>
+                    </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let b of a.asistencias">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">FECHA: {{b.fechaAsistencia}} | HORA LLEGADA: {{b.horaLlegada}}</div>
+                          HORA INICIO CURSO: {{a.seccion?.turno?.horaInicio}} <br> HORA FIN CURSO: {{a.seccion?.turno?.horaFin}}
+                      </div>
+                      <span class="badge bg-danger rounded-pill" *ngIf="b.estado == 0">FALTÓ</span>
+                      <span class="badge bg-success rounded-pill" *ngIf="b.estado == 1">ASISTIÓ</span>
+                      <span class="badge bg-warning rounded-pill" *ngIf="b.estado == 2">TARDANZA</span>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+
+              <div class="container" *ngIf="inscripcionesGenerales.length >= 1">
+                <!--TODO: "CONTADOR DE INASISTENCIAS.... SI SUPERA 5 MENSAJE EN ROJO."-->
+                <div class="col">
+                  <ul class="list-group list-group-numbered mb-3" *ngFor="let a of inscripcionesGenerales">
+                    <h6>ALUMNO: {{a.alumno?.nombre + " " + a.alumno?.apellidoPaterno + " " + a.alumno?.apellidoMaterno + " DNI: " + a.alumno?.dni }}</h6>
+                    <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let b of a.asistencias">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">FECHA: {{b.fechaAsistencia}} | HORA LLEGADA: {{b.horaLlegada}}</div>
+                          HORA INICIO CURSO: {{a.seccion?.turno?.horaInicio}} <br> HORA FIN CURSO: {{a.seccion?.turno?.horaFin}}
+                      </div>
+                      <span class="badge bg-danger rounded-pill" *ngIf="b.estado == 0">FALTÓ</span>
+                      <span class="badge bg-success rounded-pill" *ngIf="b.estado == 1">ASISTIÓ</span>
+                      <span class="badge bg-warning rounded-pill" *ngIf="b.estado == 2">TARDANZA</span>
+                    </li>
+                    <div class="container" *ngIf="a.asistencias?.length == undefined || a.asistencias?.length!! <= 0">
+                      <h5 class="text-danger text-center fw-semibold">ALUMNO NO REGISTRA ASISTENCIAS AL CURSO</h5>
+                    </div>
+                  </ul>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>

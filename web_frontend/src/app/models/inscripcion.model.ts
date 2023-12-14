@@ -1,4 +1,5 @@
 import { Alumno } from "./alumno.model";
+import { Asistencia } from "./asistencia.model";
 import { Deserializable } from "./deserializable.model";
 import { Seccion } from "./seccion.model";
 import { Turno } from "./turno.model";
@@ -12,6 +13,7 @@ export class Inscripcion implements Deserializable {
     curso?: number | any;
     turno: Turno = new Turno;
     seccion?: Seccion;
+    asistencias?: Asistencia[];
 
     deserializable(input: any): this {
         Object.assign(this, input);

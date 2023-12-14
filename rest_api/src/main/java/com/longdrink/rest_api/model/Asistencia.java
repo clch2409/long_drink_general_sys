@@ -26,16 +26,15 @@ public class Asistencia implements Serializable {
     @JsonFormat(pattern="HH:mm",timezone = "GMT-5")
     @JsonProperty("horaLlegada")
     private Date horaLlegada;
-    private byte estado;
+    private Integer estado;
     @JsonIgnore
-    //@MapsId("codInscripcion")
     @ManyToOne
     @JoinColumn(name = "cod_inscripcion")
     private Inscripcion inscripcion;
 
     public Asistencia(){}
 
-    public Asistencia(Long codAsistencia, Date fechaAsistencia, Date horaLlegada, byte estado, Inscripcion inscripcion) {
+    public Asistencia(Long codAsistencia, Date fechaAsistencia, Date horaLlegada, Integer estado, Inscripcion inscripcion) {
         this.codAsistencia = codAsistencia;
         this.fechaAsistencia = fechaAsistencia;
         this.horaLlegada = horaLlegada;
@@ -67,11 +66,11 @@ public class Asistencia implements Serializable {
         this.horaLlegada = horaLlegada;
     }
 
-    public byte isEstado() {
+    public Integer getEstado() {
         return estado;
     }
 
-    public void setEstado(byte estado) {
+    public void setEstado(Integer estado) {
         this.estado = estado;
     }
 

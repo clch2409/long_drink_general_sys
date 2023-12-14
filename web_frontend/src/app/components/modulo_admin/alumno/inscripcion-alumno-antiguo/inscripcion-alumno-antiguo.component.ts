@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { StorageService } from 'src/app/services/storage.service';
 import { InscripcionService } from 'src/app/services/inscripcion.service';
 import { SeccionService } from 'src/app/services/seccion.service';
+import { Seccion } from 'src/app/models/seccion.model';
 
 @Component({
   selector: 'app-inscripcion-alumno-antiguo',
@@ -12,7 +13,7 @@ import { SeccionService } from 'src/app/services/seccion.service';
 })
 export class InscripcionAlumnoAntiguoComponent implements OnInit {
 
-  cursosDisponibles: any[] = [];
+  cursosDisponibles: Seccion[] = [];
   selectedCurso: any = {};
   nombre: any;
   apellidoPaterno: any;
@@ -56,8 +57,7 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
   onCursoSelectionChange(): void {
     if (this.selectedCurso && this.selectedCurso.curso) {
       const cursoSeleccionado = this.selectedCurso.curso;
-
-      this.turno = cursoSeleccionado.turnos.length > 0 ? cursoSeleccionado.turnos[0].nombre : '';
+      this.turno = this.selectedCurso.turno.nombre;//cursoSeleccionado.turnos.length > 0 ? cursoSeleccionado.turnos[0].nombre : '';
       this.seccion = this.selectedCurso.nombre;
       this.fechaInicio = this.selectedCurso.fechaInicio;
       this.fechaFin = this.selectedCurso.fechaFinal;

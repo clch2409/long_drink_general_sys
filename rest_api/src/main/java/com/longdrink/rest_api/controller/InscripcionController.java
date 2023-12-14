@@ -96,7 +96,7 @@ public class InscripcionController {
                     new Mensaje("Ups! La sección ingresada no posee alumnos inscritos.", 404),
                     HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(convertListToDTO(listaInscripciones),HttpStatus.OK);
+        return new ResponseEntity<>(listaInscripciones,HttpStatus.OK); //convertListToDTO(listaInscripciones)
     }
 
     @GetMapping("/por_cod")

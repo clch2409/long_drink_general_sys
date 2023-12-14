@@ -57,6 +57,10 @@ export class InscripcionService {
     return this.http.get<Inscripcion>(API+`/inscripcion/por_cod?codInscripcion=${codInscripcion}`);
   }
 
+  getInscripcionesPorSeccion(codSeccion: number): Observable<Inscripcion[]>{
+    return this.http.get<Inscripcion[]>(API+`/inscripcion/por_seccion?codSeccion=${codSeccion}`);
+  }
+
   registroInscripcion(inscripcionData: any): Observable<any> {
     return this.http.post(
       API + '/inscripcion',

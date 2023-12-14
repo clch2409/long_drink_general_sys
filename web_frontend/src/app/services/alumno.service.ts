@@ -5,7 +5,7 @@ import { Alumno } from '../models/alumno.model';
 const API = 'http://localhost:8080/api/v1';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type' : 'application/json'})
-}; 
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +21,7 @@ export class AlumnoService {
     return this.http.get<Alumno[]>(API+'/alumno/activos')
   }
 
-  getAlumnoCod(codAlumno?: number): Observable<Alumno>{
+  getAlumnoCod(codAlumno?: number | any): Observable<Alumno>{
     return this.http.get<Alumno>(API+`/alumno/por_cod?codAlum=${codAlumno}`)
   }
 
@@ -32,5 +32,5 @@ export class AlumnoService {
   editarAlumno(carga: any): Observable<any>{
     return this.http.put(API+`/alumno`,carga,httpOptions);
   }
-  
+
 }

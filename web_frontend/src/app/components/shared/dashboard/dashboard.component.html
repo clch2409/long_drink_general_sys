@@ -12,6 +12,11 @@
 					<mat-icon>groups</mat-icon>
 					Alumnos
 				</mat-expansion-panel-header>
+        <mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'asistencias']">
+						<span>Asistencias</span>
+					</a>
+				</mat-nav-list>
 				<mat-nav-list>
 					<a mat-list-item [routerLink]="['/dashboard', 'alumnos']">
 						<span>Listado</span>
@@ -42,6 +47,23 @@
 				<mat-nav-list>
 					<a mat-list-item [routerLink]="['/dashboard', 'definir-ge']">
 						<span>Definir Guías de Estudio</span>
+					</a>
+				</mat-nav-list>
+			</mat-expansion-panel>
+
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+				<mat-expansion-panel-header>
+					<mat-icon>format_list_bulleted_add</mat-icon>
+					Secciones
+				</mat-expansion-panel-header>
+				<mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard', 'secciones']">
+						<span>Listado</span>
+					</a>
+				</mat-nav-list>
+        <mat-nav-list>
+					<a mat-list-item [routerLink]="['/dashboard','c','asignar-secciones']">
+						<span>Aperturar Sección</span>
 					</a>
 				</mat-nav-list>
 			</mat-expansion-panel>

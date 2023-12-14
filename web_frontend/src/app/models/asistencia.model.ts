@@ -5,7 +5,7 @@ export class Asistencia implements Deserializable {
   codAsistencia?: number;
   fechaAsistencia?: Date;
   horaLlegada?: Date;
-  estado?: boolean;
+  estado?: number;
   inscripcion?: Inscripcion;
 
   deserializable(input: any): this {

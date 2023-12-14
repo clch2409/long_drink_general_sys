@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { StorageService } from 'src/app/services/storage.service';
 import { SeccionService } from 'src/app/services/seccion.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Seccion } from 'src/app/models/seccion.model';
 
 @Component({
   selector: 'app-inscripcion-alumno',
@@ -10,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./inscripcion-alumno.component.css']
 })
 export class InscripcionAlumnoComponent implements OnInit {
-  cursosDisponibles: any[] = [];
+  cursosDisponibles: Seccion[] = [];
   selectedCurso: any = {};
   nombre: any;
   apellidoPaterno: any;
@@ -53,8 +54,8 @@ export class InscripcionAlumnoComponent implements OnInit {
   onCursoSelectionChange(): void {
     if (this.selectedCurso && this.selectedCurso.curso) {
       const cursoSeleccionado = this.selectedCurso.curso;
-
-      this.turno = cursoSeleccionado.turnos.length > 0 ? cursoSeleccionado.turnos[0].nombre : '';
+      console.log(cursoSeleccionado);
+      this.turno = this.selectedCurso.turno.nombre;//cursoSeleccionado.turnos.length > 0 ? cursoSeleccionado.turnos[0].nombre : '';
       this.seccion = this.selectedCurso.nombre;
       this.fechaInicio = this.selectedCurso.fechaInicio;
       this.fechaFin = this.selectedCurso.fechaFinal;
@@ -230,7 +231,7 @@ export class InscripcionAlumnoComponent implements OnInit {
       },
       (error) => {
         let errorMessage = 'Error! Ha sucedido en error en el guardado de datos.';
-  
+
         if (error.error && error.error.mensaje) {
           errorMessage = error.error.mensaje;
 
@@ -283,5 +284,5 @@ export class InscripcionAlumnoComponent implements OnInit {
         }
       }
     );
-  }  
+  }
 }

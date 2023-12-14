@@ -35,7 +35,7 @@ class PaymentsActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    override fun onNavigateUp(): Boolean {
+    override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
     }

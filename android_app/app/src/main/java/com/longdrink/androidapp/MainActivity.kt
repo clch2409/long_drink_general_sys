@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.longdrink.androidapp.adapters.CoursesViewPagerAdapter
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.ActivityMainBinding
+import com.longdrink.androidapp.model.Alumno
 import com.longdrink.androidapp.model.Inscripcion
 import com.longdrink.androidapp.retrofit.Api
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter : CoursesViewPagerAdapter
     private lateinit var binding : ActivityMainBinding
     private var apiService : ApiService? = null
-    private var inscripcionActiva = Inscripcion()
+    private lateinit var inscripcionActiva : Inscripcion
     private var listadoInscripcionesTerminadas = mutableListOf<Inscripcion>()
     //private var hasInscription = false
     private var codAlum by Delegates.notNull<Long>()
@@ -118,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     runOnUiThread{
                         //hasInscription = inscripcion.fechaInicio != ""
-                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcionActiva, codAlum, listadoInscripcionesTerminadas, email, usuario, nombreCompleto)
+                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcionActiva, listadoInscripcionesTerminadas, email, usuario, nombreCompleto)
                         binding.mainViewpager.adapter = adapter
 
                     }
@@ -126,6 +127,27 @@ class MainActivity : AppCompatActivity() {
 
             }catch(ex : Exception){
                 Log.e("ERROR EN OBTENER INSCRIPCION", ex.toString())
+            }
+        }
+    }
+
+    private fun getStudentInfo(){
+        CoroutineScope(Dispatchers.IO).launch{
+            try{
+                val response : Response<Alumno> =
+                    apiService!!.buscarAlumnoPorID(codAlum)
+
+                if (response.isSuccessful){
+                    Log.i("ALUMNO", response.body().toString())
+                    runOnUiThread{
+                        //hasInscription = inscripcion.fechaInicio != ""
+
+
+                    }
+                }
+
+            }catch(ex : Exception){
+                Log.e("ERROR EN OBTENER ALUMNO", ex.toString())
             }
         }
     }

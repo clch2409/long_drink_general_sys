@@ -1,6 +1,8 @@
 package com.longdrink.rest_api.model.payload;
 
-public class Mensaje {
+import java.io.Serializable;
+
+public class Mensaje implements Serializable{
     private String mensaje;
     private int estado;
 

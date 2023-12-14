@@ -30,10 +30,12 @@ private const val ARG_PARAM2 = "param2"
 class CoursesFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var inscripcionesTerminadas : List<Inscripcion>
+    private lateinit var inscripcionActiva : Inscripcion
     private var apiService : ApiService? = null
     private lateinit var binding : FragmentCoursesBinding
     private lateinit var adapter : CourseRecyclerViewAdapter
-    private var codAlum by Delegates.notNull<Long>()
     private val cursosTerminadosFiltrados = mutableListOf<ListItemCursoTerminado>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,15 +52,16 @@ class CoursesFragment : Fragment() {
     ): View? {
         binding = FragmentCoursesBinding.inflate(inflater)
         apiService = apiService
-        codAlum = requireArguments().getLong("codAlum")
-        getCursos()
+        inscripcionesTerminadas = requireArguments().getSerializable("inscripcionesTerminadas") as List<Inscripcion>
+        inscripcionActiva = requireArguments().getSerializable("inscripcionActiva") as Inscripcion
+        initUI(inscripcionesTerminadas)
         return binding.root
     }
 
-    private fun initUI(cursosTerminadosFiltrados : List<ListItemCursoTerminado>){
+    private fun initUI(inscripcionesTerminadas : List<Inscripcion>){
         /*TODO --> BUSCAR LA MANERA DE AGREGAR UN SEPARADOR PERSONALIZADO*/
 
-        adapter = CourseRecyclerViewAdapter(cursosTerminadosFiltrados, codAlum)
+        adapter = CourseRecyclerViewAdapter(inscripcionesTerminadas, inscripcionActiva)
         binding.recyclerCourses.setHasFixedSize(true)
         binding.recyclerCourses.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerCourses.adapter = adapter
@@ -66,7 +69,7 @@ class CoursesFragment : Fragment() {
 
     }
 
-    private fun getCursos(){
+    /*private fun getCursos(){
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response : Response<List<ListItemCursoTerminado>> =
@@ -112,7 +115,7 @@ class CoursesFragment : Fragment() {
                 Log.i("ERROR", ex.toString())
             }
         }
-    }
+    }*/
 
     companion object {
         /**

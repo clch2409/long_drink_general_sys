@@ -9,7 +9,7 @@ object RetrofitClient {
     private lateinit  var retrofit : Retrofit
     fun getConnection(url : String) : Retrofit{
         retrofit = Retrofit.Builder().baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
         return retrofit
     }

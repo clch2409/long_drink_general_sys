@@ -11,13 +11,13 @@ import com.longdrink.androidapp.fragments.MyAccountFragment
 import com.longdrink.androidapp.fragments.MyCourseFragment
 import com.longdrink.androidapp.fragments.NoActiveCourseFragment
 import com.longdrink.androidapp.fragments.NoCourseFragment
+import com.longdrink.androidapp.model.Alumno
 import com.longdrink.androidapp.model.Inscripcion
 
 class CoursesViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     private var inscription : Inscripcion,
-    private var codAlum : Long,
     private var listadoInscripcion : List<Inscripcion>,
     private var email : String,
     private var usuario : String,
@@ -32,26 +32,26 @@ class CoursesViewPagerAdapter(
         lateinit var bundle: Bundle
 
          if (position == 0) {
-            if (inscription.fechaInicio == ""){
+            bundle = bundleOf(Pair("inscripcion", inscription))
+            if (inscription.fechaInscripcion == ""){
                 fragment = NoActiveCourseFragment()
             }else{
-                bundle = bundleOf(Pair("codCurso" , inscription.curso), Pair("fechaFinal", inscription.fechaFinal))
                 fragment = MyCourseFragment()
                 fragment.arguments = bundle
             }
             fragment
         }else if(position == 1){
+            bundle = bundleOf(Pair("inscripcionesTerminadas", listadoInscripcion), Pair("inscripcionActiva", inscription))
             if (listadoInscripcion.isEmpty()){
                 fragment = NoCourseFragment()
             }
             else{
-                bundle = bundleOf(Pair("codAlum", codAlum))
                 fragment = CoursesFragment()
                 fragment.arguments = bundle
             }
             fragment
         } else{
-            bundle = bundleOf(Pair("codAlumno", codAlum), Pair("email", email), Pair("usuario", usuario), Pair("nombreCompleto", nombreCompleto))
+            bundle = bundleOf(Pair("email", email), Pair("usuario", usuario), Pair("nombreCompleto", nombreCompleto), Pair("codAlumno", inscription.codAlum), Pair("inscripcion", inscription))
             fragment = MyAccountFragment()
             fragment.arguments = bundle
         }

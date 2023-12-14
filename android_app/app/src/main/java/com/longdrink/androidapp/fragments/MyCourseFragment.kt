@@ -11,7 +11,9 @@ import com.longdrink.androidapp.R
 import com.longdrink.androidapp.adapters.TemasRecyclerViewAdapter
 import com.longdrink.androidapp.api.ApiService
 import com.longdrink.androidapp.databinding.FragmentMyCourseBinding
+import com.longdrink.androidapp.model.Alumno
 import com.longdrink.androidapp.model.Curso
+import com.longdrink.androidapp.model.Inscripcion
 import com.longdrink.androidapp.model.Tema
 import com.longdrink.androidapp.retrofit.Api
 import com.squareup.picasso.Picasso
@@ -24,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Date
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,9 +40,9 @@ private const val ARG_PARAM2 = "param2"
  */
 class MyCourseFragment : Fragment() {
     private lateinit var binding : FragmentMyCourseBinding
-    private var codCurso : Long = 0
-    private var fechaFinal : String = ""
-    private val listadoTemas : List<Tema> = emptyList()
+    private lateinit var inscripcion: Inscripcion
+    private var codAlum : Long = 0
+    private lateinit var fechaFinal : String
     private lateinit var recyclerViewAdapter : TemasRecyclerViewAdapter
     private var apiService : ApiService? = null
 
@@ -50,45 +53,53 @@ class MyCourseFragment : Fragment() {
 
         binding = FragmentMyCourseBinding.inflate(inflater)
         apiService = Api.apiService
-        codCurso = requireArguments().getLong("codCurso")
-        fechaFinal = requireArguments().getString("fechaFinal").toString()
-        getCourseInfo()
+        inscripcion = requireArguments().getSerializable("inscripcion") as Inscripcion
+        codAlum = inscripcion.codAlum
+        fechaFinal = inscripcion.seccion.fechaFinal
+        placeData(inscripcion)
         return binding.root
     }
 
 
 
-    private fun placeData(curso : Curso){
+    private fun placeData(inscripcion : Inscripcion){
         val formato = SimpleDateFormat("yyyy-MM-dd")
         val fechaFinal = formato.parse(fechaFinal)
         formato.applyPattern("dd-MM-yyyy")
         val fechaFinalFormateada = formato.format(fechaFinal)
 
 
-        binding.myCourseName.text = curso.nombre
-        binding.myCourseTeacherName.text = "${curso.profesor.nombre} ${curso.profesor.apellidoPaterno} ${curso.profesor.apellidoMaterno}"
-        binding.myCourseScheduleHours.text = "${curso.turnos[0].horaInicio} - ${curso.turnos[0].horaFin}"
+        binding.myCourseName.text = inscripcion.seccion.curso.nombre
+        binding.myCourseTeacherName.text = "${inscripcion.seccion.profesor.nombre} ${inscripcion.seccion.profesor.apellidoPaterno} ${inscripcion.seccion.profesor.apellidoMaterno}"
+        binding.myCourseScheduleHours.text = "${inscripcion.seccion.turno.horaInicio} - ${inscripcion.seccion.turno.horaFin}"
         binding.myCourseFinishedDate.text = fechaFinalFormateada
-        Picasso.get().load(curso.imagen).into(binding.myCourseImage)
+        Picasso.get().load(inscripcion.seccion.curso.imagen).into(binding.myCourseImage)
 
-        recyclerViewAdapter = TemasRecyclerViewAdapter(curso.temas)
+        recyclerViewAdapter = TemasRecyclerViewAdapter(inscripcion.seccion.curso.temas)
         binding.recyclerMyClasess.setHasFixedSize(true)
         binding.recyclerMyClasess.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerMyClasess.adapter = recyclerViewAdapter
 
     }
 
-    private fun getCourseInfo(){
+    /*private fun getInscriptionInfo(){
         CoroutineScope(Dispatchers.IO).launch{
             try {
-                if (codCurso != 0L){
-                    val response : Response<Curso> =
-                        apiService!!.findCursoById(codCurso)
+                if (codAlum != 0L){
+                    val response : Response<Alumno> =
+                        apiService!!.buscarAlumnoPorID(codAlum)
 
                     if (response.body() != null){
+                        lateinit var inscripcion : Inscripcion
+
+                        response.body()!!.inscripciones.forEach {
+                            if (it.estado){
+                                inscripcion = it
+                            }
+                        }
                         activity?.runOnUiThread{
-                            Log.e("CURSO", response.body()!!.toString())
-                            placeData(response.body()!!)
+                            Log.e("INSCRIPTION_INFO", response.body()!!.toString())
+                            placeData(inscripcion)
                         }
                     }
                 }
@@ -97,7 +108,7 @@ class MyCourseFragment : Fragment() {
                 Log.e("ERROR EN LA OBTENCION DE CURSOS", ex.toString())
             }
         }
-    }
+    }*/
 
 
     companion object {

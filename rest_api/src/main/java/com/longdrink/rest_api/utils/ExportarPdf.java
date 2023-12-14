@@ -200,8 +200,8 @@ public class ExportarPdf{
 
 
         //Se crea la tabla de titulo
-        PdfPTable tablaCursos = new PdfPTable(8);
-        tablaCursos.setWidths(new float[] {1f, 1.5f, 3.5f, 1.5f, 1.5f, 2f, 2f, 2f});
+        PdfPTable tablaCursos = new PdfPTable(6);
+        tablaCursos.setWidths(new float[] {1f, 1.5f, 3.5f, 1.5f, 1.5f, 2f});
 
         celda = new PdfPCell(new Phrase("Código", fuenteTituloColumnas));
         celda.setBackgroundColor(Color.LIGHT_GRAY);
@@ -238,21 +238,7 @@ public class ExportarPdf{
         celda.setPadding(10);
         tablaCursos.addCell(celda);
 
-        celda = new PdfPCell(new Phrase("# Alumnos", fuenteTituloColumnas));
-        celda.setBackgroundColor(Color.LIGHT_GRAY);
-        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celda.setVerticalAlignment(Element.ALIGN_CENTER);
-        celda.setPadding(10);
-        tablaCursos.addCell(celda);
-
         celda = new PdfPCell(new Phrase("Frecuencia", fuenteTituloColumnas));
-        celda.setBackgroundColor(Color.LIGHT_GRAY);
-        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celda.setVerticalAlignment(Element.ALIGN_CENTER);
-        celda.setPadding(10);
-        tablaCursos.addCell(celda);
-
-        celda = new PdfPCell(new Phrase("Docente", fuenteTituloColumnas));
         celda.setBackgroundColor(Color.LIGHT_GRAY);
         celda.setHorizontalAlignment(Element.ALIGN_CENTER);
         celda.setVerticalAlignment(Element.ALIGN_CENTER);
@@ -261,6 +247,7 @@ public class ExportarPdf{
 
 
         //TODO: SPT3 REDISEÑAR.
+        //TODO: TERMINADOOOOOO
         //Se agrega a la tabla los datos de los cliente y se agrega una celda con cada dato del cliente
         listadoCursos.forEach(curso -> {
             //int cantidad = (int)curso.getCantidadAlumnos();
@@ -393,6 +380,7 @@ public class ExportarPdf{
     }
 
     //TODO: SPT3 - REDISEÑAR.
+    //TODO: TERMINADOOOOOO
     public void exportInscripcion(HttpServletResponse response, int tipo, String codigo) throws IOException{
 
         Document document = new Document(PageSize.A4);
@@ -437,8 +425,8 @@ public class ExportarPdf{
 
 
         //Se crea la tabla de titulo
-        PdfPTable tablaInscripciones = new PdfPTable(8);
-        tablaInscripciones.setWidths(new float[] {1f, 1.5f, 3.5f, 1.5f, 1.5f, 2f, 2f, 2f});
+        PdfPTable tablaInscripciones = new PdfPTable(4);
+        tablaInscripciones.setWidths(new float[] {1f, 1.5f, 3.5f, 1.8f});
 
         celda = new PdfPCell(new Phrase("Código", fuenteTituloColumnas));
         celda.setBackgroundColor(Color.LIGHT_GRAY);
@@ -454,27 +442,6 @@ public class ExportarPdf{
         celda.setPadding(10);
         tablaInscripciones.addCell(celda);
 
-        celda = new PdfPCell(new Phrase("Curso", fuenteTituloColumnas));
-        celda.setBackgroundColor(Color.LIGHT_GRAY);
-        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celda.setVerticalAlignment(Element.ALIGN_CENTER);
-        celda.setPadding(10);
-        tablaInscripciones.addCell(celda);
-
-        celda = new PdfPCell(new Phrase("Fecha Inicio", fuenteTituloColumnas));
-        celda.setBackgroundColor(Color.LIGHT_GRAY);
-        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celda.setVerticalAlignment(Element.ALIGN_CENTER);
-        celda.setPadding(10);
-        tablaInscripciones.addCell(celda);
-
-        celda = new PdfPCell(new Phrase("Fecha Fin", fuenteTituloColumnas));
-        celda.setBackgroundColor(Color.LIGHT_GRAY);
-        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celda.setVerticalAlignment(Element.ALIGN_CENTER);
-        celda.setPadding(10);
-        tablaInscripciones.addCell(celda);
-
         celda = new PdfPCell(new Phrase("Fecha Inscripcion", fuenteTituloColumnas));
         celda.setBackgroundColor(Color.LIGHT_GRAY);
         celda.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -483,13 +450,6 @@ public class ExportarPdf{
         tablaInscripciones.addCell(celda);
 
         celda = new PdfPCell(new Phrase("Fecha Terminado", fuenteTituloColumnas));
-        celda.setBackgroundColor(Color.LIGHT_GRAY);
-        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celda.setVerticalAlignment(Element.ALIGN_CENTER);
-        celda.setPadding(10);
-        tablaInscripciones.addCell(celda);
-
-        celda = new PdfPCell(new Phrase("Turno", fuenteTituloColumnas));
         celda.setBackgroundColor(Color.LIGHT_GRAY);
         celda.setHorizontalAlignment(Element.ALIGN_CENTER);
         celda.setVerticalAlignment(Element.ALIGN_CENTER);
@@ -521,8 +481,8 @@ public class ExportarPdf{
                 
                 //fechaInicioString = deFechaAString.format(fechaInicioFormateada);
                 //fechaFinalString = deFechaAString.format(fechaFinalFormateada);
-                fechaTerminadoString = fechaTerminadoFormateada == null ? "En Curso" : deFechaAString.format(fechaTerminadoFormateada);
                 fechaInscripcionString = deFechaAString.format(fechaInscripcionFormateada);
+                fechaTerminadoString = fechaTerminadoFormateada == null ? "En Curso" : deFechaAString.format(fechaTerminadoFormateada);
 
 
                 tablaInscripciones.addCell(inscripcion.getCodInscripcion().toString());
@@ -530,8 +490,8 @@ public class ExportarPdf{
                 //tablaInscripciones.addCell(inscripcion.getCurso().getNombre());
                 //tablaInscripciones.addCell(fechaInicioString);
                 //tablaInscripciones.addCell(fechaFinalString);
-                tablaInscripciones.addCell(fechaTerminadoString);
                 tablaInscripciones.addCell(fechaInscripcionString);
+                tablaInscripciones.addCell(fechaTerminadoString);
                 //tablaInscripciones.addCell(inscripcion.getTurno().getNombre());
 
             } catch (ParseException e) {

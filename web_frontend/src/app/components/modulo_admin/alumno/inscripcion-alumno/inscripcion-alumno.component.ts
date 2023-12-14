@@ -224,7 +224,9 @@ export class InscripcionAlumnoComponent implements OnInit {
     console.log('Datos a enviar:', alumnoData);
     this.authService.registroAlumno(alumnoData).subscribe(
       (response) => {
-        Swal.fire('¡Registro exitoso!', 'El alumno se ha registrado correctamente.', 'success');
+        Swal.fire('¡Registro exitoso!', 'El alumno se ha registrado correctamente.', 'success').then(() => {
+          this.limpiarCampos();
+        });
       },
       (error) => {
         let errorMessage = 'Error! Ha sucedido en error en el guardado de datos.';

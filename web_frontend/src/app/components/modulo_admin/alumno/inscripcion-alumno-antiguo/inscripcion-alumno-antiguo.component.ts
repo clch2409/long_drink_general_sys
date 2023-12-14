@@ -150,6 +150,8 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
     this.seccion = '';
     this.fechaInicio = '';
     this.fechaFin = '';
+    const dniInput = document.getElementById('alumnoDni') as HTMLInputElement;
+    dniInput.value = '';
     const nombreInput = document.getElementById('nombre') as HTMLInputElement;
     nombreInput.focus();
   }
@@ -195,7 +197,7 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
           switch (errorMessage.toLowerCase()) {
             case 'ups! alumno no encontrado o deshabilitado.':
               Swal.fire('Error', 'Alumno no encontrado o deshabilitado.', 'error').then(() => {
-                this.limpiarError();
+                this.limpiarCampos();
               });
               break;
             case 'ups! curso no encontrado!':
@@ -205,7 +207,7 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
               break;
             case 'ups! alumno deshabilitado.':
               Swal.fire('Error', 'Alumno deshabilitado.', 'error').then(() => {
-                this.limpiarError();
+                this.limpiarCampos();
               });
               break;
             case 'error! el curso seleccionado no cuenta con vacantes disponibles.':
@@ -215,7 +217,7 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
               break;
             case 'error! el alumno seleccionado debe terminar sus cursos en proceso.':
               Swal.fire('Error', 'El alumno seleccionado debe terminar sus cursos en proceso.', 'error').then(() => {
-                this.limpiarError();
+                this.limpiarCampos();
               });
               break;
             case 'error! el curso seleccionado no tiene turnos asignados.':
@@ -225,18 +227,18 @@ export class InscripcionAlumnoAntiguoComponent implements OnInit {
               break;
             case 'error! ha sucedido en error en el guardado de datos.':
               Swal.fire('Error', 'Ha ocurrido un error en el guardado de datos.', 'error').then(() => {
-                this.limpiarError();
+                this.limpiarCampos();
               });
               break;
             default:
               Swal.fire('Error', errorMessage, 'error').then(() => {
-                this.limpiarError();
+                this.limpiarCampos();
               });
               break;
           }
         } else {
           Swal.fire('Error', errorMessage, 'error').then(() => {
-            this.limpiarError();
+            this.limpiarCampos();
           });
         }
       }

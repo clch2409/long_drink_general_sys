@@ -1,67 +1,49 @@
 <div class="container py-4">
     <div class="card border-primary-subtle">
         <div class="card-header text-center bg-primary text-light fw-bold">
-          Editando curso: {{codCurso}}
+            Editando curso: {{codCurso}}
         </div>
         <div class="card-body">
-            <p class="card-text text-center fw-light">A continuación, se presentan los datos del curso seleccionado. Puede modificarlos para su actualización. Los datos no alterados permanecerán iguales.</p>
+            <p class="card-text text-center fw-light">A continuación, se presentan los datos del curso seleccionado.
+                Puede modificarlos para su actualización. Los datos no alterados permanecerán iguales.</p>
             <div class="row">
                 <div class="col">
                     <label for="codigoCurso" class="form-label">Código del Curso</label>
                     <input type="text" class="form-control" id="codigoCurso" [disabled]="true" value="{{codCurso}}">
-    
+
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" #nombre minlength="1" maxlength="100">
-    
+
                     <label for="descripcionCurso" class="form-label">Descripción del Curso</label>
-                    <textarea class="form-control" id="descripcionCurso" rows="3" minlength="5" maxlength="100" #descripcionCurso></textarea>
+                    <textarea class="form-control" id="descripcionCurso" rows="3" minlength="5" maxlength="100"
+                        #descripcionCurso></textarea>
 
-                    <label for="duracionCurso" class="form-label">Duración del Curso - Semanas</label>
-                    <input type="number" class="form-control" id="duracionCurso" placeholder="4" #duracionCurso>
-
-                    <label for="profesor" class="form-label mt-3">Docente</label>
-                    <select class="form-select" id="profesor" #profesor>
-                        <option *ngFor="let p of listaProfesores" [value] ="p.codProfesor">{{p.nombre}} {{p.apellidoPaterno}}</option>
-                    </select>
-    
                 </div>
                 <div class="col">
 
 
                     <label for="frecuencia" class="form-label">Frecuencia</label>
                     <select class="form-select" id="frecuencia" #frecuencia>
-                        <option *ngFor="let f of listaFrecuencias" [value] ="f">{{f}}</option>
+                        <option *ngFor="let f of listaFrecuencias" [value]="f">{{f}}</option>
                     </select>
 
                     <label for="mensualidad" class="form-label">Mensualidad</label>
                     <input type="number" class="form-control" id="mensualidad" placeholder="100" #mensualidad>
-    
+
                     <label for="activo" class="form-label ">Visibilidad</label>
                     <select class="form-select" id="activo" #activo>
-                        <option   [value] ="true" selected>ACTIVO</option>
-                        <option   [value] ="false">INACTIVO</option>
+                        <option [value]="true" selected>ACTIVO</option>
+                        <option [value]="false">INACTIVO</option>
                     </select>
-
-                    <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" [checked]="cambiar" id="cambiarProfesor" #cambiarProfesor (change)="setCambiar()">
-                        <label class="form-check-label" for="cambiarProfesor">
-                          ¿Cambiar Profesor?
-                        </label>
-                    </div>
-
-                    <label for="profesorActual" class="form-label mt-2">Profesor Encargado</label>
-                    <input type="text" class="form-control" id="profesorActual" disabled  #profesorActual>
-
                 </div>
                 <div class="row mt-3">
                     <div class="col text-center">
-                        <a class="btn btn-success fw-bold" (click)="onSubmit(this.nombre.value,this.descripcionCurso.value,this.duracionCurso.value,this.profesor.value,this.frecuencia.value,this.mensualidad.value,this.activo.value)" >ACTUALIZAR</a>
+                        <a class="btn btn-success fw-bold"
+                            (click)="onSubmit(this.nombre.value,this.descripcionCurso.value,this.frecuencia.value,this.mensualidad.value,this.activo.value)">ACTUALIZAR</a>
                         <a class="btn btn-danger ms-5 fw-bold" [routerLink]="['/dashboard/cursos']">CANCELAR</a>
                     </div>
                 </div>
             </div>
-          
-         
         </div>
-      </div>
     </div>
+</div>

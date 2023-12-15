@@ -1,0 +1,24 @@
+#contenedorTemasVacio, #contenedorTemas{
+  list-style: none;
+  margin-top: 24px;
+}
+
+#temaSeleccionado{
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+
+#temaSeleccionado > span{
+  margin-right: 16px;
+}
+
+#agregarTema{
+  margin-top: 16px;
+  place-self: center;
+}
+
+#asignarTemas{
+  margin-top: 20px;
+  width: 250px;
+}

@@ -16,8 +16,13 @@ export class SetGuiasEstudioComponent implements OnInit{
   listaCursos: Curso[] = [];
   listaTemas: TemaCurso[] = [];
   cursoSeleccionado = 1;
-  temasSeleccionados: Tema[] = [];
+  temasSeleccionados: TemaCurso[] = [];
   listaCodigos: number[] = [];
+  selectCursos : HTMLSelectElement | undefined = undefined
+  selectTemas : HTMLSelectElement | undefined = undefined
+  botonAgregarTema : HTMLButtonElement | undefined = undefined
+  botonAsignarTemas : HTMLButtonElement | undefined = undefined
+  quiereAsignarTemas : Boolean = false
   
   constructor(private storageService: StorageService, private cursoService: CursoService, private temaService: TemaService) {}
   ngOnInit(): void {
@@ -25,6 +30,36 @@ export class SetGuiasEstudioComponent implements OnInit{
     this.storageService.denegarAcceso("ALUMNOyDOCENTE");
     this.llenarCursos();
     this.llenarTemas();
+    this.selectCursos = document.getElementById("nombreCurso") as HTMLSelectElement
+    this.selectTemas = document.getElementById("nombreTema") as HTMLSelectElement
+    this.botonAgregarTema = document.getElementById("agregarTema") as HTMLButtonElement
+    this.botonAsignarTemas = document.getElementById("asignarTemas") as HTMLButtonElement
+
+
+
+    this.botonAgregarTema.addEventListener("click", () => {
+      let indexSeleccionado = this.selectTemas?.selectedIndex
+      let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
+      this.agregarTema(Number.parseInt(itemSeleccionado.value))
+    })
+
+    this.botonAsignarTemas.addEventListener("click", () => {
+      if (this.temasSeleccionados.length == 0){
+        this.mensajeErrorNoTemas()
+      }
+      else{
+        let indexCursoSeleccionado = this.selectCursos?.selectedIndex
+        let itemCursoseleccionado = this.selectCursos?.childNodes[indexCursoSeleccionado!!] as HTMLOptionElement
+        this.temasSeleccionados.forEach(elemento => this.listaCodigos.push(elemento.codTema!!))
+        this.preguntaAsignacion(Number.parseInt(itemCursoseleccionado.value), itemCursoseleccionado.innerText!!)
+      }
+    })
+
+    this.selectCursos.addEventListener("change", () => {
+      this.temasSeleccionados = []
+    })
+
+
   }
   /* 
     Planeado para tercer sprint, probablemente haya una mejor forma de hacerlo sin checks.
@@ -52,7 +87,35 @@ export class SetGuiasEstudioComponent implements OnInit{
     })
   }
 
-  setCurso(curso: number | any): void{
+  agregarTema(codTema : number) : void{
+    let temaEncontrado = this.listaTemas.find(tema => tema.codTema == codTema) || new TemaCurso
+    let enLista = this.temasSeleccionados.includes(temaEncontrado)
+    if (!enLista){
+      this.temasSeleccionados.push(temaEncontrado!!)
+    }
+  }
+
+  quitarTema(codTema : number) : void{
+    let listadoTemasFiltrados = this.temasSeleccionados.filter(tema => tema.codTema != codTema)
+    this.temasSeleccionados = listadoTemasFiltrados
+
+  }
+
+  asignarTemas(listadoCodTemas : number[], codCurso : number) : void{
+    this.temaService.asignarTemasCursos(listadoCodTemas, codCurso).subscribe({
+      next: (data) =>{
+        console.log(data)
+        this.mensajeAsignado()
+        
+      },
+      error: () => {
+        this.mensajeErrorAsignado()
+      }
+    })
+
+  }
+
+  /*setCurso(curso: number | any): void{
     this.cursoSeleccionado = curso;
     console.log(this.cursoSeleccionado);
     this.setTemas(curso);
@@ -100,8 +163,55 @@ export class SetGuiasEstudioComponent implements OnInit{
     this.listaTemas.forEach((e) =>{
       e.checked = false;
     })
+  }*/
+  
+  private preguntaAsignacion(codCurso : number, nombreCurso : string): void{
+    let listadoTemasMensaje = ""
+    this.temasSeleccionados.forEach((tema, indice) => {
+      if (indice == 0){
+        listadoTemasMensaje += `${tema.nombre}`
+      }
+      else{
+        listadoTemasMensaje += `, ${tema.nombre}`
+      }
+    })
+    Swal.fire({
+      title: `¿Dese asignar los siguientes temas al curso de ${nombreCurso}?`,
+      text: listadoTemasMensaje,
+      showDenyButton: true,
+      confirmButtonText: "SÍ",
+      denyButtonText: "NO"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.asignarTemas(this.listaCodigos, codCurso)
+      }
+    });
+  }
+  private mensajeAsignado(): void{
+    Swal.fire({
+      title: "Guías Asignadas al Curso",
+      text: "Usted ha asignado las guías correctamente",
+      icon: "success"
+    }).then(() => {
+      this.limpiarTodo()
+    })
   }
 
+  private mensajeErrorAsignado(): void{
+    Swal.fire({
+      title: "Ups! Ha sucedido un error.",
+      text: "No se han podido asignar los temas al curso",
+      icon: "error"
+    })
+  }
+
+  private mensajeErrorNoTemas(): void{
+    Swal.fire({
+      title: "Sin Temas Seleccionados!",
+      text: "No hay Temas seleccionados, por favor selccione al menos un tema para asignarlo al curso",
+      icon: "error"
+    })
+  }
 
   public mensajeError(): void{
     Swal.fire({
@@ -109,5 +219,13 @@ export class SetGuiasEstudioComponent implements OnInit{
       text: "No se encontraron guías de estudio asociadas a ningún curso.",
       icon: "error"
     })
+  }
+
+  private limpiarTodo(){
+    this.temasSeleccionados = []
+    this.listaCursos = []
+    this.listaTemas = []
+    this.llenarCursos()
+    this.llenarTemas()
   }
 }

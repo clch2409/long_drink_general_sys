@@ -23,45 +23,47 @@ export class SetGuiasEstudioComponent implements OnInit{
   botonAgregarTema : HTMLButtonElement | undefined = undefined
   botonAsignarTemas : HTMLButtonElement | undefined = undefined
   quiereAsignarTemas : Boolean = false
-  
+
   constructor(private storageService: StorageService, private cursoService: CursoService, private temaService: TemaService) {}
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     this.storageService.denegarAcceso("ALUMNOyDOCENTE");
     this.llenarCursos();
     this.llenarTemas();
-    this.selectCursos = document.getElementById("nombreCurso") as HTMLSelectElement
-    this.selectTemas = document.getElementById("nombreTema") as HTMLSelectElement
-    this.botonAgregarTema = document.getElementById("agregarTema") as HTMLButtonElement
-    this.botonAsignarTemas = document.getElementById("asignarTemas") as HTMLButtonElement
+    window.addEventListener("load", () =>{
+      this.selectCursos = document.getElementById("nombreCurso") as HTMLSelectElement
+      this.selectTemas = document.getElementById("nombreTema") as HTMLSelectElement
+      this.botonAgregarTema = document.getElementById("agregarTema") as HTMLButtonElement
+      this.botonAsignarTemas = document.getElementById("asignarTemas") as HTMLButtonElement
 
 
 
-    this.botonAgregarTema.addEventListener("click", () => {
-      let indexSeleccionado = this.selectTemas?.selectedIndex
-      let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
-      this.agregarTema(Number.parseInt(itemSeleccionado.value))
+       this.botonAgregarTema.addEventListener("click", () => {
+        let indexSeleccionado = this.selectTemas?.selectedIndex
+        let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
+        this.agregarTema(Number.parseInt(itemSeleccionado.value))
+      })
+
+      this.botonAsignarTemas.addEventListener("click", () => {
+        if (this.temasSeleccionados.length == 0){
+          this.mensajeErrorNoTemas()
+        }
+        else{
+          let indexCursoSeleccionado = this.selectCursos?.selectedIndex
+          let itemCursoseleccionado = this.selectCursos?.childNodes[indexCursoSeleccionado!!] as HTMLOptionElement
+          this.temasSeleccionados.forEach(elemento => this.listaCodigos.push(elemento.codTema!!))
+          this.preguntaAsignacion(Number.parseInt(itemCursoseleccionado.value), itemCursoseleccionado.innerText!!)
+        }
+      })
+
+       this.selectCursos.addEventListener("change", () => {
+        this.temasSeleccionados = []
+      })
     })
-
-    this.botonAsignarTemas.addEventListener("click", () => {
-      if (this.temasSeleccionados.length == 0){
-        this.mensajeErrorNoTemas()
-      }
-      else{
-        let indexCursoSeleccionado = this.selectCursos?.selectedIndex
-        let itemCursoseleccionado = this.selectCursos?.childNodes[indexCursoSeleccionado!!] as HTMLOptionElement
-        this.temasSeleccionados.forEach(elemento => this.listaCodigos.push(elemento.codTema!!))
-        this.preguntaAsignacion(Number.parseInt(itemCursoseleccionado.value), itemCursoseleccionado.innerText!!)
-      }
-    })
-
-    this.selectCursos.addEventListener("change", () => {
-      this.temasSeleccionados = []
-    })
-
-
   }
-  /* 
+  //ngAfterViewInit + (click) event....
+
+  /*
     Planeado para tercer sprint, probablemente haya una mejor forma de hacerlo sin checks.
   */
 
@@ -106,7 +108,7 @@ export class SetGuiasEstudioComponent implements OnInit{
       next: (data) =>{
         console.log(data)
         this.mensajeAsignado()
-        
+
       },
       error: () => {
         this.mensajeErrorAsignado()
@@ -164,7 +166,7 @@ export class SetGuiasEstudioComponent implements OnInit{
       e.checked = false;
     })
   }*/
-  
+
   private preguntaAsignacion(codCurso : number, nombreCurso : string): void{
     let listadoTemasMensaje = ""
     this.temasSeleccionados.forEach((tema, indice) => {
@@ -176,7 +178,7 @@ export class SetGuiasEstudioComponent implements OnInit{
       }
     })
     Swal.fire({
-      title: `¿Dese asignar los siguientes temas al curso de ${nombreCurso}?`,
+      title: `¿Desea asignar los siguientes temas al curso de ${nombreCurso}?`,
       text: listadoTemasMensaje,
       showDenyButton: true,
       confirmButtonText: "SÍ",

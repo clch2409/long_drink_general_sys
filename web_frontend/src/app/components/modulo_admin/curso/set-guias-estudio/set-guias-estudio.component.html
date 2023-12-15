@@ -10,7 +10,7 @@
 
                 <div class="container row">
                     <div class="container col-6">
-                        <select class="form-select fw-medium" id="nombreCurso" #nombreCurso >
+                        <select class="form-select fw-medium" id="nombreCurso" #nombreCurso>
                             <option class="fw-medium" *ngFor="let curso of listaCursos" [value] ="curso.codCurso">{{curso.nombre}}</option>
                         </select>
                         <ul class="container" id="contenedorTemasVacio" *ngIf="temasSeleccionados.length == 0">
@@ -20,7 +20,7 @@
                             <li *ngFor="let tema of temasSeleccionados" id="temaSeleccionado">
                                 <span>{{tema.nombre}} </span>
                                 <button mat-mini-fab class="bg-danger" (click)="quitarTema(tema.codTema!!)">
-                                    <mat-icon>delete</mat-icon>
+                                    <mat-icon>clear</mat-icon>
                                 </button>
                             </li>
                         </ul>

@@ -13,11 +13,17 @@ import Swal from 'sweetalert2';
 })
 
 
-export class ListadoSeccionesComponent{
+export class ListadoSeccionesComponent {
 
   secciones: Seccion[] = [];
 
   constructor( private storageService: StorageService, private router: Router,private seccionService: SeccionService) { }
+
+  
+  ngOnInit(): void {
+    this.getSecciones();
+}
+  
 
   getSecciones(): void{
     this.seccionService.getSecciones().subscribe({

@@ -4,7 +4,7 @@
 <div class="container d-flex flex-column align-items-center mb-5">
 
     
-    <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Secciones</h1>
+    <h3 class="text-decoration-underline mt-4 mb-4 fw-bold ">Lista de Secciones</h3>
 
     <div class="table-container">
 
@@ -23,22 +23,20 @@
                     <th class="fw-bold align-middle">Fecha de Inicio</th>
                     <th class="fw-bold align-middle">Fecha de Fin</th>
                     <th class="fw-bold align-middle">Estado</th>
-                    <th class="fw-bold align-middle" colspan="2">Acciones</th>
+                    
                 </tr>
             <tbody>
                 <tr *ngFor="let seccion of secciones" class="text-center">
-                    <td class="fw-medium align-middle">{{ seccion.codSeccion }}</td>
-                    <td class="fw-medium align-middle">{{ seccion.nombre }}</td>
-                    <td class="fw-medium align-middle">{{ seccion.curso}}</td>
-                    <td class="fw-medium align-middle">{{ seccion.turno}}</td>
-                    <td class="fw-medium align-middle">{{ seccion.profesor}}</td>
+                    <td>{{ seccion.codSeccion }}</td>
+                    <td >{{ seccion.curso?.nombre }}</td>
+                    <td >{{ seccion.curso?.nombre}}</td>
+                    <td >{{ seccion.turno?.nombre}}</td>
+                    <td >{{ seccion.profesor?.nombre}}</td>
 
-                    <td class="fw-medium align-middle">{{ seccion.fechaInicio | date }}</td>
-                    <td class="fw-medium align-middle">{{ seccion.fechaFinal | date }}</td>
-                    <td class="fw-medium align-middle">{{ seccion.estado==true?'Activo':'Inactivo'}}</td>
-                    <td class="d-flex justify-content-center align-content-around" >
-                        <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/secciones']">Detalles</a>
-                    </td>
+                    <td>{{ seccion.fechaInicio | date }}</td>
+                    <td >{{ seccion.fechaFinal | date }}</td>
+                    <td >{{ seccion.estado==true?'Activo':'Inactivo'}}</td>
+                    
                 </tr>
             </tbody>
         </table>

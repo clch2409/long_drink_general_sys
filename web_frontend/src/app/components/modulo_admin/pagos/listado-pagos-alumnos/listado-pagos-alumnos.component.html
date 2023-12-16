@@ -1,0 +1,56 @@
+<div class="container py-3">
+  <div class="row justify-content-center">
+    <div class="col-md-12 py-3 px-4">
+      <div class="card border-success">
+        <div class="card-header text-center bg-success bg-gradient">
+          <h5 class="fw-bold text-light">Listado de Pagos</h5>
+        </div>
+        <div class="card-body">
+          <div class="container">
+
+            <div class="row">
+              <div class="col-2">
+                <div class="mb-3">
+                  <label for="dniAlum" class="form-label fw-bold">DNI Alumno</label>
+                  <input type="text" class="form-control" id="dniAlum" placeholder="09999999" maxlength="8" #dniAlum>
+                </div>
+              </div>
+              <div class="col-2">
+                <label for="dniAlumno" class="form-label fw-bold invisible">Invisible</label>
+                <button class="btn btn-primary bg-gradient fw-bold" (click)="cargarDatosAlumno(dniAlum.value)">CARGAR PAGOS</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="container">
+                <table class="table table-bordered table-success">
+                  <thead class="text-center">
+                    <th>Referencia</th>
+                    <th>Descripción</th>
+                    <th>Fecha Pago</th>
+                    <th>Subtotal</th>
+                    <th>Mora</th>
+                    <th>Total</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let p of listaPagos">
+                      <th>{{p.codPago}}</th>
+                      <th>{{p.descripcion}}</th>
+                      <th>{{p.fechaPago | date}}</th>
+                      <th>{{p.detallePagos!![0].subTotal}}</th>
+                      <th>{{p.detallePagos!![0].montoMora}}</th>
+                      <th>{{p.total}}</th>
+                    </tr>
+                  </tbody>
+                </table>
+                <h6 class="text-center fw-bold text-danger" *ngIf="listaPagos?.length!! <= 0">SIN PAGOS REGISTRADOS <br> Ingrese un DNI y presione "CARGAR PAGOS" para visualizar los pagos del estudiante.</h6>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+</div>

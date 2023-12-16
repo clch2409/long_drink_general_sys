@@ -1,1 +1,67 @@
-<h1>Trabajar Aquí: Asignación de secciones a curso.</h1>
+<div class="container py-4">
+  <div class="row justify-content-center">
+      <div class="col-md-12">
+          <div class="rounded-4 shadow p-4 border border-2 border-primary">
+              <h2 class="fw-bold fst-italic text-primary text-center mb-4 text-decoration-underline fs-2">Asignar
+                  Sección a Curso</h2>
+              <form class="form container" (ngSubmit)="onSubmit()">
+                  <div class="row">
+                      <div class="col-md-4 mb-3">
+                          <label for="curso" class="fw-bold form-label">Curso</label>
+                          <select class="form-select text-uppercase fw-medium" id="curso" name="curso"
+                              [(ngModel)]="selectedCurso" (change)="onCursoChange()">
+                              <option *ngFor="let curso of cursosActivos" [ngValue]="curso">{{ curso.nombre }}
+                              </option>
+                          </select>
+                      </div>
+                      <div class="col-md-4 mb-3">
+                          <label for="profesor" class="fw-bold form-label">Profesor</label>
+                          <select class="form-select text-uppercase fw-medium" id="profesor" name="profesor"
+                              [(ngModel)]="selectedProfesor" (change)="onProfesorChange()">
+                              <option *ngFor="let profesor of profesoresDisponibles" [ngValue]="profesor">{{
+                                  profesor.nombre + " " + profesor.apellidoPaterno }}</option>
+                          </select>
+                      </div>
+                      <div class="col-md-4 mb-3">
+                          <label for="turno" class="fw-bold form-label">Turno</label>
+                          <select class="form-select text-uppercase fw-medium" id="turno" name="turno"
+                              [(ngModel)]="selectedTurno" (change)="onTurnoChange()">
+                              <option *ngFor="let turno of turnosDisponibles" [ngValue]="turno">{{ turno.nombre }}
+                              </option>
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="col-md-4 mb-3">
+                          <label for="maxAlumnos" class="fw-bold form-label">Máximo de Alumnos</label>
+                          <input type="number" class="text-uppercase fw-medium form-control" id="maxAlumnos"
+                              name="maxAlumnos" [(ngModel)]="selectedMaxAlumnos" required>
+                      </div>
+                      <div class="col-md-4 mb-3">
+                          <label for="fechaInicio" class="fw-bold form-label">Fecha de Inicio</label>
+                          <input type="date" class="text-uppercase fw-medium form-control" id="fechaInicio"
+                              name="fechaInicio" [(ngModel)]="selectedFechaInicio" (change)="onFechaInicioChange()" required>
+                      </div>
+                      <div class="col-md-4 mb-3">
+                          <label for="fechaFinal" class="fw-bold form-label">Fecha de Finalización</label>
+                          <input type="date" class="text-uppercase fw-medium form-control" id="fechaFinal"
+                              name="fechaFinal" [(ngModel)]="selectedFechaFinal" required readonly>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-4 mb-3 text-center">
+                          <button type="submit" class="fw-bold btn btn-primary fs-5">Guardar</button>
+                      </div>
+                      <div class="col-md-4 mb-3 text-center">
+                          <button type="button" class="fw-bold btn btn-secondary fs-5" (click)="limpiarCampos()">Limpiar</button>
+                      </div>
+                      <div class="col-md-4 mb-3 text-center">
+                          <a class="fw-bold btn btn-danger fs-5" [routerLink]="['/dashboard']">Cancelar</a>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

@@ -50,6 +50,15 @@ export class ListadoAsistenciasComponent implements OnInit {
       next: (data) =>{
         this.inscripcionesGenerales = data;
         this.enriquecerInscripciones();
+        this.inscripcionesGenerales.forEach((e) =>{
+          let conteoFaltas = 0;
+          e.asistencias?.forEach((a) =>{
+            if(a.estado == 0){
+              conteoFaltas +=1;
+            }
+          })
+          e.cantidadFaltas = conteoFaltas;
+        });
       },
       error: (err) =>{
         Swal.fire('Ups!',err.error.mensaje,'error');
@@ -93,6 +102,15 @@ export class ListadoAsistenciasComponent implements OnInit {
         console.log(this.inscripcionesAlumno);
         this.inscripcionesAlumno.forEach((e) =>{
           this.seccionesAlumno.push(e.seccion!!);
+        })
+        this.inscripcionesAlumno.forEach((i) =>{
+          let conteoFaltas = 0;
+          i.asistencias?.forEach((a) =>{
+            if(a.estado == 0){
+              conteoFaltas++;
+            }
+          })
+          i.cantidadFaltas = conteoFaltas;
         })
       },
       error: (err) => {

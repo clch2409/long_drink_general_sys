@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Seccion } from 'src/app/models/seccion.model';
 import { SeccionService } from 'src/app/services/seccion.service';
@@ -13,32 +13,31 @@ import Swal from 'sweetalert2';
 })
 
 
-export class ListadoSeccionesComponent {
-
+export class ListadoSeccionesComponent implements OnInit {
   secciones: Seccion[] = [];
 
-  constructor( private storageService: StorageService, private router: Router,private seccionService: SeccionService) { }
+  constructor(private storageService: StorageService, private router: Router, private seccionService: SeccionService) { }
 
-  
   ngOnInit(): void {
+    this.storageService.comprobarSesion();
+    this.storageService.denegarAcceso('ALUMNOyDOCENTE');
     this.getSecciones();
-}
-  
+  }
 
-  getSecciones(): void{
+
+  getSecciones(): void {
     this.seccionService.getSecciones().subscribe({
-      next: (data) =>{
+      next: (data) => {
         this.secciones = data;
-        console.log(data);
       },
-      error: (err) => console.log(err)
+      error: (err) => Swal.fire('Error!','Ups! No se pudieron cargar las secciones. Intente nuevamente.','error')
     });
   }
 
 
 }
 
- 
+
 
 
 

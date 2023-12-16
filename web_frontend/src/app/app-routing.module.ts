@@ -32,6 +32,8 @@ import { MarcarAsistenciaComponent } from './components/modulo_alumnos/marcar-as
 import { ListadoAsistenciasComponent } from './components/modulo_admin/asistencias/listado-asistencias/listado-asistencias.component';
 import { ListadoSeccionesComponent } from './components/modulo_admin/secciones/listado-secciones/listado-secciones.component';
 import { AsignarSeccionCursoComponent } from './components/modulo_admin/secciones/asignar-seccion-curso/asignar-seccion-curso.component';
+import { NuevoPagoAlumnoComponent } from './components/modulo_admin/pagos/nuevo-pago-alumno/nuevo-pago-alumno.component';
+import { ListadoPagosAlumnosComponent } from './components/modulo_admin/pagos/listado-pagos-alumnos/listado-pagos-alumnos.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, title: 'Long Drink - Inicio de Sesión' },
@@ -60,6 +62,8 @@ const routes: Routes = [
   { path: 'asistencias', component: ListadoAsistenciasComponent, title: 'Long Drink - Gestión de Asistencias' },
   { path: 'secciones', component: ListadoSeccionesComponent, title: 'Long Drink - Listado de Secciones' },
   { path: 'c/asignar-secciones', component: AsignarSeccionCursoComponent, title: 'Long Drink - Gestión de Curso: Secciones' },
+  { path: 'registro-pagos', component: NuevoPagoAlumnoComponent, title: 'Long Drink: Gestión de Pagos - Alumnos' },
+  { path: 'listado-pagos', component: ListadoPagosAlumnosComponent, title: 'Long Drink: Gestión de Pagos - Listado' },
   ]
   },
   { path: 'a', component: DashboardComponent, title: 'Long Drink - Área Estudiantil', children: [

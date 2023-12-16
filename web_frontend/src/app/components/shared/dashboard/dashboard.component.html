@@ -128,6 +128,19 @@
 				</mat-list-item>
 			</mat-expansion-panel>
 
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+				<mat-expansion-panel-header>
+					<mat-icon>payments</mat-icon>
+					Pagos
+				</mat-expansion-panel-header>
+				<mat-list-item [routerLink]="['/dashboard', 'listado-pagos']">
+					<span>Listado</span>
+				</mat-list-item>
+				<mat-list-item [routerLink]="['/dashboard', 'registro-pagos']">
+					<span>Nuevo Pago</span>
+				</mat-list-item>
+			</mat-expansion-panel>
+
 			<mat-list-item>
 				<span>{{rol}}</span>
 			</mat-list-item>

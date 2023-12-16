@@ -48,7 +48,9 @@ import { MisPagosComponent } from './components/modulo_alumnos/mis-pagos/mis-pag
 import { MarcarAsistenciaComponent } from './components/modulo_alumnos/marcar-asistencia/marcar-asistencia.component';
 import { ListadoAsistenciasComponent } from './components/modulo_admin/asistencias/listado-asistencias/listado-asistencias.component';
 import { ListadoSeccionesComponent } from './components/modulo_admin/secciones/listado-secciones/listado-secciones.component';
-import { AsignarSeccionCursoComponent } from './components/modulo_admin/secciones/asignar-seccion-curso/asignar-seccion-curso.component' 
+import { AsignarSeccionCursoComponent } from './components/modulo_admin/secciones/asignar-seccion-curso/asignar-seccion-curso.component';
+import { NuevoPagoAlumnoComponent } from './components/modulo_admin/pagos/nuevo-pago-alumno/nuevo-pago-alumno.component';
+import { ListadoPagosAlumnosComponent } from './components/modulo_admin/pagos/listado-pagos-alumnos/listado-pagos-alumnos.component' 
 
 @NgModule({
   declarations: [
@@ -87,6 +89,8 @@ import { AsignarSeccionCursoComponent } from './components/modulo_admin/seccione
     ListadoAsistenciasComponent,
     ListadoSeccionesComponent,
     AsignarSeccionCursoComponent,
+    NuevoPagoAlumnoComponent,
+    ListadoPagosAlumnosComponent,
   ],
   imports: [
     BrowserModule,

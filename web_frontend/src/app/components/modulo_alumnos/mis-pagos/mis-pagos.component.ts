@@ -66,7 +66,7 @@ export class MisPagosComponent implements OnInit {
       }
     });
     cuotas = duracionCurso!! / 4;
-    if(cuotas >= 1){
+    if(cuotas >= 1 && this.listaPagados.length < cuotas+1){ //Algo falla? quitar el &&....
       let mora = 0;
       this.listaPagados.forEach((e) =>{
         if(!e.descripcion?.includes("MATRICULA")){
@@ -124,6 +124,59 @@ export class MisPagosComponent implements OnInit {
           }
         }
       })
+    }
+
+    //!!!!!!! Llenar listado de pendiente de pago en caso de que no tenga ni 1 solo pago.
+    if(this.listaPagados.length <= 0){
+      let mora = 0;
+      let fechaActual = new Date();
+      if(fechaActual > vencimiento!!){
+        mora = 50;
+      }
+      let detallePM = [
+        new DetallePago({
+          codDetallePago: 0,
+          concepto: 'MATRICULA',
+          monto: 150,
+          montoMora: mora,
+          subTotal: 150+mora,
+        })
+      ];
+      let pagoMatricula = new Pago({
+          codPago: 0,
+          descripcion: `MATRICULA - ${nombreCurso!!}`,
+          fechaPago: undefined,
+          fechaVencimiento: vencimiento!!,
+          total: detallePM[0].subTotal,
+          estado: false,
+          detallePagos: detallePM
+        });
+      this.listaPendientes.push(pagoMatricula);
+
+      if(fechaActual.getTime() >= new Date(vencimiento!!).getTime()){
+        mora = 50;
+      }
+      for(let c = 0; c<cuotas!!; c++){
+        let detallePM = [
+          new DetallePago({
+            codDetallePago: c+1,
+            concepto: `CUOTA ${c+1}`,
+            monto: mensualidad!!,
+            montoMora: mora,
+            subTotal: mensualidad!!+mora,
+          })
+        ];
+        let pagoMatricula = new Pago({
+            codPago: c+1,
+            descripcion: `CUOTA ${c+1} - ${nombreCurso!!}`,
+            fechaPago: undefined,
+            fechaVencimiento: vencimiento!!,
+            total: detallePM[0].subTotal,
+            estado: false,
+            detallePagos: detallePM
+          });
+        this.listaPendientes.push(pagoMatricula);
+      }
     }
   }
 

@@ -9,6 +9,7 @@ export class Pago implements Deserializable{
   total?: number;
   detallePagos?: DetallePago[];
   estado?: boolean;
+  auxSubTotal?: number;
 
   deserializable(input: any): this {
     Object.assign(this, input);

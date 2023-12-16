@@ -35,6 +35,7 @@
 
                     <td class="fw-medium align-middle">{{ seccion.fechaInicio | date }}</td>
                     <td class="fw-medium align-middle">{{ seccion.fechaFinal | date }}</td>
+                    <td class="fw-medium align-middle">{{ seccion.estado==true?'Activo':'Inactivo'}}</td>
                     <td class="d-flex justify-content-center align-content-around" >
                         <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/secciones']">Detalles</a>
                     </td>

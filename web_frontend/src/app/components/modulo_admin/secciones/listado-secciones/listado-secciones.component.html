@@ -1,1 +1,55 @@
-<h1>Trabajar Aquí: Listado de secciones.</h1>
+
+
+
+<div class="container d-flex flex-column align-items-center mb-5">
+
+    
+    <h1 class="text-decoration-underline mt-4 mb-4 fw-bold fst-italic">Lista de Secciones</h1>
+
+    <div class="table-container">
+
+
+        <div class="card">
+            <div class="card-header">Secciones</div>
+            <div class="card-body">
+        <table class=" table-bordered table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th class="fw-bold align-middle">Codigo</th>
+                    <th class="fw-bold align-middle">Nombre</th>
+                    <th class="fw-bold align-middle">Curso</th>
+                    <th class="fw-bold align-middle">Turno</th>
+                    <th class="fw-bold align-middle">Profesor</th>
+                    <th class="fw-bold align-middle">Fecha de Inicio</th>
+                    <th class="fw-bold align-middle">Fecha de Fin</th>
+                    <th class="fw-bold align-middle">Estado</th>
+                    <th class="fw-bold align-middle" colspan="2">Acciones</th>
+                </tr>
+            <tbody>
+                <tr *ngFor="let seccion of secciones" class="text-center">
+                    <td class="fw-medium align-middle">{{ seccion.codSeccion }}</td>
+                    <td class="fw-medium align-middle">{{ seccion.nombre }}</td>
+                    <td class="fw-medium align-middle">{{ seccion.curso}}</td>
+                    <td class="fw-medium align-middle">{{ seccion.turno}}</td>
+                    <td class="fw-medium align-middle">{{ seccion.profesor}}</td>
+
+                    <td class="fw-medium align-middle">{{ seccion.fechaInicio | date }}</td>
+                    <td class="fw-medium align-middle">{{ seccion.fechaFinal | date }}</td>
+                    <td class="d-flex justify-content-center align-content-around" >
+                        <a class="btn btn-success mx-2 my-1 fw-bold" [routerLink]="['/dashboard/secciones']">Detalles</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+    </div>
+</div>
+
+
+
+    </div>
+</div>

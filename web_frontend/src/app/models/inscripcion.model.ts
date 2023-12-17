@@ -14,6 +14,7 @@ export class Inscripcion implements Deserializable {
     turno: Turno = new Turno;
     seccion?: Seccion;
     asistencias?: Asistencia[];
+    cantidadFaltas?: number; //Auxiliar asistencias.
 
     deserializable(input: any): this {
         Object.assign(this, input);

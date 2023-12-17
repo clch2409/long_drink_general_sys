@@ -23,7 +23,7 @@ export class SetGuiasEstudioComponent implements OnInit{
   botonAgregarTema : HTMLButtonElement | undefined = undefined
   botonAsignarTemas : HTMLButtonElement | undefined = undefined
   quiereAsignarTemas : Boolean = false
-  
+
   constructor(private storageService: StorageService, private cursoService: CursoService, private temaService: TemaService) {}
   ngOnInit(): void {
     window.addEventListener("load", () => {
@@ -36,11 +36,11 @@ export class SetGuiasEstudioComponent implements OnInit{
       this.botonAgregarTema = document.getElementById("agregarTema") as HTMLButtonElement
       this.botonAsignarTemas = document.getElementById("asignarTemas") as HTMLButtonElement
 
-      this.botonAgregarTema.addEventListener("click", () => {
-        let indexSeleccionado = this.selectTemas?.selectedIndex
-        let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
-        this.agregarTema(Number.parseInt(itemSeleccionado.value))
-      })
+    this.botonAgregarTema.addEventListener("click", () => {
+      let indexSeleccionado = this.selectTemas?.selectedIndex
+      let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
+      this.agregarTema(Number.parseInt(itemSeleccionado.value))
+    })
 
       this.botonAsignarTemas.addEventListener("click", () => {
         if (this.temasSeleccionados.length == 0){
@@ -54,13 +54,15 @@ export class SetGuiasEstudioComponent implements OnInit{
         }
       })
 
-      this.selectCursos.addEventListener("change", () => {
-        this.temasSeleccionados = []
-      })
+    this.selectCursos.addEventListener("change", () => {
+      this.temasSeleccionados = []
     })
-    
+
+
   }
-  /* 
+  //ngAfterViewInit + (click) event....
+
+  /*
     Planeado para tercer sprint, probablemente haya una mejor forma de hacerlo sin checks.
   */
 
@@ -105,7 +107,7 @@ export class SetGuiasEstudioComponent implements OnInit{
       next: (data) =>{
         console.log(data)
         this.mensajeAsignado()
-        
+
       },
       error: () => {
         this.mensajeErrorAsignado()
@@ -163,7 +165,7 @@ export class SetGuiasEstudioComponent implements OnInit{
       e.checked = false;
     })
   }*/
-  
+
   private preguntaAsignacion(codCurso : number, nombreCurso : string): void{
     let listadoTemasMensaje = ""
     this.temasSeleccionados.forEach((tema, indice) => {
@@ -175,7 +177,7 @@ export class SetGuiasEstudioComponent implements OnInit{
       }
     })
     Swal.fire({
-      title: `¿Dese asignar los siguientes temas al curso de ${nombreCurso}?`,
+      title: `¿Desea asignar los siguientes temas al curso de ${nombreCurso}?`,
       text: listadoTemasMensaje,
       showDenyButton: true,
       confirmButtonText: "SÍ",

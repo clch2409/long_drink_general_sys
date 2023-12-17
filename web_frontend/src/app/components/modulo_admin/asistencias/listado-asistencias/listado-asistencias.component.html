@@ -48,10 +48,11 @@
               </div>
               <hr>
               <div class="container" *ngIf="inscripcionesAlumno.length >= 1">
-
+                <!----SECCION DE ASISTENCIAS: ALUMNO INDIVIDUAL.-->
                 <div class="col">
                   <ul class="list-group list-group-numbered" *ngFor="let a of inscripcionesAlumno">
                     <h6>{{a.seccion?.curso?.nombre + " - INICIO CURSO: "+a.seccion?.fechaInicio +" FINAL CURSO: "+a.seccion?.fechaFinal}}</h6>
+                    <h6 class="text-center fw-bold text-danger" *ngIf="a.cantidadFaltas!! >=5">Inasistencias del Alumno: {{a.cantidadFaltas}}</h6>
                     <div class="container" *ngIf="a.asistencias?.length!! <= 0">
                       <h5 class="text-danger text-center fw-semibold">ALUMNO NO REGISTRA ASISTENCIAS AL CURSO</h5>
                     </div>
@@ -70,10 +71,12 @@
               </div>
 
               <div class="container" *ngIf="inscripcionesGenerales.length >= 1">
-                <!--TODO: "CONTADOR DE INASISTENCIAS.... SI SUPERA 5 MENSAJE EN ROJO."-->
+                <!--SECCION DE ASISTENCIAS GENERALES-->
                 <div class="col">
                   <ul class="list-group list-group-numbered mb-3" *ngFor="let a of inscripcionesGenerales">
                     <h6>ALUMNO: {{a.alumno?.nombre + " " + a.alumno?.apellidoPaterno + " " + a.alumno?.apellidoMaterno + " DNI: " + a.alumno?.dni }}</h6>
+                    <h6>CURSO: {{a.seccion?.curso?.nombre + " FECHA INICIO: " + a.seccion?.fechaInicio + " FECHA FIN: " + a.seccion?.fechaFinal}}</h6>
+                    <h6 *ngIf="a.cantidadFaltas!! >= 5">Inasistencias del Alumno: {{a.cantidadFaltas}}</h6>
                     <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let b of a.asistencias">
                       <div class="ms-2 me-auto">
                         <div class="fw-bold">FECHA: {{b.fechaAsistencia}} | HORA LLEGADA: {{b.horaLlegada}}</div>

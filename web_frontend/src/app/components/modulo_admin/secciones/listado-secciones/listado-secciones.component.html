@@ -1,1 +1,36 @@
-<h1>Trabajar Aquí: Listado de secciones.</h1>
+<div class="container d-flex flex-column align-items-center mb-5 mt-4">
+  <div class="table-container">
+    <div class="card border-primary">
+      <div class="card-header text-center bg-gradient bg-primary"><h5 class="text-light fw-bold">Secciones</h5></div>
+      <div class="card-body">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr class="text-center">
+              <th class="fw-bold align-middle">Codigo</th>
+              <th class="fw-bold align-middle">Nombre</th>
+              <th class="fw-bold align-middle">Curso</th>
+              <th class="fw-bold align-middle">Turno</th>
+              <th class="fw-bold align-middle">Profesor</th>
+              <th class="fw-bold align-middle">Fecha de Inicio</th>
+              <th class="fw-bold align-middle">Fecha de Fin</th>
+              <th class="fw-bold align-middle">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let seccion of secciones" class="text-center">
+              <td>{{ seccion.codSeccion }}</td>
+              <td>{{ seccion.nombre }}</td>
+              <td>{{ seccion.curso?.nombre }}</td>
+              <td>{{ seccion.turno?.nombre }}</td>
+              <td>{{ seccion.profesor?.nombre + " " + seccion.profesor?.apellidoPaterno }}</td>
+              <td>{{ seccion.fechaInicio | date }}</td>
+              <td>{{ seccion.fechaFinal | date }}</td>
+              <td *ngIf="seccion.estado" class="fw-bold text-success">EN CURSO</td>
+              <td *ngIf="!seccion.estado" class="fw-bold text-danger">CERRADA</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -47,4 +47,12 @@ export class SeccionService {
     return this.http.get<Seccion[]>(API+`/seccion/activas`);
   }
 
+  asignarSeccion(seccionData: any):Observable<any> {
+    return this.http.post(
+      API + '/seccion/asignar_curso',
+      seccionData,
+      httpOptions
+    );
+  }
+
 }

@@ -255,7 +255,7 @@ public class ExportarPdf{
             tablaCursos.addCell(curso.getNombre());
             tablaCursos.addCell(curso.getDescripcion());
             tablaCursos.addCell("S/." + curso.getMensualidad());
-            tablaCursos.addCell(curso.getDuracion() + " semanas");
+            tablaCursos.addCell(curso.getDuracion() + " SEMANAS");
             //tablaCursos.addCell(cantidad+"");
             tablaCursos.addCell(curso.getFrecuencia());
             //tablaCursos.addCell(curso.getProfesor().getNombre() + " " + curso.getProfesor().getApellidoPaterno());

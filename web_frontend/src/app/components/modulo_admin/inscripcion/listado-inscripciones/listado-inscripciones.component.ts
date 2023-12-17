@@ -27,6 +27,11 @@ export class ListadoInscripcionesComponent {
   ngOnInit(): void {
     this.storageService.comprobarSesion();
     this.storageService.denegarAcceso('ALUMNOyDOCENTE');
+    Swal.fire("MANTENIMIENTO","Este modulo se encuentra en mantenimiento.","info").then((event) =>{
+      if(event.dismiss || event.isConfirmed){
+        this.router.navigate(['dashboard','secciones']);
+      }
+    })
     this.getInscripcionesEnProceso();
   }
 

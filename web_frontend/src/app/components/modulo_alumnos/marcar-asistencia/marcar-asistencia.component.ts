@@ -107,6 +107,12 @@ export class MarcarAsistenciaComponent implements OnInit {
             }
           }
         }
+        if(e.fechaTerminado != null){  //TODO: CAMBIO DE ULTIMO MINUTO. SI NO FUNCIONA ALGO ELIMINA ESTE BLOQUE IF.
+          const index = this.inscripciones.indexOf(e);
+          if(index > -1){
+            this.inscripciones.splice(index,1);
+          }
+        }
         console.log(this.inscripciones);
       });
       let fecha = formatDate(new Date(),'yyyy-MM-dd','en-US')

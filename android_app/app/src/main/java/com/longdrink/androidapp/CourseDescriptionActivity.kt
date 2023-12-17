@@ -98,7 +98,7 @@ class CourseDescriptionActivity : AppCompatActivity() {
     }
 
     private fun validarTerminadoRetirado(inscripcion: Inscripcion) : String{
-        return if (!inscripcion.estado && (inscripcion.fechaTerminado == inscripcion.seccion.fechaFinal)){
+        return if (!inscripcion.estado && !inscripcion.seccion.estado){ //(inscripcion.fechaTerminado == inscripcion.seccion.fechaFinal)
             permitirCertificado = true
             "Terminado"
         } else{

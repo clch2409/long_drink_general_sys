@@ -21,7 +21,8 @@
                         </select>
                         <label for="fechaInicio" class="fw-bold form-label">Fecha de Inicio</label>
                         <input type="date" class="text-uppercase fw-medium form-control" id="fechaInicio"
-                            name="fechaInicio" (change)="onFechaInicioChange()" required #fechaInicio>
+                            name="fechaInicio" [(ngModel)]="eFechaInicio" (change)="onFechaInicioChange()" required
+                            #fechaInicio>
                     </div>
                     <div class="col">
                         <label for="duracionCurso" class="form-label fw-bold">Duración del Curso - Semanas</label>
@@ -38,7 +39,7 @@
                         </select>
                         <label for="fechaFin" class="fw-bold form-label">Fecha de Fin</label>
                         <input type="date" class="text-uppercase fw-medium form-control" id="fechaFin" name="fechaFin"
-                            #fechaFin readonly required>
+                            [(ngModel)]="eFechaFin" #fechaFin readonly required>
                     </div>
                     <div class="col">
                         <label for="mensualidad" class="form-label fw-bold">Mensualidad</label>

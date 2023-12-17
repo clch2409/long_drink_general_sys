@@ -92,19 +92,19 @@ export class NuevoCursoComponent implements OnInit {
   }
 
 
-  onSubmit(n: string, d: number | any, m: number | any, des: string, c: number | any, doc: number | any, t: number | any, f: string, v: boolean, fechaInicio: string, fechaFin: string): void {
-    this.eNombre = n;
-    this.eDuracion = parseInt(d);
-    this.eMensualidad = parseFloat(m);
-    this.eDescripcion = des;
-    this.eCantidad = parseInt(c);
-    this.eDocente = parseInt(doc);
-    this.eTurno = parseInt(t);
-    this.eFrecuencia = f;
+  onSubmit(nombre: string, duracion: number | any, mensualidad: number | any, descripcion: string, cantidad: number | any, docente: number | any, turno: number | any, frecuencia: string, visibilidad: boolean, fechaInicio: string, fechaFin: string): void {
+    this.eNombre = nombre;
+    this.eDuracion = parseInt(duracion);
+    this.eMensualidad = parseFloat(mensualidad);
+    this.eDescripcion = descripcion;
+    this.eCantidad = parseInt(cantidad);
+    this.eDocente = parseInt(docente);
+    this.eTurno = parseInt(turno);
+    this.eFrecuencia = frecuencia;
     this.eVisibilidad = true;
-    this.validarDatos();
     this.eFechaInicio = fechaInicio;
     this.eFechaFin = fechaFin;
+    this.validarDatos();
   }
 
   validarDatos(): void {
@@ -149,6 +149,7 @@ export class NuevoCursoComponent implements OnInit {
       };
       this.cursoService.nuevoCurso(carga).subscribe({
         next: (data) => {
+          console.log(carga)
           Swal.fire("Exito!", "Curso creado correctamente.", "info").then((result) => {
             if (result.isConfirmed || result.isDismissed) {
               window.location.reload();

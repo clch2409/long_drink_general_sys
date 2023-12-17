@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class CoursesViewHolder(view: View, private var inscripcion : Inscripcion) : RecyclerView.ViewHolder(view) {
+class CoursesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val binding = ListItemCoursesBinding.bind(view)
 
@@ -36,7 +36,7 @@ class CoursesViewHolder(view: View, private var inscripcion : Inscripcion) : Rec
     private fun sendToCourseDetail(inscripcion: Inscripcion){
         val intent = Intent(this.itemView.context, CourseDescriptionActivity::class.java)
         intent.apply {
-            putExtra("inscripcion",inscripcion)
+            putExtra("inscripcion", inscripcion)
             /*putExtra("courseName", cursoTerminado.descripcion)
             putExtra("image", cursoTerminado.imagen)
             putExtra("fechaInicio", cursoTerminado.fechaInicioInscripcion)

@@ -17,11 +17,12 @@ import com.longdrink.androidapp.model.Inscripcion
 class CoursesViewPagerAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    private var inscription : Inscripcion,
+    private var inscription : Inscripcion?,
     private var listadoInscripcion : List<Inscripcion>,
     private var email : String,
     private var usuario : String,
-    private var nombreCompleto : String
+    private var nombreCompleto : String,
+    private var codAlumno : Long
 ) : FragmentStateAdapter(fragmentManager, lifecycle){
     override fun getItemCount(): Int {
         return 3
@@ -33,7 +34,7 @@ class CoursesViewPagerAdapter(
 
          if (position == 0) {
             bundle = bundleOf(Pair("inscripcion", inscription))
-            if (inscription.fechaInscripcion == ""){
+            if (inscription == null){
                 fragment = NoActiveCourseFragment()
             }else{
                 fragment = MyCourseFragment()
@@ -41,7 +42,7 @@ class CoursesViewPagerAdapter(
             }
             fragment
         }else if(position == 1){
-            bundle = bundleOf(Pair("inscripcionesTerminadas", listadoInscripcion), Pair("inscripcionActiva", inscription))
+            bundle = bundleOf(Pair("inscripcionesTerminadas", listadoInscripcion))
             if (listadoInscripcion.isEmpty()){
                 fragment = NoCourseFragment()
             }
@@ -51,7 +52,7 @@ class CoursesViewPagerAdapter(
             }
             fragment
         } else{
-            bundle = bundleOf(Pair("email", email), Pair("usuario", usuario), Pair("nombreCompleto", nombreCompleto), Pair("codAlumno", inscription.codAlum), Pair("inscripcion", inscription))
+            bundle = bundleOf(Pair("email", email), Pair("usuario", usuario), Pair("nombreCompleto", nombreCompleto), Pair("codAlum", codAlumno), Pair("inscripcion", inscription))
             fragment = MyAccountFragment()
             fragment.arguments = bundle
         }

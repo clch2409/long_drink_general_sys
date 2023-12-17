@@ -26,23 +26,21 @@ export class SetGuiasEstudioComponent implements OnInit{
 
   constructor(private storageService: StorageService, private cursoService: CursoService, private temaService: TemaService) {}
   ngOnInit(): void {
-    this.storageService.comprobarSesion();
-    this.storageService.denegarAcceso("ALUMNOyDOCENTE");
-    this.llenarCursos();
-    this.llenarTemas();
-    window.addEventListener("load", () =>{
+    window.addEventListener("load", () => {
+      this.storageService.comprobarSesion();
+      this.storageService.denegarAcceso("ALUMNOyDOCENTE");
+      this.llenarCursos();
+      this.llenarTemas();
       this.selectCursos = document.getElementById("nombreCurso") as HTMLSelectElement
       this.selectTemas = document.getElementById("nombreTema") as HTMLSelectElement
       this.botonAgregarTema = document.getElementById("agregarTema") as HTMLButtonElement
       this.botonAsignarTemas = document.getElementById("asignarTemas") as HTMLButtonElement
 
-
-
-       this.botonAgregarTema.addEventListener("click", () => {
-        let indexSeleccionado = this.selectTemas?.selectedIndex
-        let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
-        this.agregarTema(Number.parseInt(itemSeleccionado.value))
-      })
+    this.botonAgregarTema.addEventListener("click", () => {
+      let indexSeleccionado = this.selectTemas?.selectedIndex
+      let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
+      this.agregarTema(Number.parseInt(itemSeleccionado.value))
+    })
 
       this.botonAsignarTemas.addEventListener("click", () => {
         if (this.temasSeleccionados.length == 0){
@@ -56,10 +54,11 @@ export class SetGuiasEstudioComponent implements OnInit{
         }
       })
 
-       this.selectCursos.addEventListener("change", () => {
-        this.temasSeleccionados = []
-      })
+    this.selectCursos.addEventListener("change", () => {
+      this.temasSeleccionados = []
     })
+
+
   }
   //ngAfterViewInit + (click) event....
 
@@ -224,10 +223,6 @@ export class SetGuiasEstudioComponent implements OnInit{
   }
 
   private limpiarTodo(){
-    this.temasSeleccionados = []
-    this.listaCursos = []
-    this.listaTemas = []
-    this.llenarCursos()
-    this.llenarTemas()
+    window.location.reload()
   }
 }

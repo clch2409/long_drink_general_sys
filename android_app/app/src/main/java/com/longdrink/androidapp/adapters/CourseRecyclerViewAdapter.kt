@@ -11,14 +11,13 @@ import com.longdrink.androidapp.viewholders.CoursesViewHolder
 
 class CourseRecyclerViewAdapter(
     var inscripcionesTerminadas : List<Inscripcion> = emptyList(),
-    private var inscripcion: Inscripcion,
 ) : RecyclerView.Adapter<CoursesViewHolder>()
 
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CoursesViewHolder(layoutInflater.inflate(R.layout.list_item_courses, parent, false), inscripcion)
+        return CoursesViewHolder(layoutInflater.inflate(R.layout.list_item_courses, parent, false))
     }
 
     override fun onBindViewHolder (holder : CoursesViewHolder, position : Int){

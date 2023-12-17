@@ -136,7 +136,7 @@ data class Asistencia(
     @SerializedName("codAsistencia") var codAsistencia: Long = 0L,
     @SerializedName("fechaAsistencia") var fechaAsistencia: String,
     @SerializedName("horaLlegada") var horaLlegada: String,
-    @SerializedName("estado") var estado: Boolean = false,
+    @SerializedName("estado") var estado: Int = 0,
     @SerializedName("inscripcion") var inscripcion: Inscripcion
 ) : Serializable
 
@@ -151,8 +151,8 @@ data class MarcarAsistencia(
 /** --------------------- PAYMENTS RELATED DATA CLASSES ----------------------------------*/
 data class Pago(
     @SerializedName("codPago") var codPago : Long = 0L,
-    @SerializedName("fechaPago") var fechaPago : Date,
-    @SerializedName("fechaVencimiento") var fechaVencimiento : Date,
+    @SerializedName("fechaPago") var fechaPago : String = "",
+    @SerializedName("fechaVencimiento") var fechaVencimiento : String,
     @SerializedName("estado") var estado : Boolean,
     @SerializedName("descripcion") var descripcion : String,
     @SerializedName("total") var total : Double

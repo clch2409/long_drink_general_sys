@@ -32,11 +32,9 @@ class CoursesFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var inscripcionesTerminadas : List<Inscripcion>
-    private lateinit var inscripcionActiva : Inscripcion
     private var apiService : ApiService? = null
     private lateinit var binding : FragmentCoursesBinding
     private lateinit var adapter : CourseRecyclerViewAdapter
-    private val cursosTerminadosFiltrados = mutableListOf<ListItemCursoTerminado>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +51,6 @@ class CoursesFragment : Fragment() {
         binding = FragmentCoursesBinding.inflate(inflater)
         apiService = apiService
         inscripcionesTerminadas = requireArguments().getSerializable("inscripcionesTerminadas") as List<Inscripcion>
-        inscripcionActiva = requireArguments().getSerializable("inscripcionActiva") as Inscripcion
         initUI(inscripcionesTerminadas)
         return binding.root
     }
@@ -61,7 +58,7 @@ class CoursesFragment : Fragment() {
     private fun initUI(inscripcionesTerminadas : List<Inscripcion>){
         /*TODO --> BUSCAR LA MANERA DE AGREGAR UN SEPARADOR PERSONALIZADO*/
 
-        adapter = CourseRecyclerViewAdapter(inscripcionesTerminadas, inscripcionActiva)
+        adapter = CourseRecyclerViewAdapter(inscripcionesTerminadas)
         binding.recyclerCourses.setHasFixedSize(true)
         binding.recyclerCourses.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerCourses.adapter = adapter

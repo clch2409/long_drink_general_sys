@@ -23,7 +23,7 @@ class PaymentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityPaymentsBinding.inflate(layoutInflater)
-        codAlum = intent.getLongExtra("codAlum", codAlum)
+        codAlum = intent.getLongExtra("codAlum", 0L)
 
         setSupportActionBar(binding.recoveryToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -57,6 +57,9 @@ class PaymentsActivity : AppCompatActivity() {
                 Log.i("PAYMENTS", response.body().toString())
 
                 /*TODO: MOSTRAR EN PANTALLA SI ES QUE NO TIENE PAGOS PENDIENTES NI HECHOS*/
+                runOnUiThread{
+                    initUi(response.body()!!)
+                }
             }catch (ex : Exception){
                 Log.e("PAYMENTS ACTIVITY", ex.toString())
             }

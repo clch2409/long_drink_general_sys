@@ -33,6 +33,19 @@ class RecoveryActivity : AppCompatActivity() {
             }
         }
 
+        binding.recoveryReturnButton.setOnClickListener {
+            val dialog = Utils.showDialog("Regresar", "¿Desea regresar a la pantalla de Inicio de Sesión?", applicationContext)
+            dialog.apply {
+                setPositiveButton("SI"){ _: DialogInterface, _: Int ->
+                    goToLogin()
+                }
+                setNegativeButton("NO"){ _: DialogInterface, _: Int ->
+                }
+            }
+            dialog.create()
+            dialog.show()
+        }
+
         setContentView(binding.root)
     }
     private fun recuperarCuenta(email : String){
@@ -65,8 +78,8 @@ class RecoveryActivity : AppCompatActivity() {
     }
 
     private fun goToLogin(){
-        finish()
         val intent = Intent(this@RecoveryActivity, LoginActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }

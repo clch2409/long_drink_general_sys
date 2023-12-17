@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter : CoursesViewPagerAdapter
     private lateinit var binding : ActivityMainBinding
     private var apiService : ApiService? = null
-    private lateinit var inscripcionActiva : Inscripcion
+    private var inscripcionActiva : Inscripcion? = null
     private var listadoInscripcionesTerminadas = mutableListOf<Inscripcion>()
     //private var hasInscription = false
     private var codAlum by Delegates.notNull<Long>()
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     runOnUiThread{
                         //hasInscription = inscripcion.fechaInicio != ""
-                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcionActiva, listadoInscripcionesTerminadas, email, usuario, nombreCompleto)
+                        adapter = CoursesViewPagerAdapter(supportFragmentManager, lifecycle, inscripcionActiva, listadoInscripcionesTerminadas, email, usuario, nombreCompleto, codAlum)
                         binding.mainViewpager.adapter = adapter
 
                     }

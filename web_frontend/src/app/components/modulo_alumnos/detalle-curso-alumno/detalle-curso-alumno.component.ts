@@ -53,7 +53,7 @@ export class DetalleCursoAlumnoComponent implements OnInit{
     });
   }
 
-  descrgarCertificado(codAlum: number | any, codCurso: number | any): void {
+  descargarCertificado(codAlum: number | any, codCurso: number | any): void {
     window.location.href = API + `/reporte/certificado/pdf?codAlum=${codAlum}&codCurso=${codCurso}`
     Swal.fire({
       title: "Descargando Certificado...",

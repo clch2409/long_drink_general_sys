@@ -26,40 +26,39 @@ export class SetGuiasEstudioComponent implements OnInit{
   
   constructor(private storageService: StorageService, private cursoService: CursoService, private temaService: TemaService) {}
   ngOnInit(): void {
-    this.storageService.comprobarSesion();
-    this.storageService.denegarAcceso("ALUMNOyDOCENTE");
-    this.llenarCursos();
-    this.llenarTemas();
-    this.selectCursos = document.getElementById("nombreCurso") as HTMLSelectElement
-    this.selectTemas = document.getElementById("nombreTema") as HTMLSelectElement
-    this.botonAgregarTema = document.getElementById("agregarTema") as HTMLButtonElement
-    this.botonAsignarTemas = document.getElementById("asignarTemas") as HTMLButtonElement
+    window.addEventListener("load", () => {
+      this.storageService.comprobarSesion();
+      this.storageService.denegarAcceso("ALUMNOyDOCENTE");
+      this.llenarCursos();
+      this.llenarTemas();
+      this.selectCursos = document.getElementById("nombreCurso") as HTMLSelectElement
+      this.selectTemas = document.getElementById("nombreTema") as HTMLSelectElement
+      this.botonAgregarTema = document.getElementById("agregarTema") as HTMLButtonElement
+      this.botonAsignarTemas = document.getElementById("asignarTemas") as HTMLButtonElement
 
+      this.botonAgregarTema.addEventListener("click", () => {
+        let indexSeleccionado = this.selectTemas?.selectedIndex
+        let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
+        this.agregarTema(Number.parseInt(itemSeleccionado.value))
+      })
 
+      this.botonAsignarTemas.addEventListener("click", () => {
+        if (this.temasSeleccionados.length == 0){
+          this.mensajeErrorNoTemas()
+        }
+        else{
+          let indexCursoSeleccionado = this.selectCursos?.selectedIndex
+          let itemCursoseleccionado = this.selectCursos?.childNodes[indexCursoSeleccionado!!] as HTMLOptionElement
+          this.temasSeleccionados.forEach(elemento => this.listaCodigos.push(elemento.codTema!!))
+          this.preguntaAsignacion(Number.parseInt(itemCursoseleccionado.value), itemCursoseleccionado.innerText!!)
+        }
+      })
 
-    this.botonAgregarTema.addEventListener("click", () => {
-      let indexSeleccionado = this.selectTemas?.selectedIndex
-      let itemSeleccionado = this.selectTemas?.childNodes.item(indexSeleccionado!!) as HTMLOptionElement
-      this.agregarTema(Number.parseInt(itemSeleccionado.value))
+      this.selectCursos.addEventListener("change", () => {
+        this.temasSeleccionados = []
+      })
     })
-
-    this.botonAsignarTemas.addEventListener("click", () => {
-      if (this.temasSeleccionados.length == 0){
-        this.mensajeErrorNoTemas()
-      }
-      else{
-        let indexCursoSeleccionado = this.selectCursos?.selectedIndex
-        let itemCursoseleccionado = this.selectCursos?.childNodes[indexCursoSeleccionado!!] as HTMLOptionElement
-        this.temasSeleccionados.forEach(elemento => this.listaCodigos.push(elemento.codTema!!))
-        this.preguntaAsignacion(Number.parseInt(itemCursoseleccionado.value), itemCursoseleccionado.innerText!!)
-      }
-    })
-
-    this.selectCursos.addEventListener("change", () => {
-      this.temasSeleccionados = []
-    })
-
-
+    
   }
   /* 
     Planeado para tercer sprint, probablemente haya una mejor forma de hacerlo sin checks.
@@ -222,10 +221,6 @@ export class SetGuiasEstudioComponent implements OnInit{
   }
 
   private limpiarTodo(){
-    this.temasSeleccionados = []
-    this.listaCursos = []
-    this.listaTemas = []
-    this.llenarCursos()
-    this.llenarTemas()
+    window.location.reload()
   }
 }

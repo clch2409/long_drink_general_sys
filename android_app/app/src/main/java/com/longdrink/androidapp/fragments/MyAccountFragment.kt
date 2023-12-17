@@ -45,7 +45,7 @@ class MyAccountFragment : Fragment() {
     private var codAlum = 0L
     private lateinit var fechaActual : String
     private lateinit var horaActual: String
-    private lateinit var inscripcion : Inscripcion
+    private var inscripcion : Inscripcion? = null
     private var asistenciaMarcada = false
     private var permitirAsistencia = false
 
@@ -65,7 +65,12 @@ class MyAccountFragment : Fragment() {
         usuario = requireArguments().getString("usuario")!!
         nombreCompleto = requireArguments().getString("nombreCompleto")!!
         codAlum = requireArguments().getLong("codAlum")
-        inscripcion = requireArguments().getSerializable("inscripcion") as Inscripcion
+        inscripcion = if (requireArguments().getSerializable("inscripcion") == null){
+            null
+        }
+        else{
+            requireArguments().getSerializable("inscripcion") as Inscripcion
+        }
         fechaActual = Utils.obtenerFechaHoy()
         horaActual = Utils.obtenerHoraActual()
         permitirAsistencia = habilitarAsistencia()
@@ -73,7 +78,7 @@ class MyAccountFragment : Fragment() {
         binding = FragmentMyAccountBinding.inflate(layoutInflater)
         disableInputs()
         placeInfo(email, usuario, nombreCompleto)
-        comprobarAsistencia(fechaActual, inscripcion.codInscripcion)
+
 
         binding.myAccountChangePassword.setOnClickListener {
             goToRecovery()
@@ -81,51 +86,58 @@ class MyAccountFragment : Fragment() {
         binding.myAccountViewPayments.setOnClickListener {
             goToPayments()
         }
+        if (inscripcion != null){
+            comprobarAsistencia(fechaActual, inscripcion!!.codInscripcion)
+            if (!permitirAsistencia){
+                binding.myAccountAssistence.isEnabled = false
+            }
+            else{
+                binding.myAccountAssistence.setOnClickListener {
 
-        if (!permitirAsistencia){
-            binding.myAccountAssistence.isEnabled = false
-        }
-        else{
-            binding.myAccountAssistence.setOnClickListener {
+                    val dialog : AlertDialog.Builder?
+                    val horaActual = Utils.obtenerHoraActual()
+                    if (asistenciaMarcada){
+                        dialog = Utils.showDialog("Marcar Asistencia",
+                            "Usted ya ha marcado su asistencia",
+                            this.requireContext())
+                        dialog.apply {
+                            setNeutralButton("OK"){ _: DialogInterface, _: Int ->
 
-                val dialog : AlertDialog.Builder?
-                val horaActual = Utils.obtenerHoraActual()
-                if (asistenciaMarcada){
-                    dialog = Utils.showDialog("Marcar Asistencia",
-                        "Usted ya ha marcado su asistencia",
-                        this.requireContext())
-                    dialog.apply {
-                        setNeutralButton("OK"){ _: DialogInterface, _: Int ->
-
+                            }
                         }
                     }
-                }
-                else{
-                    dialog = Utils.showDialog("Marcar Asistencia",
-                        "Marcar Asistencia al\n " +
-                                "Curso: ${inscripcion.seccion.curso.nombre}" +
-                                "\n" +
-                                "Sección: ${inscripcion.seccion.nombre}" +
-                                "\n" +
-                                "Hora de Inicio: ${inscripcion.seccion.turno.horaInicio}" +
-                                "\n"+
-                                "Hora de Asistencia: $horaActual" +
-                                "\n" ,
-                        this.requireContext())
-                    dialog.apply {
-                        setPositiveButton("SI") { _: DialogInterface, _: Int ->
-                            val marcarAsistencia = MarcarAsistencia(inscripcion.codInscripcion, Utils.obtenerFechaHoy(), Utils.obtenerHoraActual(), true)
-                            marcarAsistencia(marcarAsistencia)
-                        }
-                        setNegativeButton("NO") { _: DialogInterface, _: Int ->
+                    else{
+                        dialog = Utils.showDialog("Marcar Asistencia",
+                            "Marcar Asistencia al\n " +
+                                    "Curso: ${inscripcion!!.seccion.curso.nombre}" +
+                                    "\n" +
+                                    "Sección: ${inscripcion!!.seccion.nombre}" +
+                                    "\n" +
+                                    "Hora de Inicio: ${inscripcion!!.seccion.turno.horaInicio}" +
+                                    "\n"+
+                                    "Hora de Asistencia: $horaActual" +
+                                    "\n" ,
+                            this.requireContext())
+                        dialog.apply {
+                            setPositiveButton("SI") { _: DialogInterface, _: Int ->
+                                val marcarAsistencia = MarcarAsistencia(inscripcion!!.codInscripcion, Utils.obtenerFechaHoy(), Utils.obtenerHoraActual(), true)
+                                marcarAsistencia(marcarAsistencia)
+                            }
+                            setNegativeButton("NO") { _: DialogInterface, _: Int ->
+                            }
                         }
                     }
-                }
 
-                dialog.create()
-                dialog.show()
+                    dialog.create()
+                    dialog.show()
+                }
             }
         }
+        else{
+            binding.myAccountAssistence.visibility = View.INVISIBLE
+        }
+
+
 
         return binding.root
     }
@@ -138,7 +150,7 @@ class MyAccountFragment : Fragment() {
 
 
                 activity?.runOnUiThread{
-                    comprobarAsistencia(fechaActual, inscripcion.codInscripcion)
+                    comprobarAsistencia(fechaActual, inscripcion!!.codInscripcion)
                 }
             }
             catch (ex : Exception){
@@ -178,9 +190,10 @@ class MyAccountFragment : Fragment() {
     * [diaSemanaActual] es el número del día en la semana (domingo = 1, lunes = 2 ...)
     * */
     private fun habilitarAsistencia() : Boolean{
-        val diaSemanaActual = Utils.obtenerDiaSemana()
-        if (inscripcion.fechaTerminado == null && inscripcion.seccion.estado){
-            when (inscripcion.seccion.curso.frecuencia){
+        val calendarioActual = Utils.obtenerCalendarioActual()
+        val diaSemanaActual = Utils.obtenerDiaSemana(calendarioActual)
+        if (inscripcion != null){
+            when (inscripcion!!.seccion.curso.frecuencia){
                 "Diario" -> {
                     if (diaSemanaActual == 1 || diaSemanaActual == 7){
                         return false

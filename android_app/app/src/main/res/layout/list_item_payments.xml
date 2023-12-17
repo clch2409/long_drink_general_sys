@@ -20,7 +20,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/txtNumberPayment"
+        android:id="@+id/txtPaymentDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,14 +31,14 @@
         app:layout_constraintVertical_bias="0"
         android:layout_margin="5dp"
         android:textStyle="bold"
-        android:text="Nº pago: "
+        android:text="Fecha de Pago: "
         android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/txtDueDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/txtNumberPayment"
+        app:layout_constraintTop_toBottomOf="@id/txtPaymentDate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/paymentStateImage"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,12 +65,12 @@
         android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/numberPayment"
+        android:id="@+id/paymentDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txtNumberPayment"
+        app:layout_constraintStart_toEndOf="@id/txtPaymentDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintVertical_bias="0"
@@ -82,7 +82,7 @@
         android:id="@+id/dueDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/numberPayment"
+        app:layout_constraintTop_toBottomOf="@id/paymentDate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/txtDueDate"
         app:layout_constraintEnd_toEndOf="parent"

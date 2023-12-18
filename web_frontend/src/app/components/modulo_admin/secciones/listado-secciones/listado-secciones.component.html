@@ -14,6 +14,7 @@
               <th class="fw-bold align-middle">Fecha de Inicio</th>
               <th class="fw-bold align-middle">Fecha de Fin</th>
               <th class="fw-bold align-middle">Estado</th>
+              <th class="fw bold align-middle">Herramientas</th>
             </tr>
           </thead>
           <tbody>
@@ -22,11 +23,14 @@
               <td>{{ seccion.nombre }}</td>
               <td>{{ seccion.curso?.nombre }}</td>
               <td>{{ seccion.turno?.nombre }}</td>
-              <td>{{ seccion.profesor?.nombre + " " + seccion.profesor?.apellidoPaterno }}</td>
+              <td class="text-uppercase">{{ seccion.profesor?.nombre + " " + seccion.profesor?.apellidoPaterno }}</td>
               <td>{{ seccion.fechaInicio | date }}</td>
               <td>{{ seccion.fechaFinal | date }}</td>
-              <td *ngIf="seccion.estado" class="fw-bold text-success">EN CURSO</td>
-              <td *ngIf="!seccion.estado" class="fw-bold text-danger">CERRADA</td>
+              <td *ngIf="setEstadoSeccion(seccion) =='PROGRAMADA'" class="fw-bold text-warning">{{setEstadoSeccion(seccion)}}</td>
+              <td *ngIf="setEstadoSeccion(seccion) =='TERMINADA'" class="fw-bold text-danger">{{setEstadoSeccion(seccion)}}</td>
+              <td *ngIf="setEstadoSeccion(seccion) =='EN CURSO'" class="fw-bold text-success">{{setEstadoSeccion(seccion)}}</td>
+              <td *ngIf="setEstadoSeccion(seccion) ==''" class="fw-bold text-warning">N/A</td>
+              <td><button class="btn btn-primary bg-gradient btn-sm fw-bold" [routerLink]="['/dashboard','detalle-seccion',seccion.codSeccion]">DETALLES</button></td>
             </tr>
           </tbody>
         </table>

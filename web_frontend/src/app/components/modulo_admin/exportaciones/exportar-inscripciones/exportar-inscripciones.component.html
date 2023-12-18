@@ -32,10 +32,10 @@
                 <select class="form-select fw-medium" id="nombreCurso" #nombreCurso [disabled] = "this.estadoCurso" (change)="setCurso(nombreCurso.value)">
                     <option class="fw-medium" *ngFor="let curso of listaCursos" [value] ="curso.codCurso">{{curso.nombre}}</option>
                 </select>
-                
+
             </div>
             <div class="col-2 mt-4">
-                <a class="btn-success btn fw-bold" (click)="descargarArchivoI()">Descargar</a>
+                <a class="btn-success btn fw-bold bg-gradient" (click)="descargarArchivoI()">Descargar</a>
             </div>
         </div>
         </div>

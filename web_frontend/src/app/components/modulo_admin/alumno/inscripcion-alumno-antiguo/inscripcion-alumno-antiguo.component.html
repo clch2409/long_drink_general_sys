@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <label for="buscar" class="fw-bold me-2">Buscar Alumno Por Dni :</label>
             <input type="text" id="alumnoDni" autofocus class="fw-medium me-2">
-            <button class="fw-bold btn btn-primary me-2" (click)="buscarAlumnoPorDni()">Buscar Alumno</button>
+            <button class="fw-bold btn btn-primary me-2 bg-gradient" (click)="buscarAlumnoPorDni()">Buscar Alumno</button>
             <br>
             <br>
             <div class="rounded-4 shadow p-4 border border-2 border-primary">
@@ -81,13 +81,13 @@
 
                     <div class="row">
                         <div class="col-md-4 mb-3 text-center">
-                            <button type="submit" class="fw-bold btn btn-primary fs-5">Guardar</button>
+                            <button type="submit" class="fw-bold btn btn-primary fs-5 bg-gradient">Guardar</button>
                         </div>
                         <div class="col-md-4 mb-3 text-center">
-                            <button type="button" class="fw-bold btn btn-secondary fs-5" (click)="limpiarCampos()">Limpiar</button>
+                            <button type="button" class="fw-bold btn btn-secondary fs-5 bg-gradient" (click)="limpiarCampos()">Limpiar</button>
                         </div>
                         <div class="col-md-4 mb-3 text-center">
-                            <a class="fw-bold btn btn-danger fs-5" [routerLink]="['/dashboard']">Cancelar</a>
+                            <a class="fw-bold btn btn-danger fs-5 bg-gradient" [routerLink]="['/dashboard']">Cancelar</a>
                         </div>
                     </div>
                 </form>

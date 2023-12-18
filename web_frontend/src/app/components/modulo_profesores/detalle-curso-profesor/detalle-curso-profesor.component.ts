@@ -42,9 +42,10 @@ export class DetalleCursoProfesorComponent implements OnInit {
   }
 
   getInscripcionPorCurso(codCurso: number): void {
-    this.inscripcionService.getInscripcionesPorCurso(codCurso).subscribe({
+    this.inscripcionService.getInscripcionesPorSeccion(codCurso).subscribe({
       next: (data: Inscripcion[]) => {
         this.inscripciones = data
+        this.enriquecerInscripciones();
         console.log(this.inscripciones);
       },
       error: (err) => {
@@ -52,6 +53,17 @@ export class DetalleCursoProfesorComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+
+  enriquecerInscripciones(){
+    if(this.inscripciones.length >=1){
+      this.inscripciones.forEach((e) =>{
+        this.alumnoService.getAlumnoCod(e.alumno).subscribe({
+          next: (data) => e.alumno = data,
+          error: (err) => console.log(err)
+        })
+      })
+    }
   }
 
   getSeccion(codSeccion: number): void{

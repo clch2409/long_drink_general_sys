@@ -11,7 +11,7 @@
                       <p class="card-text">{{i.seccion?.curso?.descripcion}}</p>
                       <p class="fw-bold text-center">Primer Día de Clases: {{i.seccion?.fechaInicio}}</p>
                       <div class="container text-center">
-                        <a [routerLink]="['/a/mi-curso',codAlumno,i.codInscripcion,i.seccion?.curso?.codCurso]" class="btn btn-success">Detalles</a>
+                        <a [routerLink]="['/a/mi-curso',codAlumno,i.codInscripcion,i.seccion?.curso?.codCurso]" class="btn btn-success bg-gradient">Detalles</a>
                       </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                       <p class="card-text">{{i.seccion?.curso?.descripcion}}</p>
                       <p class="fw-bold text-danger">Finalizado el: {{i.fechaTerminado}}</p>
                       <div class="container text-center">
-                        <a [routerLink]="['/a/mi-curso',codAlumno,i.codInscripcion,i.seccion?.curso?.codCurso]" class="btn btn-success">Detalles</a>
+                        <a [routerLink]="['/a/mi-curso',codAlumno,i.codInscripcion,i.seccion?.curso?.codCurso]" class="btn btn-success bg-gradient">Detalles</a>
                       </div>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ export class DetalleInscripcion implements Deserializable{
     fechaInscripcion?: Date;
     fechaTerminado?: Date;
     estado?: boolean
-    
+
     deserializable(input: any): this {
         Object.assign(this, input);
         return this;

@@ -55,15 +55,15 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-4 mb-3 text-center">
-                        <a class="fw-bold btn btn-primary fs-5"
+                        <a class="fw-bold btn btn-primary fs-5 bg-gradient"
                             (click)="onSubmit(nombreCurso.value, duracionCurso.value, mensualidad.value, descripcionCurso.value, cantidadAlumnos.value, profesor.value, turno.value, frecuencia.value, true, fechaInicio.value, fechaFin.value)">Guardar</a>
                     </div>
                     <div class="col-md-4 mb-3 text-center">
-                        <button type="button" class="fw-bold btn btn-secondary fs-5"
+                        <button type="button" class="fw-bold btn btn-secondary fs-5 bg-gradient"
                             (click)="limpiarCampos()">Limpiar</button>
                     </div>
                     <div class="col-md-4 mb-3 text-center">
-                        <a class="fw-bold btn btn-danger fs-5" [routerLink]="['/dashboard']">Cancelar</a>
+                        <a class="fw-bold btn btn-danger fs-5 bg-gradient" [routerLink]="['/dashboard']">Cancelar</a>
                     </div>
                 </div>
             </div>

@@ -9,13 +9,13 @@
                 <div class="col">
                     <label for="codigoAlumno" class="form-label">Código del Alumno</label>
                     <input type="text" class="form-control" id="codigoAlumno" [disabled]="true" value="{{codAlumno}}">
-    
+
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" #nombre minlength="1" maxlength="50">
-    
+
                     <label for="apPaterno" class="form-label">Apellido Paterno</label>
                     <input type="text" class="form-control" id="apPaterno" #apPaterno minlength="1" maxlength="25">
-    
+
                 </div>
                 <div class="col">
                     <label for="apMaterno" class="form-label">Apellido Materno</label>
@@ -23,7 +23,7 @@
 
                     <label for="telefono" class="form-label">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" #telefono maxlength="9">
-    
+
                     <label for="activo" class="form-label ">Estado</label>
                     <select class="form-select" id="activo" #activo>
                         <option   [value] ="true" selected>ACTIVO</option>
@@ -32,13 +32,13 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col text-center">
-                        <a class="btn btn-success fw-bold" (click)="onSubmit(this.nombre.value,this.apPaterno.value,this.apMaterno.value,this.telefono.value,this.activo.value)">ACTUALIZAR</a>
-                        <a class="btn btn-danger ms-5 fw-bold" [routerLink]="['/dashboard/alumnos']">CANCELAR</a>
+                        <a class="btn btn-success fw-bold bg-gradient" (click)="onSubmit(this.nombre.value,this.apPaterno.value,this.apMaterno.value,this.telefono.value,this.activo.value)">ACTUALIZAR</a>
+                        <a class="btn btn-danger ms-5 fw-bold bg-gradient" [routerLink]="['/dashboard/alumnos']">CANCELAR</a>
                     </div>
                 </div>
             </div>
-          
-         
+
+
         </div>
       </div>
     </div>

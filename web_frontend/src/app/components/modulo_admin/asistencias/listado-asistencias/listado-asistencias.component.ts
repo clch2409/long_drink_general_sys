@@ -80,7 +80,7 @@ export class ListadoAsistenciasComponent implements OnInit {
   }
 
   llenarSecciones(){ //Combobox Secciones.
-    this.seccionService.getActivas().subscribe({
+    this.seccionService.getSecciones().subscribe({
       next: (data) =>{
         this.listaSecciones = data;
         console.log(this.listaSecciones);

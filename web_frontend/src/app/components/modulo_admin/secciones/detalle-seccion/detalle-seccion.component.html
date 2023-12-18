@@ -1,0 +1,98 @@
+<div class="container py-3">
+  <div class="row justify-content-center">
+    <div class="col-md-12 py-3 px-4">
+      <div class="card border-danger">
+        <div class="card-header text-center bg-danger bg-gradient">
+          <h5 class="fw-bold text-light">Detalle de Sección</h5>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+
+              <div class="col-2">
+                <div class="mb-1">
+                  <label for="codSec" class="form-label fw-bold">Código Sección</label>
+                  <input type="text" class="form-control" id="codSec" disabled [value]="codSeccion">
+                </div>
+              </div>
+
+              <div class="col-3">
+                <div class="mb-1">
+                  <label for="nomCur" class="form-label fw-bold">Curso</label>
+                  <input type="text" class="form-control" id="nomCur" disabled [value]="seccion?.curso?.nombre">
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="mb-1">
+                  <label for="nomSec" class="form-label fw-bold">Nombre Sección</label>
+                  <input type="text" class="form-control" id="nomSec" disabled [value]="seccion?.nombre">
+                </div>
+              </div>
+
+              <div class="col-3">
+                <div class="mb-1">
+                  <label for="nomPro" class="form-label fw-bold">Profesor Encargado</label>
+                  <input type="text" class="form-control text-uppercase" id="nomPro" disabled value="{{seccion?.profesor?.nombre + ' ' + seccion?.profesor?.apellidoPaterno}}">
+                </div>
+              </div>
+
+              <div class="col-2">
+                <div class="mb-1">
+                  <label for="feIni" class="form-label fw-semibold text-success">Fecha Inicio: {{seccion?.fechaInicio}}</label>
+                  <label for="feFin" class="form-label fw-semibold mt-2 text-danger">Fecha Final: {{seccion?.fechaFinal}}</label>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr class="text-center">
+                      <th>Código</th>
+                      <th>Nombre</th>
+                      <th>Apellidos</th>
+                      <th>DNI</th>
+                      <th>Teléfono</th>
+                      <th>Fecha Inscripción</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="listaInscripciones?.length!! >= 1">
+                    <tr *ngFor="let i of listaInscripciones">
+                      <th class="text-center">{{i.alumno?.codAlumno}}</th>
+                      <th>{{i.alumno?.nombre}}</th>
+                      <th>{{i.alumno?.apellidoPaterno + " " + i.alumno?.apellidoMaterno}}</th>
+                      <th class="text-center">{{i.alumno?.dni}}</th>
+                      <th class="text-center">{{i.alumno?.telefono}}</th>
+                      <th class="text-center">{{i.fechaInscripcion}}</th>
+                    </tr>
+                  </tbody>
+                </table>
+                <h6 *ngIf="listaInscripciones?.length!! <= 0" class="text-center text-danger fw-bold">Ups! La sección no tiene alumnos inscritos actualmente.</h6>
+              </div>
+            </div>
+
+            <div class="row text-end mb-1 align-content-end">
+              <div class="col"></div>
+              <div class="col-2">
+                <div class="mb-1">
+                  <label for="nomPro" class="form-label fw-bold">Estado Sección</label>
+                  <input type="text" class="form-control {{colorEstado}} fw-bold" id="nomPro" disabled value="{{estadoSeccion}}">
+                </div>
+              </div>
+            </div>
+
+            <div class="row text-end">
+              <div class="col">
+                <button class="btn btn-primary bg-gradient fw-bold" [routerLink]="['/dashboard','secciones']">ATRÁS</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+</div>

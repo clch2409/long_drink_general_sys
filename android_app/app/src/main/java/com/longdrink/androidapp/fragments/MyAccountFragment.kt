@@ -89,7 +89,7 @@ class MyAccountFragment : Fragment() {
         if (inscripcion != null){
             comprobarAsistencia(fechaActual, inscripcion!!.codInscripcion)
             if (!permitirAsistencia){
-                binding.myAccountAssistence.isEnabled = false
+                binding.myAccountAssistence.visibility = View.INVISIBLE
             }
             else{
                 binding.myAccountAssistence.setOnClickListener {
